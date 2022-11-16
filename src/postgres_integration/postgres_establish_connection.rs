@@ -3,7 +3,7 @@ use crate::global_variables::runtime::config::CONFIG;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use impl_error_with_tracing_for_struct_without_get_source::ImplErrorWithTracingForStructWithoutGetSourceFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
-use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon;
+use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethodFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use sqlx::postgres::PgPoolOptions;
 use sqlx::Error;
@@ -19,7 +19,7 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     Debug,
     InitErrorFromTufaCommon,
     ImplGetSourceFromTufaCommon,
-    ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon,
+    ImplGetWhereWasOneOrManyWithMethodFromTufaCommon,
     ImplErrorWithTracingForStructWithoutGetSourceFromTufaCommon,
 )]
 pub struct PostgresEstablishConnectionOriginError {

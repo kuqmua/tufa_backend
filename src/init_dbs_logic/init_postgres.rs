@@ -14,7 +14,6 @@ use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 use std::collections::HashMap;
 use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethodFromTufaCommon;
-use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::common::where_was::WhereWas;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
@@ -28,7 +27,7 @@ use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditional
     Debug,
     InitErrorFromTufaCommon,
     ImplGetSourceFromTufaCommon,
-    ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon,
+    ImplGetWhereWasOneOrManyWithMethodFromTufaCommon,
     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
 )]
 pub struct PostgresInitWrapperError {

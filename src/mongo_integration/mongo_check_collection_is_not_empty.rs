@@ -5,7 +5,7 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 use futures::future::join_all;
 use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
-use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon;
+use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethodFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use mongodb::bson::Document;
 use mongodb::error::Error;
@@ -20,7 +20,7 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     Debug,
     InitErrorFromTufaCommon,
     ImplGetSourceFromTufaCommon,
-    ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon,
+    ImplGetWhereWasOneOrManyWithMethodFromTufaCommon,
     ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon,
 )]
 pub struct MongoCheckCollectionsIsNotEmptyWrapperError {
