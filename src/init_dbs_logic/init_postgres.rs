@@ -13,7 +13,7 @@ use crate::postgres_integration::postgres_insert_link_parts_into_providers_table
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 use std::collections::HashMap;
-use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperWithMethodFromTufaCommon;
+use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::common::where_was::WhereWas;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
@@ -27,7 +27,7 @@ use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditional
     Debug,
     InitErrorFromTufaCommon,
     ImplGetSourceFromTufaCommon,
-    ImplGetWhereWasOriginOrWrapperWithMethodFromTufaCommon,
+    ImplGetWhereWasOriginOrWrapperFromTufaCommon,
     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
 )]
 pub struct PostgresInitWrapperError {
@@ -35,9 +35,7 @@ pub struct PostgresInitWrapperError {
     where_was: WhereWas,
 }
 
-#[derive(
-    Debug, ImplGetWhereWasOriginOrWrapperWithMethodFromTufaCommon, ImplGetSourceFromTufaCommon,
-)]
+#[derive(Debug, ImplGetWhereWasOriginOrWrapperFromTufaCommon, ImplGetSourceFromTufaCommon)]
 pub enum PostgresInitErrorEnum {
     EstablishConnectionWrapper(PostgresEstablishConnectionOriginError),
     CreateTableQueriesWrapper(PostgresCreateProvidersDbsOriginError),

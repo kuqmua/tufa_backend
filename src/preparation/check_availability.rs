@@ -11,7 +11,7 @@ use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 
-use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperWithMethodFromTufaCommon;
+use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use std::ops::Deref;
 use tufa_common::common::where_was::WhereWas;
@@ -28,7 +28,7 @@ use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTr
     ImplDisplayForErrorStruct,
     InitErrorFromTufaCommon,
     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
-    ImplGetWhereWasOriginOrWrapperWithMethodFromTufaCommon,
+    ImplGetWhereWasOriginOrWrapperFromTufaCommon,
 )]
 pub struct CheckAvailabilityWrapperError {
     source: CheckAvailabilityErrorEnum,
@@ -39,7 +39,7 @@ pub struct CheckAvailabilityWrapperError {
     Debug,
     ImplGetSourceFromTufaCommon,
     ImplDisplayForSimpleErrorEnum,
-    ImplGetWhereWasOriginOrWrapperWithMethodFromTufaCommon,
+    ImplGetWhereWasOriginOrWrapperFromTufaCommon,
 )]
 pub enum CheckAvailabilityErrorEnum {
     NetOrigin(Box<NetCheckAvailabilityWrapperError>),

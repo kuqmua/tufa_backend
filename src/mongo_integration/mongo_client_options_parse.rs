@@ -2,7 +2,7 @@ use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
 use impl_error_with_tracing_for_struct_without_get_source::ImplErrorWithTracingForStructWithoutGetSourceFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
-use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperWithMethodFromTufaCommon;
+use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use mongodb::error::Error;
 use mongodb::options::ClientOptions;
@@ -15,7 +15,7 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     Debug,
     InitErrorFromTufaCommon,
     ImplGetSourceFromTufaCommon,
-    ImplGetWhereWasOriginOrWrapperWithMethodFromTufaCommon,
+    ImplGetWhereWasOriginOrWrapperFromTufaCommon,
     ImplErrorWithTracingForStructWithoutGetSourceFromTufaCommon,
 )]
 pub struct MongoClientOptionsParseOriginError {

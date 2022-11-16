@@ -6,7 +6,7 @@ use crate::traits::provider_kind_trait::ProviderKindTrait;
 use futures::future::join_all;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
-use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperWithMethodFromTufaCommon;
+use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use std::collections::HashMap;
 use tufa_common::common::where_was::WhereWas;
@@ -18,7 +18,7 @@ use valuable::Valuable;
 #[derive(
     Debug,
     InitErrorFromTufaCommon,
-    ImplGetWhereWasOriginOrWrapperWithMethodFromTufaCommon,
+    ImplGetWhereWasOriginOrWrapperFromTufaCommon,
     ImplGetSourceFromTufaCommon,
     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
 )]
