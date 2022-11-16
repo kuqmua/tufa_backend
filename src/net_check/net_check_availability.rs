@@ -4,7 +4,7 @@ use git_info::GitInfoFromTufaCommon;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
 use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon;
-use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
+use impl_get_source::ImplGetSourceFromTufaCommon;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use reqwest::Error;
@@ -17,7 +17,7 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
 #[derive(
     Debug,
     ImplDisplayForErrorStruct,
-    ImplGetSourceWithMethodFromTufaCommon,
+    ImplGetSourceFromTufaCommon,
     ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon,
     InitErrorFromTufaCommon,
     ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon,
@@ -28,10 +28,7 @@ pub struct NetCheckAvailabilityWrapperError {
 }
 
 #[derive(
-    Debug,
-    GitInfoFromTufaCommon,
-    ImplDisplayForSimpleErrorEnum,
-    ImplGetSourceWithMethodFromTufaCommon,
+    Debug, GitInfoFromTufaCommon, ImplDisplayForSimpleErrorEnum, ImplGetSourceFromTufaCommon,
 )]
 pub enum NetCheckAvailabilityErrorEnum {
     ReqwestGetOrigin(Error),

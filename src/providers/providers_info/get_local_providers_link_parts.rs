@@ -5,7 +5,7 @@ use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use futures::future::join_all;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
-use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
+use impl_get_source::ImplGetSourceFromTufaCommon;
 use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethodFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use std::collections::HashMap;
@@ -19,7 +19,7 @@ use valuable::Valuable;
     Debug,
     InitErrorFromTufaCommon,
     ImplGetWhereWasOneOrManyWithMethodFromTufaCommon,
-    ImplGetSourceWithMethodFromTufaCommon,
+    ImplGetSourceFromTufaCommon,
     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
 )]
 pub struct GetLocalProvidersLinkPartsWrapperError {

@@ -4,7 +4,7 @@ use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use futures::future::join_all;
 use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon;
-use impl_get_source_with_method::ImplGetSourceWithMethodFromTufaCommon;
+use impl_get_source::ImplGetSourceFromTufaCommon;
 use impl_get_where_was_one_or_many_one_for_error_struct::ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use mongodb::bson::Document;
@@ -19,7 +19,7 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
 #[derive(
     Debug,
     InitErrorFromTufaCommon,
-    ImplGetSourceWithMethodFromTufaCommon,
+    ImplGetSourceFromTufaCommon,
     ImplGetWhereWasOneOrManyOneForErrorStructFromTufaCommon,
     ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon,
 )]
@@ -28,7 +28,7 @@ pub struct MongoCheckCollectionsIsNotEmptyWrapperError {
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetSourceWithMethodFromTufaCommon)]
+#[derive(Debug, ImplGetSourceFromTufaCommon)]
 pub enum CollectionCountDocumentsOrIsNotEmpty {
     CountDocumentsOrigin(Error),
     IsNotEmptyOrigin(u64),
