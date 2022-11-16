@@ -5,7 +5,7 @@ use crate::init_dbs_logic::init_tables_enum::InitTablesWrapperError;
 use futures::future::join_all;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
-use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethodFromTufaCommon;
+use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperWithMethodFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use strum::IntoEnumIterator;
 use tufa_common::common::where_was::WhereWas;
@@ -16,7 +16,7 @@ use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTr
 #[derive(
     Debug,
     InitErrorFromTufaCommon,
-    ImplGetWhereWasOneOrManyWithMethodFromTufaCommon,
+    ImplGetWhereWasOriginOrWrapperWithMethodFromTufaCommon,
     ImplGetSourceFromTufaCommon,
     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
 )]

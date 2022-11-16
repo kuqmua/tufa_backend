@@ -4,7 +4,7 @@ use crate::init_dbs_logic::init_dbs_with_providers_link_parts::init_dbs_with_pro
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsWrapperError;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
-use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethodFromTufaCommon;
+use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperWithMethodFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use strum_macros::EnumIter;
 use tufa_common::common::where_was::WhereWas;
@@ -22,14 +22,16 @@ pub enum InitTablesEnum {
     InitErrorFromTufaCommon,
     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
     ImplGetSourceFromTufaCommon,
-    ImplGetWhereWasOneOrManyWithMethodFromTufaCommon,
+    ImplGetWhereWasOriginOrWrapperWithMethodFromTufaCommon,
 )]
 pub struct InitTablesWrapperError {
     source: InitTablesErrorEnum,
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetWhereWasOneOrManyWithMethodFromTufaCommon, ImplGetSourceFromTufaCommon)]
+#[derive(
+    Debug, ImplGetWhereWasOriginOrWrapperWithMethodFromTufaCommon, ImplGetSourceFromTufaCommon,
+)]
 pub enum InitTablesErrorEnum {
     ProvidersLinkPartsWrapper(InitDbsProvidersLinkPartsWrapperError),
 }

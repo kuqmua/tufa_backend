@@ -8,7 +8,7 @@ use crate::providers::providers_info::get_local_providers_link_parts::get_local_
 use crate::providers::providers_info::get_local_providers_link_parts::GetLocalProvidersLinkPartsWrapperError;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
-use impl_get_where_was_one_or_many_with_method::ImplGetWhereWasOneOrManyWithMethodFromTufaCommon;
+use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperWithMethodFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use tufa_common::common::where_was::WhereWas;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
@@ -20,14 +20,16 @@ use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTr
     InitErrorFromTufaCommon,
     ImplGetSourceFromTufaCommon,
     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
-    ImplGetWhereWasOneOrManyWithMethodFromTufaCommon,
+    ImplGetWhereWasOriginOrWrapperWithMethodFromTufaCommon,
 )]
 pub struct InitDbsProvidersLinkPartsWrapperError {
     source: InitDbsProvidersLinkPartsErrorEnum,
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetWhereWasOneOrManyWithMethodFromTufaCommon, ImplGetSourceFromTufaCommon)]
+#[derive(
+    Debug, ImplGetWhereWasOriginOrWrapperWithMethodFromTufaCommon, ImplGetSourceFromTufaCommon,
+)]
 pub enum InitDbsProvidersLinkPartsErrorEnum {
     GetLocalProvidersLinkPartsWrapper(GetLocalProvidersLinkPartsWrapperError),
     PostgresInitWrapper(PostgresInitWrapperError),
