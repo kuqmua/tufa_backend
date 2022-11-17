@@ -10,7 +10,6 @@ use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
 use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
-
 use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use std::ops::Deref;
@@ -35,6 +34,7 @@ pub struct CheckAvailabilityWrapperError {
     where_was: WhereWas,
 }
 
+#[allow(clippy::enum_variant_names)]
 #[derive(
     Debug,
     ImplGetSourceFromTufaCommon,
