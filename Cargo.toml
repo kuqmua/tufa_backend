@@ -81,7 +81,6 @@ tufa_common = {path = "../tufa_common"}# local dev test without commits version
 # gen_enum = {git = "https://github.com/kuqmua/gen_enum"}
 # gen_enum_without_values = {git = "https://github.com/kuqmua/gen_enum_without_values"}
 # git_info = {git = "https://github.com/kuqmua/git_info"}
-# impl_display = {git = "https://github.com/kuqmua/impl_display"}
 # impl_from_for_upper_struct = {git = "https://github.com/kuqmua/impl_from_for_upper_struct"}
 # init_from_env = {git = "https://github.com/kuqmua/init_from_env"}
 # provider_kind_from_config = {path = "https://github.com/kuqmua/provider_kind_from_config"}
@@ -94,7 +93,6 @@ gen_enum_without_values = {path = "../proc_macros/gen_enum_without_values"}
 generate_getter_traits_for_struct_fields = {path = "../proc_macros/generate_getter_traits_for_struct_fields"}
 git_info = {path = "../proc_macros/git_info"}
 impl_box_err_source_from_err = {path = "../proc_macros/impl_box_err_source_from_err"}
-impl_display = {path = "../proc_macros/impl_display"}
 impl_display_for_error_struct = {path = "../proc_macros/impl_display_for_error_struct"}
 impl_display_for_simple_error_enum = {path = "../proc_macros/impl_display_for_simple_error_enum"}
 impl_error_with_tracing = {path = "../proc_macros/impl_error_with_tracing"}

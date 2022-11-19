@@ -11,7 +11,6 @@ use tufa_common::common::where_was::WhereWas;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
-use tufa_common::traits::where_was_trait::WhereWasTrait;
 
 #[derive(Debug, EnumIter)]
 pub enum InitTablesEnum {

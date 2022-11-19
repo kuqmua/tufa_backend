@@ -1,8 +1,7 @@
-use impl_display::ImplDisplay;
 use tracing::dispatcher::SetGlobalDefaultError;
 use tracing::log::SetLoggerError;
 
-#[derive(thiserror::Error, Debug, ImplDisplay)]
+#[derive(thiserror::Error, Debug)]
 pub enum InitSubcriberErrorEnum {
     SetLogger {
         #[from]
@@ -12,4 +11,10 @@ pub enum InitSubcriberErrorEnum {
         #[from]
         source: SetGlobalDefaultError,
     },
+}
+
+impl std::fmt::Display for InitSubcriberErrorEnum {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
