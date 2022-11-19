@@ -12,7 +12,6 @@ use tufa_common::common::where_was::WhereWas;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
-use tufa_common::traits::where_was_trait::WhereWasTrait;
 
 #[derive(
     Debug,
@@ -21,12 +20,12 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
 )]
 pub struct PreparationWrapperError {
-    source: PreparationErrorEnum,
+    source: InitDbsProvidersLinkPartsWrapperErrorEnum,
     where_was: WhereWas,
 }
 
 #[derive(Debug, ImplGetWhereWasOriginOrWrapperFromTufaCommon, ImplGetSourceFromTufaCommon)]
-pub enum PreparationErrorEnum {
+pub enum InitDbsProvidersLinkPartsWrapperErrorEnum {
     CheckAvailabilityWrapper(CheckAvailabilityWrapperError),
     InitDbsWrapper(InitDbsWrapperError),
 }
@@ -41,7 +40,7 @@ pub async fn prepare_server(should_trace: bool) -> Result<(), Box<PreparationWra
     if let Err(e) = check_availability(false).await {
         return Err(Box::new(
             PreparationWrapperError::init_error_with_possible_trace(
-                PreparationErrorEnum::CheckAvailabilityWrapper(*e),
+                InitDbsProvidersLinkPartsWrapperErrorEnum::CheckAvailabilityWrapper(*e),
                 WhereWas {
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
@@ -63,7 +62,7 @@ pub async fn prepare_server(should_trace: bool) -> Result<(), Box<PreparationWra
     if let Err(e) = init_dbs(false).await {
         return Err(Box::new(
             PreparationWrapperError::init_error_with_possible_trace(
-                PreparationErrorEnum::InitDbsWrapper(*e),
+                InitDbsProvidersLinkPartsWrapperErrorEnum::InitDbsWrapper(*e),
                 WhereWas {
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)

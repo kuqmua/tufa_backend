@@ -23,14 +23,14 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon,
 )]
 pub struct NetCheckAvailabilityWrapperError {
-    source: NetCheckAvailabilityErrorEnum,
+    source: NetCheckAvailabilityWrapperErrorEnum,
     where_was: WhereWas,
 }
 
 #[derive(
     Debug, GitInfoFromTufaCommon, ImplDisplayForSimpleErrorEnum, ImplGetSourceFromTufaCommon,
 )]
-pub enum NetCheckAvailabilityErrorEnum {
+pub enum NetCheckAvailabilityWrapperErrorEnum {
     ReqwestGetOrigin(Error),
     ClientOrigin(StatusCode),
     ServerOrigin(StatusCode),
@@ -49,7 +49,7 @@ pub async fn net_check_availability(
     match reqwest::get(link).await {
         Err(e) => Err(Box::new(
             NetCheckAvailabilityWrapperError::init_error_with_possible_trace(
-                NetCheckAvailabilityErrorEnum::ReqwestGetOrigin(e),
+                NetCheckAvailabilityWrapperErrorEnum::ReqwestGetOrigin(e),
                 WhereWas {
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
@@ -66,7 +66,7 @@ pub async fn net_check_availability(
             if status.is_client_error() {
                 return Err(Box::new(
                     NetCheckAvailabilityWrapperError::init_error_with_possible_trace(
-                        NetCheckAvailabilityErrorEnum::ClientOrigin(status),
+                        NetCheckAvailabilityWrapperErrorEnum::ClientOrigin(status),
                         WhereWas {
                             time: std::time::SystemTime::now()
                                 .duration_since(std::time::UNIX_EPOCH)
@@ -82,7 +82,7 @@ pub async fn net_check_availability(
             if status.is_server_error() {
                 return Err(Box::new(
                     NetCheckAvailabilityWrapperError::init_error_with_possible_trace(
-                        NetCheckAvailabilityErrorEnum::ServerOrigin(status),
+                        NetCheckAvailabilityWrapperErrorEnum::ServerOrigin(status),
                         WhereWas {
                             time: std::time::SystemTime::now()
                                 .duration_since(std::time::UNIX_EPOCH)

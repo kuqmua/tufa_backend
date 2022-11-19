@@ -32,12 +32,12 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
 )]
 pub struct PostgresInitWrapperError {
-    source: PostgresInitErrorEnum,
+    source: PostgresInitWrapperErrorEnum,
     where_was: WhereWas,
 }
 
 #[derive(Debug, ImplGetWhereWasOriginOrWrapperFromTufaCommon, ImplGetSourceFromTufaCommon)]
-pub enum PostgresInitErrorEnum {
+pub enum PostgresInitWrapperErrorEnum {
     EstablishConnectionWrapper(PostgresEstablishConnectionOriginError),
     CreateTableQueriesWrapper(PostgresCreateProvidersDbsOriginError),
     CheckProviderLinksTablesAreEmptyWrapper(PostgresCheckProvidersLinkPartsTablesEmptyWrapperError),
@@ -63,7 +63,7 @@ pub async fn init_postgres(
     match postgres_establish_connection(&providers_json_local_data_hashmap, should_trace).await {
         Err(e) => Err(Box::new(
             PostgresInitWrapperError::init_error_with_possible_trace(
-                PostgresInitErrorEnum::EstablishConnectionWrapper(*e),
+                PostgresInitWrapperErrorEnum::EstablishConnectionWrapper(*e),
                 WhereWas {
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
@@ -85,7 +85,7 @@ pub async fn init_postgres(
             {
                 return Err(Box::new(
                     PostgresInitWrapperError::init_error_with_possible_trace(
-                        PostgresInitErrorEnum::CreateTableQueriesWrapper(*e),
+                        PostgresInitWrapperErrorEnum::CreateTableQueriesWrapper(*e),
                         WhereWas {
                             time: std::time::SystemTime::now()
                                 .duration_since(std::time::UNIX_EPOCH)
@@ -107,7 +107,7 @@ pub async fn init_postgres(
             {
                 return Err(Box::new(
                     PostgresInitWrapperError::init_error_with_possible_trace(
-                        PostgresInitErrorEnum::CheckProviderLinksTablesAreEmptyWrapper(*e),
+                        PostgresInitWrapperErrorEnum::CheckProviderLinksTablesAreEmptyWrapper(*e),
                         WhereWas {
                             time: std::time::SystemTime::now()
                                 .duration_since(std::time::UNIX_EPOCH)
@@ -129,7 +129,7 @@ pub async fn init_postgres(
             {
                 return Err(Box::new(
                     PostgresInitWrapperError::init_error_with_possible_trace(
-                        PostgresInitErrorEnum::DeleteAllFromProvidersTablesWrapper(*e),
+                        PostgresInitWrapperErrorEnum::DeleteAllFromProvidersTablesWrapper(*e),
                         WhereWas {
                             time: std::time::SystemTime::now()
                                 .duration_since(std::time::UNIX_EPOCH)
@@ -149,7 +149,7 @@ pub async fn init_postgres(
             // )
             // .await {
             //                                                                             return Err(Box::new(PostgresInitWrapperError::init_error_with_possible_trace(
-            //     PostgresInitErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e),
+            //     PostgresInitWrapperErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e),
             //     WhereWas {
             //         time: std::time::SystemTime::now()
             // .duration_since(std::time::UNIX_EPOCH)
@@ -172,7 +172,7 @@ pub async fn init_postgres(
             {
                 return Err(Box::new(
                     PostgresInitWrapperError::init_error_with_possible_trace(
-                        PostgresInitErrorEnum::InsertLinkPartsIntoProvidersTablesWrapper(*e),
+                        PostgresInitWrapperErrorEnum::InsertLinkPartsIntoProvidersTablesWrapper(*e),
                         WhereWas {
                             time: std::time::SystemTime::now()
                                 .duration_since(std::time::UNIX_EPOCH)

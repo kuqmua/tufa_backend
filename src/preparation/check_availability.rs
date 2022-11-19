@@ -20,7 +20,6 @@ use tufa_common::server::mongo::mongo_check_availability::MongoCheckAvailability
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
-use tufa_common::traits::where_was_trait::WhereWasTrait;
 
 #[derive(
     Debug,
@@ -31,7 +30,7 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
 )]
 pub struct CheckAvailabilityWrapperError {
-    source: CheckAvailabilityErrorEnum,
+    source: CheckAvailabilityWrapperErrorEnum,
     where_was: WhereWas,
 }
 
@@ -42,7 +41,7 @@ pub struct CheckAvailabilityWrapperError {
     ImplDisplayForSimpleErrorEnum,
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
 )]
-pub enum CheckAvailabilityErrorEnum {
+pub enum CheckAvailabilityWrapperErrorEnum {
     NetWrapper(Box<NetCheckAvailabilityWrapperError>),
     PostgresWrapper(Box<PostgresCheckAvailabilityOriginError>),
     MongoWrapper(Box<MongoCheckAvailabilityWrapperError>),
@@ -89,7 +88,7 @@ pub async fn check_availability(
         (Ok(_), Ok(_), Ok(_)) => Ok(()),
         (Ok(_), Ok(_), Err(m)) => Err(Box::new(
             CheckAvailabilityWrapperError::init_error_with_possible_trace(
-                CheckAvailabilityErrorEnum::MongoWrapper(m),
+                CheckAvailabilityWrapperErrorEnum::MongoWrapper(m),
                 WhereWas {
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
@@ -103,7 +102,7 @@ pub async fn check_availability(
         )),
         (Ok(_), Err(p), Ok(_)) => Err(Box::new(
             CheckAvailabilityWrapperError::init_error_with_possible_trace(
-                CheckAvailabilityErrorEnum::PostgresWrapper(p),
+                CheckAvailabilityWrapperErrorEnum::PostgresWrapper(p),
                 WhereWas {
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
@@ -117,7 +116,7 @@ pub async fn check_availability(
         )),
         (Ok(_), Err(p), Err(m)) => Err(Box::new(
             CheckAvailabilityWrapperError::init_error_with_possible_trace(
-                CheckAvailabilityErrorEnum::MongoAndPostgresWrapper {
+                CheckAvailabilityWrapperErrorEnum::MongoAndPostgresWrapper {
                     mongo_source: m,
                     postgres_source: p,
                 },
@@ -134,7 +133,7 @@ pub async fn check_availability(
         )),
         (Err(n), Ok(_), Ok(_)) => Err(Box::new(
             CheckAvailabilityWrapperError::init_error_with_possible_trace(
-                CheckAvailabilityErrorEnum::NetWrapper(n),
+                CheckAvailabilityWrapperErrorEnum::NetWrapper(n),
                 WhereWas {
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
@@ -148,7 +147,7 @@ pub async fn check_availability(
         )),
         (Err(n), Ok(_), Err(m)) => Err(Box::new(
             CheckAvailabilityWrapperError::init_error_with_possible_trace(
-                CheckAvailabilityErrorEnum::NetAndMongoWrapper {
+                CheckAvailabilityWrapperErrorEnum::NetAndMongoWrapper {
                     net_source: n,
                     mongo_source: m,
                 },
@@ -165,7 +164,7 @@ pub async fn check_availability(
         )),
         (Err(n), Err(p), Ok(_)) => Err(Box::new(
             CheckAvailabilityWrapperError::init_error_with_possible_trace(
-                CheckAvailabilityErrorEnum::NetAndPostgresWrapper {
+                CheckAvailabilityWrapperErrorEnum::NetAndPostgresWrapper {
                     net_source: n,
                     postgres_source: p,
                 },
@@ -182,7 +181,7 @@ pub async fn check_availability(
         )),
         (Err(n), Err(p), Err(m)) => Err(Box::new(
             CheckAvailabilityWrapperError::init_error_with_possible_trace(
-                CheckAvailabilityErrorEnum::NetAndMongoAndPostgresWrapper {
+                CheckAvailabilityWrapperErrorEnum::NetAndMongoAndPostgresWrapper {
                     net_source: n,
                     postgres_source: p,
                     mongo_source: m,

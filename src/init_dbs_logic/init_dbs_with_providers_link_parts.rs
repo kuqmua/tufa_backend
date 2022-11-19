@@ -14,7 +14,6 @@ use tufa_common::common::where_was::WhereWas;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
-use tufa_common::traits::where_was_trait::WhereWasTrait;
 
 #[derive(
     Debug,
@@ -24,12 +23,12 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
 )]
 pub struct InitDbsProvidersLinkPartsWrapperError {
-    source: InitDbsProvidersLinkPartsErrorEnum,
+    source: InitDbsProvidersLinkPartsWrapperErrorEnum,
     where_was: WhereWas,
 }
 
 #[derive(Debug, ImplGetWhereWasOriginOrWrapperFromTufaCommon, ImplGetSourceFromTufaCommon)]
-pub enum InitDbsProvidersLinkPartsErrorEnum {
+pub enum InitDbsProvidersLinkPartsWrapperErrorEnum {
     GetLocalProvidersLinkPartsWrapper(GetLocalProvidersLinkPartsWrapperError),
     PostgresInitWrapper(PostgresInitWrapperError),
     MongoInitWrapper(InitMongoWrapperError),
@@ -52,7 +51,7 @@ pub async fn init_dbs_with_providers_link_parts(
     match get_local_providers_link_parts(false).await {
         Err(e) => Err(Box::new(
             InitDbsProvidersLinkPartsWrapperError::init_error_with_possible_trace(
-                InitDbsProvidersLinkPartsErrorEnum::GetLocalProvidersLinkPartsWrapper(*e),
+                InitDbsProvidersLinkPartsWrapperErrorEnum::GetLocalProvidersLinkPartsWrapper(*e),
                 WhereWas {
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
@@ -91,7 +90,7 @@ pub async fn init_dbs_with_providers_link_parts(
                     if let Err(e) = pg_result {
                         return Err(Box::new(
                             InitDbsProvidersLinkPartsWrapperError::init_error_with_possible_trace(
-                                InitDbsProvidersLinkPartsErrorEnum::PostgresInitWrapper(*e),
+                                InitDbsProvidersLinkPartsWrapperErrorEnum::PostgresInitWrapper(*e),
                                 WhereWas {
                                     time: std::time::SystemTime::now()
                                         .duration_since(std::time::UNIX_EPOCH)
@@ -109,7 +108,7 @@ pub async fn init_dbs_with_providers_link_parts(
                     if let Err(e) = mongo_result {
                         return Err(Box::new(
                             InitDbsProvidersLinkPartsWrapperError::init_error_with_possible_trace(
-                                InitDbsProvidersLinkPartsErrorEnum::MongoInitWrapper(*e),
+                                InitDbsProvidersLinkPartsWrapperErrorEnum::MongoInitWrapper(*e),
                                 WhereWas {
                                     time: std::time::SystemTime::now()
                                         .duration_since(std::time::UNIX_EPOCH)
@@ -128,7 +127,7 @@ pub async fn init_dbs_with_providers_link_parts(
                     (Ok(_), Err(e)) => {
                         return Err(Box::new(
                             InitDbsProvidersLinkPartsWrapperError::init_error_with_possible_trace(
-                                InitDbsProvidersLinkPartsErrorEnum::PostgresInitWrapper(*e),
+                                InitDbsProvidersLinkPartsWrapperErrorEnum::PostgresInitWrapper(*e),
                                 WhereWas {
                                     time: std::time::SystemTime::now()
                                         .duration_since(std::time::UNIX_EPOCH)
@@ -144,7 +143,7 @@ pub async fn init_dbs_with_providers_link_parts(
                     (Err(e), Ok(_)) => {
                         return Err(Box::new(
                             InitDbsProvidersLinkPartsWrapperError::init_error_with_possible_trace(
-                                InitDbsProvidersLinkPartsErrorEnum::MongoInitWrapper(*e),
+                                InitDbsProvidersLinkPartsWrapperErrorEnum::MongoInitWrapper(*e),
                                 WhereWas {
                                     time: std::time::SystemTime::now()
                                         .duration_since(std::time::UNIX_EPOCH)
@@ -161,7 +160,7 @@ pub async fn init_dbs_with_providers_link_parts(
                         todo!();
                         // return Err(Box::new(
                         //     InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
-                        //         InitDbsProvidersLinkPartsErrorEnum::MongoAndPostgresInitOrigin {
+                        //         InitDbsProvidersLinkPartsWrapperErrorEnum::MongoAndPostgresInitOrigin {
                         //             mongo: *mongo_error,
                         //             postgres: *postgres_error,
                         //         },

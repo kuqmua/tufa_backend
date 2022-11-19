@@ -26,12 +26,12 @@ pub enum InitTablesEnum {
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
 )]
 pub struct InitTablesWrapperError {
-    source: InitTablesErrorEnum,
+    source: InitTablesWrapperErrorEnum,
     where_was: WhereWas,
 }
 
 #[derive(Debug, ImplGetWhereWasOriginOrWrapperFromTufaCommon, ImplGetSourceFromTufaCommon)]
-pub enum InitTablesErrorEnum {
+pub enum InitTablesWrapperErrorEnum {
     ProvidersLinkPartsWrapper(InitDbsProvidersLinkPartsWrapperError),
 }
 
@@ -48,7 +48,7 @@ impl InitTablesEnum {
                 if let Err(e) = init_dbs_with_providers_link_parts(false).await {
                     return Err(Box::new(
                         InitTablesWrapperError::init_error_with_possible_trace(
-                            InitTablesErrorEnum::ProvidersLinkPartsWrapper(*e),
+                            InitTablesWrapperErrorEnum::ProvidersLinkPartsWrapper(*e),
                             WhereWas {
                                 time: std::time::SystemTime::now()
                                     .duration_since(std::time::UNIX_EPOCH)
