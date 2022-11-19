@@ -4,7 +4,7 @@ use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
 use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJsonSchema;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
-use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
+use impl_display_for_error::ImplDisplayForError;
 use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 
@@ -20,7 +20,7 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     Debug,
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
     ImplGetSourceFromTufaCommon,
-    ImplDisplayForSimpleErrorEnum,
+    ImplDisplayForError,
     InitErrorFromTufaCommon,
     ImplErrorWithTracingFromTufaCommon,
 )]
@@ -29,7 +29,7 @@ pub struct GetLinkPartsFromLocalJsonFileWrapperError {
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetSourceFromTufaCommon, ImplDisplayForSimpleErrorEnum)]
+#[derive(Debug, ImplGetSourceFromTufaCommon, ImplDisplayForError)]
 pub enum GetLinkPartsFromLocalJsonFileOriginErrorEnum {
     TokioFsFileOpenOrigin(std::io::Error),
     TokioIoAsyncReadExtReadToEndOrigin(std::io::Error),

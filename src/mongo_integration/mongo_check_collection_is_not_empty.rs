@@ -3,7 +3,7 @@ use crate::global_variables::runtime::config::CONFIG;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use futures::future::join_all;
-use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
+use impl_display_for_error::ImplDisplayForError;
 use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
@@ -29,7 +29,7 @@ pub struct MongoCheckCollectionsIsNotEmptyWrapperError {
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetSourceFromTufaCommon, ImplDisplayForSimpleErrorEnum)]
+#[derive(Debug, ImplGetSourceFromTufaCommon, ImplDisplayForError)]
 pub enum CollectionCountDocumentsOrIsNotEmpty {
     CountDocumentsOrigin(Error),
     IsNotEmptyOrigin(u64),

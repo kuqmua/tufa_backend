@@ -1,6 +1,6 @@
 use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
-use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
+use impl_display_for_error::ImplDisplayForError;
 use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
@@ -14,7 +14,7 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
 
 #[derive(
     Debug,
-    ImplDisplayForSimpleErrorEnum,
+    ImplDisplayForError,
     ImplGetSourceFromTufaCommon,
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
     InitErrorFromTufaCommon,
