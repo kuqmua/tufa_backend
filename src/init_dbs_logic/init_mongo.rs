@@ -11,7 +11,7 @@ use crate::mongo_integration::mongo_insert_many::MongoInsertManyOriginError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use futures::future::join_all;
-use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon;
+use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
@@ -22,6 +22,7 @@ use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::collections::HashMap;
 use tufa_common::common::where_was::WhereWas;
+use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::where_was_trait::WhereWasTrait;
@@ -31,15 +32,15 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     InitErrorFromTufaCommon,
     ImplGetSourceFromTufaCommon,
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
-    ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon,
+    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
 )]
 pub struct InitMongoWrapperError {
-    source: InitMongoErrorEnum,
+    source: InitMongoWrapperErrorEnum,
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetSourceFromTufaCommon)]
-pub enum InitMongoErrorEnum {
+#[derive(Debug, ImplGetSourceFromTufaCommon, ImplGetWhereWasOriginOrWrapperFromTufaCommon)]
+pub enum InitMongoWrapperErrorEnum {
     ClientOptionsParseWrapper(MongoClientOptionsParseOriginError),
     ClientWithOptionsWrapper(MongoClientWithOptionsOriginError),
     CollectionCountDocumentsOrIsNotEmptyWrapper(MongoCheckCollectionsIsNotEmptyWrapperError),
@@ -59,7 +60,7 @@ pub async fn init_mongo(
     todo!()
     // match mongo_client_options_parse(false).await {
     //     Err(e) => Err(Box::new(InitMongoWrapperError::init_error_with_possible_trace(
-    //         InitMongoErrorEnum::ClientOptionsParse(*e),
+    //         InitMongoWrapperErrorEnum::ClientOptionsParse(*e),
     //         WhereWas {
     //             time: std::time::SystemTime::now()
     // .duration_since(std::time::UNIX_EPOCH)
@@ -74,7 +75,7 @@ pub async fn init_mongo(
     //     ))),
     //     Ok(client_options) => match mongo_client_with_options(client_options, false) {
     //         Err(e) => Err(Box::new(InitMongoWrapperError::init_error_with_possible_trace(
-    //             InitMongoErrorEnum::ClientWithOptions(*e),
+    //             InitMongoWrapperErrorEnum::ClientWithOptions(*e),
     //             WhereWas {
     //                 time: std::time::SystemTime::now()
     // .duration_since(std::time::UNIX_EPOCH)
@@ -97,7 +98,7 @@ pub async fn init_mongo(
     //             .await
     //             {
     //                 return Err(Box::new(InitMongoWrapperError::init_error_with_possible_trace(
-    //                     InitMongoErrorEnum::CollectionCountDocumentsOrIsNotEmpty(
+    //                     InitMongoWrapperErrorEnum::CollectionCountDocumentsOrIsNotEmpty(
     //                         *error_vec_count_documents,
     //                     ),
     //                     WhereWas {
@@ -117,7 +118,7 @@ pub async fn init_mongo(
     //                 mongo_insert_many(providers_json_local_data_hashmap, db, false).await
     //             {
     //                 return Err(Box::new(InitMongoWrapperError::init_error_with_possible_trace(
-    //                     InitMongoErrorEnum::InsertManyError(error_vec_insert_many),
+    //                     InitMongoWrapperErrorEnum::InsertManyError(error_vec_insert_many),
     //                     WhereWas {
     //                         time: std::time::SystemTime::now()
     // .duration_since(std::time::UNIX_EPOCH)
@@ -145,7 +146,7 @@ pub async fn init_mongo(
     //             //     .collect::<HashMap<ProviderKind, Error>>();
     //             // if !error_vec_insert_many.is_empty() {
     //             //     return Err(Box::new(InitMongoWrapperError::init_error_with_possible_trace(
-    //             //         InitMongoErrorEnum::InsertManyError(error_vec_insert_many),
+    //             //         InitMongoWrapperErrorEnum::InsertManyError(error_vec_insert_many),
     //             //         WhereWas {
     //             //             time: std::time::SystemTime::now()
     // .duration_since(std::time::UNIX_EPOCH)

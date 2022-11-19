@@ -3,7 +3,7 @@ use crate::global_variables::runtime::config::CONFIG;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use futures::future::join_all;
-use impl_error_with_tracing_for_struct_with_get_source_without_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon;
+use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
@@ -18,17 +18,17 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
 #[derive(
     Debug,
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
-    ImplErrorWithTracingForStructWithGetSourceWithoutGetWhereWasFromTufaCommon,
+    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
     InitErrorFromTufaCommon,
     ImplGetSourceFromTufaCommon,
 )]
 pub struct PostgresCheckProvidersLinkPartsTablesEmptyWrapperError {
-    source: PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum,
+    source: PostgresCheckProvidersLinkPartsTablesEmptyOriginErrorEnum,
     where_was: WhereWas,
 }
 
 #[derive(Debug, ImplGetSourceFromTufaCommon)]
-pub enum PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum {
+pub enum PostgresCheckProvidersLinkPartsTablesEmptyOriginErrorEnum {
     SelectCountOrigin(HashMap<ProviderKind, sqlx::Error>),
     NotEmptyOrigin(HashMap<ProviderKind, i64>),
 }
@@ -73,7 +73,7 @@ pub async fn postgres_check_providers_link_parts_tables_are_empty(
     if !count_provider_links_tables_error_hashmap.is_empty() {
         return Err(Box::new(
             PostgresCheckProvidersLinkPartsTablesEmptyWrapperError::init_error_with_possible_trace(
-                PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::SelectCountOrigin(
+                PostgresCheckProvidersLinkPartsTablesEmptyOriginErrorEnum::SelectCountOrigin(
                     count_provider_links_tables_error_hashmap,
                 ),
                 WhereWas {
@@ -91,7 +91,7 @@ pub async fn postgres_check_providers_link_parts_tables_are_empty(
     if !provider_links_tables_not_empty_error_hashmap.is_empty() {
         return Err(Box::new(
             PostgresCheckProvidersLinkPartsTablesEmptyWrapperError::init_error_with_possible_trace(
-                PostgresCheckProvidersLinkPartsTablesEmptyErrorEnum::NotEmptyOrigin(
+                PostgresCheckProvidersLinkPartsTablesEmptyOriginErrorEnum::NotEmptyOrigin(
                     provider_links_tables_not_empty_error_hashmap,
                 ),
                 WhereWas {
