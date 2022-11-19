@@ -6,7 +6,6 @@ use crate::net_check::net_check_availability::NetCheckAvailabilityWrapperError;
 use crate::postgres_integration::postgres_check_availability::postgres_check_availability;
 use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityOriginError;
 use futures::join;
-use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
 use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
@@ -24,7 +23,7 @@ use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTr
 #[derive(
     Debug,
     ImplGetSourceFromTufaCommon,
-    ImplDisplayForErrorStruct,
+    ImplDisplayForSimpleErrorEnum,
     InitErrorFromTufaCommon,
     ImplErrorWithTracingFromTufaCommon,
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
