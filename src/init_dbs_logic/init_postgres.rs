@@ -16,7 +16,7 @@ use std::collections::HashMap;
 use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::common::where_was::WhereWas;
-use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
+use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
 use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError;
 use tufa_common::traits::get_source::GetSource;
 use init_error::InitErrorFromTufaCommon;
@@ -29,7 +29,7 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     InitErrorFromTufaCommon,
     ImplGetSourceFromTufaCommon,
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
-    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
+    ImplErrorWithTracingFromTufaCommon,
 )]
 pub struct PostgresInitWrapperError {
     source: PostgresInitWrapperErrorEnum,

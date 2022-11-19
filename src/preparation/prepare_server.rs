@@ -4,7 +4,7 @@ use crate::init_dbs_logic::init_dbs::init_dbs;
 use crate::init_dbs_logic::init_dbs::InitDbsWrapperError;
 use crate::preparation::check_availability::check_availability;
 use crate::preparation::check_availability::CheckAvailabilityWrapperError;
-use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
+use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
@@ -16,7 +16,7 @@ use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTr
 #[derive(
     Debug,
     InitErrorFromTufaCommon,
-    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
+    ImplErrorWithTracingFromTufaCommon,
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
 )]
 pub struct PreparationWrapperError {

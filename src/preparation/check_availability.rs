@@ -8,7 +8,7 @@ use crate::postgres_integration::postgres_check_availability::PostgresCheckAvail
 use futures::join;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
-use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
+use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
@@ -26,7 +26,7 @@ use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTr
     ImplGetSourceFromTufaCommon,
     ImplDisplayForErrorStruct,
     InitErrorFromTufaCommon,
-    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
+    ImplErrorWithTracingFromTufaCommon,
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
 )]
 pub struct CheckAvailabilityWrapperError {

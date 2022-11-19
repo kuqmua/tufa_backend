@@ -6,7 +6,7 @@ use crate::providers::providers_info::providers_init_json_schema::ProvidersInitJ
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use impl_display_for_error_struct::ImplDisplayForErrorStruct;
 use impl_display_for_simple_error_enum::ImplDisplayForSimpleErrorEnum;
-use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
+use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 
 use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
@@ -23,7 +23,7 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     ImplGetSourceFromTufaCommon,
     ImplDisplayForErrorStruct,
     InitErrorFromTufaCommon,
-    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
+    ImplErrorWithTracingFromTufaCommon,
 )]
 pub struct GetLinkPartsFromLocalJsonFileWrapperError {
     source: GetLinkPartsFromLocalJsonFileOriginErrorEnum,

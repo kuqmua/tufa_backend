@@ -3,7 +3,7 @@ use crate::global_variables::runtime::config::CONFIG;
 use crate::init_dbs_logic::init_tables_enum::InitTablesEnum;
 use crate::init_dbs_logic::init_tables_enum::InitTablesWrapperError;
 use futures::future::join_all;
-use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
+use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
@@ -19,7 +19,7 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     InitErrorFromTufaCommon,
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
     ImplGetSourceFromTufaCommon,
-    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
+    ImplErrorWithTracingFromTufaCommon,
 )]
 pub struct InitDbsWrapperError {
     source: Vec<InitTablesWrapperError>,

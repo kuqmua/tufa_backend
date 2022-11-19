@@ -6,7 +6,7 @@ use crate::init_dbs_logic::init_postgres::init_postgres;
 use crate::init_dbs_logic::init_postgres::PostgresInitWrapperError;
 use crate::providers::providers_info::get_local_providers_link_parts::get_local_providers_link_parts;
 use crate::providers::providers_info::get_local_providers_link_parts::GetLocalProvidersLinkPartsWrapperError;
-use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
+use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
@@ -19,7 +19,7 @@ use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTr
     Debug,
     InitErrorFromTufaCommon,
     ImplGetSourceFromTufaCommon,
-    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
+    ImplErrorWithTracingFromTufaCommon,
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
 )]
 pub struct InitDbsProvidersLinkPartsWrapperError {

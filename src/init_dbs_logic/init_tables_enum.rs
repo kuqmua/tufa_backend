@@ -2,7 +2,7 @@ use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::init_dbs_with_providers_link_parts;
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsWrapperError;
-use impl_error_with_tracing_for_struct_with_get_source_with_get_where_was::ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon;
+use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
@@ -21,7 +21,7 @@ pub enum InitTablesEnum {
 #[derive(
     Debug,
     InitErrorFromTufaCommon,
-    ImplErrorWithTracingForStructWithGetSourceWithGetWhereWasFromTufaCommon,
+    ImplErrorWithTracingFromTufaCommon,
     ImplGetSourceFromTufaCommon,
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
 )]
