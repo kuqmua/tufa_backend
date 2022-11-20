@@ -7,14 +7,13 @@ use crate::prints::print_colorful_message::print_colorful_message;
 use crate::prints::print_type_enum::PrintType;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use futures::future::join_all;
-use git_info::GitInfoFromTufaCommon;
 use std::time::Instant;
 use tufa_common::common::where_was::WhereWas;
 use tufa_common::server::http_request::http_request_error::HttpRequestOriginError;
 use tufa_common::server::http_request::http_request_method::HttpRequestMethod;
 use tufa_common::server::http_request::wrappers::text::async_http_request_text::async_http_request_text_wrapper;
 
-#[derive(Debug, GitInfoFromTufaCommon)]
+#[derive(Debug)]
 pub enum FetchAndParseProviderDataErrorEnum {
     AsyncFetchLinks {
         source: Vec<(String, Box<HttpRequestOriginError>)>, //link, error

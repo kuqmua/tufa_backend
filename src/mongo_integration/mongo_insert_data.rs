@@ -2,14 +2,13 @@ use crate::global_variables::runtime::config::CONFIG;
 use crate::global_variables::runtime::mongo_client_options::MONGO_CLIENT_OPTIONS;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use futures::future::join_all;
-use git_info::GitInfoFromTufaCommon;
 use std::collections::HashMap;
 use std::ops::Deref;
 use tufa_common::common::where_was::WhereWas;
 use tufa_common::server::mongo::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
 use tufa_common::server::mongo::mongo_insert_docs_in_empty_collection::MongoInsertDocsInEmptyCollectionWrapperError;
 
-#[derive(Debug, GitInfoFromTufaCommon)]
+#[derive(Debug)]
 pub struct MongoInsertDataWrapperError {
     pub source: HashMap<ProviderKind, MongoInsertDocsInEmptyCollectionWrapperError>,
     where_was: WhereWas,

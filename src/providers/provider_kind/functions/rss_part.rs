@@ -1,13 +1,11 @@
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-use crate::global_variables::runtime::config::CONFIG;
 use crate::providers::provider_kind::functions::fetch_and_parse_provider_data::FetchAndParseProviderDataErrorEnum;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
-use git_info::GitInfoFromTufaCommon;
 use reqwest::StatusCode;
 use tufa_common::common::where_was::WhereWas;
 
-#[derive(Debug, GitInfoFromTufaCommon)]
+#[derive(Debug)]
 pub enum RssPartErrorEnum {
     CheckLinkStatusCodeError {
         source: reqwest::Error,
