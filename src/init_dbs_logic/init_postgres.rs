@@ -21,7 +21,6 @@ use crate::postgres_integration::postgres_check_providers_links_tables_length_ro
 use tufa_common::traits::get_source::GetSource;
 use init_error::InitErrorFromTufaCommon;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
-use tufa_common::traits::where_was_trait::WhereWasTrait;
 // use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length;
 
 #[derive(
