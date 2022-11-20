@@ -252,10 +252,6 @@ its maybe bad practice but must work
 * try SNAFU as error handling crate 
 https://crates.io/crates/snafu
 
-* how to write proc macro argument?
-for derive_impl_box_err_source_from_err
-EXISTS INSIDE AST!!!
-
 * LINKS_LIMIT_PROVIDERS not working now. fix it
 
 * parameter db initialization provider link parts source must be

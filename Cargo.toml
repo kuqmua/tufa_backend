@@ -75,7 +75,6 @@ valuable = {version = "0.1.0", features = ["default", "std", "alloc", "derive", 
 # tufa_common = {git = "https://github.com/kuqmua/tufa_common"}# git version
 tufa_common = {path = "../tufa_common"}# local dev test without commits version
 #prod
-# impl_box_err_source_from_err = {git = "https://github.com/kuqmua/impl_box_err_source_from_err"}
 # enum_extension = {git = "https://github.com/kuqmua/enum_extension"}
 # error_display = {git = "https://github.com/kuqmua/error_display"}
 # gen_enum = {git = "https://github.com/kuqmua/gen_enum"}
@@ -90,7 +89,6 @@ error_display = {path = "../proc_macros/error_display"}
 gen_enum = {path = "../proc_macros/gen_enum"}
 gen_enum_without_values = {path = "../proc_macros/gen_enum_without_values"}
 generate_getter_traits_for_struct_fields = {path = "../proc_macros/generate_getter_traits_for_struct_fields"}
-impl_box_err_source_from_err = {path = "../proc_macros/impl_box_err_source_from_err"}
 impl_display_for_error = {path = "../proc_macros/impl_display_for_error"}
 impl_error_with_tracing = {path = "../proc_macros/impl_error_with_tracing"}
 impl_from_for_upper_struct = {path = "../proc_macros/impl_from_for_upper_struct"}
