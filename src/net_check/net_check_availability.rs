@@ -1,6 +1,5 @@
 use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
-use git_info::GitInfoFromTufaCommon;
 use impl_display_for_error::ImplDisplayForError;
 use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
@@ -26,7 +25,12 @@ pub struct NetCheckAvailabilityWrapperError {
     where_was: WhereWas,
 }
 
-#[derive(Debug, GitInfoFromTufaCommon, ImplDisplayForError, ImplGetSourceFromTufaCommon)]
+#[derive(
+    Debug,
+    ImplDisplayForError,
+    ImplGetSourceFromTufaCommon,
+    ImplGetWhereWasOriginOrWrapperFromTufaCommon,
+)]
 pub enum NetCheckAvailabilityOriginErrorEnum {
     ReqwestGetOrigin(Error),
     ClientOrigin(StatusCode),

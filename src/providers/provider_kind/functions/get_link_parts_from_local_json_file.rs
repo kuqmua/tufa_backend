@@ -29,7 +29,12 @@ pub struct GetLinkPartsFromLocalJsonFileWrapperError {
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetSourceFromTufaCommon, ImplDisplayForError)]
+#[derive(
+    Debug,
+    ImplGetSourceFromTufaCommon,
+    ImplDisplayForError,
+    ImplGetWhereWasOriginOrWrapperFromTufaCommon,
+)]
 pub enum GetLinkPartsFromLocalJsonFileOriginErrorEnum {
     TokioFsFileOpenOrigin(std::io::Error),
     TokioIoAsyncReadExtReadToEndOrigin(std::io::Error),

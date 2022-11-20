@@ -81,7 +81,7 @@ pub async fn check_availability(
             MONGO_CLIENT_OPTIONS.deref().to_owned(), //std::time::Duration::from_millis(CONFIG.mongo_connection_timeout),
             &CONFIG.mongo_providers_logs_db_name,
             &CONFIG.source_place_type,
-            true,
+            false,
         ),
     ) {
         (Ok(_), Ok(_), Ok(_)) => Ok(()),

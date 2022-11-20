@@ -27,7 +27,7 @@ pub struct PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLen
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetSourceFromTufaCommon)]
+#[derive(Debug, ImplGetSourceFromTufaCommon, ImplGetWhereWasOriginOrWrapperFromTufaCommon)]
 pub enum PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthOriginErrorEnum {
     SelectCountOrigin(HashMap<ProviderKind, sqlx::Error>),
     ProviderLinksTablesRowsLengthNotEqualOrigin(

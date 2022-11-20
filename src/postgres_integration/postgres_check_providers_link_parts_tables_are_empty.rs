@@ -27,7 +27,7 @@ pub struct PostgresCheckProvidersLinkPartsTablesEmptyWrapperError {
     where_was: WhereWas,
 }
 
-#[derive(Debug, ImplGetSourceFromTufaCommon)]
+#[derive(Debug, ImplGetSourceFromTufaCommon, ImplGetWhereWasOriginOrWrapperFromTufaCommon)]
 pub enum PostgresCheckProvidersLinkPartsTablesEmptyOriginErrorEnum {
     SelectCountOrigin(HashMap<ProviderKind, sqlx::Error>),
     NotEmptyOrigin(HashMap<ProviderKind, i64>),
