@@ -28,7 +28,9 @@ pub fn check_providers_link_parts_on_empty(
                 time: std::time::SystemTime::now()
                     .duration_since(std::time::UNIX_EPOCH)
                     .expect("cannot convert time to unix_epoch"),
-                location: *core::panic::Location::caller(),
+                file: String::from(file!()),
+                line: line!(),
+                column: column!(),
             },
         }));
     }
@@ -52,7 +54,9 @@ pub fn check_providers_link_parts_on_empty(
                 time: std::time::SystemTime::now()
                     .duration_since(std::time::UNIX_EPOCH)
                     .expect("cannot convert time to unix_epoch"),
-                location: *core::panic::Location::caller(),
+                file: String::from(file!()),
+                line: line!(),
+                column: column!(),
             },
         }));
     }

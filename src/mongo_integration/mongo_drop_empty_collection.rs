@@ -47,7 +47,9 @@ pub async fn mongo_drop_empty_collection(
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
                         .expect("cannot convert time to unix_epoch"),
-                    location: *core::panic::Location::caller(),
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
                 },
             },
         )),
@@ -59,7 +61,9 @@ pub async fn mongo_drop_empty_collection(
                         time: std::time::SystemTime::now()
                             .duration_since(std::time::UNIX_EPOCH)
                             .expect("cannot convert time to unix_epoch"),
-                        location: *core::panic::Location::caller(),
+                        file: String::from(file!()),
+                        line: line!(),
+                        column: column!(),
                     },
                 },
             )),
@@ -74,7 +78,9 @@ pub async fn mongo_drop_empty_collection(
                                 time: std::time::SystemTime::now()
                                     .duration_since(std::time::UNIX_EPOCH)
                                     .expect("cannot convert time to unix_epoch"),
-                                location: *core::panic::Location::caller(),
+                                file: String::from(file!()),
+                                line: line!(),
+                                column: column!(),
                             },
                         },
                     )),
@@ -86,7 +92,9 @@ pub async fn mongo_drop_empty_collection(
                                     time: std::time::SystemTime::now()
                                         .duration_since(std::time::UNIX_EPOCH)
                                         .expect("cannot convert time to unix_epoch"),
-                                    location: *core::panic::Location::caller(),
+                                    file: String::from(file!()),
+                                    line: line!(),
+                                    column: column!(),
                                 },
                             }))
                         } else {
@@ -98,7 +106,9 @@ pub async fn mongo_drop_empty_collection(
                                             time: std::time::SystemTime::now()
                                                 .duration_since(std::time::UNIX_EPOCH)
                                                 .expect("cannot convert time to unix_epoch"),
-                                            location: *core::panic::Location::caller(),
+                                            file: String::from(file!()),
+                                            line: line!(),
+                                            column: column!(),
                                         },
                                     },
                                 ));

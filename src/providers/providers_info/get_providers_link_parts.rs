@@ -42,7 +42,9 @@ pub async fn get_providers_link_parts(
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
                         .expect("cannot convert time to unix_epoch"),
-                    location: *core::panic::Location::caller(),
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
                 },
             })),
             Ok(success_hashmap) => Ok(success_hashmap),
@@ -54,7 +56,9 @@ pub async fn get_providers_link_parts(
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
                         .expect("cannot convert time to unix_epoch"),
-                    location: *core::panic::Location::caller(),
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
                 },
             })),
             Ok(success_hashmap) => Ok(success_hashmap),

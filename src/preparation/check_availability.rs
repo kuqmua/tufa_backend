@@ -81,7 +81,7 @@ pub async fn check_availability(
             MONGO_CLIENT_OPTIONS.deref().to_owned(), //std::time::Duration::from_millis(CONFIG.mongo_connection_timeout),
             &CONFIG.mongo_providers_logs_db_name,
             &CONFIG.source_place_type,
-            false,
+            true,
         ),
     ) {
         (Ok(_), Ok(_), Ok(_)) => Ok(()),
@@ -92,7 +92,9 @@ pub async fn check_availability(
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
                         .expect("cannot convert time to unix_epoch"),
-                    location: *core::panic::Location::caller(),
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
                 },
                 &CONFIG.source_place_type,
                 &GIT_INFO,
@@ -106,7 +108,9 @@ pub async fn check_availability(
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
                         .expect("cannot convert time to unix_epoch"),
-                    location: *core::panic::Location::caller(),
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
                 },
                 &CONFIG.source_place_type,
                 &GIT_INFO,
@@ -123,7 +127,9 @@ pub async fn check_availability(
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
                         .expect("cannot convert time to unix_epoch"),
-                    location: *core::panic::Location::caller(),
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
                 },
                 &CONFIG.source_place_type,
                 &GIT_INFO,
@@ -137,7 +143,9 @@ pub async fn check_availability(
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
                         .expect("cannot convert time to unix_epoch"),
-                    location: *core::panic::Location::caller(),
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
                 },
                 &CONFIG.source_place_type,
                 &GIT_INFO,
@@ -154,7 +162,9 @@ pub async fn check_availability(
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
                         .expect("cannot convert time to unix_epoch"),
-                    location: *core::panic::Location::caller(),
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
                 },
                 &CONFIG.source_place_type,
                 &GIT_INFO,
@@ -171,7 +181,9 @@ pub async fn check_availability(
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
                         .expect("cannot convert time to unix_epoch"),
-                    location: *core::panic::Location::caller(),
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
                 },
                 &CONFIG.source_place_type,
                 &GIT_INFO,
@@ -189,7 +201,9 @@ pub async fn check_availability(
                     time: std::time::SystemTime::now()
                         .duration_since(std::time::UNIX_EPOCH)
                         .expect("cannot convert time to unix_epoch"),
-                    location: *core::panic::Location::caller(),
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
                 },
                 &CONFIG.source_place_type,
                 &GIT_INFO,

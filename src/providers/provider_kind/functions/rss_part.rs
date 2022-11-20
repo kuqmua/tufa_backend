@@ -40,7 +40,9 @@ pub async fn rss_part(
                 time: std::time::SystemTime::now()
                     .duration_since(std::time::UNIX_EPOCH)
                     .expect("cannot convert time to unix_epoch"),
-                location: *core::panic::Location::caller(),
+                file: String::from(file!()),
+                line: line!(),
+                column: column!(),
             },
         })),
         Ok(res) => {
@@ -52,7 +54,9 @@ pub async fn rss_part(
                         time: std::time::SystemTime::now()
                             .duration_since(std::time::UNIX_EPOCH)
                             .expect("cannot convert time to unix_epoch"),
-                        location: *core::panic::Location::caller(),
+                        file: String::from(file!()),
+                        line: line!(),
+                        column: column!(),
                     },
                 }));
             }
@@ -63,7 +67,9 @@ pub async fn rss_part(
                         time: std::time::SystemTime::now()
                             .duration_since(std::time::UNIX_EPOCH)
                             .expect("cannot convert time to unix_epoch"),
-                        location: *core::panic::Location::caller(),
+                        file: String::from(file!()),
+                        line: line!(),
+                        column: column!(),
                     },
                 })),
                 Ok(vec) => Ok(vec),

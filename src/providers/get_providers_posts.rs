@@ -76,19 +76,19 @@ pub enum GetProviderPostsErrorEnum {
 )]
 pub async fn get_providers_posts() -> Result<(), Box<GetProviderPostsErrorEnum>> {
     match get_providers_link_parts(&CONFIG.providers_link_parts_source).await {
-        Err(e) => {
-            return Err(Box::new(
-                GetProviderPostsErrorEnum::GetLocalProvidersLinkParts {
-                    source: *e,
-                    where_was: WhereWas {
-                        time: std::time::SystemTime::now()
-                            .duration_since(std::time::UNIX_EPOCH)
-                            .expect("cannot convert time to unix_epoch"),
-                        location: *core::panic::Location::caller(),
-                    },
+        Err(e) => Err(Box::new(
+            GetProviderPostsErrorEnum::GetLocalProvidersLinkParts {
+                source: *e,
+                where_was: WhereWas {
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
                 },
-            ));
-        }
+            },
+        )),
         Ok(providers_link_parts) => {
             match check_providers_link_parts_on_empty(providers_link_parts) {
                 Err(e) => {
@@ -99,7 +99,9 @@ pub async fn get_providers_posts() -> Result<(), Box<GetProviderPostsErrorEnum>>
                                 time: std::time::SystemTime::now()
                                     .duration_since(std::time::UNIX_EPOCH)
                                     .expect("cannot convert time to unix_epoch"),
-                                location: *core::panic::Location::caller(),
+                                file: String::from(file!()),
+                                line: line!(),
+                                column: column!(),
                             },
                         },
                     ));
@@ -125,7 +127,9 @@ pub async fn get_providers_posts() -> Result<(), Box<GetProviderPostsErrorEnum>>
                                 time: std::time::SystemTime::now()
                                     .duration_since(std::time::UNIX_EPOCH)
                                     .expect("cannot convert time to unix_epoch"),
-                                location: *core::panic::Location::caller(),
+                                file: String::from(file!()),
+                                line: line!(),
+                                column: column!(),
                             },
                         }));
                     }
