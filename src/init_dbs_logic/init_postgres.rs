@@ -21,6 +21,7 @@ use crate::postgres_integration::postgres_check_providers_links_tables_length_ro
 use tufa_common::traits::get_source::GetSource;
 use init_error::InitErrorFromTufaCommon;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
+use impl_get_git_info::ImplGetGitInfoFromTufaCommon;
 // use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length;
 
 #[derive(
@@ -29,11 +30,37 @@ use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditional
     ImplGetSourceFromTufaCommon,
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
     ImplErrorWithTracingFromTufaCommon,
+    // ImplGetGitInfoFromTufaCommon,
 )]
 pub struct PostgresInitWrapperError {
     source: PostgresInitWrapperErrorEnum,
     where_was: WhereWas,
 }
+
+// impl PostgresInitWrapperError {
+//     fn kekw(&self) -> String {
+//         // use tufa_common::traits::get_git_info::GetGitInfo;
+//         self.get_log_with_additional_where_wass()
+//     }
+// }
+// pub trait GetLogWithAdditionalWhereWass<T> {
+//     fn get_log_with_additional_where_wass(&self) -> String;
+// }
+
+// impl<T> GetLogWithAdditionalWhereWass<Self> for T
+// where
+//     Self: tufa_common::traits::get_git_info::GetGitInfo,
+// {
+//     fn get_log_with_additional_where_wass(&self) -> String {
+//         String::from("kekw")
+//     }
+// }
+
+// impl tufa_common::traits::get_git_info::GetGitInfo for PostgresInitWrapperError {
+//     fn get_git_info(&self) -> &'static tufa_common::common::git::git_info::GitInformation<'static> {
+//         &crate::global_variables::compile_time::git_info::GIT_INFO
+//     }
+// }
 
 #[derive(Debug, ImplGetWhereWasOriginOrWrapperFromTufaCommon, ImplGetSourceFromTufaCommon)]
 pub enum PostgresInitWrapperErrorEnum {
@@ -70,6 +97,30 @@ pub async fn init_postgres(
                     file: String::from(file!()),
                     line: line!(),
                     column: column!(),
+                    git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                        commit_id: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                        ),
+                        repo_link: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                        ),
+                        author: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                        ),
+                        author_email: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
+                        ),
+                        commit_unix_time: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO
+                                .commit_unix_time,
+                        ),
+                        timezone: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                        ),
+                        message: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                        ),
+                    },
                 },
                 &CONFIG.source_place_type,
                 &GIT_INFO,
@@ -94,6 +145,36 @@ pub async fn init_postgres(
                             file: String::from(file!()),
                             line: line!(),
                             column: column!(),
+                            git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                                commit_id: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .commit_id,
+                                ),
+                                repo_link: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .repo_link,
+                                ),
+                                author: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .author,
+                                ),
+                                author_email: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .author_email,
+                                ),
+                                commit_unix_time: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .commit_unix_time,
+                                ),
+                                timezone: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .timezone,
+                                ),
+                                message: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .message,
+                                ),
+                            },
                         },
                         &CONFIG.source_place_type,
                         &GIT_INFO,
@@ -118,6 +199,36 @@ pub async fn init_postgres(
                             file: String::from(file!()),
                             line: line!(),
                             column: column!(),
+                            git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                                commit_id: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .commit_id,
+                                ),
+                                repo_link: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .repo_link,
+                                ),
+                                author: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .author,
+                                ),
+                                author_email: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .author_email,
+                                ),
+                                commit_unix_time: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .commit_unix_time,
+                                ),
+                                timezone: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .timezone,
+                                ),
+                                message: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .message,
+                                ),
+                            },
                         },
                         &CONFIG.source_place_type,
                         &GIT_INFO,
@@ -142,6 +253,36 @@ pub async fn init_postgres(
                             file: String::from(file!()),
                             line: line!(),
                             column: column!(),
+                            git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                                commit_id: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .commit_id,
+                                ),
+                                repo_link: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .repo_link,
+                                ),
+                                author: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .author,
+                                ),
+                                author_email: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .author_email,
+                                ),
+                                commit_unix_time: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .commit_unix_time,
+                                ),
+                                timezone: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .timezone,
+                                ),
+                                message: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .message,
+                                ),
+                            },
                         },
                         &CONFIG.source_place_type,
                         &GIT_INFO,
@@ -187,6 +328,36 @@ pub async fn init_postgres(
                             file: String::from(file!()),
                             line: line!(),
                             column: column!(),
+                            git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                                commit_id: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .commit_id,
+                                ),
+                                repo_link: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .repo_link,
+                                ),
+                                author: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .author,
+                                ),
+                                author_email: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .author_email,
+                                ),
+                                commit_unix_time: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .commit_unix_time,
+                                ),
+                                timezone: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .timezone,
+                                ),
+                                message: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .message,
+                                ),
+                            },
                         },
                         &CONFIG.source_place_type,
                         &GIT_INFO,

@@ -3,6 +3,7 @@ use crate::global_variables::runtime::config::CONFIG;
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::init_dbs_with_providers_link_parts;
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsWrapperError;
 use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
+use impl_get_git_info::ImplGetGitInfoFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
@@ -23,6 +24,7 @@ pub enum InitTablesEnum {
     ImplErrorWithTracingFromTufaCommon,
     ImplGetSourceFromTufaCommon,
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
+    ImplGetGitInfoFromTufaCommon,
 )]
 pub struct InitTablesWrapperError {
     source: InitTablesWrapperErrorEnum,
@@ -55,6 +57,36 @@ impl InitTablesEnum {
                                 file: String::from(file!()),
                                 line: line!(),
                                 column: column!(),
+                                git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                                    commit_id: String::from(
+                                        crate::global_variables::compile_time::git_info::GIT_INFO
+                                            .commit_id,
+                                    ),
+                                    repo_link: String::from(
+                                        crate::global_variables::compile_time::git_info::GIT_INFO
+                                            .repo_link,
+                                    ),
+                                    author: String::from(
+                                        crate::global_variables::compile_time::git_info::GIT_INFO
+                                            .author,
+                                    ),
+                                    author_email: String::from(
+                                        crate::global_variables::compile_time::git_info::GIT_INFO
+                                            .author_email,
+                                    ),
+                                    commit_unix_time: String::from(
+                                        crate::global_variables::compile_time::git_info::GIT_INFO
+                                            .commit_unix_time,
+                                    ),
+                                    timezone: String::from(
+                                        crate::global_variables::compile_time::git_info::GIT_INFO
+                                            .timezone,
+                                    ),
+                                    message: String::from(
+                                        crate::global_variables::compile_time::git_info::GIT_INFO
+                                            .message,
+                                    ),
+                                },
                             },
                             &CONFIG.source_place_type,
                             &GIT_INFO,

@@ -7,6 +7,7 @@ use crate::init_dbs_logic::init_postgres::PostgresInitWrapperError;
 use crate::providers::providers_info::get_local_providers_link_parts::get_local_providers_link_parts;
 use crate::providers::providers_info::get_local_providers_link_parts::GetLocalProvidersLinkPartsWrapperError;
 use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
+use impl_get_git_info::ImplGetGitInfoFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
@@ -21,6 +22,7 @@ use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTr
     ImplGetSourceFromTufaCommon,
     ImplErrorWithTracingFromTufaCommon,
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
+    ImplGetGitInfoFromTufaCommon,
 )]
 pub struct InitDbsProvidersLinkPartsWrapperError {
     source: InitDbsProvidersLinkPartsWrapperErrorEnum,
@@ -59,6 +61,30 @@ pub async fn init_dbs_with_providers_link_parts(
                     file: String::from(file!()),
                     line: line!(),
                     column: column!(),
+                    git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                        commit_id: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                        ),
+                        repo_link: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                        ),
+                        author: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                        ),
+                        author_email: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
+                        ),
+                        commit_unix_time: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO
+                                .commit_unix_time,
+                        ),
+                        timezone: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                        ),
+                        message: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                        ),
+                    },
                 },
                 &CONFIG.source_place_type,
                 &GIT_INFO,
@@ -100,6 +126,30 @@ pub async fn init_dbs_with_providers_link_parts(
                                     file: String::from(file!()),
                                     line: line!(),
                                     column: column!(),
+                                    git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                        commit_id: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                        ),
+                        repo_link: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                        ),
+                        author: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                        ),
+                        author_email: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
+                        ),
+                        commit_unix_time: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO
+                                .commit_unix_time,
+                        ),
+                        timezone: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                        ),
+                        message: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                        ),
+                    },
                                 },
                                 &CONFIG.source_place_type,
                                 &GIT_INFO,
@@ -120,6 +170,30 @@ pub async fn init_dbs_with_providers_link_parts(
                                     file: String::from(file!()),
                                     line: line!(),
                                     column: column!(),
+                                    git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                        commit_id: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                        ),
+                        repo_link: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                        ),
+                        author: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                        ),
+                        author_email: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
+                        ),
+                        commit_unix_time: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO
+                                .commit_unix_time,
+                        ),
+                        timezone: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                        ),
+                        message: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                        ),
+                    },
                                 },
                                 &CONFIG.source_place_type,
                                 &GIT_INFO,
@@ -128,10 +202,11 @@ pub async fn init_dbs_with_providers_link_parts(
                         ));
                     }
                 }
-                (Some(mongo_result), Some(pg_result)) => match (mongo_result, pg_result) {
-                    (Ok(_), Ok(_)) => (),
-                    (Ok(_), Err(e)) => {
-                        return Err(Box::new(
+                (Some(mongo_result), Some(pg_result)) => {
+                    match (mongo_result, pg_result) {
+                        (Ok(_), Ok(_)) => (),
+                        (Ok(_), Err(e)) => {
+                            return Err(Box::new(
                             InitDbsProvidersLinkPartsWrapperError::init_error_with_possible_trace(
                                 InitDbsProvidersLinkPartsWrapperErrorEnum::PostgresInitWrapper(*e),
                                 WhereWas {
@@ -141,15 +216,39 @@ pub async fn init_dbs_with_providers_link_parts(
                                     file: String::from(file!()),
                                     line: line!(),
                                     column: column!(),
+                                    git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                        commit_id: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                        ),
+                        repo_link: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                        ),
+                        author: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                        ),
+                        author_email: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
+                        ),
+                        commit_unix_time: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO
+                                .commit_unix_time,
+                        ),
+                        timezone: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                        ),
+                        message: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                        ),
+                    },
                                 },
                                 &CONFIG.source_place_type,
                                 &GIT_INFO,
                                 should_trace,
                             ),
                         ));
-                    }
-                    (Err(e), Ok(_)) => {
-                        return Err(Box::new(
+                        }
+                        (Err(e), Ok(_)) => {
+                            return Err(Box::new(
                             InitDbsProvidersLinkPartsWrapperError::init_error_with_possible_trace(
                                 InitDbsProvidersLinkPartsWrapperErrorEnum::MongoInitWrapper(*e),
                                 WhereWas {
@@ -159,34 +258,59 @@ pub async fn init_dbs_with_providers_link_parts(
                                     file: String::from(file!()),
                                     line: line!(),
                                     column: column!(),
+                                    git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                        commit_id: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                        ),
+                        repo_link: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                        ),
+                        author: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                        ),
+                        author_email: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
+                        ),
+                        commit_unix_time: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO
+                                .commit_unix_time,
+                        ),
+                        timezone: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                        ),
+                        message: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                        ),
+                    },
                                 },
                                 &CONFIG.source_place_type,
                                 &GIT_INFO,
                                 should_trace,
                             ),
                         ));
+                        }
+                        (Err(mongo_error), Err(postgres_error)) => {
+                            todo!();
+                            // return Err(Box::new(
+                            //     InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
+                            //         InitDbsProvidersLinkPartsWrapperErrorEnum::MongoAndPostgresInitOrigin {
+                            //             mongo: *mongo_error,
+                            //             postgres: *postgres_error,
+                            //         },
+                            //         WhereWas {
+                            //             time: std::time::SystemTime::now()
+                            //                 .duration_since(std::time::UNIX_EPOCH)
+                            //                 .expect("cannot convert time to unix_epoch"),
+                            //             location: *core::panic::Location::caller(),
+                            //         },
+                            //         &CONFIG.source_place_type,
+                            //         &GIT_INFO,
+                            //         should_trace,
+                            //     ),
+                            // ));
+                        }
                     }
-                    (Err(mongo_error), Err(postgres_error)) => {
-                        todo!();
-                        // return Err(Box::new(
-                        //     InitDbsProvidersLinkPartsError::init_error_with_possible_trace(
-                        //         InitDbsProvidersLinkPartsWrapperErrorEnum::MongoAndPostgresInitOrigin {
-                        //             mongo: *mongo_error,
-                        //             postgres: *postgres_error,
-                        //         },
-                        //         WhereWas {
-                        //             time: std::time::SystemTime::now()
-                        //                 .duration_since(std::time::UNIX_EPOCH)
-                        //                 .expect("cannot convert time to unix_epoch"),
-                        //             location: *core::panic::Location::caller(),
-                        //         },
-                        //         &CONFIG.source_place_type,
-                        //         &GIT_INFO,
-                        //         should_trace,
-                        //     ),
-                        // ));
-                    }
-                },
+                }
             }
             Ok(())
         }

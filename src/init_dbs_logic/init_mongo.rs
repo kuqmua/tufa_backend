@@ -12,6 +12,7 @@ use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use futures::future::join_all;
 use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
+use impl_get_git_info::ImplGetGitInfoFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
@@ -33,6 +34,7 @@ use tufa_common::traits::where_was_trait::WhereWasTrait;
     ImplGetSourceFromTufaCommon,
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
     ImplErrorWithTracingFromTufaCommon,
+    ImplGetGitInfoFromTufaCommon,
 )]
 pub struct InitMongoWrapperError {
     source: InitMongoWrapperErrorEnum,

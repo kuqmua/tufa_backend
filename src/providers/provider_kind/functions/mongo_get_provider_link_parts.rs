@@ -52,6 +52,31 @@ impl ProviderKind {
                         file: String::from(file!()),
                         line: line!(),
                         column: column!(),
+                        git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                            commit_id: String::from(
+                                crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                            ),
+                            repo_link: String::from(
+                                crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                            ),
+                            author: String::from(
+                                crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                            ),
+                            author_email: String::from(
+                                crate::global_variables::compile_time::git_info::GIT_INFO
+                                    .author_email,
+                            ),
+                            commit_unix_time: String::from(
+                                crate::global_variables::compile_time::git_info::GIT_INFO
+                                    .commit_unix_time,
+                            ),
+                            timezone: String::from(
+                                crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                            ),
+                            message: String::from(
+                                crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                            ),
+                        },
                     },
                 }),
             }),
@@ -66,6 +91,36 @@ impl ProviderKind {
                             file: String::from(file!()),
                             line: line!(),
                             column: column!(),
+                            git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                                commit_id: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .commit_id,
+                                ),
+                                repo_link: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .repo_link,
+                                ),
+                                author: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .author,
+                                ),
+                                author_email: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .author_email,
+                                ),
+                                commit_unix_time: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .commit_unix_time,
+                                ),
+                                timezone: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .timezone,
+                                ),
+                                message: String::from(
+                                    crate::global_variables::compile_time::git_info::GIT_INFO
+                                        .message,
+                                ),
+                            },
                         },
                     }),
                 }),
@@ -83,13 +138,36 @@ impl ProviderKind {
                             source: Box::new(
                                 MongoGetProviderLinkPartsErrorEnum::MongoGetDocumentsAsStringVector {
                                     source: e,
-                where_was: WhereWas {
+            where_was: WhereWas {
                 time: std::time::SystemTime::now()
-                                .duration_since(std::time::UNIX_EPOCH)
-                                .expect("cannot convert time to unix_epoch"),
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .expect("cannot convert time to unix_epoch"),
                 file: String::from(file!()),
                 line: line!(),
                 column: column!(),
+                git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                    commit_id: String::from(
+                        crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                    ),
+                    repo_link: String::from(
+                        crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                    ),
+                    author: String::from(
+                        crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                    ),
+                    author_email: String::from(
+                        crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
+                    ),
+                    commit_unix_time: String::from(
+                        crate::global_variables::compile_time::git_info::GIT_INFO.commit_unix_time,
+                    ),
+                    timezone: String::from(
+                        crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                    ),
+                    message: String::from(
+                        crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                    ),
+                },
             },
                         })}),
                         Ok(vec_of_strings) => Ok(vec_of_strings),

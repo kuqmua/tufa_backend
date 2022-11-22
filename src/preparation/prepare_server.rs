@@ -5,6 +5,7 @@ use crate::init_dbs_logic::init_dbs::InitDbsWrapperError;
 use crate::preparation::check_availability::check_availability;
 use crate::preparation::check_availability::CheckAvailabilityWrapperError;
 use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
+use impl_get_git_info::ImplGetGitInfoFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
@@ -18,6 +19,7 @@ use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTr
     InitErrorFromTufaCommon,
     ImplErrorWithTracingFromTufaCommon,
     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
+    ImplGetGitInfoFromTufaCommon,
 )]
 pub struct PreparationWrapperError {
     source: InitDbsProvidersLinkPartsWrapperErrorEnum,
@@ -48,6 +50,30 @@ pub async fn prepare_server(should_trace: bool) -> Result<(), Box<PreparationWra
                     file: String::from(file!()),
                     line: line!(),
                     column: column!(),
+                    git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                        commit_id: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                        ),
+                        repo_link: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                        ),
+                        author: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                        ),
+                        author_email: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
+                        ),
+                        commit_unix_time: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO
+                                .commit_unix_time,
+                        ),
+                        timezone: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                        ),
+                        message: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                        ),
+                    },
                 },
                 &CONFIG.source_place_type,
                 &GIT_INFO,
@@ -72,6 +98,30 @@ pub async fn prepare_server(should_trace: bool) -> Result<(), Box<PreparationWra
                     file: String::from(file!()),
                     line: line!(),
                     column: column!(),
+                    git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                        commit_id: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                        ),
+                        repo_link: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                        ),
+                        author: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                        ),
+                        author_email: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
+                        ),
+                        commit_unix_time: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO
+                                .commit_unix_time,
+                        ),
+                        timezone: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                        ),
+                        message: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                        ),
+                    },
                 },
                 &CONFIG.source_place_type,
                 &GIT_INFO,

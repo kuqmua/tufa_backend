@@ -59,6 +59,30 @@ pub async fn mongo_get_providers_link_parts(
                     file: String::from(file!()),
                     line: line!(),
                     column: column!(),
+                    git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                        commit_id: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                        ),
+                        repo_link: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                        ),
+                        author: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                        ),
+                        author_email: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
+                        ),
+                        commit_unix_time: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO
+                                .commit_unix_time,
+                        ),
+                        timezone: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                        ),
+                        message: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                        ),
+                    },
                 },
             }),
         }),
@@ -73,6 +97,31 @@ pub async fn mongo_get_providers_link_parts(
                         file: String::from(file!()),
                         line: line!(),
                         column: column!(),
+                        git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                            commit_id: String::from(
+                                crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                            ),
+                            repo_link: String::from(
+                                crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                            ),
+                            author: String::from(
+                                crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                            ),
+                            author_email: String::from(
+                                crate::global_variables::compile_time::git_info::GIT_INFO
+                                    .author_email,
+                            ),
+                            commit_unix_time: String::from(
+                                crate::global_variables::compile_time::git_info::GIT_INFO
+                                    .commit_unix_time,
+                            ),
+                            timezone: String::from(
+                                crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                            ),
+                            message: String::from(
+                                crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                            ),
+                        },
                     },
                 }),
             }),
@@ -83,14 +132,38 @@ pub async fn mongo_get_providers_link_parts(
                         source: Box::new(
                             MongoGetProvidersLinkPartsErrorEnum::ListCollectionNames {
                                 source: e,
-                                where_was: WhereWas {
-                                    time: std::time::SystemTime::now()
-                                        .duration_since(std::time::UNIX_EPOCH)
-                                        .expect("cannot convert time to unix_epoch"),
-                                    file: String::from(file!()),
-                                    line: line!(),
-                                    column: column!(),
-                                },
+                                where_was:                 WhereWas {
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
+                    git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                        commit_id: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                        ),
+                        repo_link: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                        ),
+                        author: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                        ),
+                        author_email: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
+                        ),
+                        commit_unix_time: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO
+                                .commit_unix_time,
+                        ),
+                        timezone: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                        ),
+                        message: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                        ),
+                    },
+                },
                             },
                         ),
                     }),
@@ -110,14 +183,38 @@ pub async fn mongo_get_providers_link_parts(
                                 source: Box::new(
                                     MongoGetProvidersLinkPartsErrorEnum::NoSuchCollections {
                                         source: no_collection_error_hashmap,
-                                        where_was: WhereWas {
-                                            time: std::time::SystemTime::now()
-                                                .duration_since(std::time::UNIX_EPOCH)
-                                                .expect("cannot convert time to unix_epoch"),
-                                            file: String::from(file!()),
-                                            line: line!(),
-                                            column: column!(),
-                                        },
+                                        where_was:                 WhereWas {
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
+                    git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                        commit_id: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                        ),
+                        repo_link: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                        ),
+                        author: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                        ),
+                        author_email: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
+                        ),
+                        commit_unix_time: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO
+                                .commit_unix_time,
+                        ),
+                        timezone: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                        ),
+                        message: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                        ),
+                    },
+                },
                                     },
                                 ),
                             });
@@ -157,14 +254,38 @@ pub async fn mongo_get_providers_link_parts(
                                 source: Box::new(
                                     MongoGetProvidersLinkPartsErrorEnum::GetDocuments {
                                         source: error_hashmap,
-                                        where_was: WhereWas {
-                                            time: std::time::SystemTime::now()
-                                                .duration_since(std::time::UNIX_EPOCH)
-                                                .expect("cannot convert time to unix_epoch"),
-                                            file: String::from(file!()),
-                                            line: line!(),
-                                            column: column!(),
-                                        },
+                                        where_was:                 WhereWas {
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
+                    git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                        commit_id: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                        ),
+                        repo_link: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                        ),
+                        author: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                        ),
+                        author_email: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
+                        ),
+                        commit_unix_time: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO
+                                .commit_unix_time,
+                        ),
+                        timezone: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                        ),
+                        message: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                        ),
+                    },
+                },
                                     },
                                 ),
                             });

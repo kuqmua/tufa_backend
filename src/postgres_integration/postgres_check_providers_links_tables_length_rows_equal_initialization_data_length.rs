@@ -114,11 +114,35 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
                 PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthOriginErrorEnum::SelectCountOrigin(count_provider_links_tables_error_hashmap),
                 WhereWas {
                     time: std::time::SystemTime::now()
-                                .duration_since(std::time::UNIX_EPOCH)
-                                .expect("cannot convert time to unix_epoch"),
-                        file: String::from(file!()),
-                        line: line!(),
-                        column: column!(),
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
+                    git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                        commit_id: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                        ),
+                        repo_link: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                        ),
+                        author: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                        ),
+                        author_email: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
+                        ),
+                        commit_unix_time: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO
+                                .commit_unix_time,
+                        ),
+                        timezone: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                        ),
+                        message: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                        ),
+                    },
                 },
                 &CONFIG.source_place_type,
                 &GIT_INFO,
@@ -132,11 +156,35 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
                 PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthOriginErrorEnum::ProviderLinksTablesRowsLengthNotEqualOrigin(provider_links_tables_rows_length_not_equal_error_hashmap),
                 WhereWas {
                     time: std::time::SystemTime::now()
-                                .duration_since(std::time::UNIX_EPOCH)
-                                .expect("cannot convert time to unix_epoch"),
-                        file: String::from(file!()),
-                        line: line!(),
-                        column: column!(),
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
+                    git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                        commit_id: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                        ),
+                        repo_link: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                        ),
+                        author: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                        ),
+                        author_email: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
+                        ),
+                        commit_unix_time: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO
+                                .commit_unix_time,
+                        ),
+                        timezone: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                        ),
+                        message: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                        ),
+                    },
                 },
                 &CONFIG.source_place_type,
                 &GIT_INFO,

@@ -46,6 +46,30 @@ pub async fn mongo_get_documents_as_string_vector(
                     file: String::from(file!()),
                     line: line!(),
                     column: column!(),
+                    git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                        commit_id: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                        ),
+                        repo_link: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                        ),
+                        author: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                        ),
+                        author_email: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
+                        ),
+                        commit_unix_time: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO
+                                .commit_unix_time,
+                        ),
+                        timezone: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                        ),
+                        message: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                        ),
+                    },
                 },
             },
         )),
@@ -57,36 +81,83 @@ pub async fn mongo_get_documents_as_string_vector(
                         return Err(Box::new(
                             MongoGetDocumentsAsStringVectorErrorEnum::CursorTryNext {
                                 source: e,
-                                where_was: WhereWas {
-                                    time: std::time::SystemTime::now()
-                                        .duration_since(std::time::UNIX_EPOCH)
-                                        .expect("cannot convert time to unix_epoch"),
-                                    file: String::from(file!()),
-                                    line: line!(),
-                                    column: column!(),
-                                },
+                                where_was:                 WhereWas {
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
+                    git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                        commit_id: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                        ),
+                        repo_link: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                        ),
+                        author: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                        ),
+                        author_email: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
+                        ),
+                        commit_unix_time: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO
+                                .commit_unix_time,
+                        ),
+                        timezone: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                        ),
+                        message: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                        ),
+                    },
+                },
                             },
                         ));
                     }
-                    Ok(option_document) => {
-                        match option_document {
-                            None => {
-                                break;
-                            }
-                            Some(document) => {
-                                match document.get(db_collection_document_field_name_handle) {
+                    Ok(option_document) => match option_document {
+                        None => {
+                            break;
+                        }
+                        Some(document) => {
+                            match document.get(db_collection_document_field_name_handle) {
                                     None => return Err(Box::new(
                                         MongoGetDocumentsAsStringVectorErrorEnum::NoKeyInDocument {
                                             source: db_collection_document_field_name_handle
                                                 .to_string(),
-                                            where_was: WhereWas {
-                                                time: std::time::SystemTime::now()
-                                                    .duration_since(std::time::UNIX_EPOCH)
-                                                    .expect("cannot convert time to unix_epoch"),
-                                                file: String::from(file!()),
-                                                line: line!(),
-                                                column: column!(),
-                                            },
+                                            where_was:                 WhereWas {
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
+                    git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                        commit_id: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                        ),
+                        repo_link: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                        ),
+                        author: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                        ),
+                        author_email: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
+                        ),
+                        commit_unix_time: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO
+                                .commit_unix_time,
+                        ),
+                        timezone: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                        ),
+                        message: String::from(
+                            crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                        ),
+                    },
+                },
                                         },
                                     )),
                                     Some(bson_handle) => match bson_handle {
@@ -97,22 +168,44 @@ pub async fn mongo_get_documents_as_string_vector(
                                             return Err(Box::new(
                                             MongoGetDocumentsAsStringVectorErrorEnum::WrongBsonType {
                                                 source: other_bson_type.clone(),
-                where_was: WhereWas {
+            where_was: WhereWas {
                 time: std::time::SystemTime::now()
-                                .duration_since(std::time::UNIX_EPOCH)
-                                .expect("cannot convert time to unix_epoch"),
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .expect("cannot convert time to unix_epoch"),
                 file: String::from(file!()),
                 line: line!(),
                 column: column!(),
+                git_info: tufa_common::common::where_was::GitInfoForWhereWas {
+                    commit_id: String::from(
+                        crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
+                    ),
+                    repo_link: String::from(
+                        crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
+                    ),
+                    author: String::from(
+                        crate::global_variables::compile_time::git_info::GIT_INFO.author,
+                    ),
+                    author_email: String::from(
+                        crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
+                    ),
+                    commit_unix_time: String::from(
+                        crate::global_variables::compile_time::git_info::GIT_INFO.commit_unix_time,
+                    ),
+                    timezone: String::from(
+                        crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
+                    ),
+                    message: String::from(
+                        crate::global_variables::compile_time::git_info::GIT_INFO.message,
+                    ),
+                },
             },
                                             },
                                         ));
                                         }
                                     },
                                 }
-                            }
                         }
-                    }
+                    },
                 }
             }
             Ok(vec_of_strings.into_iter().unique().collect())
