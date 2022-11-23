@@ -109,7 +109,6 @@ pub async fn mongo_check_collections_is_not_empty(
                     },
                 },
                 &CONFIG.source_place_type,
-                &GIT_INFO,
                 should_trace,
             ),
         ));

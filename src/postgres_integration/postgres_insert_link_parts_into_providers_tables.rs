@@ -100,7 +100,6 @@ pub async fn postgres_insert_link_parts_into_providers_tables(
                     },
                 },
                 &CONFIG.source_place_type,
-                &GIT_INFO,
                 should_trace,
             ),
         ));

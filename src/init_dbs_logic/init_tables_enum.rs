@@ -89,7 +89,6 @@ impl InitTablesEnum {
                                 },
                             },
                             &CONFIG.source_place_type,
-                            &GIT_INFO,
                             should_trace,
                         ),
                     ));

@@ -79,7 +79,6 @@ pub async fn postgres_establish_connection(
                     },
                 },
                 &CONFIG.source_place_type,
-                &GIT_INFO,
                 should_trace,
             ),
         )),

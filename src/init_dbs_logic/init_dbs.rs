@@ -81,7 +81,6 @@ pub async fn init_dbs(should_trace: bool) -> Result<(), Box<InitDbsWrapperError>
                     },
                 },
                 &CONFIG.source_place_type,
-                &GIT_INFO,
                 should_trace,
             ),
         ));

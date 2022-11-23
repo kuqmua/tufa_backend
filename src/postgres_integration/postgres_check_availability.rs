@@ -77,7 +77,6 @@ pub async fn postgres_check_availability(
                     },
                 },
                 &CONFIG.source_place_type,
-                &GIT_INFO,
                 should_trace,
             ),
         ));

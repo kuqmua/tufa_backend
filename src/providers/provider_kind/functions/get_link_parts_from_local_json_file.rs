@@ -90,7 +90,6 @@ impl ProviderKind {
                         },
                     }, //
                     &CONFIG.source_place_type,
-                    &GIT_INFO,
                     should_trace,
                 ),
             )),
@@ -133,7 +132,6 @@ impl ProviderKind {
                 },
                             },
                             &CONFIG.source_place_type,
-                            &GIT_INFO,
                             should_trace,
                         ),
                     ));
@@ -183,7 +181,6 @@ impl ProviderKind {
                                 },
                             },
                             &CONFIG.source_place_type,
-                            &GIT_INFO,
                             should_trace,
                         ),
                     )),

@@ -76,7 +76,6 @@ pub async fn prepare_server(should_trace: bool) -> Result<(), Box<PreparationWra
                     },
                 },
                 &CONFIG.source_place_type,
-                &GIT_INFO,
                 should_trace,
             ),
         ));
@@ -124,7 +123,6 @@ pub async fn prepare_server(should_trace: bool) -> Result<(), Box<PreparationWra
                     },
                 },
                 &CONFIG.source_place_type,
-                &GIT_INFO,
                 should_trace,
             ),
         ));

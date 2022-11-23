@@ -70,7 +70,6 @@ pub fn mongo_client_with_options(
                     },
                 },
                 &CONFIG.source_place_type,
-                &GIT_INFO,
                 should_trace,
             ),
         )),

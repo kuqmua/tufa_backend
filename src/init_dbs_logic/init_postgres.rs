@@ -123,7 +123,6 @@ pub async fn init_postgres(
                     },
                 },
                 &CONFIG.source_place_type,
-                &GIT_INFO,
                 should_trace,
             ),
         )),
@@ -177,7 +176,6 @@ pub async fn init_postgres(
                             },
                         },
                         &CONFIG.source_place_type,
-                        &GIT_INFO,
                         should_trace,
                     ),
                 ));
@@ -231,7 +229,6 @@ pub async fn init_postgres(
                             },
                         },
                         &CONFIG.source_place_type,
-                        &GIT_INFO,
                         should_trace,
                     ),
                 ));
@@ -285,7 +282,6 @@ pub async fn init_postgres(
                             },
                         },
                         &CONFIG.source_place_type,
-                        &GIT_INFO,
                         should_trace,
                     ),
                 ));
@@ -360,7 +356,6 @@ pub async fn init_postgres(
                             },
                         },
                         &CONFIG.source_place_type,
-                        &GIT_INFO,
                         should_trace,
                     ),
                 ));

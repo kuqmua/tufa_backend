@@ -87,7 +87,6 @@ pub async fn init_dbs_with_providers_link_parts(
                     },
                 },
                 &CONFIG.source_place_type,
-                &GIT_INFO,
                 should_trace,
             ),
         )),
@@ -152,7 +151,6 @@ pub async fn init_dbs_with_providers_link_parts(
                     },
                                 },
                                 &CONFIG.source_place_type,
-                                &GIT_INFO,
                                 should_trace,
                             ),
                         ));
@@ -196,7 +194,6 @@ pub async fn init_dbs_with_providers_link_parts(
                     },
                                 },
                                 &CONFIG.source_place_type,
-                                &GIT_INFO,
                                 should_trace,
                             ),
                         ));
@@ -242,7 +239,6 @@ pub async fn init_dbs_with_providers_link_parts(
                     },
                                 },
                                 &CONFIG.source_place_type,
-                                &GIT_INFO,
                                 should_trace,
                             ),
                         ));
@@ -284,7 +280,6 @@ pub async fn init_dbs_with_providers_link_parts(
                     },
                                 },
                                 &CONFIG.source_place_type,
-                                &GIT_INFO,
                                 should_trace,
                             ),
                         ));

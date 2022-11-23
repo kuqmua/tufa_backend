@@ -98,7 +98,6 @@ pub async fn mongo_insert_many(
                     },
                 },
                 &CONFIG.source_place_type,
-                &GIT_INFO,
                 should_trace,
             ),
         ));

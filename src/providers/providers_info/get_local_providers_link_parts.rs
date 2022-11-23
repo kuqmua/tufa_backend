@@ -104,7 +104,6 @@ pub async fn get_local_providers_link_parts(
                     },
                 },
                 &CONFIG.source_place_type,
-                &GIT_INFO,
                 should_trace,
             ),
         ));

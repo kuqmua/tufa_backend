@@ -145,7 +145,6 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
                     },
                 },
                 &CONFIG.source_place_type,
-                &GIT_INFO,
                 should_trace,
             ),
         ));
@@ -187,7 +186,6 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
                     },
                 },
                 &CONFIG.source_place_type,
-                &GIT_INFO,
                 should_trace,
             ),
         ));
