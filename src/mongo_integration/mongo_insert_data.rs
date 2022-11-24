@@ -14,12 +14,6 @@ pub struct MongoInsertDataWrapperError {
     where_was: WhereWas,
 }
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub async fn mongo_insert_data(
     db_name_handle: &str,
     vec_of_link_parts_hashmap: HashMap<ProviderKind, Vec<String>>,

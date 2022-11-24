@@ -2,12 +2,6 @@ use crate::global_variables::hardcode::GITHUB_LINK_FIRST_PART;
 use crate::global_variables::hardcode::GITHUB_LINK_SECOND_PART;
 use crate::global_variables::runtime::config::CONFIG;
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub fn generate_github_links(github_names: Vec<String>) -> Vec<String> {
     //https://github.com/kuqmua.private.atom?token=EXAMPLE_FROM_CONFIG
     github_names

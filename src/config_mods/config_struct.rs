@@ -323,12 +323,6 @@ pub struct ConfigStruct {
 mod tests {
     use crate::config_mods::config_struct::ConfigStruct;
 
-    #[deny(
-        clippy::indexing_slicing,
-        clippy::unwrap_used,
-        clippy::integer_arithmetic,
-        clippy::float_arithmetic
-    )]
     #[test]
     fn ci_check_compromised_env_vars() {
         let config_from_env = ConfigStruct::new().expect("cannot create ConfigStruct::new()");
@@ -342,12 +336,6 @@ mod tests {
     use std::fs;
     use strum::IntoEnumIterator;
 
-    #[deny(
-        clippy::indexing_slicing,
-        clippy::unwrap_used,
-        clippy::integer_arithmetic,
-        clippy::float_arithmetic
-    )]
     #[test]
     pub fn ci_check_env_var_names_contains_in_docker_compose() {
         let result_of_reading_to_string = fs::read_to_string(&format!(

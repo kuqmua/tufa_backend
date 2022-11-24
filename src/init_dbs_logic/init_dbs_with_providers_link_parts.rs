@@ -41,12 +41,6 @@ pub enum InitDbsProvidersLinkPartsWrapperErrorEnum {
     // },
 }
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub async fn init_dbs_with_providers_link_parts(
     should_trace: bool,
 ) -> Result<(), Box<InitDbsProvidersLinkPartsWrapperError>> {

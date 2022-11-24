@@ -51,12 +51,6 @@ impl std::fmt::Display for ProviderLinksTablesLengthRowsNotEqualInitializationDa
     }
 }
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub async fn postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
     providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
     db: &Pool<Postgres>,

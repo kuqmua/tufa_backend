@@ -1,11 +1,5 @@
 use ansi_term::Colour;
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub fn print_wrapper(
     color: Colour,
     sources_track: String,

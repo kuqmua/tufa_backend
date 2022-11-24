@@ -26,12 +26,6 @@ pub struct InitDbsWrapperError {
     where_was: WhereWas,
 }
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub async fn init_dbs(should_trace: bool) -> Result<(), Box<InitDbsWrapperError>> {
     let results =
         join_all(InitTablesEnum::iter().map(|table| async move { table.init(false).await }))

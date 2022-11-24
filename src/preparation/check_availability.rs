@@ -35,7 +35,7 @@ pub struct CheckAvailabilityWrapperError {
     where_was: WhereWas,
 }
 
-#[allow(clippy::enum_variant_names)]
+#[allow(enum_variant_names)]
 #[derive(
     Debug,
     ImplGetSourceFromTufaCommon,
@@ -65,12 +65,6 @@ pub enum CheckAvailabilityWrapperErrorEnum {
     },
 }
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub async fn check_availability(
     should_trace: bool,
 ) -> Result<(), Box<CheckAvailabilityWrapperError>> {

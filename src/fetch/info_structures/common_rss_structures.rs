@@ -100,7 +100,7 @@ pub struct CommonRssPost {
     //twitter specific
 }
 impl CommonRssPost {
-    #[allow(clippy::too_many_arguments)]
+    #[allow(too_many_arguments)]
     pub fn initialize_with_params(
         title: Option<String>,
         link: Option<String>,
@@ -308,12 +308,6 @@ pub struct GithubInfoFromHtml {
 }
 
 impl GithubInfoFromHtml {
-    #[deny(
-        clippy::indexing_slicing,
-        clippy::unwrap_used,
-        clippy::integer_arithmetic,
-        clippy::float_arithmetic
-    )]
     pub fn initialize_with_params(
         avatar_link: Option<String>,
         author: Option<String>,

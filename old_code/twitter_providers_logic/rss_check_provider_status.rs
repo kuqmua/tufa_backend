@@ -17,7 +17,7 @@
 // //     println!("fetch_link res.status() not ok");
 // //     result_tuplefff.1 = HandledReachProviderStatusInfo::ResStatusError(res.status());
 // // }
-// #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+// #[deny(,   unwrap_used)]
 // pub fn rss_check_provider_status(
 //     link: &str,
 // ) -> Result<(bool, HandledFetchStatusInfo), Box<dyn std::error::Error>> {

@@ -33,12 +33,6 @@ pub enum PostgresCheckProvidersLinkPartsTablesEmptyOriginErrorEnum {
     NotEmptyOrigin(HashMap<ProviderKind, i64>),
 }
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub async fn postgres_check_providers_link_parts_tables_are_empty(
     providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
     db: &Pool<Postgres>,

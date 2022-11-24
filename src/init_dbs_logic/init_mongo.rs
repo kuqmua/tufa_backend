@@ -49,12 +49,6 @@ pub enum InitMongoWrapperErrorEnum {
     InsertManyErrorWrapper(MongoInsertManyOriginError),
 }
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub async fn init_mongo(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
     should_trace: bool,

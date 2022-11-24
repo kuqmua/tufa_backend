@@ -32,12 +32,6 @@ pub enum InitDbsProvidersLinkPartsWrapperErrorEnum {
     InitDbsWrapper(InitDbsWrapperError),
 }
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub async fn prepare_server(should_trace: bool) -> Result<(), Box<PreparationWrapperError>> {
     if let Err(e) = check_availability(false).await {
         return Err(Box::new(

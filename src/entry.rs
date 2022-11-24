@@ -24,12 +24,6 @@ use crate::telemetry::init_subscriber::init_subscriber;
 //     street: String,
 // }
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub fn entry() {
     match tokio::runtime::Builder::new_multi_thread()
         .worker_threads(num_cpus::get())

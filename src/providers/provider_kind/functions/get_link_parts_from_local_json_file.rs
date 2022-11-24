@@ -42,12 +42,6 @@ pub enum GetLinkPartsFromLocalJsonFileOriginErrorEnum {
 }
 
 impl ProviderKind {
-    #[deny(
-        clippy::indexing_slicing,
-        clippy::unwrap_used,
-        clippy::integer_arithmetic,
-        clippy::float_arithmetic
-    )]
     pub async fn get_link_parts_from_local_json_file(
         self,
         should_trace: bool,

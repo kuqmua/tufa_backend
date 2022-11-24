@@ -8,7 +8,7 @@ Like http request to crates.io or something similar
 
 * write test what checks if something missing in .dockerignore and .gitignore - local or ci? 
 
-* Write tests what checks all function to have #![deny(clippy::indexing_slicing, clippy::unwrap_used)]
+* Write tests what checks all function to have #![deny(,   unwrap_used)]
 
 * test to check what cargo run executes in the right folder
 

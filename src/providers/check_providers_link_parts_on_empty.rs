@@ -13,12 +13,6 @@ pub enum CheckProvidersLinkPartsEmptyError {
     },
 }
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub fn check_providers_link_parts_on_empty(
     providers_link_parts: HashMap<ProviderKind, Vec<String>>,
 ) -> Result<HashMap<ProviderKind, Vec<String>>, Box<CheckProvidersLinkPartsEmptyError>> {

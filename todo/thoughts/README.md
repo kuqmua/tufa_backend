@@ -106,7 +106,7 @@ https://efanzh.org/2021/05/25/rust-lints.html
 * global .gitignore
 https://www.youtube.com/watch?v=D97rnxDqq1I
 
-* #[deny(clippy::unwrap_used)]
+* #[deny(  unwrap_used)]
 Find out why its triggers for tokio:main functions
 
 * rewrite something with "from" and "into" traits

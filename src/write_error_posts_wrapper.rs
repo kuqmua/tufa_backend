@@ -7,12 +7,6 @@
 // use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 // use crate::traits::provider_kind_trait::ProviderKindTrait;
 
-// #[deny(
-//     clippy::indexing_slicing,
-//     clippy::unwrap_used,
-//     clippy::integer_arithmetic,
-//     clippy::float_arithmetic
-// )]
 // pub async fn write_error_posts_wrapper(error_posts: Vec<PostErrorVariant>) {
 //     //todo add flag in config or if its already exists put it here
 //     //maybe instead of if write match to local or to mongo or postgres

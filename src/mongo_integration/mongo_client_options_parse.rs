@@ -23,12 +23,6 @@ pub struct MongoClientOptionsParseOriginError {
     where_was: WhereWas,
 }
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub async fn mongo_client_options_parse(
     should_trace: bool,
 ) -> Result<ClientOptions, Box<MongoClientOptionsParseOriginError>> {

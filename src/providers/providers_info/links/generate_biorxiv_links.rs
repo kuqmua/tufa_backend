@@ -1,11 +1,5 @@
 use crate::global_variables::hardcode::BIORXIV_LINK_FIRST_PART;
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub fn generate_biorxiv_links(biorxiv_names: Vec<String>) -> Vec<String> {
     //example http://connect.biorxiv.org/biorxiv_xml.php?subject=animal_behavior_and_cognition
     biorxiv_names

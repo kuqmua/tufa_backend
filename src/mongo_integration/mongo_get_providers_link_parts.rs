@@ -40,12 +40,6 @@ pub enum MongoGetProvidersLinkPartsErrorEnum {
     },
 }
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub async fn mongo_get_providers_link_parts(
 ) -> Result<HashMap<ProviderKind, Vec<String>>, MongoGetProvidersLinkPartsError> {
     match ClientOptions::parse(CONFIG.get_mongo_url()).await {

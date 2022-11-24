@@ -33,12 +33,6 @@ pub struct TracingVec {
     pub vec: Vec<String>,
 }
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub async fn get_local_providers_link_parts(
     should_trace: bool,
 ) -> Result<HashMap<ProviderKind, Vec<String>>, Box<GetLocalProvidersLinkPartsWrapperError>> {

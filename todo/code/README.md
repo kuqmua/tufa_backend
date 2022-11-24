@@ -82,7 +82,7 @@ and in dcoker-compose too
 * limit for mongo "get data" functions
 get concrete number of provider links as function or command line or env
 
-* #[deny(clippy::indexing_slicing, clippy::unwrap_used)]
+* #[deny(,   unwrap_used)]
 files to write warnings:
 rss_parse_string_into_struct
 rss_fetch_and_parse_provider_data
@@ -280,10 +280,7 @@ impl User<u32> {
 }
 meaning implementation only for u32 type
   
-* auto check int and float overflow
-first, install cargo clippy
-#![deny(clippy::integer_arithmetic, clippy::float_arithmetic)]
-use checked_sub() and checked_add() methods
+* use checked_sub() and checked_add() methods
 
 * in cases across await points use tokio::sync::Mutex instead of std Mutex
 use this lint 

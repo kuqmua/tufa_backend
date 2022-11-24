@@ -37,12 +37,6 @@ pub enum InitTablesWrapperErrorEnum {
 }
 
 impl InitTablesEnum {
-    #[deny(
-        clippy::indexing_slicing,
-        clippy::unwrap_used,
-        clippy::integer_arithmetic,
-        clippy::float_arithmetic
-    )]
     pub async fn init(&self, should_trace: bool) -> Result<(), Box<InitTablesWrapperError>> {
         match self {
             InitTablesEnum::ProvidersLinkParts => {

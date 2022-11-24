@@ -34,12 +34,6 @@ pub enum CollectionCountDocumentsOrIsNotEmpty {
     IsNotEmptyOrigin(u64),
 }
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub async fn mongo_check_collections_is_not_empty(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
     db: &Database,

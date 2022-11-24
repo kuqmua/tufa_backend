@@ -21,12 +21,6 @@ pub enum RssPartErrorEnum {
     },
 }
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub async fn rss_part(
     pk: ProviderKind,
     vec_of_provider_links: Vec<String>,

@@ -68,12 +68,6 @@ pub enum GetProviderPostsErrorEnum {
     },
 }
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub async fn get_providers_posts() -> Result<(), Box<GetProviderPostsErrorEnum>> {
     match get_providers_link_parts(&CONFIG.providers_link_parts_source).await {
         Err(e) => Err(Box::new(

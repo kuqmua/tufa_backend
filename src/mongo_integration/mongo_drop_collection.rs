@@ -20,12 +20,6 @@ pub enum MongoDropCollectionErrorEnum {
     },
 }
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub async fn mongo_drop_collection(
     mongo_url: &str,
     db_name: &str,

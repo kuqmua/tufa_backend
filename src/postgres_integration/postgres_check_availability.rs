@@ -25,12 +25,6 @@ pub struct PostgresCheckAvailabilityOriginError {
     where_was: WhereWas,
 }
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub async fn postgres_check_availability(
     postgres_url: &str,
     should_trace: bool,

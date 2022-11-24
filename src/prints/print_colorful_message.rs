@@ -5,12 +5,6 @@ use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
 use tufa_common::traits::print_type_trait::PrintTypeTrait;
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub fn print_colorful_message(
     pk: Option<&ProviderKind>,
     pt: PrintType,

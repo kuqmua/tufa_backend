@@ -1,9 +1,3 @@
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub fn get_twitter_provider_name() -> String {
     //todo: move it into env file (config) or into db
 

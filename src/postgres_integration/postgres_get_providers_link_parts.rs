@@ -15,12 +15,6 @@
 //     IncorrectProviderNameInsideDb(String),
 // }
 
-// #[deny(
-//     clippy::indexing_slicing,
-//     clippy::unwrap_used,
-//     clippy::integer_arithmetic,
-//     clippy::float_arithmetic
-// )]
 // pub async fn postgres_get_providers_link_parts(
 // ) -> Result<HashMap<ProviderKind, Vec<String>>, PostgresGetProviderLinksError> {
 //     match PgConnection::establish(&postgres_get_db_url()) {

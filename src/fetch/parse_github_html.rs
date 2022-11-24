@@ -20,12 +20,6 @@ pub type GithubPostInfoVec = Vec<(
     Option<String>, //data_url,
 )>;
 
-#[deny(
-    clippy::indexing_slicing,
-    clippy::unwrap_used,
-    clippy::integer_arithmetic,
-    clippy::float_arithmetic
-)]
 pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
     let mut avatar_link: Option<String> = None;
     let mut author: Option<String> = None;

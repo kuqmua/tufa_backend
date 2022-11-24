@@ -32,12 +32,6 @@ pub enum MongoGetProviderLinkPartsErrorEnum {
 
 impl ProviderKind {
     //rust does not support async traits yet (end of 2021). only with third party crate
-    #[deny(
-        clippy::indexing_slicing,
-        clippy::unwrap_used,
-        clippy::integer_arithmetic,
-        clippy::float_arithmetic
-    )]
     pub async fn mongo_get_provider_link_parts(
         pk: ProviderKind,
     ) -> Result<Vec<String>, MongoGetProviderLinkPartsError> {

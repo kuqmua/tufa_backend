@@ -101,7 +101,7 @@ pub async fn save_response(
     Ok(http_response)
 }
 
-#[allow(clippy::large_enum_variant)]
+#[allow(large_enum_variant)]
 pub enum NextAction {
     ReturnSavedResponse(HttpResponse),
     StartProcessing(Transaction<'static, Postgres>),

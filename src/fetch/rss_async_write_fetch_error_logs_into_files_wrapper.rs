@@ -6,12 +6,6 @@
 // use std::time::Instant;
 // use crate::global_variables::runtime::config::CONFIG;
 
-// #[deny(
-//     clippy::indexing_slicing,
-//     clippy::unwrap_used,
-//     clippy::integer_arithmetic,
-//     clippy::float_arithmetic
-// )]
 // #[tokio::main]
 // pub async fn rss_async_write_fetch_error_logs_into_files_wrapper(
 //     error_posts: Vec<PostErrorVariant>,
