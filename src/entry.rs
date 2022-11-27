@@ -40,7 +40,7 @@ pub fn entry() {
             );
         }
         Ok(runtime) => {
-            if let true = CONFIG.is_tracing_enabled {
+            if let tufa_common::config_mods::log_type::LogType::Tracing = CONFIG.log_type {
                 if let Err(e) = init_subscriber(get_subscriber(
                     PROJECT_NAME.into(),
                     CONFIG.tracing_type.to_lower_snake_case(),

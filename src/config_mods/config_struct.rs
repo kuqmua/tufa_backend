@@ -2,6 +2,7 @@ use gen_enum::GenEnum;
 use gen_enum_without_values::GenEnumWithoutValues;
 use generate_getter_traits_for_struct_fields::GenerateGetterTraitsForStructFieldsFromTufaCommon;
 use init_from_env_with_panic_if_failed::InitFromEnvWithPanicIfFailedWithPanicIfFailedFromTufaCommon;
+use tufa_common::config_mods::log_type::LogType;
 use tufa_common::config_mods::source_place_type::SourcePlaceType;
 use tufa_common::config_mods::tracing_type::TracingType;
 use tufa_common::server::resource::Resource;
@@ -287,7 +288,7 @@ pub struct ConfigStruct {
     pub links_limit_twitter: usize,
 
     pub is_preparation_enabled: bool,
-    pub is_tracing_enabled: bool,
+    pub log_type: LogType,
     pub tracing_type: TracingType,
     pub is_parent_tracing_enabled: bool,
     pub source_place_type: SourcePlaceType,
