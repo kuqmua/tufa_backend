@@ -1,6 +1,13 @@
 use crate::global_variables::runtime::config::CONFIG;
 use ansi_term::Colour;
 use ansi_term::Colour::RGB;
+use tufa_common::traits::get_color::ErrorColor;
+use tufa_common::traits::get_color::InfoColor;
+use tufa_common::traits::get_color::PartialSuccessColor;
+use tufa_common::traits::get_color::SuccessColor;
+use tufa_common::traits::get_color::TimeMeasurementColor;
+use tufa_common::traits::get_color::WarningHighColor;
+use tufa_common::traits::get_color::WarningLowColor;
 use tufa_common::traits::print_type_trait::PrintTypeTrait;
 
 pub enum PrintType {
@@ -27,33 +34,13 @@ impl PrintTypeTrait for PrintType {
     }
     fn get_color(&self) -> Colour {
         match *self {
-            PrintType::Error => RGB(CONFIG.error_red, CONFIG.error_green, CONFIG.error_blue),
-            PrintType::WarningHigh => RGB(
-                CONFIG.warning_high_red,
-                CONFIG.warning_high_green,
-                CONFIG.warning_high_blue,
-            ),
-            PrintType::WarningLow => RGB(
-                CONFIG.warning_low_red,
-                CONFIG.warning_low_green,
-                CONFIG.warning_low_blue,
-            ),
-            PrintType::Success => RGB(
-                CONFIG.success_red,
-                CONFIG.success_green,
-                CONFIG.success_blue,
-            ),
-            PrintType::PartialSuccess => RGB(
-                CONFIG.partial_success_red,
-                CONFIG.partial_success_green,
-                CONFIG.partial_success_blue,
-            ),
-            PrintType::TimeMeasurement => RGB(
-                CONFIG.time_measurement_red,
-                CONFIG.time_measurement_green,
-                CONFIG.time_measurement_blue,
-            ),
-            PrintType::Info => RGB(CONFIG.info_red, CONFIG.info_green, CONFIG.info_blue),
+            PrintType::Error => CONFIG.get_error_color(),
+            PrintType::WarningHigh => CONFIG.get_warning_high_color(),
+            PrintType::WarningLow => CONFIG.get_warning_low_color(),
+            PrintType::Success => CONFIG.get_success_color(),
+            PrintType::PartialSuccess => CONFIG.get_partial_success_color(),
+            PrintType::TimeMeasurement => CONFIG.get_time_measurement_color(),
+            PrintType::Info => CONFIG.get_info_color(),
         }
     }
 }
