@@ -4,14 +4,15 @@ use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
 use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
 use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use futures::future::join_all;
 use std::time::Instant;
 use tufa_common::common::where_was::WhereWas;
+use tufa_common::config_mods::print_type::PrintType;
 use tufa_common::server::http_request::http_request_error::HttpRequestOriginError;
 use tufa_common::server::http_request::http_request_method::HttpRequestMethod;
 use tufa_common::server::http_request::wrappers::text::async_http_request_text::async_http_request_text_wrapper;
+use tufa_common::traits::get_color::WarningHighColor;
 
 #[derive(Debug)]
 pub enum FetchAndParseProviderDataErrorEnum {
@@ -123,7 +124,7 @@ impl ProviderKind {
             .await;
             print_colorful_message(
                 None,
-                PrintType::TimeMeasurement,
+                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
                 vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                 format!(

@@ -1,7 +1,7 @@
 // use roux::util::error::RouxError;
 // use roux::Reddit;
 // use crate::prints::print_colorful_message::print_colorful_message;
-// use crate::prints::print_type_enum::PrintType;
+// use tufa_common::config_mods::print_type::PrintType;
 // use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 
 // #[deny(,   unwrap_used)]
@@ -24,7 +24,7 @@
 //                     if let Some(eshe_errorishe) = error_instans.get_ref() {
 //                         print_colorful_message(
 //                             Some(&ProviderKind::Reddit),
-//                             PrintType::Error,
+//                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
 //                             file!().to_string(),
 //                             line!().to_string(),
 //                             eshe_errorishe.to_string(),
@@ -32,7 +32,7 @@
 //                     } else {
 //                         print_colorful_message(
 //                             Some(&ProviderKind::Reddit),
-//                             PrintType::Error,
+//                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
 //                             file!().to_string(),
 //                             line!().to_string(),
 //                             "RouxError::Network different error - todo".to_string(),
@@ -41,7 +41,7 @@
 //                 }
 //                 _ => print_colorful_message(
 //                     Some(&ProviderKind::Reddit),
-//                     PrintType::Error,
+//                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
 //                     file!().to_string(),
 //                     line!().to_string(),
 //                     "todo RouxError enum error".to_string(),

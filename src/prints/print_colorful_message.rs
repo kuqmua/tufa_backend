@@ -1,10 +1,13 @@
 use super::print_wrapper::print_wrapper;
 use crate::global_variables::runtime::config::CONFIG;
-use crate::prints::print_type_enum::PrintType;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
+use tufa_common::config_mods::config_struct::ConfigStruct;
+use tufa_common::config_mods::print_type::PrintType;
+use tufa_common::config_mods::tracing_type::TracingType;
 use tufa_common::traits::print_type_trait::PrintTypeTrait;
 
+//ansi_term::Colour
 pub fn print_colorful_message(
     pk: Option<&ProviderKind>,
     pt: PrintType,
@@ -23,13 +26,24 @@ pub fn print_colorful_message(
         }
         match pk {
             Some(pk) => {
-                if pk.is_prints_enabled() && pk.is_prints_for_print_type_enabled(&pt) {
-                    print_wrapper(pt.get_color(), sources_track, github_sources_track, message);
+                if pk.is_prints_enabled() && CONFIG.is_prints_enabled(&pt) {
+                    //pk.is_prints_for_print_type_enabled(&pt)
+                    print_wrapper(
+                        CONFIG.get_color(&pt),
+                        sources_track,
+                        github_sources_track,
+                        message,
+                    );
                 }
             }
             None => {
-                if pt.is_prints_enabled() {
-                    print_wrapper(pt.get_color(), sources_track, github_sources_track, message);
+                if CONFIG.is_prints_enabled(&pt) {
+                    print_wrapper(
+                        CONFIG.get_color(&pt),
+                        sources_track,
+                        github_sources_track,
+                        message,
+                    );
                 }
             }
         }

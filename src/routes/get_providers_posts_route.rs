@@ -1,9 +1,9 @@
 use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
 use crate::providers::get_providers_posts::get_providers_posts;
 use actix_web::HttpResponse;
 use std::time::Instant;
+use tufa_common::config_mods::print_type::PrintType;
 
 // #[tracing::instrument(
 //     name = "get_providers_posts_routee",
@@ -21,7 +21,7 @@ pub async fn get_providers_posts_route() -> Result<HttpResponse, actix_web::Erro
     );
     print_colorful_message(
         None,
-        PrintType::TimeMeasurement,
+        tufa_common::config_mods::print_type::PrintType::TimeMeasurement,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         message,

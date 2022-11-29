@@ -7,7 +7,7 @@
 // use crate::mongo_integration::mongo_insert_docs_in_empty_collection::mongo_insert_docs_in_empty_collection;
 // use std::time::Instant;
 // use crate::prints::print_colorful_message::print_colorful_message;
-// use crate::prints::print_type_enum::PrintType;
+// use tufa_common::config_mods::print_type::PrintType;
 // use std::collections::HashMap;
 // use chrono::Local;
 // use futures::future::join_all;
@@ -28,7 +28,7 @@
 //     if error_posts.is_empty() {
 //         print_colorful_message(
 //             None,
-//             PrintType::WarningLow,
+//             tufa_common::config_mods::print_type::PrintType::WarningLow,
 //             file!().to_string(),
 //             line!().to_string(),
 //             "error_posts.len() == 0".to_string(),
@@ -94,7 +94,7 @@
 //             Err(e) => {
 //                 print_colorful_message(
 //                     None,
-//                     PrintType::Error,
+//                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
 //                     file!().to_string(),
 //                     line!().to_string(),
 //                     format!(
@@ -148,7 +148,7 @@
 //                                 None => {
 //                                     print_colorful_message(
 //                                         None,
-//                                         PrintType::WarningHigh,
+//                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
 //                                         file!().to_string(),
 //                                         line!().to_string(),
 //                                         "hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) is None"
@@ -160,7 +160,7 @@
 //                         Err(e) => {
 //                             print_colorful_message(
 //                                 Some(&provider_kind),
-//                                 PrintType::WarningLow,
+//                                 tufa_common::config_mods::print_type::PrintType::WarningLow,
 //                                 file!().to_string(),
 //                                 line!().to_string(),
 //                                 format!("serde_json::to_string_pretty(&json) error: {e:#?}"),
@@ -192,7 +192,7 @@
 //                                 None => {
 //                                     print_colorful_message(
 //                                         None,
-//                                         PrintType::WarningHigh,
+//                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
 //                                         file!().to_string(),
 //                                         line!().to_string(),
 //                                         "hashmap_of_provider_vec_of_strings.get_mut(&provider_kind) is None"
@@ -204,7 +204,7 @@
 //                         Err(e) => {
 //                             print_colorful_message(
 //                                 Some(&provider_kind),
-//                                 PrintType::WarningLow,
+//                                 tufa_common::config_mods::print_type::PrintType::WarningLow,
 //                                 file!().to_string(),
 //                                 line!().to_string(),
 //                                 format!("serde_json::to_string_pretty(&json) error: {e:#?}"),
@@ -235,7 +235,7 @@
 //     if CONFIG.is_time_measurement_prints_enabled {
 //         print_colorful_message(
 //             None,
-//             PrintType::TimeMeasurement,
+//             tufa_common::config_mods::print_type::PrintType::TimeMeasurement,
 //             file!().to_string(),
 //             line!().to_string(),
 //             format!(
@@ -270,7 +270,7 @@
 //         //todo write more info about this case
 //         print_colorful_message(
 //             None,
-//             PrintType::WarningLow,
+//             tufa_common::config_mods::print_type::PrintType::WarningLow,
 //             file!().to_string(),
 //             line!().to_string(),
 //             "partial_success coz results_vec not all true".to_string(),
@@ -290,7 +290,7 @@
 //         //todo write more info about this case
 //         print_colorful_message(
 //                     None,
-//                     PrintType::WarningLow,
+//                     tufa_common::config_mods::print_type::PrintType::WarningLow,
 //                     file!().to_string(),
 //                     line!().to_string(),
 //                     format!("partial_success coz results_vec_len != hashmap_len and results_vec not all true, results_vec.len() {results_vec_len}, hashmap_len {hashmap_len}"),

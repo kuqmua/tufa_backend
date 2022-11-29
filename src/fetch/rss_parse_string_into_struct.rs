@@ -29,11 +29,12 @@ use crate::global_variables::hardcode::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_
 use crate::global_variables::hardcode::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
 use crate::global_variables::hardcode::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_3;
 use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_trait::ProviderKindTrait;
 use regex::Regex;
 use serde_xml_rs::from_str;
+use tufa_common::config_mods::print_type::PrintType;
+use tufa_common::traits::get_color::WarningLowColor;
 
 pub fn rss_parse_string_into_struct(
     mut fetch_result_string: String,
@@ -61,7 +62,7 @@ pub fn rss_parse_string_into_struct(
                                                 format!("no </channel> in response link: {value}");
                                             print_colorful_message(
                                                 Some(&pk),
-                                                PrintType::WarningLow,
+                                                tufa_common::config_mods::print_type::PrintType::WarningLow,
                                                 vec![format!(
                                                     "{}{}{}",
                                                     file!(),
@@ -80,7 +81,7 @@ pub fn rss_parse_string_into_struct(
                                         format!("no <channel> in response link: {value}");
                                     print_colorful_message(
                                         Some(&pk),
-                                        PrintType::WarningLow,
+                                        tufa_common::config_mods::print_type::PrintType::WarningLow,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         warning_message,
@@ -285,7 +286,7 @@ pub fn rss_parse_string_into_struct(
                                 Err(e) => {
                                     print_colorful_message(
                                         Some(&pk),
-                                        PrintType::Error,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {e}"),
@@ -411,7 +412,7 @@ pub fn rss_parse_string_into_struct(
                                 Err(e) => {
                                     print_colorful_message(
                                         Some(&pk),
-                                        PrintType::Error,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {e}"),
@@ -542,7 +543,7 @@ pub fn rss_parse_string_into_struct(
                                 Err(e) => {
                                     print_colorful_message(
                                         Some(&pk),
-                                        PrintType::Error,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {e}"),
@@ -666,7 +667,7 @@ pub fn rss_parse_string_into_struct(
                                 Err(e) => {
                                     print_colorful_message(
                                         Some(&pk),
-                                        PrintType::Error,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {e}"),
@@ -792,7 +793,7 @@ pub fn rss_parse_string_into_struct(
                                 Err(e) => {
                                     print_colorful_message(
                                         Some(&pk),
-                                        PrintType::Error,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {e}"),
@@ -919,7 +920,7 @@ pub fn rss_parse_string_into_struct(
                                 Err(e) => {
                                     print_colorful_message(
                                         Some(&pk),
-                                        PrintType::Error,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {e}"),
@@ -937,7 +938,7 @@ pub fn rss_parse_string_into_struct(
                     let warning_message = format!("cannot find {what_should_find_in_fetch_result_string} for {pk:#?} in fetch_result_string");
                     print_colorful_message(
                         Some(&pk),
-                        PrintType::WarningLow,
+                        tufa_common::config_mods::print_type::PrintType::WarningLow,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         warning_message,
@@ -1064,7 +1065,7 @@ pub fn rss_parse_string_into_struct(
                 Err(e) => {
                     print_colorful_message(
                         Some(&pk),
-                        PrintType::Error,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         format!("Rss conversion from str error: {e}"),

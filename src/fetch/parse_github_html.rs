@@ -1,9 +1,10 @@
 use crate::fetch::info_structures::common_rss_structures::GithubInfoFromHtml;
 use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
 use html_parser::Dom;
 use html_parser::Node;
+use tufa_common::config_mods::print_type::PrintType;
+use tufa_common::traits::get_color::WarningHighColor;
 
 //todo: think about renaming
 pub type GithubPostInfoVec = Vec<(
@@ -98,7 +99,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                             );
                                                             print_colorful_message(
                                                                 None,
-                                                                PrintType::WarningHigh,
+                                                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                                                 vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                 warning_message,
@@ -108,7 +109,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                 }
                                                 _ => print_colorful_message(
                                                     None,
-                                                    PrintType::WarningHigh,
+                                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                     "different node".to_string(),
@@ -121,7 +122,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                 );
                                                 print_colorful_message(
                                                     None,
-                                                    PrintType::WarningHigh,
+                                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                 warning_message,
@@ -131,7 +132,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                     }
                                     _ => print_colorful_message(
                                                     None,
-                                        PrintType::WarningHigh,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
@@ -142,7 +143,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                         format!("different children.len(): {}", dom_first_child.children.len());
                                     print_colorful_message(
                                                     None,
-                                        PrintType::WarningHigh,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
@@ -152,7 +153,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                             }
                             _ => print_colorful_message(
                                 None,
-                                PrintType::WarningHigh,
+                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                 vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                 "different node".to_string(),
@@ -163,7 +164,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                 format!("different children.len(): {}", dom.children.len());
                             print_colorful_message(
                                 None,
-                                PrintType::WarningHigh,
+                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                 vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                 warning_message,
@@ -175,7 +176,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                     let error_message = format!("Dom::parse error {e}");
                     print_colorful_message(
                         None,
-                        PrintType::Error,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         error_message,
@@ -185,7 +186,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
         }
         None => print_colorful_message(
             None,
-            PrintType::WarningHigh,
+            tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "option content is None".to_string(),
@@ -254,7 +255,7 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                                     let warning_message = format!("no {attribute} attribute");
                                     print_colorful_message(
                                         None,
-                                        PrintType::WarningHigh,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         warning_message,
@@ -264,7 +265,7 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                         }
                         _ => print_colorful_message(
                             None,
-                            PrintType::WarningHigh,
+                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
@@ -277,7 +278,7 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                         );
                         print_colorful_message(
                             None,
-                            PrintType::WarningHigh,
+                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                             warning_message,
@@ -286,7 +287,7 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                 },
                 _ => print_colorful_message(
                     None,
-                    PrintType::WarningHigh,
+                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
@@ -297,7 +298,7 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                     format!("different children.len(): {}", node_element.children.len());
                 print_colorful_message(
                     None,
-                    PrintType::WarningHigh,
+                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     warning_message,
@@ -306,7 +307,7 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
         },
         _ => print_colorful_message(
             None,
-            PrintType::WarningHigh,
+            tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
@@ -392,7 +393,7 @@ fn parse_github_html_second_part(
                                                     }
                                                     _ => print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -413,7 +414,7 @@ fn parse_github_html_second_part(
                                                     );
                                                     print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -431,7 +432,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -447,7 +448,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -467,7 +468,7 @@ fn parse_github_html_second_part(
                                                     }
                                                     _ => print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -488,7 +489,7 @@ fn parse_github_html_second_part(
                                                     );
                                                     print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -506,7 +507,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -547,7 +548,7 @@ fn parse_github_html_second_part(
                                                                     );
                                                                     print_colorful_message(
                                                                     None,
-                                                                    PrintType::WarningHigh,
+                                                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                     warning_message,
@@ -572,7 +573,7 @@ fn parse_github_html_second_part(
                                                                 }
                                                                 _ => print_colorful_message(
                                                     None,
-                                                                    PrintType::WarningHigh,
+                                                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                 "different node".to_string(),
@@ -586,7 +587,7 @@ fn parse_github_html_second_part(
                                                 );
                                                 print_colorful_message(
                                                     None,
-                                                    PrintType::WarningHigh,
+                                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                 warning_message,
@@ -596,7 +597,7 @@ fn parse_github_html_second_part(
                                                         }
                                                         _ => print_colorful_message(
                                                             None,
-                                                            PrintType::WarningHigh,
+                                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                             vec![format!(
                                                                 "{}{}{}",
                                                                 file!(),
@@ -619,7 +620,7 @@ fn parse_github_html_second_part(
                                                     );
                                                     print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -637,7 +638,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -670,7 +671,7 @@ fn parse_github_html_second_part(
                                                                     }
                                                                     _ => print_colorful_message(
                                                     None,
-                                                                        PrintType::WarningHigh,
+                                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                     "different node".to_string(),
@@ -685,7 +686,7 @@ fn parse_github_html_second_part(
                                 );
                                                                 print_colorful_message(
                                                     None,
-                                                                    PrintType::WarningHigh,
+                                                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                 warning_message,
@@ -695,7 +696,7 @@ fn parse_github_html_second_part(
                                                         }
                                                         _ => print_colorful_message(
                                                             None,
-                                                            PrintType::WarningHigh,
+                                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                             vec![format!(
                                                                 "{}{}{}",
                                                                 file!(),
@@ -729,7 +730,7 @@ fn parse_github_html_second_part(
                                                                     }
                                                                     _ => print_colorful_message(
                                                     None,
-                                                                        PrintType::WarningHigh,
+                                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                     "different node".to_string(),
@@ -743,7 +744,7 @@ fn parse_github_html_second_part(
                                 );
                                 print_colorful_message(
                                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                 warning_message,
@@ -753,7 +754,7 @@ fn parse_github_html_second_part(
                                                         }
                                                         _ => print_colorful_message(
                                                             None,
-                                                            PrintType::WarningHigh,
+                                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                             vec![format!(
                                                                 "{}{}{}",
                                                                 file!(),
@@ -790,7 +791,7 @@ fn parse_github_html_second_part(
                                                                     }
                                                                     _ => print_colorful_message(
                                                     None,
-                                                                        PrintType::WarningHigh,
+                                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                     "different node".to_string(),
@@ -805,7 +806,7 @@ fn parse_github_html_second_part(
                                 );
                                                                 print_colorful_message(
                                                     None,
-        PrintType::WarningHigh,
+        tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
@@ -815,7 +816,7 @@ fn parse_github_html_second_part(
                                                         }
                                                         _ => print_colorful_message(
                                                             None,
-                                                            PrintType::WarningHigh,
+                                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                             vec![format!(
                                                                 "{}{}{}",
                                                                 file!(),
@@ -838,7 +839,7 @@ fn parse_github_html_second_part(
                                                     );
                                                     print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -856,7 +857,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -878,7 +879,7 @@ fn parse_github_html_second_part(
                                                     }
                                                     _ => print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -899,7 +900,7 @@ fn parse_github_html_second_part(
                                                     );
                                                     print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -917,7 +918,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -937,7 +938,7 @@ fn parse_github_html_second_part(
                                                     }
                                                     _ => print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -958,7 +959,7 @@ fn parse_github_html_second_part(
                                                     );
                                                     print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -976,7 +977,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -992,7 +993,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -1012,7 +1013,7 @@ fn parse_github_html_second_part(
                                                     }
                                                     _ => print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -1033,7 +1034,7 @@ fn parse_github_html_second_part(
                                                     );
                                                     print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -1051,7 +1052,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -1092,7 +1093,7 @@ fn parse_github_html_second_part(
                                                                     );
                                                                     print_colorful_message(
                                                                     None,
-                                                                    PrintType::WarningHigh,
+                                                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                     warning_message,
@@ -1114,7 +1115,7 @@ fn parse_github_html_second_part(
                                                                     }
                                                                     _ => print_colorful_message(
                                                     None,
-        PrintType::WarningHigh,
+        tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
@@ -1130,7 +1131,7 @@ fn parse_github_html_second_part(
                                                                 );
                                                                 print_colorful_message(
                                                     None,
-                                                                    PrintType::WarningHigh,
+                                                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                 warning_message,
@@ -1140,7 +1141,7 @@ fn parse_github_html_second_part(
                                                         }
                                                         _ => print_colorful_message(
                                                             None,
-                                                            PrintType::WarningHigh,
+                                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                             vec![format!(
                                                                 "{}{}{}",
                                                                 file!(),
@@ -1163,7 +1164,7 @@ fn parse_github_html_second_part(
                                                     );
                                                     print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -1181,7 +1182,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -1214,7 +1215,7 @@ fn parse_github_html_second_part(
                                                                     }
                                                                     _ => print_colorful_message(
                                                     None,
-        PrintType::WarningHigh,
+        tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
@@ -1229,7 +1230,7 @@ fn parse_github_html_second_part(
                                 );
                                                                 print_colorful_message(
                                                     None,
-        PrintType::WarningHigh,
+        tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
@@ -1239,7 +1240,7 @@ fn parse_github_html_second_part(
                                                         }
                                                         _ => print_colorful_message(
                                                             None,
-                                                            PrintType::WarningHigh,
+                                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                             vec![format!(
                                                                 "{}{}{}",
                                                                 file!(),
@@ -1273,7 +1274,7 @@ fn parse_github_html_second_part(
                                                                     }
                                                                     _ => print_colorful_message(
                                                     None,
-        PrintType::WarningHigh,
+        tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
@@ -1287,7 +1288,7 @@ fn parse_github_html_second_part(
                                                 );
                                                 print_colorful_message(
                                                     None,
-        PrintType::WarningHigh,
+        tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
@@ -1297,7 +1298,7 @@ fn parse_github_html_second_part(
                                                         }
                                                         _ => print_colorful_message(
                                                             None,
-                                                            PrintType::WarningHigh,
+                                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                             vec![format!(
                                                                 "{}{}{}",
                                                                 file!(),
@@ -1334,7 +1335,7 @@ fn parse_github_html_second_part(
                                                                     }
                                                                     _ => print_colorful_message(
                                                     None,
-        PrintType::WarningHigh,
+        tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
@@ -1348,7 +1349,7 @@ fn parse_github_html_second_part(
                                                 );
                                                 print_colorful_message(
                                                     None,
-        PrintType::WarningHigh,
+        tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
@@ -1358,7 +1359,7 @@ fn parse_github_html_second_part(
                                                         }
                                                         _ => print_colorful_message(
                                                             None,
-                                                            PrintType::WarningHigh,
+                                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                             vec![format!(
                                                                 "{}{}{}",
                                                                 file!(),
@@ -1381,7 +1382,7 @@ fn parse_github_html_second_part(
                                                     );
                                                     print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -1399,7 +1400,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -1415,7 +1416,7 @@ fn parse_github_html_second_part(
                                     );
                                     print_colorful_message(
                                         None,
-                                        PrintType::WarningHigh,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         warning_message,
@@ -1425,7 +1426,7 @@ fn parse_github_html_second_part(
                         }
                         _ => print_colorful_message(
                             None,
-                            PrintType::WarningHigh,
+                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
@@ -1501,7 +1502,7 @@ fn parse_github_html_second_part(
                                                 );
                                                 print_colorful_message(
                                                     None,
-                                                    PrintType::WarningHigh,
+                                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                     vec![format!(
                                                         "{}{}{}",
                                                         file!(),
@@ -1519,7 +1520,7 @@ fn parse_github_html_second_part(
                                     }
                                     _ => print_colorful_message(
                                         None,
-                                        PrintType::WarningHigh,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
@@ -1538,7 +1539,7 @@ fn parse_github_html_second_part(
                                                     }
                                                     _ => print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -1559,7 +1560,7 @@ fn parse_github_html_second_part(
                                                     );
                                                     print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -1577,7 +1578,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -1593,7 +1594,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -1614,7 +1615,7 @@ fn parse_github_html_second_part(
                                                     }
                                                     _ => print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -1635,7 +1636,7 @@ fn parse_github_html_second_part(
                                                     );
                                                     print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -1653,7 +1654,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -1669,7 +1670,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -1689,7 +1690,7 @@ fn parse_github_html_second_part(
                                                     }
                                                     _ => print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -1710,7 +1711,7 @@ fn parse_github_html_second_part(
                                                     );
                                                     print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -1728,7 +1729,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -1767,7 +1768,7 @@ fn parse_github_html_second_part(
                                                                     );
                                                                     print_colorful_message(
                                                                     None,
-                                                                    PrintType::WarningHigh,
+                                                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                     warning_message,
@@ -1788,7 +1789,7 @@ fn parse_github_html_second_part(
                                                                     }
                                                                     _ => print_colorful_message(
                                                     None,
-        PrintType::WarningHigh,
+        tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
@@ -1802,7 +1803,7 @@ fn parse_github_html_second_part(
                                                                     );
                                                                     print_colorful_message(
                                                     None,
-        PrintType::WarningHigh,
+        tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
@@ -1812,7 +1813,7 @@ fn parse_github_html_second_part(
                                                         }
                                                         _ => print_colorful_message(
                                                             None,
-                                                            PrintType::WarningHigh,
+                                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                             vec![format!(
                                                                 "{}{}{}",
                                                                 file!(),
@@ -1835,7 +1836,7 @@ fn parse_github_html_second_part(
                                                     );
                                                     print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -1853,7 +1854,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -1869,7 +1870,7 @@ fn parse_github_html_second_part(
                                     );
                                     print_colorful_message(
                                         None,
-                                        PrintType::WarningHigh,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         warning_message,
@@ -1879,7 +1880,7 @@ fn parse_github_html_second_part(
                         }
                         _ => print_colorful_message(
                             None,
-                            PrintType::WarningHigh,
+                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
@@ -1934,7 +1935,7 @@ fn parse_github_html_second_part(
                                                 );
                                                 print_colorful_message(
                                                     None,
-                                                    PrintType::WarningHigh,
+                                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                     vec![format!(
                                                         "{}{}{}",
                                                         file!(),
@@ -1952,7 +1953,7 @@ fn parse_github_html_second_part(
                                     }
                                     _ => print_colorful_message(
                                         None,
-                                        PrintType::WarningHigh,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
@@ -1972,7 +1973,7 @@ fn parse_github_html_second_part(
                                                     }
                                                     _ => print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -1995,7 +1996,7 @@ fn parse_github_html_second_part(
                                                     );
                                                     print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -2013,7 +2014,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -2029,7 +2030,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -2052,7 +2053,7 @@ fn parse_github_html_second_part(
                                                     }
                                                     _ => print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -2075,7 +2076,7 @@ fn parse_github_html_second_part(
                                                     );
                                                     print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -2093,7 +2094,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -2109,7 +2110,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -2131,7 +2132,7 @@ fn parse_github_html_second_part(
                                                     }
                                                     _ => print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -2154,7 +2155,7 @@ fn parse_github_html_second_part(
                                                     );
                                                     print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -2172,7 +2173,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -2213,7 +2214,7 @@ fn parse_github_html_second_part(
                                                                     );
                                                                     print_colorful_message(
                                                                     None,
-                                                                    PrintType::WarningHigh,
+                                                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                     warning_message,
@@ -2236,7 +2237,7 @@ fn parse_github_html_second_part(
                                                                 }
                                                                 _ => print_colorful_message(
                                                     None,
-        PrintType::WarningHigh,
+        tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
@@ -2250,7 +2251,7 @@ fn parse_github_html_second_part(
                             );
                                                                 print_colorful_message(
                                                     None,
-        PrintType::WarningHigh,
+        tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
@@ -2260,7 +2261,7 @@ fn parse_github_html_second_part(
                                                         }
                                                         _ => print_colorful_message(
                                                             None,
-                                                            PrintType::WarningHigh,
+                                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                             vec![format!(
                                                                 "{}{}{}",
                                                                 file!(),
@@ -2285,7 +2286,7 @@ fn parse_github_html_second_part(
                                                     );
                                                     print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -2303,7 +2304,7 @@ fn parse_github_html_second_part(
                                         }
                                         _ => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -2319,7 +2320,7 @@ fn parse_github_html_second_part(
                                     );
                                     print_colorful_message(
                                         None,
-                                        PrintType::WarningHigh,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         warning_message,
@@ -2329,7 +2330,7 @@ fn parse_github_html_second_part(
                         }
                         _ => print_colorful_message(
                             None,
-                            PrintType::WarningHigh,
+                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
@@ -2344,7 +2345,7 @@ fn parse_github_html_second_part(
                         format!("different children.len(): {}", node_element.children.len());
                     print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         warning_message,
@@ -2354,7 +2355,7 @@ fn parse_github_html_second_part(
         }
         _ => print_colorful_message(
             None,
-            PrintType::WarningHigh,
+            tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
@@ -2429,7 +2430,7 @@ fn parse_github_html_second_part_inner_one_element(
                                 }
                                 _ => print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
@@ -2442,7 +2443,7 @@ fn parse_github_html_second_part_inner_one_element(
                                 );
                                 print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
@@ -2452,7 +2453,7 @@ fn parse_github_html_second_part_inner_one_element(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -2479,7 +2480,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                             format!("no {attribute} attribute");
                                                         print_colorful_message(
                                                             None,
-                                                            PrintType::WarningHigh,
+                                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                             vec![format!(
                                                                 "{}{}{}",
                                                                 file!(),
@@ -2525,7 +2526,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                                 format!("no {attribute} attribute");
                                                             print_colorful_message(
                                                                 None,
-                                                                PrintType::WarningHigh,
+                                                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                                 vec![format!(
                                                                     "{}{}{}",
                                                                     file!(),
@@ -2544,7 +2545,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                 }
                                                 _ => print_colorful_message(
                                                     None,
-                                                    PrintType::WarningHigh,
+                                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                     vec![format!(
                                                         "{}{}{}",
                                                         file!(),
@@ -2565,7 +2566,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                 );
                                                 print_colorful_message(
                                                     None,
-                                                    PrintType::WarningHigh,
+                                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                     vec![format!(
                                                         "{}{}{}",
                                                         file!(),
@@ -2584,7 +2585,7 @@ fn parse_github_html_second_part_inner_one_element(
                                     }
                                     _ => print_colorful_message(
                                         None,
-                                        PrintType::WarningHigh,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
@@ -2597,7 +2598,7 @@ fn parse_github_html_second_part_inner_one_element(
                                     );
                                     print_colorful_message(
                                         None,
-                                        PrintType::WarningHigh,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         warning_message,
@@ -2607,7 +2608,7 @@ fn parse_github_html_second_part_inner_one_element(
                         }
                         _ => print_colorful_message(
                             None,
-                            PrintType::WarningHigh,
+                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
@@ -2637,7 +2638,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                     format!("no {attribute} attribute");
                                                 print_colorful_message(
                                                     None,
-                                                    PrintType::WarningHigh,
+                                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                     vec![format!(
                                                         "{}{}{}",
                                                         file!(),
@@ -2655,7 +2656,7 @@ fn parse_github_html_second_part_inner_one_element(
                                     }
                                     _ => print_colorful_message(
                                         None,
-                                        PrintType::WarningHigh,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
@@ -2668,7 +2669,7 @@ fn parse_github_html_second_part_inner_one_element(
                                     );
                                     print_colorful_message(
                                         None,
-                                        PrintType::WarningHigh,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         warning_message,
@@ -2678,7 +2679,7 @@ fn parse_github_html_second_part_inner_one_element(
                         }
                         _ => print_colorful_message(
                             None,
-                            PrintType::WarningHigh,
+                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
@@ -2755,7 +2756,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                                             );
                                                                             print_colorful_message(
                                                     None,
-                                                                                PrintType::WarningHigh,
+                                                                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                             warning_message,
@@ -2767,7 +2768,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                                     .to_string();
                                                                          print_colorful_message(
                                                     None,
-                                                                                PrintType::WarningHigh,
+                                                                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                             warning_message,
@@ -2780,7 +2781,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                                     .to_string();
                                                                     print_colorful_message(
                                                     None,
-                                                                        PrintType::WarningHigh,
+                                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                                                     warning_message,
@@ -2790,7 +2791,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                     }
                                                     _ => print_colorful_message(
                                                         None,
-                                                        PrintType::WarningHigh,
+                                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                         vec![format!(
                                                             "{}{}{}",
                                                             file!(),
@@ -2867,7 +2868,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                     format!("different children.len(): {len}");
                                                 print_colorful_message(
                                                     None,
-                                                    PrintType::WarningHigh,
+                                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                     vec![format!(
                                                         "{}{}{}",
                                                         file!(),
@@ -2885,7 +2886,7 @@ fn parse_github_html_second_part_inner_one_element(
                                     }
                                     _ => print_colorful_message(
                                         None,
-                                        PrintType::WarningHigh,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
@@ -2898,7 +2899,7 @@ fn parse_github_html_second_part_inner_one_element(
                                     );
                                     print_colorful_message(
                                         None,
-                                        PrintType::WarningHigh,
+                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                         warning_message,
@@ -2908,7 +2909,7 @@ fn parse_github_html_second_part_inner_one_element(
                         }
                         _ => print_colorful_message(
                             None,
-                            PrintType::WarningHigh,
+                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
@@ -2920,7 +2921,7 @@ fn parse_github_html_second_part_inner_one_element(
                         format!("different children.len(): {}", node_element.children.len());
                     print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         warning_message,
@@ -2930,7 +2931,7 @@ fn parse_github_html_second_part_inner_one_element(
         }
         _ => print_colorful_message(
             None,
-            PrintType::WarningHigh,
+            tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
@@ -2965,7 +2966,7 @@ fn handle_text_element(node: &Node) -> Option<String> {
         }
         _ => print_colorful_message(
             None,
-            PrintType::WarningHigh,
+            tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
@@ -3057,7 +3058,7 @@ fn second_element(
                                 }
                                 _ => print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
@@ -3070,7 +3071,7 @@ fn second_element(
                                 );
                                 print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
@@ -3080,7 +3081,7 @@ fn second_element(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -3091,7 +3092,7 @@ fn second_element(
                         format!("different children.len(): {}", node_element.children.len());
                     print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         warning_message,
@@ -3101,7 +3102,7 @@ fn second_element(
         }
         _ => print_colorful_message(
             None,
-            PrintType::WarningHigh,
+            tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
@@ -3157,7 +3158,7 @@ fn two_elements_one_child(
                                 }
                                 _ => print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
@@ -3170,7 +3171,7 @@ fn two_elements_one_child(
                                 );
                                 print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
@@ -3180,7 +3181,7 @@ fn two_elements_one_child(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -3194,7 +3195,7 @@ fn two_elements_one_child(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -3221,7 +3222,7 @@ fn two_elements_one_child(
                                 let warning_message = format!("no {attribute} attribute");
                                 print_colorful_message(
                                                     None,
-        PrintType::WarningHigh,
+        tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
@@ -3231,7 +3232,7 @@ fn two_elements_one_child(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -3257,7 +3258,7 @@ fn two_elements_one_child(
                                                 format!("no {attribute} attribute");
                                             print_colorful_message(
                                                 None,
-                                                PrintType::WarningHigh,
+                                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                 vec![format!(
                                                     "{}{}{}",
                                                     file!(),
@@ -3279,7 +3280,7 @@ fn two_elements_one_child(
                                             }
                                             _ => print_colorful_message(
                                                 None,
-                                                PrintType::WarningHigh,
+                                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                 vec![format!(
                                                     "{}{}{}",
                                                     file!(),
@@ -3298,7 +3299,7 @@ fn two_elements_one_child(
                                             );
                                             print_colorful_message(
                                                 None,
-                                                PrintType::WarningHigh,
+                                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                 vec![format!(
                                                     "{}{}{}",
                                                     file!(),
@@ -3314,7 +3315,7 @@ fn two_elements_one_child(
                                 }
                                 _ => print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
@@ -3327,7 +3328,7 @@ fn two_elements_one_child(
                                 );
                                 print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
@@ -3337,7 +3338,7 @@ fn two_elements_one_child(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -3356,7 +3357,7 @@ fn two_elements_one_child(
                                 }
                                 _ => print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
@@ -3369,7 +3370,7 @@ fn two_elements_one_child(
                                 );
                                 print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
@@ -3379,7 +3380,7 @@ fn two_elements_one_child(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -3393,7 +3394,7 @@ fn two_elements_one_child(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -3420,7 +3421,7 @@ fn two_elements_one_child(
                                     let warning_message = format!("no {attribute} attribute");
                                     print_colorful_message(
                                                     None,
-        PrintType::WarningHigh,
+        tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
@@ -3430,7 +3431,7 @@ fn two_elements_one_child(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -3444,7 +3445,7 @@ fn two_elements_one_child(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -3467,7 +3468,7 @@ fn two_elements_one_child(
                                         },
                                         None => print_colorful_message(
                                             None,
-                                            PrintType::WarningHigh,
+                                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
                                                 GIT_INFO.get_git_source_file_link(file!(), line!())
@@ -3484,7 +3485,7 @@ fn two_elements_one_child(
                                             }
                                             _ => print_colorful_message(
                                                 None,
-                                                PrintType::WarningHigh,
+                                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                 vec![format!(
                                                     "{}{}{}",
                                                     file!(),
@@ -3503,7 +3504,7 @@ fn two_elements_one_child(
                                             );
                                             print_colorful_message(
                                                 None,
-                                                PrintType::WarningHigh,
+                                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                 vec![format!(
                                                     "{}{}{}",
                                                     file!(),
@@ -3519,7 +3520,7 @@ fn two_elements_one_child(
                                 }
                                 _ => print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
@@ -3532,7 +3533,7 @@ fn two_elements_one_child(
                                 );
                                 print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
@@ -3542,7 +3543,7 @@ fn two_elements_one_child(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -3561,7 +3562,7 @@ fn two_elements_one_child(
                                 }
                                 _ => print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
@@ -3574,7 +3575,7 @@ fn two_elements_one_child(
                                 );
                                 print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
@@ -3584,7 +3585,7 @@ fn two_elements_one_child(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -3598,7 +3599,7 @@ fn two_elements_one_child(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -3626,7 +3627,7 @@ fn two_elements_one_child(
                                             let warning_message = format!("no {attribute} attribute or {attribute_check_case} attribute");
                                             print_colorful_message(
                                                     None,
-        PrintType::WarningHigh,
+        tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
@@ -3644,7 +3645,7 @@ fn two_elements_one_child(
                                 }
                                 _ => print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
@@ -3657,7 +3658,7 @@ fn two_elements_one_child(
                                 );
                                 print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
@@ -3667,7 +3668,7 @@ fn two_elements_one_child(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -3681,7 +3682,7 @@ fn two_elements_one_child(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -3707,7 +3708,7 @@ fn two_elements_one_child(
                                     let warning_message = format!("no {attribute} attribute");
                                     print_colorful_message(
                                                     None,
-        PrintType::WarningHigh,
+        tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
         warning_message,
@@ -3717,7 +3718,7 @@ fn two_elements_one_child(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -3745,7 +3746,7 @@ fn two_elements_one_child(
                                                 format!("no {attribute} attribute");
                                             print_colorful_message(
                                                 None,
-                                                PrintType::WarningHigh,
+                                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                 vec![format!(
                                                     "{}{}{}",
                                                     file!(),
@@ -3767,7 +3768,7 @@ fn two_elements_one_child(
                                             }
                                             _ => print_colorful_message(
                                                 None,
-                                                PrintType::WarningHigh,
+                                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                 vec![format!(
                                                     "{}{}{}",
                                                     file!(),
@@ -3786,7 +3787,7 @@ fn two_elements_one_child(
                                             );
                                             print_colorful_message(
                                                 None,
-                                                PrintType::WarningHigh,
+                                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                 vec![format!(
                                                     "{}{}{}",
                                                     file!(),
@@ -3802,7 +3803,7 @@ fn two_elements_one_child(
                                 }
                                 _ => print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
@@ -3815,7 +3816,7 @@ fn two_elements_one_child(
                                 );
                                 print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
@@ -3825,7 +3826,7 @@ fn two_elements_one_child(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -3837,7 +3838,7 @@ fn two_elements_one_child(
                     format!("different children.len(): {}", node_element.children.len());
                 print_colorful_message(
                     None,
-                    PrintType::WarningHigh,
+                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     warning_message,
@@ -3846,7 +3847,7 @@ fn two_elements_one_child(
         },
         _ => print_colorful_message(
             None,
-            PrintType::WarningHigh,
+            tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
@@ -3885,7 +3886,7 @@ fn two_elements_four_children_first(node: &Node) -> Option<String> {
                 }
                 _ => print_colorful_message(
                     None,
-                    PrintType::WarningHigh,
+                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
@@ -3896,7 +3897,7 @@ fn two_elements_four_children_first(node: &Node) -> Option<String> {
                     format!("different children.len(): {}", node_element.children.len());
                 print_colorful_message(
                     None,
-                    PrintType::WarningHigh,
+                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     warning_message,
@@ -3905,7 +3906,7 @@ fn two_elements_four_children_first(node: &Node) -> Option<String> {
         },
         _ => print_colorful_message(
             None,
-            PrintType::WarningHigh,
+            tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
@@ -3925,7 +3926,7 @@ fn two_elements_four_children_second(node: &Node) -> Option<String> {
         }
         _ => print_colorful_message(
             None,
-            PrintType::WarningHigh,
+            tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
@@ -3947,7 +3948,7 @@ fn two_elements_four_children_third(node: &Node) -> Option<String> {
                 }
                 _ => print_colorful_message(
                     None,
-                    PrintType::WarningHigh,
+                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
@@ -3958,7 +3959,7 @@ fn two_elements_four_children_third(node: &Node) -> Option<String> {
                     format!("different children.len(): {}", node_element.children.len());
                 print_colorful_message(
                     None,
-                    PrintType::WarningHigh,
+                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     warning_message,
@@ -3967,7 +3968,7 @@ fn two_elements_four_children_third(node: &Node) -> Option<String> {
         },
         _ => print_colorful_message(
             None,
-            PrintType::WarningHigh,
+            tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
@@ -3998,7 +3999,7 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                             let warning_message = format!("no {attribute} attribute");
                             print_colorful_message(
                                 None,
-                                PrintType::WarningHigh,
+                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                 vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                 warning_message,
@@ -4014,7 +4015,7 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                             }
                             _ => print_colorful_message(
                                 None,
-                                PrintType::WarningHigh,
+                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                 vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                 "different node".to_string(),
@@ -4027,7 +4028,7 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                             );
                             print_colorful_message(
                                 None,
-                                PrintType::WarningHigh,
+                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                 vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                 warning_message,
@@ -4037,7 +4038,7 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                 }
                 _ => print_colorful_message(
                     None,
-                    PrintType::WarningHigh,
+                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
@@ -4048,7 +4049,7 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                     format!("different children.len(): {}", node_element.children.len());
                 print_colorful_message(
                     None,
-                    PrintType::WarningHigh,
+                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     warning_message,
@@ -4057,7 +4058,7 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
         },
         _ => print_colorful_message(
             None,
-            PrintType::WarningHigh,
+            tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
@@ -4100,7 +4101,7 @@ fn parse_github_html_second_part_two_children_first(
                                 }
                                 _ => print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
@@ -4113,7 +4114,7 @@ fn parse_github_html_second_part_two_children_first(
                                 );
                                 print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
@@ -4123,7 +4124,7 @@ fn parse_github_html_second_part_two_children_first(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -4137,7 +4138,7 @@ fn parse_github_html_second_part_two_children_first(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -4154,7 +4155,7 @@ fn parse_github_html_second_part_two_children_first(
                                 }
                                 _ => print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
@@ -4167,7 +4168,7 @@ fn parse_github_html_second_part_two_children_first(
                                 );
                                 print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
@@ -4177,7 +4178,7 @@ fn parse_github_html_second_part_two_children_first(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -4203,7 +4204,7 @@ fn parse_github_html_second_part_two_children_first(
                                                 format!("no {attribute} attribute");
                                             print_colorful_message(
                                                 None,
-                                                PrintType::WarningHigh,
+                                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                 vec![format!(
                                                     "{}{}{}",
                                                     file!(),
@@ -4225,7 +4226,7 @@ fn parse_github_html_second_part_two_children_first(
                                             }
                                             _ => print_colorful_message(
                                                 None,
-                                                PrintType::WarningHigh,
+                                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                 vec![format!(
                                                     "{}{}{}",
                                                     file!(),
@@ -4244,7 +4245,7 @@ fn parse_github_html_second_part_two_children_first(
                                             );
                                             print_colorful_message(
                                                 None,
-                                                PrintType::WarningHigh,
+                                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                 vec![format!(
                                                     "{}{}{}",
                                                     file!(),
@@ -4260,7 +4261,7 @@ fn parse_github_html_second_part_two_children_first(
                                 }
                                 _ => print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
@@ -4273,7 +4274,7 @@ fn parse_github_html_second_part_two_children_first(
                                 );
                                 print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
@@ -4283,7 +4284,7 @@ fn parse_github_html_second_part_two_children_first(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -4305,7 +4306,7 @@ fn parse_github_html_second_part_two_children_first(
                                 }
                                 _ => print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
@@ -4318,7 +4319,7 @@ fn parse_github_html_second_part_two_children_first(
                                 );
                                 print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
@@ -4328,7 +4329,7 @@ fn parse_github_html_second_part_two_children_first(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -4342,7 +4343,7 @@ fn parse_github_html_second_part_two_children_first(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -4359,7 +4360,7 @@ fn parse_github_html_second_part_two_children_first(
                                 }
                                 _ => print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
@@ -4372,7 +4373,7 @@ fn parse_github_html_second_part_two_children_first(
                                 );
                                 print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
@@ -4382,7 +4383,7 @@ fn parse_github_html_second_part_two_children_first(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -4396,7 +4397,7 @@ fn parse_github_html_second_part_two_children_first(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -4414,7 +4415,7 @@ fn parse_github_html_second_part_two_children_first(
                                 }
                                 _ => print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
@@ -4427,7 +4428,7 @@ fn parse_github_html_second_part_two_children_first(
                                 );
                                 print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
@@ -4437,7 +4438,7 @@ fn parse_github_html_second_part_two_children_first(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -4463,7 +4464,7 @@ fn parse_github_html_second_part_two_children_first(
                                                 format!("no {attribute} attribute");
                                             print_colorful_message(
                                                 None,
-                                                PrintType::WarningHigh,
+                                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                 vec![format!(
                                                     "{}{}{}",
                                                     file!(),
@@ -4485,7 +4486,7 @@ fn parse_github_html_second_part_two_children_first(
                                             }
                                             _ => print_colorful_message(
                                                 None,
-                                                PrintType::WarningHigh,
+                                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                 vec![format!(
                                                     "{}{}{}",
                                                     file!(),
@@ -4504,7 +4505,7 @@ fn parse_github_html_second_part_two_children_first(
                                             );
                                             print_colorful_message(
                                                 None,
-                                                PrintType::WarningHigh,
+                                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                 vec![format!(
                                                     "{}{}{}",
                                                     file!(),
@@ -4520,7 +4521,7 @@ fn parse_github_html_second_part_two_children_first(
                                 }
                                 _ => print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
@@ -4533,7 +4534,7 @@ fn parse_github_html_second_part_two_children_first(
                                 );
                                 print_colorful_message(
                                     None,
-                                    PrintType::WarningHigh,
+                                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                     warning_message,
@@ -4543,7 +4544,7 @@ fn parse_github_html_second_part_two_children_first(
                     }
                     _ => print_colorful_message(
                         None,
-                        PrintType::WarningHigh,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
@@ -4555,7 +4556,7 @@ fn parse_github_html_second_part_two_children_first(
                     format!("different children.len(): {}", node_element.children.len());
                 print_colorful_message(
                     None,
-                    PrintType::WarningHigh,
+                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     warning_message,
@@ -4564,7 +4565,7 @@ fn parse_github_html_second_part_two_children_first(
         },
         _ => print_colorful_message(
             None,
-            PrintType::WarningHigh,
+            tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
@@ -4612,7 +4613,7 @@ fn four_cases(
                 }
                 _ => print_colorful_message(
                     None,
-                    PrintType::WarningHigh,
+                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
@@ -4623,7 +4624,7 @@ fn four_cases(
                     format!("different children.len(): {}", first_element.children.len());
                 print_colorful_message(
                     None,
-                    PrintType::WarningHigh,
+                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     warning_message,
@@ -4632,7 +4633,7 @@ fn four_cases(
         },
         _ => print_colorful_message(
             None,
-            PrintType::WarningHigh,
+            tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
@@ -4646,7 +4647,7 @@ fn four_cases(
         }
         _ => print_colorful_message(
             None,
-            PrintType::WarningHigh,
+            tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
@@ -4662,7 +4663,7 @@ fn four_cases(
                 }
                 _ => print_colorful_message(
                     None,
-                    PrintType::WarningHigh,
+                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
@@ -4673,7 +4674,7 @@ fn four_cases(
                     format!("different children.len(): {}", third_element.children.len());
                 print_colorful_message(
                     None,
-                    PrintType::WarningHigh,
+                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     warning_message,
@@ -4682,7 +4683,7 @@ fn four_cases(
         },
         _ => print_colorful_message(
             None,
-            PrintType::WarningHigh,
+            tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
@@ -4706,7 +4707,7 @@ fn four_cases(
                             let warning_message = format!("no {attribute} attribute");
                             print_colorful_message(
                                 None,
-                                PrintType::WarningHigh,
+                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                 vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                 warning_message,
@@ -4723,7 +4724,7 @@ fn four_cases(
                             }
                             _ => print_colorful_message(
                                 None,
-                                PrintType::WarningHigh,
+                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                 vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                 "different node".to_string(),
@@ -4736,7 +4737,7 @@ fn four_cases(
                             );
                             print_colorful_message(
                                 None,
-                                PrintType::WarningHigh,
+                                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                 vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                                 warning_message,
@@ -4746,7 +4747,7 @@ fn four_cases(
                 }
                 _ => print_colorful_message(
                     None,
-                    PrintType::WarningHigh,
+                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
@@ -4759,7 +4760,7 @@ fn four_cases(
                 );
                 print_colorful_message(
                     None,
-                    PrintType::WarningHigh,
+                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     warning_message,
@@ -4768,7 +4769,7 @@ fn four_cases(
         },
         _ => print_colorful_message(
             None,
-            PrintType::WarningHigh,
+            tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),

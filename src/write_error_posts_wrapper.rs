@@ -2,7 +2,7 @@
 // use crate::logs_logic::async_write_fetch_error_logs_into_mongo_wrapper::async_write_fetch_error_logs_into_mongo_wrapper;
 // use crate::logs_logic::async_write_fetch_error_logs_into_mongo_wrapper::WriteLogsResult;
 // use crate::prints::print_colorful_message::print_colorful_message;
-// use crate::prints::print_type_enum::PrintType;
+// use tufa_common::config_mods::print_type::PrintType;
 // use crate::global_variables::runtime::config::CONFIG;
 // use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 // use crate::traits::provider_kind_trait::ProviderKindTrait;
@@ -21,7 +21,7 @@
 //                 for (pk, error) in error_hashmap {
 //                     print_colorful_message(
 //                         Some(&pk),
-//                         PrintType::Error,
+//                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
 //                         file!().to_string(),
 //                         line!().to_string(),
 //                         format!("ProviderKind::remove_providers_logs_directories() failed for {pk:#?} (todo2) error: {error:#?}"),
@@ -36,7 +36,7 @@
 //             WriteLogsResult::Success => {
 //                 print_colorful_message(
 //                     None,
-//                     PrintType::Success,
+//                     tufa_common::config_mods::print_type::PrintType::Success,
 //                     file!().to_string(),
 //                     line!().to_string(),
 //                     format!("async_write_fetch_error_logs_into_mongo_wrapper result {result:#?}"),
@@ -45,7 +45,7 @@
 //             WriteLogsResult::PartialSuccess => {
 //                 print_colorful_message(
 //                     None,
-//                     PrintType::PartialSuccess,
+//                     tufa_common::config_mods::print_type::PrintType::PartialSuccess,
 //                     file!().to_string(),
 //                     line!().to_string(),
 //                     format!("async_write_fetch_error_logs_into_mongo_wrapper result {result:#?}"),
@@ -54,7 +54,7 @@
 //             WriteLogsResult::Failure => {
 //                 print_colorful_message(
 //                     None,
-//                     PrintType::Error,
+//                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
 //                     file!().to_string(),
 //                     line!().to_string(),
 //                     format!("async_write_fetch_error_logs_into_mongo_wrapper result {result:#?}"),

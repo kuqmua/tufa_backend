@@ -1,6 +1,6 @@
 // use crate::fetch::rss_metainfo_fetch_structures::HandledFetchStatusInfo;
 // use crate::prints::print_colorful_message::print_colorful_message;
-// use crate::prints::print_type_enum::PrintType;
+// use tufa_common::config_mods::print_type::PrintType;
 
 // // use std::time::Instant;
 // //async
@@ -27,7 +27,7 @@
 //     } else {
 //         print_colorful_message(
 //             None,
-//             PrintType::Error,
+//             tufa_common::config_mods::print_type::PrintType::WarningHigh,
 //             vec![format!("{}:{}:{}", file!(), line!(), column!())],
 //             vec![get_git_source_file_link(file!(), line!())],
 //             format!("{link} {}", res.status()),

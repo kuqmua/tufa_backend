@@ -12,7 +12,7 @@
 // if is_reddit_authorized {
 //     print_colorful_message(
 //         Some(&provider_kind),
-//         PrintType::Success,
+//         tufa_common::config_mods::print_type::PrintType::Success,
 //         file!().to_string(),
 //         line!().to_string(),
 //         "success reddit authorization".to_string(),
@@ -23,7 +23,7 @@
 //     unfiltered_posts_vec_after_fetch_and_parse = Vec::new(); //rethink this
 //     print_colorful_message(
 //                 Some(&provider_kind),
-//                 PrintType::Error,
+//                 tufa_common::config_mods::print_type::PrintType::WarningHigh,
 //                 file!().to_string(),
 //                 line!().to_string(),
 //                 "cannot authorize reddit(cannot put here authorization_info for future security reasons".to_string(),

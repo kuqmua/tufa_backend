@@ -3,10 +3,10 @@ use crate::global_variables::hardcode::PROJECT_NAME;
 use crate::global_variables::runtime::config::CONFIG;
 use crate::preparation::prepare_server::prepare_server;
 use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
 use crate::server_wrapper::server_wrapper;
 use crate::telemetry::get_subscriber::get_subscriber;
 use crate::telemetry::init_subscriber::init_subscriber;
+use tufa_common::config_mods::print_type::PrintType;
 // use valuable::Valuable;
 
 // #[derive(Clone, Debug, Valuable)]
@@ -33,7 +33,7 @@ pub fn entry() {
         Err(e) => {
             print_colorful_message(
                 None,
-                PrintType::Error,
+                tufa_common::config_mods::print_type::PrintType::WarningHigh,
                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
                 vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                 format!("Cannot build tokio runtime {e:#?}"),
@@ -48,7 +48,7 @@ pub fn entry() {
                 )) {
                     print_colorful_message(
                         None,
-                        PrintType::Error,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                         format!("tracing init_subscriber error: {:#?}", e),
@@ -75,7 +75,7 @@ pub fn entry() {
             if let Err(e) = server_wrapper() {
                 print_colorful_message(
                     None,
-                    PrintType::Error,
+                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
                     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
                     format!("Cannot run actix-web HttpServer, error: {:#?}", e),

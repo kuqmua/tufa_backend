@@ -3,9 +3,9 @@ use crate::global_variables::runtime::config::CONFIG;
 use crate::mongo_integration::mongo_drop_empty_collection::mongo_drop_empty_collection;
 use crate::mongo_integration::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorEnum;
 use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
+use tufa_common::config_mods::print_type::PrintType;
 
 pub async fn drop_mongo_provider_logs_collection_if_need(
     pk: &ProviderKind,
@@ -26,7 +26,7 @@ pub async fn drop_mongo_provider_logs_collection_if_need(
     {
         print_colorful_message(
             Some(pk),
-            PrintType::WarningHigh,
+            tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
             format!("drop fail with error {e:#?}"),

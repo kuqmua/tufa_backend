@@ -1,8 +1,8 @@
 use crate::fetch::rss_check_provider_status::rss_check_provider_status;
 use crate::prints::print_colorful_message::print_colorful_message;
-use crate::prints::print_type_enum::PrintType;
 use std::sync::{Arc, Mutex};
 use std::thread;
+use tufa_common::config_mods::print_type::PrintType;
 use tufa_common::helpers::git::get_git_source_file_link::get_git_source_file_link;
 
 pub fn rss_check_available_providers(twitter_providers_names: Vec<String>) -> Vec<String> {
@@ -25,7 +25,7 @@ pub fn rss_check_available_providers(twitter_providers_names: Vec<String>) -> Ve
                 Err(e) => {
                     print_colorful_message(
                         None,
-                        PrintType::Error,
+                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
                         vec![get_git_source_file_link(file!(), line!())],
                         format!("UnhandledFetchStatusInfo::Failure {e:#?}"),
