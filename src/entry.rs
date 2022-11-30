@@ -116,6 +116,17 @@ pub enum OneErrorEnum {
     Three(ThreeError),
 }
 
+pub trait GetCodeOccurence {
+    fn get_code_occurence(&self) -> CodeOccurence;
+}
+
+impl GetCodeOccurence for OneError {
+    fn get_code_occurence(&self) -> CodeOccurence {
+        //todo match enum
+        self.code_occurence
+    }
+}
+
 pub fn one() -> Result<(), Box<OneError>> {
     if let Err(e) = two() {
         return Err(Box::new(OneError {
@@ -177,6 +188,12 @@ pub struct TwoError {
     code_occurence: CodeOccurence,
 }
 
+impl GetCodeOccurence for TwoError {
+    fn get_code_occurence(&self) -> CodeOccurence {
+        self.code_occurence
+    }
+}
+
 pub fn two() -> Result<(), Box<TwoError>> {
     return Err(Box::new(TwoError {
         source: false,
@@ -207,6 +224,12 @@ pub fn two() -> Result<(), Box<TwoError>> {
 pub struct ThreeError {
     source: u32,
     code_occurence: CodeOccurence,
+}
+
+impl GetCodeOccurence for ThreeError {
+    fn get_code_occurence(&self) -> CodeOccurence {
+        self.code_occurence
+    }
 }
 
 pub fn three() -> Result<(), Box<ThreeError>> {
