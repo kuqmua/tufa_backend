@@ -84,3 +84,154 @@ pub fn entry() {
         }
     }
 }
+
+// use crate::global_variables::compile_time::git_info::GIT_INFO;
+// use crate::global_variables::compile_time::git_info::GIT_INFO;
+use once_cell::sync::Lazy;
+use std::collections::HashMap;
+use tufa_common::common::code_occurence::CodeOccurence;
+use tufa_common::common::code_occurence::FileLineColumn;
+use tufa_common::common::code_occurence::TimeFileLineColumn;
+use tufa_common::common::code_occurence::TimeFileLineColumnIncrement;
+use tufa_common::common::where_was::GitInfoForWhereWas;
+use tufa_common::traits::code_occurence::CodeOccurenceTrait;
+
+// #[derive(
+//     Debug,
+//     InitErrorFromTufaCommon,
+//     ImplErrorWithTracingFromTufaCommon,
+//     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
+//     ImplGetGitInfoFromTufaCommon,
+// )]
+
+// #[derive(Debug, ImplGetWhereWasOriginOrWrapperFromTufaCommon, ImplGetSourceFromTufaCommon)]
+
+pub struct OneError {
+    source: OneErrorEnum,
+    code_occurence: CodeOccurence,
+}
+
+pub enum OneErrorEnum {
+    Two(TwoError),
+    Three(ThreeError),
+}
+
+pub fn one() -> Result<(), Box<OneError>> {
+    if let Err(e) = two() {
+        return Err(Box::new(OneError {
+            source: OneErrorEnum::Two(*e),
+            code_occurence: CodeOccurence::new(
+                GitInfoForWhereWas {
+                    commit_id: String::from(GIT_INFO.commit_id),
+                    repo_link: String::from(GIT_INFO.repo_link),
+                    author: String::from(GIT_INFO.author),
+                    author_email: String::from(GIT_INFO.author_email),
+                    commit_unix_time: String::from(GIT_INFO.commit_unix_time),
+                    timezone: String::from(GIT_INFO.timezone),
+                    message: String::from(GIT_INFO.message),
+                },
+                TimeFileLineColumn {
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
+                    file_line_column: FileLineColumn {
+                        file: String::from(file!()),
+                        line: line!(),
+                        column: column!(),
+                    },
+                },
+            ),
+        }));
+    }
+    if let Err(e) = three() {
+        return Err(Box::new(OneError {
+            source: OneErrorEnum::Three(*e),
+            code_occurence: CodeOccurence::new(
+                GitInfoForWhereWas {
+                    commit_id: String::from(GIT_INFO.commit_id),
+                    repo_link: String::from(GIT_INFO.repo_link),
+                    author: String::from(GIT_INFO.author),
+                    author_email: String::from(GIT_INFO.author_email),
+                    commit_unix_time: String::from(GIT_INFO.commit_unix_time),
+                    timezone: String::from(GIT_INFO.timezone),
+                    message: String::from(GIT_INFO.message),
+                },
+                TimeFileLineColumn {
+                    time: std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .expect("cannot convert time to unix_epoch"),
+                    file_line_column: FileLineColumn {
+                        file: String::from(file!()),
+                        line: line!(),
+                        column: column!(),
+                    },
+                },
+            ),
+        }));
+    }
+    Ok(())
+}
+
+pub struct TwoError {
+    source: bool,
+    code_occurence: CodeOccurence,
+}
+
+pub fn two() -> Result<(), Box<TwoError>> {
+    return Err(Box::new(TwoError {
+        source: false,
+        code_occurence: CodeOccurence::new(
+            GitInfoForWhereWas {
+                commit_id: String::from(GIT_INFO.commit_id),
+                repo_link: String::from(GIT_INFO.repo_link),
+                author: String::from(GIT_INFO.author),
+                author_email: String::from(GIT_INFO.author_email),
+                commit_unix_time: String::from(GIT_INFO.commit_unix_time),
+                timezone: String::from(GIT_INFO.timezone),
+                message: String::from(GIT_INFO.message),
+            },
+            TimeFileLineColumn {
+                time: std::time::SystemTime::now()
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .expect("cannot convert time to unix_epoch"),
+                file_line_column: FileLineColumn {
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
+                },
+            },
+        ),
+    }));
+}
+
+pub struct ThreeError {
+    source: u32,
+    code_occurence: CodeOccurence,
+}
+
+pub fn three() -> Result<(), Box<ThreeError>> {
+    return Err(Box::new(ThreeError {
+        source: 34,
+        code_occurence: CodeOccurence::new(
+            GitInfoForWhereWas {
+                commit_id: String::from(GIT_INFO.commit_id),
+                repo_link: String::from(GIT_INFO.repo_link),
+                author: String::from(GIT_INFO.author),
+                author_email: String::from(GIT_INFO.author_email),
+                commit_unix_time: String::from(GIT_INFO.commit_unix_time),
+                timezone: String::from(GIT_INFO.timezone),
+                message: String::from(GIT_INFO.message),
+            },
+            TimeFileLineColumn {
+                time: std::time::SystemTime::now()
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .expect("cannot convert time to unix_epoch"),
+                file_line_column: FileLineColumn {
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
+                },
+            },
+        ),
+    }));
+}
