@@ -90,6 +90,7 @@ pub fn entry() {
 // use crate::global_variables::compile_time::git_info::GIT_INFO;
 use once_cell::sync::Lazy;
 use std::collections::HashMap;
+use tufa_common::traits::get_color::ErrorColorBold;
 // use tufa_common::common::code_occurence::CodeOccurence;
 use tufa_common::common::code_occurence::FileLineColumn;
 use tufa_common::common::code_occurence::TimeFileLineColumn;
@@ -101,15 +102,6 @@ use tufa_common::config_mods::tracing_type::TracingType;
 use tufa_common::traits::code_occurence::CodeOccurenceTrait;
 
 use tufa_common::common::code_occurence::ThreeError;
-// #[derive(
-//     Debug,
-//     InitErrorFromTufaCommon,
-//     ImplErrorWithTracingFromTufaCommon,
-//     ImplGetWhereWasOriginOrWrapperFromTufaCommon,
-//     ImplGetGitInfoFromTufaCommon,
-// )]
-
-// #[derive(Debug, ImplGetWhereWasOriginOrWrapperFromTufaCommon, ImplGetSourceFromTufaCommon)]
 
 pub struct OneError {
     source: OneErrorEnum,
@@ -117,7 +109,6 @@ pub struct OneError {
 }
 
 pub enum OneErrorEnum {
-    Two(TwoError),
     Three(ThreeError),
 }
 
@@ -133,46 +124,6 @@ pub enum OneErrorEnum {
 // }
 
 pub fn one() -> Result<(), Box<OneError>> {
-    // if let Err(e) = two() {
-    //     let mut code_oc = HashMap::from([(
-    //         GitInfoForWhereWas {
-    //             commit_id: String::from(GIT_INFO.commit_id),
-    //             repo_link: String::from(GIT_INFO.repo_link),
-    //             author: String::from(GIT_INFO.author),
-    //             author_email: String::from(GIT_INFO.author_email),
-    //             commit_unix_time: String::from(GIT_INFO.commit_unix_time),
-    //             timezone: String::from(GIT_INFO.timezone),
-    //             message: String::from(GIT_INFO.message),
-    //         },
-    //         vec![TimeFileLineColumnIncrement {
-    //             increment: 0,
-    //             value: TimeFileLineColumn {
-    //                 time: std::time::SystemTime::now()
-    //                     .duration_since(std::time::UNIX_EPOCH)
-    //                     .expect("cannot convert time to unix_epoch"),
-    //                 file_line_column: FileLineColumn {
-    //                     file: String::from(file!()),
-    //                     line: line!(),
-    //                     column: column!(),
-    //                 },
-    //             },
-    //         }],
-    //     )]);
-    //     code_oc.add(e.code_occurence.clone());
-    //     let f = Box::new(OneError {
-    //         source: OneErrorEnum::Two(*e),
-    //         code_occurence: code_oc,
-    //     });
-    //     f.code_occurence.log(
-    //         &SourcePlaceType::Github,
-    //         LogType::Stack,
-    //         String::from("kekw"),
-    //         2,
-    //         3,
-    //         4,
-    //     );
-    //     // return Err(f);
-    // }
     if let Err(e) = tufa_common::common::code_occurence::three() {
         let mut code_oc = HashMap::from([(
             GitInfoForWhereWas {
@@ -207,9 +158,7 @@ pub fn one() -> Result<(), Box<OneError>> {
             &SourcePlaceType::Github,
             LogType::Stack,
             String::from("kekw"),
-            2,
-            3,
-            4,
+            CONFIG.get_error_color_bold(),
         );
         return Err(f);
     }
@@ -220,39 +169,3 @@ pub struct TwoError {
     source: bool,
     code_occurence: HashMap<GitInfoForWhereWas, Vec<TimeFileLineColumnIncrement>>,
 }
-
-// // impl GetCodeOccurence for TwoError {
-// //     fn get_code_occurence(&self) -> HashMap<GitInfoForWhereWas, Vec<TimeFileLineColumnIncrement>> {
-// //         self.code_occurence
-// //     }
-// // }
-
-// pub fn two() -> Result<(), Box<TwoError>> {
-//     return Err(Box::new(TwoError {
-//         source: false,
-//         code_occurence: HashMap::from([(
-//             GitInfoForWhereWas {
-//                 commit_id: String::from(GIT_INFO.commit_id),
-//                 repo_link: String::from(GIT_INFO.repo_link),
-//                 author: String::from(GIT_INFO.author),
-//                 author_email: String::from(GIT_INFO.author_email),
-//                 commit_unix_time: String::from(GIT_INFO.commit_unix_time),
-//                 timezone: String::from(GIT_INFO.timezone),
-//                 message: String::from(GIT_INFO.message),
-//             },
-//             vec![TimeFileLineColumnIncrement {
-//                 increment: 0,
-//                 value: TimeFileLineColumn {
-//                     time: std::time::SystemTime::now()
-//                         .duration_since(std::time::UNIX_EPOCH)
-//                         .expect("cannot convert time to unix_epoch"),
-//                     file_line_column: FileLineColumn {
-//                         file: String::from(file!()),
-//                         line: line!(),
-//                         column: column!(),
-//                     },
-//                 },
-//             }],
-//         )]),
-//     }));
-// }
