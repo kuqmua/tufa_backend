@@ -100,6 +100,7 @@ use tufa_common::config_mods::source_place_type::SourcePlaceType;
 use tufa_common::config_mods::tracing_type::TracingType;
 use tufa_common::traits::code_occurence::CodeOccurenceTrait;
 
+use tufa_common::common::code_occurence::ThreeError;
 // #[derive(
 //     Debug,
 //     InitErrorFromTufaCommon,
@@ -132,7 +133,47 @@ pub enum OneErrorEnum {
 // }
 
 pub fn one() -> Result<(), Box<OneError>> {
-    if let Err(e) = two() {
+    // if let Err(e) = two() {
+    //     let mut code_oc = HashMap::from([(
+    //         GitInfoForWhereWas {
+    //             commit_id: String::from(GIT_INFO.commit_id),
+    //             repo_link: String::from(GIT_INFO.repo_link),
+    //             author: String::from(GIT_INFO.author),
+    //             author_email: String::from(GIT_INFO.author_email),
+    //             commit_unix_time: String::from(GIT_INFO.commit_unix_time),
+    //             timezone: String::from(GIT_INFO.timezone),
+    //             message: String::from(GIT_INFO.message),
+    //         },
+    //         vec![TimeFileLineColumnIncrement {
+    //             increment: 0,
+    //             value: TimeFileLineColumn {
+    //                 time: std::time::SystemTime::now()
+    //                     .duration_since(std::time::UNIX_EPOCH)
+    //                     .expect("cannot convert time to unix_epoch"),
+    //                 file_line_column: FileLineColumn {
+    //                     file: String::from(file!()),
+    //                     line: line!(),
+    //                     column: column!(),
+    //                 },
+    //             },
+    //         }],
+    //     )]);
+    //     code_oc.add(e.code_occurence.clone());
+    //     let f = Box::new(OneError {
+    //         source: OneErrorEnum::Two(*e),
+    //         code_occurence: code_oc,
+    //     });
+    //     f.code_occurence.log(
+    //         &SourcePlaceType::Github,
+    //         LogType::Stack,
+    //         String::from("kekw"),
+    //         2,
+    //         3,
+    //         4,
+    //     );
+    //     // return Err(f);
+    // }
+    if let Err(e) = tufa_common::common::code_occurence::three() {
         let mut code_oc = HashMap::from([(
             GitInfoForWhereWas {
                 commit_id: String::from(GIT_INFO.commit_id),
@@ -159,7 +200,7 @@ pub fn one() -> Result<(), Box<OneError>> {
         )]);
         code_oc.add(e.code_occurence.clone());
         let f = Box::new(OneError {
-            source: OneErrorEnum::Two(*e),
+            source: OneErrorEnum::Three(*e),
             code_occurence: code_oc,
         });
         f.code_occurence.log(
@@ -172,35 +213,6 @@ pub fn one() -> Result<(), Box<OneError>> {
         );
         return Err(f);
     }
-    if let Err(e) = three() {
-        return Err(Box::new(OneError {
-            source: OneErrorEnum::Three(*e),
-            code_occurence: HashMap::from([(
-                GitInfoForWhereWas {
-                    commit_id: String::from(GIT_INFO.commit_id),
-                    repo_link: String::from(GIT_INFO.repo_link),
-                    author: String::from(GIT_INFO.author),
-                    author_email: String::from(GIT_INFO.author_email),
-                    commit_unix_time: String::from(GIT_INFO.commit_unix_time),
-                    timezone: String::from(GIT_INFO.timezone),
-                    message: String::from(GIT_INFO.message),
-                },
-                vec![TimeFileLineColumnIncrement {
-                    increment: 0,
-                    value: TimeFileLineColumn {
-                        time: std::time::SystemTime::now()
-                            .duration_since(std::time::UNIX_EPOCH)
-                            .expect("cannot convert time to unix_epoch"),
-                        file_line_column: FileLineColumn {
-                            file: String::from(file!()),
-                            line: line!(),
-                            column: column!(),
-                        },
-                    },
-                }],
-            )]),
-        }));
-    }
     Ok(())
 }
 
@@ -209,79 +221,38 @@ pub struct TwoError {
     code_occurence: HashMap<GitInfoForWhereWas, Vec<TimeFileLineColumnIncrement>>,
 }
 
-// impl GetCodeOccurence for TwoError {
-//     fn get_code_occurence(&self) -> HashMap<GitInfoForWhereWas, Vec<TimeFileLineColumnIncrement>> {
-//         self.code_occurence
-//     }
+// // impl GetCodeOccurence for TwoError {
+// //     fn get_code_occurence(&self) -> HashMap<GitInfoForWhereWas, Vec<TimeFileLineColumnIncrement>> {
+// //         self.code_occurence
+// //     }
+// // }
+
+// pub fn two() -> Result<(), Box<TwoError>> {
+//     return Err(Box::new(TwoError {
+//         source: false,
+//         code_occurence: HashMap::from([(
+//             GitInfoForWhereWas {
+//                 commit_id: String::from(GIT_INFO.commit_id),
+//                 repo_link: String::from(GIT_INFO.repo_link),
+//                 author: String::from(GIT_INFO.author),
+//                 author_email: String::from(GIT_INFO.author_email),
+//                 commit_unix_time: String::from(GIT_INFO.commit_unix_time),
+//                 timezone: String::from(GIT_INFO.timezone),
+//                 message: String::from(GIT_INFO.message),
+//             },
+//             vec![TimeFileLineColumnIncrement {
+//                 increment: 0,
+//                 value: TimeFileLineColumn {
+//                     time: std::time::SystemTime::now()
+//                         .duration_since(std::time::UNIX_EPOCH)
+//                         .expect("cannot convert time to unix_epoch"),
+//                     file_line_column: FileLineColumn {
+//                         file: String::from(file!()),
+//                         line: line!(),
+//                         column: column!(),
+//                     },
+//                 },
+//             }],
+//         )]),
+//     }));
 // }
-
-pub fn two() -> Result<(), Box<TwoError>> {
-    return Err(Box::new(TwoError {
-        source: false,
-        code_occurence: HashMap::from([(
-            GitInfoForWhereWas {
-                commit_id: String::from(GIT_INFO.commit_id),
-                repo_link: String::from(GIT_INFO.repo_link),
-                author: String::from(GIT_INFO.author),
-                author_email: String::from(GIT_INFO.author_email),
-                commit_unix_time: String::from(GIT_INFO.commit_unix_time),
-                timezone: String::from(GIT_INFO.timezone),
-                message: String::from(GIT_INFO.message),
-            },
-            vec![TimeFileLineColumnIncrement {
-                increment: 0,
-                value: TimeFileLineColumn {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file_line_column: FileLineColumn {
-                        file: String::from(file!()),
-                        line: line!(),
-                        column: column!(),
-                    },
-                },
-            }],
-        )]),
-    }));
-}
-
-pub struct ThreeError {
-    source: u32,
-    code_occurence: HashMap<GitInfoForWhereWas, Vec<TimeFileLineColumnIncrement>>,
-}
-
-// impl GetCodeOccurence for ThreeError {
-//     fn get_code_occurence(&self) -> HashMap<GitInfoForWhereWas, Vec<TimeFileLineColumnIncrement>> {
-//         self.code_occurence
-//     }
-// }
-
-pub fn three() -> Result<(), Box<ThreeError>> {
-    return Err(Box::new(ThreeError {
-        source: 34,
-        code_occurence: HashMap::from([(
-            GitInfoForWhereWas {
-                commit_id: String::from(GIT_INFO.commit_id),
-                repo_link: String::from(GIT_INFO.repo_link),
-                author: String::from(GIT_INFO.author),
-                author_email: String::from(GIT_INFO.author_email),
-                commit_unix_time: String::from(GIT_INFO.commit_unix_time),
-                timezone: String::from(GIT_INFO.timezone),
-                message: String::from(GIT_INFO.message),
-            },
-            vec![TimeFileLineColumnIncrement {
-                increment: 0,
-                value: TimeFileLineColumn {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file_line_column: FileLineColumn {
-                        file: String::from(file!()),
-                        line: line!(),
-                        column: column!(),
-                    },
-                },
-            }],
-        )]),
-    }));
-}
