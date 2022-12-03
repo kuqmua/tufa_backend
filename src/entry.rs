@@ -102,13 +102,14 @@ use tufa_common::config_mods::tracing_type::TracingType;
 use tufa_common::traits::code_occurence::CodeOccurenceTrait;
 
 use tufa_common::common::code_occurence::ThreeError;
+use tufa_common::common::git::git_info::GitInformationWithoutLifetimes;
 use tufa_common::common::where_was::WhereWas;
 use tufa_common::traits::new_error::NewError;
 use tufa_common::traits::with_tracing::WithTracing;
 
 pub struct OneError {
     source: OneErrorEnum,
-    code_occurence: HashMap<GitInfoForWhereWas, Vec<TimeFileLineColumnIncrement>>,
+    code_occurence: HashMap<GitInformationWithoutLifetimes, Vec<TimeFileLineColumnIncrement>>,
 }
 
 pub enum OneErrorEnum {
@@ -118,7 +119,7 @@ pub enum OneErrorEnum {
 pub trait WithTracingTest<T> {
     fn with_tracing_test(
         source: T,
-        where_was: HashMap<GitInfoForWhereWas, Vec<TimeFileLineColumnIncrement>>,
+        where_was: HashMap<GitInformationWithoutLifetimes, Vec<TimeFileLineColumnIncrement>>,
         source_place_type: &SourcePlaceType,
     ) -> Self;
 }
@@ -126,7 +127,7 @@ pub trait WithTracingTest<T> {
 pub trait NewErrorTest<T> {
     fn new_test(
         source: T,
-        where_was: HashMap<GitInfoForWhereWas, Vec<TimeFileLineColumnIncrement>>,
+        where_was: HashMap<GitInformationWithoutLifetimes, Vec<TimeFileLineColumnIncrement>>,
     ) -> Self;
 }
 
@@ -137,7 +138,7 @@ where
 {
     fn init_error_with_possible_trace_test(
         source: GenericErrorStructSource,
-        where_was: HashMap<GitInfoForWhereWas, Vec<TimeFileLineColumnIncrement>>,
+        where_was: HashMap<GitInformationWithoutLifetimes, Vec<TimeFileLineColumnIncrement>>,
         source_place_type: &SourcePlaceType,
         should_trace: bool,
     ) -> Self;
@@ -152,7 +153,7 @@ where
 {
     fn init_error_with_possible_trace_test(
         source: GenericErrorStructSource,
-        where_was: HashMap<GitInfoForWhereWas, Vec<TimeFileLineColumnIncrement>>,
+        where_was: HashMap<GitInformationWithoutLifetimes, Vec<TimeFileLineColumnIncrement>>,
         source_place_type: &SourcePlaceType,
         should_trace: bool,
     ) -> Self {
@@ -177,15 +178,7 @@ where
 pub fn one() -> Result<(), Box<OneError>> {
     if let Err(e) = tufa_common::common::code_occurence::three() {
         let mut code_oc = HashMap::from([(
-            GitInfoForWhereWas {
-                commit_id: String::from(GIT_INFO.commit_id),
-                repo_link: String::from(GIT_INFO.repo_link),
-                author: String::from(GIT_INFO.author),
-                author_email: String::from(GIT_INFO.author_email),
-                commit_unix_time: String::from(GIT_INFO.commit_unix_time),
-                timezone: String::from(GIT_INFO.timezone),
-                message: String::from(GIT_INFO.message),
-            },
+            crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
             vec![TimeFileLineColumnIncrement {
                 increment: 0,
                 value: TimeFileLineColumn {
