@@ -102,6 +102,9 @@ use tufa_common::config_mods::tracing_type::TracingType;
 use tufa_common::traits::code_occurence::CodeOccurenceTrait;
 
 use tufa_common::common::code_occurence::ThreeError;
+use tufa_common::common::where_was::WhereWas;
+use tufa_common::traits::new_error::NewError;
+use tufa_common::traits::with_tracing::WithTracing;
 
 pub struct OneError {
     source: OneErrorEnum,
@@ -110,6 +113,54 @@ pub struct OneError {
 
 pub enum OneErrorEnum {
     Three(ThreeError),
+}
+
+pub trait WithTracingTest<T> {
+    fn with_tracing_test(
+        source: T,
+        where_was: HashMap<GitInfoForWhereWas, Vec<TimeFileLineColumnIncrement>>,
+        source_place_type: &SourcePlaceType,
+    ) -> Self;
+}
+
+pub trait NewErrorTest<T> {
+    fn new_test(
+        source: T,
+        where_was: HashMap<GitInfoForWhereWas, Vec<TimeFileLineColumnIncrement>>,
+    ) -> Self;
+}
+
+pub trait InitErrorWithPossibleTraceTest<GenericErrorStruct, GenericErrorStructSource>
+where
+    GenericErrorStruct:
+        WithTracingTest<GenericErrorStructSource> + NewErrorTest<GenericErrorStructSource>,
+{
+    fn init_error_with_possible_trace_test(
+        source: GenericErrorStructSource,
+        where_was: HashMap<GitInfoForWhereWas, Vec<TimeFileLineColumnIncrement>>,
+        source_place_type: &SourcePlaceType,
+        should_trace: bool,
+    ) -> Self;
+}
+
+impl<GenericErrorStruct, GenericErrorStructSource>
+    InitErrorWithPossibleTraceTest<GenericErrorStruct, GenericErrorStructSource>
+    for GenericErrorStruct
+where
+    GenericErrorStruct:
+        WithTracingTest<GenericErrorStructSource> + NewErrorTest<GenericErrorStructSource>,
+{
+    fn init_error_with_possible_trace_test(
+        source: GenericErrorStructSource,
+        where_was: HashMap<GitInfoForWhereWas, Vec<TimeFileLineColumnIncrement>>,
+        source_place_type: &SourcePlaceType,
+        should_trace: bool,
+    ) -> Self {
+        match should_trace {
+            true => Self::with_tracing_test(source, where_was, source_place_type),
+            false => Self::new_test(source, where_was),
+        }
+    }
 }
 
 // pub trait GetCodeOccurence {
