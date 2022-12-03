@@ -95,7 +95,6 @@ use tufa_common::traits::get_color::ErrorColorBold;
 use tufa_common::common::code_occurence::FileLineColumn;
 use tufa_common::common::code_occurence::TimeFileLineColumn;
 use tufa_common::common::code_occurence::TimeFileLineColumnIncrement;
-use tufa_common::common::where_was::GitInfoForWhereWas;
 use tufa_common::config_mods::log_type::LogType;
 use tufa_common::config_mods::source_place_type::SourcePlaceType;
 use tufa_common::config_mods::tracing_type::TracingType;
@@ -165,11 +164,11 @@ where
 }
 
 // pub trait GetCodeOccurence {
-//     fn get_code_occurence(&self) -> HashMap<GitInfoForWhereWas, Vec<TimeFileLineColumnIncrement>>;
+//     fn get_code_occurence(&self) -> HashMap<GitInformationWithoutLifetimes, Vec<TimeFileLineColumnIncrement>>;
 // }
 
 // impl GetCodeOccurence for OneError {
-//     fn get_code_occurence(&self) -> HashMap<GitInfoForWhereWas, Vec<TimeFileLineColumnIncrement>> {
+//     fn get_code_occurence(&self) -> HashMap<GitInformationWithoutLifetimes, Vec<TimeFileLineColumnIncrement>> {
 //         //todo match enum
 //         self.code_occurence
 //     }
@@ -211,5 +210,5 @@ pub fn one() -> Result<(), Box<OneError>> {
 
 pub struct TwoError {
     source: bool,
-    code_occurence: HashMap<GitInfoForWhereWas, Vec<TimeFileLineColumnIncrement>>,
+    code_occurence: HashMap<GitInformationWithoutLifetimes, Vec<TimeFileLineColumnIncrement>>,
 }
