@@ -6,6 +6,7 @@ use crate::prints::print_colorful_message::print_colorful_message;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
 use tufa_common::config_mods::print_type::PrintType;
+use tufa_common::traits::get_git_source_file_link::GetGitSourceFileLink;
 
 pub async fn drop_mongo_provider_logs_collection_if_need(
     pk: &ProviderKind,

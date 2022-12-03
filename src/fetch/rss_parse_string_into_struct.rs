@@ -35,6 +35,7 @@ use regex::Regex;
 use serde_xml_rs::from_str;
 use tufa_common::config_mods::print_type::PrintType;
 use tufa_common::traits::get_color::WarningLowColor;
+use tufa_common::traits::get_git_source_file_link::GetGitSourceFileLink;
 
 pub fn rss_parse_string_into_struct(
     mut fetch_result_string: String,

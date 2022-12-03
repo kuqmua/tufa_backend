@@ -5,6 +5,7 @@ use html_parser::Dom;
 use html_parser::Node;
 use tufa_common::config_mods::print_type::PrintType;
 use tufa_common::traits::get_color::WarningHighColor;
+use tufa_common::traits::get_git_source_file_link::GetGitSourceFileLink;
 
 //todo: think about renaming
 pub type GithubPostInfoVec = Vec<(
