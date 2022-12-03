@@ -32,29 +32,7 @@ pub async fn mongo_drop_db(
                 file: String::from(file!()),
                 line: line!(),
                 column: column!(),
-                git_info: tufa_common::common::where_was::GitInfoForWhereWas {
-                    commit_id: String::from(
-                        crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
-                    ),
-                    repo_link: String::from(
-                        crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
-                    ),
-                    author: String::from(
-                        crate::global_variables::compile_time::git_info::GIT_INFO.author,
-                    ),
-                    author_email: String::from(
-                        crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
-                    ),
-                    commit_unix_time: String::from(
-                        crate::global_variables::compile_time::git_info::GIT_INFO.commit_unix_time,
-                    ),
-                    timezone: String::from(
-                        crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
-                    ),
-                    message: String::from(
-                        crate::global_variables::compile_time::git_info::GIT_INFO.message,
-                    ),
-                },
+                git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
             },
         })),
         Ok(client_options) => match Client::with_options(client_options) {
@@ -67,30 +45,7 @@ pub async fn mongo_drop_db(
                     file: String::from(file!()),
                     line: line!(),
                     column: column!(),
-                    git_info: tufa_common::common::where_was::GitInfoForWhereWas {
-                        commit_id: String::from(
-                            crate::global_variables::compile_time::git_info::GIT_INFO.commit_id,
-                        ),
-                        repo_link: String::from(
-                            crate::global_variables::compile_time::git_info::GIT_INFO.repo_link,
-                        ),
-                        author: String::from(
-                            crate::global_variables::compile_time::git_info::GIT_INFO.author,
-                        ),
-                        author_email: String::from(
-                            crate::global_variables::compile_time::git_info::GIT_INFO.author_email,
-                        ),
-                        commit_unix_time: String::from(
-                            crate::global_variables::compile_time::git_info::GIT_INFO
-                                .commit_unix_time,
-                        ),
-                        timezone: String::from(
-                            crate::global_variables::compile_time::git_info::GIT_INFO.timezone,
-                        ),
-                        message: String::from(
-                            crate::global_variables::compile_time::git_info::GIT_INFO.message,
-                        ),
-                    },
+                    git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
                 },
             })),
             Ok(client) => {
@@ -104,36 +59,7 @@ pub async fn mongo_drop_db(
                             file: String::from(file!()),
                             line: line!(),
                             column: column!(),
-                            git_info: tufa_common::common::where_was::GitInfoForWhereWas {
-                                commit_id: String::from(
-                                    crate::global_variables::compile_time::git_info::GIT_INFO
-                                        .commit_id,
-                                ),
-                                repo_link: String::from(
-                                    crate::global_variables::compile_time::git_info::GIT_INFO
-                                        .repo_link,
-                                ),
-                                author: String::from(
-                                    crate::global_variables::compile_time::git_info::GIT_INFO
-                                        .author,
-                                ),
-                                author_email: String::from(
-                                    crate::global_variables::compile_time::git_info::GIT_INFO
-                                        .author_email,
-                                ),
-                                commit_unix_time: String::from(
-                                    crate::global_variables::compile_time::git_info::GIT_INFO
-                                        .commit_unix_time,
-                                ),
-                                timezone: String::from(
-                                    crate::global_variables::compile_time::git_info::GIT_INFO
-                                        .timezone,
-                                ),
-                                message: String::from(
-                                    crate::global_variables::compile_time::git_info::GIT_INFO
-                                        .message,
-                                ),
-                            },
+                            git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
                         },
                     }));
                 }
