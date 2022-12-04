@@ -113,6 +113,19 @@ pub struct OneError {
     code_occurence: HashMap<GitInformationWithoutLifetimes, Vec<TimeFileLineColumnIncrement>>,
 }
 
+impl LogCodeOccurence for OneError {
+    fn log_code_occurence(
+        &self,
+        source_place_type: &SourcePlaceType,
+        log_type: LogType,
+        source: String,
+        style: ansi_term::Style,
+    ) {
+        self.code_occurence
+            .log_code_occurence(source_place_type, log_type, source, style);
+    }
+}
+
 pub enum OneErrorEnum {
     Three(ThreeError),
 }
@@ -191,7 +204,7 @@ pub fn one() -> Result<(), Box<OneError>> {
             source: OneErrorEnum::Three(*e),
             code_occurence: code_oc,
         });
-        f.code_occurence.log(
+        f.log_code_occurence(
             &SourcePlaceType::Github,
             LogType::Stack,
             String::from("kekw"),
