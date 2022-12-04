@@ -179,11 +179,11 @@ pub fn one() -> Result<(), Box<OneError>> {
     if let Err(e) = tufa_common::common::code_occurence::three() {
         let mut code_oc = HashMap::from([(
             crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-            vec![TimeFileLineColumnIncrement::new(TimeFileLineColumn::new(FileLineColumn {
-                file: String::from(file!()),
-                line: line!(),
-                column: column!(),
-            }))],
+            vec![TimeFileLineColumnIncrement::new(
+                String::from(file!()),
+                line!(),
+                column!(),
+            )],
         )]);
         code_oc.add(e.code_occurence.clone());
         let f = Box::new(OneError {
