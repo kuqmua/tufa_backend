@@ -101,7 +101,7 @@ use tufa_common::config_mods::source_place_type::SourcePlaceType;
 use tufa_common::config_mods::tracing_type::TracingType;
 use tufa_common::traits::code_occurence::CodeOccurence;
 
-use tufa_common::common::code_occurence::ThreeError;
+use tufa_common::common::code_occurence::ThreeOriginError;
 use tufa_common::common::git::git_info::GitInformationWithoutLifetimes;
 use tufa_common::common::where_was::WhereWas;
 use tufa_common::traits::log_code_occurence::LogCodeOccurence;
@@ -127,7 +127,7 @@ impl LogCodeOccurence for OneError {
 }
 
 pub enum OneErrorEnum {
-    Three(ThreeError),
+    Three(ThreeOriginError),
 }
 
 pub trait WithTracingTest<T> {
