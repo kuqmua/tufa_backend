@@ -181,16 +181,11 @@ pub fn one() -> Result<(), Box<OneError>> {
             crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
             vec![TimeFileLineColumnIncrement {
                 increment: 0,
-                value: TimeFileLineColumn {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file_line_column: FileLineColumn {
-                        file: String::from(file!()),
-                        line: line!(),
-                        column: column!(),
-                    },
-                },
+                value: TimeFileLineColumn::new(FileLineColumn {
+                    file: String::from(file!()),
+                    line: line!(),
+                    column: column!(),
+                })
             }],
         )]);
         code_oc.add(e.code_occurence.clone());
