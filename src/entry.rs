@@ -104,6 +104,7 @@ use tufa_common::traits::code_occurence::CodeOccurence;
 use tufa_common::common::code_occurence::ThreeError;
 use tufa_common::common::git::git_info::GitInformationWithoutLifetimes;
 use tufa_common::common::where_was::WhereWas;
+use tufa_common::traits::log_code_occurence::LogCodeOccurence;
 use tufa_common::traits::new_error::NewError;
 use tufa_common::traits::with_tracing::WithTracing;
 
