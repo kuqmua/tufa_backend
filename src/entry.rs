@@ -99,7 +99,7 @@ use tufa_common::common::code_occurence::TimeFileLineColumnIncrement;
 use tufa_common::config_mods::log_type::LogType;
 use tufa_common::config_mods::source_place_type::SourcePlaceType;
 use tufa_common::config_mods::tracing_type::TracingType;
-use tufa_common::traits::code_occurence::CodeOccurenceTrait;
+use tufa_common::traits::code_occurence::CodeOccurence;
 
 use tufa_common::common::code_occurence::ThreeError;
 use tufa_common::common::git::git_info::GitInformationWithoutLifetimes;
