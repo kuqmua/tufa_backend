@@ -214,17 +214,16 @@ where
 
 pub fn one() -> Result<(), Box<OneWrapperError>> {
     if let Err(e) = tufa_common::common::code_occurence::three() {
-        let mut code_oc = CodeOccurence::new(
-            crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(), 
-            String::from(file!()), 
-            line!(), 
-            column!()
-        ).add(e.code_occurence.clone());
-        // code_oc;
         let f = Box::new(OneWrapperError {
-            source: OneWrapperErrorEnum::Three(*e),
-            code_occurence: code_oc,
+            source: OneWrapperErrorEnum::Three(*e.clone()),
+            code_occurence: CodeOccurence::new(
+                crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(), 
+                String::from(file!()), 
+                line!(), 
+                column!()
+            ).add(e.code_occurence.clone()),//get_code_occurence()
         });
+        //return self from log?
         f.log_error_code_occurence(
             &SourcePlaceType::Github,
             LogType::Stack,
