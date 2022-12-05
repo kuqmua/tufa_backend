@@ -30,7 +30,7 @@ use crate::global_variables::hardcode::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_
 use crate::global_variables::hardcode::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_3;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use crate::traits::provider_kind_trait::ProviderKindTrait;
+use crate::traits::provider_kind_methods::ProviderKindMethods;
 use regex::Regex;
 use serde_xml_rs::from_str;
 use tufa_common::config_mods::print_type::PrintType;

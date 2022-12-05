@@ -2,7 +2,7 @@ use super::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVector
 use crate::global_variables::runtime::config::CONFIG;
 use crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use crate::traits::provider_kind_trait::ProviderKindTrait;
+use crate::traits::provider_kind_methods::ProviderKindMethods;
 use futures::future::join_all;
 use mongodb::bson::Document;
 use mongodb::options::ClientOptions;

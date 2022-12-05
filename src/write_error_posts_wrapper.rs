@@ -5,7 +5,7 @@
 // use tufa_common::config_mods::print_type::PrintType;
 // use crate::global_variables::runtime::config::CONFIG;
 // use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-// use crate::traits::provider_kind_trait::ProviderKindTrait;
+// use crate::traits::provider_kind_methods::ProviderKindMethods;
 
 // pub async fn write_error_posts_wrapper(error_posts: Vec<PostErrorVariant>) {
 //     //todo add flag in config or if its already exists put it here

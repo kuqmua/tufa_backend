@@ -1,1 +1,1 @@
-pub mod provider_kind_trait;
+pub mod provider_kind_methods;

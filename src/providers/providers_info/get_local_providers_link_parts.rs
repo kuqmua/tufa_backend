@@ -2,7 +2,7 @@ use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
 use crate::providers::provider_kind::functions::get_link_parts_from_local_json_file::GetLinkPartsFromLocalJsonFileWrapperError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use crate::traits::provider_kind_trait::ProviderKindTrait;
+use crate::traits::provider_kind_methods::ProviderKindMethods;
 use futures::future::join_all;
 use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;

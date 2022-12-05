@@ -257,7 +257,7 @@ https://crates.io/crates/snafu
 * parameter db initialization provider link parts source must be
 different than PROVIDERS_LINK_PARTS_SOURCE 
 
-* divide and move outside postgres and mongo methods from provider_kind_trait 
+* divide and move outside postgres and mongo methods from provider_kind_methods 
 
 * rewrite prints like this
 let person = get_person();

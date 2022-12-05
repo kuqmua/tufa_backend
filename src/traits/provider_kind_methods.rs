@@ -2,7 +2,7 @@ use crate::providers::provider_kind::provider_kind_enum::CleanLogsDirError;
 use crate::providers::provider_kind::provider_kind_enum::RemoveDirError;
 use std::collections::HashMap;
 
-pub trait ProviderKindTrait {
+pub trait ProviderKindMethods {
     fn get_item_handle(&self) -> Option<&'static str>;
     fn get_mongo_log_collection_name(&self) -> String;
     fn get_path_to_logs_directory(&self) -> String;

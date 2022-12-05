@@ -9,7 +9,7 @@ use crate::mongo_integration::mongo_client_with_options::MongoClientWithOptionsO
 use crate::mongo_integration::mongo_insert_many::mongo_insert_many;
 use crate::mongo_integration::mongo_insert_many::MongoInsertManyOriginError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use crate::traits::provider_kind_trait::ProviderKindTrait;
+use crate::traits::provider_kind_methods::ProviderKindMethods;
 use futures::future::join_all;
 use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
 use impl_get_git_info::ImplGetGitInfoFromTufaCommon;

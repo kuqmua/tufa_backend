@@ -10,13 +10,13 @@ use crate::providers::providers_info::links::generate_habr_links::generate_habr_
 use crate::providers::providers_info::links::generate_medrxiv_links::generate_medrxiv_links;
 use crate::providers::providers_info::links::generate_reddit_links::generate_reddit_links;
 use crate::providers::providers_info::links::generate_twitter_links::generate_twitter_links;
-use crate::traits::provider_kind_trait::ProviderKindTrait;
+use crate::traits::provider_kind_methods::ProviderKindMethods;
 use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
 use strum::IntoEnumIterator;
 
-impl ProviderKindTrait for ProviderKind {
+impl ProviderKindMethods for ProviderKind {
     fn get_item_handle(&self) -> Option<&'static str> {
         match self {
             ProviderKind::Arxiv => Some("</item>"),
