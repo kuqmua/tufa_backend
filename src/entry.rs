@@ -91,15 +91,14 @@ pub fn entry() {
 // use crate::global_variables::compile_time::git_info::GIT_INFO;
 use once_cell::sync::Lazy;
 use std::collections::HashMap;
-use tufa_common::traits::get_color::ErrorColorBold;
-// use tufa_common::common::code_occurence::CodeOccurence;
 use tufa_common::common::code_occurence::FileLineColumn;
 use tufa_common::common::code_occurence::TimeFileLineColumn;
 use tufa_common::common::code_occurence::TimeFileLineColumnIncrement;
 use tufa_common::config_mods::log_type::LogType;
 use tufa_common::config_mods::source_place_type::SourcePlaceType;
 use tufa_common::config_mods::tracing_type::TracingType;
-use tufa_common::traits::code_occurence::CodeOccurence;
+use tufa_common::traits::code_occurence_methods::CodeOccurenceMethods;
+use tufa_common::traits::get_color::ErrorColorBold;
 
 use tufa_common::common::code_occurence::ThreeOriginError;
 use tufa_common::common::git::git_info::GitInformationWithoutLifetimes;
