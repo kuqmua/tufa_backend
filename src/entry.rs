@@ -99,35 +99,58 @@ use tufa_common::config_mods::source_place_type::SourcePlaceType;
 use tufa_common::config_mods::tracing_type::TracingType;
 use tufa_common::traits::code_occurence_methods::CodeOccurenceMethods;
 use tufa_common::traits::get_color::ErrorColorBold;
-
 use tufa_common::common::code_occurence::CodeOccurence;
 use tufa_common::common::code_occurence::ThreeOriginError;
 use tufa_common::common::git::git_info::GitInformationWithoutLifetimes;
 use tufa_common::common::where_was::WhereWas;
-use tufa_common::traits::log_code_occurence::LogCodeOccurence;
 use tufa_common::traits::new_error::NewError;
 use tufa_common::traits::with_tracing::WithTracing;
+use impl_get_source::ImplGetSourceFromTufaCommon;
+use tufa_common::traits::get_code_occurence::GetCodeOccurence;
+use tufa_common::traits::log_error_code_occurence::LogErrorCodeOccurence;
+use tufa_common::traits::get_source::GetSource;
 
-pub struct OneError {
-    source: OneErrorEnum,
+#[derive(ImplGetSourceFromTufaCommon)]
+pub struct OneWrapperError {
+    source: OneWrapperErrorEnum,
     code_occurence: CodeOccurence,
 }
 
-impl LogCodeOccurence for OneError {
-    fn log_code_occurence(
-        &self,
-        source_place_type: &SourcePlaceType,
-        log_type: LogType,
-        source: String,
-        style: ansi_term::Style,
-    ) {
-        self.code_occurence
-            .log_code_occurence(source_place_type, log_type, source, style);
+impl GetCodeOccurence for OneWrapperError {
+    fn get_code_occurence(&self) -> &CodeOccurence {
+        &self.code_occurence
     }
 }
 
-pub enum OneErrorEnum {
+// impl LogCodeOccurence for OneError {
+//     fn log_code_occurence(
+//         &self,
+//         source_place_type: &SourcePlaceType,
+//         log_type: LogType,
+//         source: String,
+//         style: ansi_term::Style,
+//     ) {
+//         self.code_occurence
+//             .log_code_occurence(source_place_type, log_type, source, style);
+//     }
+// }
+
+// #[derive(
+//         // Debug,
+//     // ImplDisplayForError,
+//     ImplGetSourceFromTufaCommon,
+//     // ImplGetWhereWasOriginOrWrapperFromTufaCommon,
+// )]
+pub enum OneWrapperErrorEnum {
     Three(ThreeOriginError),
+}
+
+impl GetSource for OneWrapperErrorEnum {
+    fn get_source(&self) -> String {
+        match self {
+            OneWrapperErrorEnum::Three(t) => t.get_source(),
+        }
+    }
 }
 
 pub trait WithTracingTest<T> {
@@ -189,7 +212,7 @@ where
 //     }
 // }
 
-pub fn one() -> Result<(), Box<OneError>> {
+pub fn one() -> Result<(), Box<OneWrapperError>> {
     if let Err(e) = tufa_common::common::code_occurence::three() {
         let mut code_oc = CodeOccurence::new(
             crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(), 
@@ -198,14 +221,13 @@ pub fn one() -> Result<(), Box<OneError>> {
             column!()
         );
         code_oc.add(e.code_occurence.clone());
-        let f = Box::new(OneError {
-            source: OneErrorEnum::Three(*e),
+        let f = Box::new(OneWrapperError {
+            source: OneWrapperErrorEnum::Three(*e),
             code_occurence: code_oc,
         });
-        f.log_code_occurence(
+        f.log_error_code_occurence(
             &SourcePlaceType::Github,
             LogType::Stack,
-            String::from("kekw"),
             CONFIG.get_error_color_bold(),
         );
         return Err(f);
