@@ -191,16 +191,12 @@ where
 
 pub fn one() -> Result<(), Box<OneError>> {
     if let Err(e) = tufa_common::common::code_occurence::three() {
-        let mut code_oc = CodeOccurence {
-            occurences: HashMap::from([(
-                crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                vec![TimeFileLineColumnIncrement::new(
-                    String::from(file!()),
-                    line!(),
-                    column!(),
-                )],
-            )])
-        };
+        let mut code_oc = CodeOccurence::new(
+            crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(), 
+            String::from(file!()), 
+            line!(), 
+            column!()
+        );
         code_oc.add(e.code_occurence.clone());
         let f = Box::new(OneError {
             source: OneErrorEnum::Three(*e),
