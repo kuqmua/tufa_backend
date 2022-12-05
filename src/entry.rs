@@ -100,6 +100,7 @@ use tufa_common::config_mods::tracing_type::TracingType;
 use tufa_common::traits::code_occurence_methods::CodeOccurenceMethods;
 use tufa_common::traits::get_color::ErrorColorBold;
 
+use tufa_common::common::code_occurence::CodeOccurence;
 use tufa_common::common::code_occurence::ThreeOriginError;
 use tufa_common::common::git::git_info::GitInformationWithoutLifetimes;
 use tufa_common::common::where_was::WhereWas;
@@ -109,7 +110,7 @@ use tufa_common::traits::with_tracing::WithTracing;
 
 pub struct OneError {
     source: OneErrorEnum,
-    code_occurence: HashMap<GitInformationWithoutLifetimes, Vec<TimeFileLineColumnIncrement>>,
+    code_occurence: CodeOccurence,
 }
 
 impl LogCodeOccurence for OneError {
@@ -190,14 +191,16 @@ where
 
 pub fn one() -> Result<(), Box<OneError>> {
     if let Err(e) = tufa_common::common::code_occurence::three() {
-        let mut code_oc = HashMap::from([(
-            crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-            vec![TimeFileLineColumnIncrement::new(
-                String::from(file!()),
-                line!(),
-                column!(),
-            )],
-        )]);
+        let mut code_oc = CodeOccurence {
+            occurences: HashMap::from([(
+                crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
+                vec![TimeFileLineColumnIncrement::new(
+                    String::from(file!()),
+                    line!(),
+                    column!(),
+                )],
+            )])
+        };
         code_oc.add(e.code_occurence.clone());
         let f = Box::new(OneError {
             source: OneErrorEnum::Three(*e),
