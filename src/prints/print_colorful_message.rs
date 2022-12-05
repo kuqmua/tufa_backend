@@ -1,7 +1,7 @@
 use super::print_wrapper::print_wrapper;
 use crate::global_variables::runtime::config::CONFIG;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
+use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfig;
 use tufa_common::config_mods::config_struct::ConfigStruct;
 use tufa_common::config_mods::print_type::PrintType;
 use tufa_common::config_mods::tracing_type::TracingType;

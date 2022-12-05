@@ -1,6 +1,6 @@
 use crate::global_variables::runtime::config::CONFIG;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
+use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfig;
 use mongodb::bson::doc;
 use mongodb::bson::Document;
 

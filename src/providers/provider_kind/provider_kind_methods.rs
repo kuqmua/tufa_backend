@@ -1,7 +1,7 @@
 use crate::global_variables::runtime::config::CONFIG;
 use crate::providers::provider_kind::provider_kind_enum::CleanLogsDirError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
+use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfig;
 use crate::providers::provider_kind::provider_kind_enum::RemoveDirError;
 use crate::providers::providers_info::links::generate_arxiv_links::generate_arxiv_links;
 use crate::providers::providers_info::links::generate_biorxiv_links::generate_biorxiv_links;

@@ -4,7 +4,7 @@ use crate::mongo_integration::mongo_drop_empty_collection::mongo_drop_empty_coll
 use crate::mongo_integration::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorEnum;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigTrait;
+use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfig;
 use tufa_common::config_mods::print_type::PrintType;
 use tufa_common::traits::get_git_source_file_link::GetGitSourceFileLink;
 

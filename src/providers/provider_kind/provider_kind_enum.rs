@@ -1,7 +1,6 @@
-// use crate::traits::provider_kind_from_config_trait::ProviderKindFromConfigTrait;
 use enum_extension::EnumExtension;
 use mongodb::bson::doc;
-use provider_kind_from_config::ProviderKindFromConfigTrait;
+use provider_kind_from_config::ProviderKindFromConfig;
 use strum_macros::Display;
 use strum_macros::EnumIter;
 
@@ -29,7 +28,7 @@ impl From<std::io::Error> for CleanLogsDirError {
 }
 
 #[derive(
-    ProviderKindFromConfigTrait,
+    ProviderKindFromConfig,
     EnumExtension,
     EnumIter,
     Clone,
