@@ -219,8 +219,8 @@ pub fn one() -> Result<(), Box<OneWrapperError>> {
             String::from(file!()), 
             line!(), 
             column!()
-        );
-        code_oc.add(e.code_occurence.clone());
+        ).add(e.code_occurence.clone());
+        // code_oc;
         let f = Box::new(OneWrapperError {
             source: OneWrapperErrorEnum::Three(*e),
             code_occurence: code_oc,
