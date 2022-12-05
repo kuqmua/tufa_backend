@@ -5,7 +5,7 @@ use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfigT
 use tufa_common::config_mods::config_struct::ConfigStruct;
 use tufa_common::config_mods::print_type::PrintType;
 use tufa_common::config_mods::tracing_type::TracingType;
-use tufa_common::traits::print_type_trait::PrintTypeTrait;
+use tufa_common::traits::print_type_methods::PrintTypeMethods;
 
 //ansi_term::Colour
 pub fn print_colorful_message(

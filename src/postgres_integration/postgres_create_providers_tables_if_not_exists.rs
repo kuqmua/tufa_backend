@@ -13,7 +13,7 @@ use sqlx::Postgres;
 use std::collections::HashMap;
 use tufa_common::common::where_was::WhereWas;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
-use tufa_common::traits::where_was_trait::WhereWasTrait;
+use tufa_common::traits::where_was_methods::WhereWasMethods;
 
 #[derive(
     Debug,
