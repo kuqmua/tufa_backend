@@ -154,6 +154,14 @@ impl GetSource for OneWrapperErrorEnum {
     }
 }
 
+impl GetCodeOccurence for OneWrapperErrorEnum {
+    fn get_code_occurence(&self) -> &tufa_common::common::code_occurence::CodeOccurence{
+        match self {
+            OneWrapperErrorEnum::Three(e) => e.get_code_occurence(),
+        }
+    }
+}
+
 
 pub trait WithTracingTest<T> {
     fn with_tracing_test(
