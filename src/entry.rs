@@ -154,6 +154,7 @@ impl GetSource for OneWrapperErrorEnum {
     }
 }
 
+
 pub trait WithTracingTest<T> {
     fn with_tracing_test(
         source: T,
@@ -213,13 +214,10 @@ where
 //     }
 // }
 
-pub trait NewErrorTestTest<T> {
+pub trait NewErrorTestTest<SourceGeneric, ConfigGeneric, ErrorColorBoldGeneric> {
     fn new_error_test_test(
-        source: impl GetSource + GetCodeOccurence,
-        config: impl 
-            tufa_common::config_mods::traits::fields::GetSourcePlaceType + 
-            tufa_common::config_mods::traits::fields::GetLogType + 
-            tufa_common::traits::get_color::ErrorColorBold<T>,
+        source: SourceGeneric,
+        config: ConfigGeneric,
         git_info: tufa_common::common::git::git_info::GitInformationWithoutLifetimes,
         file: String,
         line: u32,
@@ -228,17 +226,40 @@ pub trait NewErrorTestTest<T> {
     ) -> Self;
 }
  
-// impl NewErrorTestTest for OneWrapperError {
+// impl<SourceGeneric, ConfigGeneric, ErrorColorBoldGeneric> NewErrorTestTest<SourceGeneric, ConfigGeneric, ErrorColorBoldGeneric> for OneWrapperError 
+// where 
+//     SourceGeneric: GetSource + GetCodeOccurence,
+//     ConfigGeneric: tufa_common::config_mods::traits::fields::GetSourcePlaceType + 
+//             tufa_common::config_mods::traits::fields::GetLogType + 
+//             tufa_common::traits::get_color::ErrorColorBold<ErrorColorBoldGeneric>
+// {
 //     fn new_error_test_test(
-//         source: impl GetSource + GetCodeOccurence,
-//         config: impl GetSourcePlaceType + GetLogType + GetErrorColorBold,
+//         // source: SourceGeneric,
+//         source: OneWrapperErrorEnum,
+//         config: ConfigGeneric,
 //         git_info: tufa_common::common::git::git_info::GitInformationWithoutLifetimes,
 //         file: String,
 //         line: u32,
-//         column: u32, 
+//         column: u32,
 //         should_trace: bool,
 //     ) -> Self {
-
+//         let f = OneWrapperError {
+//             source: OneWrapperErrorEnum::Three(*e.clone()),
+//             code_occurence: CodeOccurence::new(
+//                 git_info, 
+//                 file, 
+//                 line, 
+//                 column,
+//             ).add(source.get_code_occurence().clone()),//get_code_occurence()
+//         };
+//         if let true = should_trace {
+//             f.log_error_code_occurence(
+//                 config.get_source_place_type(),
+//                 config.get_log_type(),
+//                 config.get_error_color_bold(),
+//             );
+//         }
+//         f
 //     }
 // }
 
@@ -257,7 +278,7 @@ pub fn one() -> Result<(), Box<OneWrapperError>> {
         //return self from log?
         f.log_error_code_occurence(
             &SourcePlaceType::Github,
-            LogType::Stack,
+            &LogType::Stack,
             CONFIG.get_error_color_bold(),
         );
         return Err(f);
