@@ -7,6 +7,7 @@ use crate::server_wrapper::server_wrapper;
 use crate::telemetry::get_subscriber::get_subscriber;
 use crate::telemetry::init_subscriber::init_subscriber;
 use tufa_common::config_mods::print_type::PrintType;
+use tufa_common::config_mods::traits::fields::GetLogType;
 use tufa_common::traits::get_git_source_file_link::GetGitSourceFileLink;
 // use valuable::Valuable;
 
@@ -211,6 +212,36 @@ where
 //         self.code_occurence
 //     }
 // }
+
+pub trait NewErrorTestTest<T> {
+    fn new_error_test_test(
+        source: impl GetSource + GetCodeOccurence,
+        config: impl 
+            tufa_common::config_mods::traits::fields::GetSourcePlaceType + 
+            tufa_common::config_mods::traits::fields::GetLogType + 
+            tufa_common::traits::get_color::ErrorColorBold<T>,
+        git_info: tufa_common::common::git::git_info::GitInformationWithoutLifetimes,
+        file: String,
+        line: u32,
+        column: u32,
+        should_trace: bool,
+    ) -> Self;
+}
+ 
+// impl NewErrorTestTest for OneWrapperError {
+//     fn new_error_test_test(
+//         source: impl GetSource + GetCodeOccurence,
+//         config: impl GetSourcePlaceType + GetLogType + GetErrorColorBold,
+//         git_info: tufa_common::common::git::git_info::GitInformationWithoutLifetimes,
+//         file: String,
+//         line: u32,
+//         column: u32, 
+//         should_trace: bool,
+//     ) -> Self {
+
+//     }
+// }
+
 
 pub fn one() -> Result<(), Box<OneWrapperError>> {
     if let Err(e) = tufa_common::common::code_occurence::three() {
