@@ -42,7 +42,7 @@ pub fn entry() {
             );
         }
         Ok(runtime) => {
-            one();
+            one(true);
             if let tufa_common::config_mods::log_type::LogType::Tracing = CONFIG.log_type {
                 if let Err(e) = init_subscriber(get_subscriber(
                     PROJECT_NAME.into(),
@@ -274,18 +274,17 @@ where
     }
 }
 
-pub fn one() -> Result<(), Box<OneWrapperError>> {
+pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
     if let Err(e) = tufa_common::common::code_occurence::three() {
-        let f = Box::new(OneWrapperError::new_error_test_test(
+        return Err(Box::new(OneWrapperError::new_error_test_test(
             OneWrapperErrorEnum::Three(*e), 
             once_cell::sync::Lazy::force(&crate::global_variables::runtime::config::CONFIG), 
             crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(), 
             String::from(file!()), 
             line!(), 
             column!(), 
-            true
-        ));
-        return Err(f);
+            should_trace
+        )));
     }
     Ok(())
 }
