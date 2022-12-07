@@ -251,45 +251,38 @@ where
         column: u32,
         should_trace: bool,
     ) -> Self {
-        let another_code_occurence = source.get_code_occurence().clone();
-        let f = OneWrapperError {
-            source,
-            code_occurence: CodeOccurence::new(
+        let code_occurence = CodeOccurence::new(
                 git_info, 
                 file, 
                 line, 
                 column,
-            ).add(another_code_occurence),//get_code_occurence()
+            ).add(source.get_code_occurence());
+        let error = OneWrapperError {
+            source,
+            code_occurence,
         };
         if let true = should_trace {
-            f.log_error_code_occurence(
+            error.log_error_code_occurence(
                 config.get_source_place_type(),
                 config.get_log_type(),
                 config.get_error_color_bold(),
             );
         }
-        f
+        error
     }
 }
 
-
 pub fn one() -> Result<(), Box<OneWrapperError>> {
     if let Err(e) = tufa_common::common::code_occurence::three() {
-        let f = Box::new(OneWrapperError {
-            source: OneWrapperErrorEnum::Three(*e.clone()),
-            code_occurence: CodeOccurence::new(
-                crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(), 
-                String::from(file!()), 
-                line!(), 
-                column!()
-            ).add(e.code_occurence.clone()),//get_code_occurence()
-        });
-        //return self from log?
-        f.log_error_code_occurence(
-            &SourcePlaceType::Github,
-            &LogType::Stack,
-            CONFIG.get_error_color_bold(),
-        );
+        let f = Box::new(OneWrapperError::new_error_test_test(
+            OneWrapperErrorEnum::Three(*e), 
+            once_cell::sync::Lazy::force(&crate::global_variables::runtime::config::CONFIG), 
+            crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(), 
+            String::from(file!()), 
+            line!(), 
+            column!(), 
+            true
+        ));
         return Err(f);
     }
     Ok(())
