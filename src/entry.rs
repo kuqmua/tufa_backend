@@ -222,9 +222,9 @@ where
 //     }
 // }
 
-pub trait NewErrorTestTest<SourceGeneric, ConfigGeneric, ErrorColorBoldGeneric> {
+pub trait NewErrorTestTest<ConfigGeneric, ErrorColorBoldGeneric> {//SourceGeneric, 
     fn new_error_test_test(
-        source: SourceGeneric,
+        source: OneWrapperErrorEnum,//SourceGeneric,
         config: ConfigGeneric,
         git_info: tufa_common::common::git::git_info::GitInformationWithoutLifetimes,
         file: String,
@@ -234,42 +234,43 @@ pub trait NewErrorTestTest<SourceGeneric, ConfigGeneric, ErrorColorBoldGeneric> 
     ) -> Self;
 }
  
-// impl<SourceGeneric, ConfigGeneric, ErrorColorBoldGeneric> NewErrorTestTest<SourceGeneric, ConfigGeneric, ErrorColorBoldGeneric> for OneWrapperError 
-// where 
-//     SourceGeneric: GetSource + GetCodeOccurence,
-//     ConfigGeneric: tufa_common::config_mods::traits::fields::GetSourcePlaceType + 
-//             tufa_common::config_mods::traits::fields::GetLogType + 
-//             tufa_common::traits::get_color::ErrorColorBold<ErrorColorBoldGeneric>
-// {
-//     fn new_error_test_test(
-//         // source: SourceGeneric,
-//         source: OneWrapperErrorEnum,
-//         config: ConfigGeneric,
-//         git_info: tufa_common::common::git::git_info::GitInformationWithoutLifetimes,
-//         file: String,
-//         line: u32,
-//         column: u32,
-//         should_trace: bool,
-//     ) -> Self {
-//         let f = OneWrapperError {
-//             source: OneWrapperErrorEnum::Three(*e.clone()),
-//             code_occurence: CodeOccurence::new(
-//                 git_info, 
-//                 file, 
-//                 line, 
-//                 column,
-//             ).add(source.get_code_occurence().clone()),//get_code_occurence()
-//         };
-//         if let true = should_trace {
-//             f.log_error_code_occurence(
-//                 config.get_source_place_type(),
-//                 config.get_log_type(),
-//                 config.get_error_color_bold(),
-//             );
-//         }
-//         f
-//     }
-// }
+impl<ConfigGeneric, ErrorColorBoldGeneric> NewErrorTestTest<ConfigGeneric, ErrorColorBoldGeneric> for OneWrapperError 
+where 
+    // SourceGeneric: GetSource + GetCodeOccurence,
+    ConfigGeneric: tufa_common::config_mods::traits::fields::GetSourcePlaceType + 
+            tufa_common::config_mods::traits::fields::GetLogType + 
+            tufa_common::traits::get_color::ErrorColorBold<ErrorColorBoldGeneric>
+{
+    fn new_error_test_test(
+        // source: SourceGeneric,
+        source: OneWrapperErrorEnum,
+        config: ConfigGeneric,
+        git_info: tufa_common::common::git::git_info::GitInformationWithoutLifetimes,
+        file: String,
+        line: u32,
+        column: u32,
+        should_trace: bool,
+    ) -> Self {
+        let another_code_occurence = source.get_code_occurence().clone();
+        let f = OneWrapperError {
+            source,
+            code_occurence: CodeOccurence::new(
+                git_info, 
+                file, 
+                line, 
+                column,
+            ).add(another_code_occurence),//get_code_occurence()
+        };
+        if let true = should_trace {
+            f.log_error_code_occurence(
+                config.get_source_place_type(),
+                config.get_log_type(),
+                config.get_error_color_bold(),
+            );
+        }
+        f
+    }
+}
 
 
 pub fn one() -> Result<(), Box<OneWrapperError>> {
