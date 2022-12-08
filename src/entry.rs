@@ -111,6 +111,7 @@ use tufa_common::traits::get_code_occurence::GetCodeOccurence;
 use tufa_common::traits::log_error_code_occurence::LogErrorCodeOccurence;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::new_error_test::NewErrorTest;
+use tufa_common::traits::new_error_test_test::NewErrorTestTest;
 
 #[derive(ImplGetSourceFromTufaCommon)]
 pub struct OneWrapperError {
@@ -197,55 +198,55 @@ where
 //     }
 // }
 
-pub trait NewErrorTestTest<SourceGeneric, ConfigGeneric, ErrorColorBoldGeneric, ReturnSelfGeneric> {//
-    fn new_error_test_test(
-        source: SourceGeneric,
-        config: ConfigGeneric,
-        git_info: tufa_common::common::git::git_info::GitInformationWithoutLifetimes,
-        file: String,
-        line: u32,
-        column: u32,
-        should_trace: bool,
-    ) -> ReturnSelfGeneric;
-}
+// pub trait NewErrorTestTest<SourceGeneric, ConfigGeneric, ErrorColorBoldGeneric, ReturnSelfGeneric> {//
+//     fn new_error_test_test(
+//         source: SourceGeneric,
+//         config: ConfigGeneric,
+//         git_info: tufa_common::common::git::git_info::GitInformationWithoutLifetimes,
+//         file: String,
+//         line: u32,
+//         column: u32,
+//         should_trace: bool,
+//     ) -> ReturnSelfGeneric;
+// }
  
-impl<SourceGeneric, ConfigGeneric, ErrorColorBoldGeneric, ReturnSelfGeneric> NewErrorTestTest<SourceGeneric, ConfigGeneric, ErrorColorBoldGeneric, ReturnSelfGeneric> for ReturnSelfGeneric
-where 
-    SourceGeneric: GetSource + GetCodeOccurence,
-    ReturnSelfGeneric: NewErrorTest<SourceGeneric> + LogErrorCodeOccurence,
-    ConfigGeneric: tufa_common::config_mods::traits::fields::GetSourcePlaceType + 
-            tufa_common::config_mods::traits::fields::GetLogType + 
-            tufa_common::traits::get_color::ErrorColorBold<ErrorColorBoldGeneric>
-{
-    fn new_error_test_test(
-        source: SourceGeneric,
-        config: ConfigGeneric,
-        git_info: tufa_common::common::git::git_info::GitInformationWithoutLifetimes,
-        file: String,
-        line: u32,
-        column: u32,
-        should_trace: bool,
-    ) -> ReturnSelfGeneric {
-        let code_occurence = CodeOccurence::new(
-                git_info, 
-                file, 
-                line, 
-                column,
-            ).add(source.get_code_occurence());
-        let error = ReturnSelfGeneric::new_error_test(
-            source,
-            code_occurence,
-        );
-        if let true = should_trace {
-            error.log_error_code_occurence(
-                config.get_source_place_type(),
-                config.get_log_type(),
-                config.get_error_color_bold(),
-            );
-        }
-        error
-    }
-}
+// impl<SourceGeneric, ConfigGeneric, ErrorColorBoldGeneric, ReturnSelfGeneric> NewErrorTestTest<SourceGeneric, ConfigGeneric, ErrorColorBoldGeneric, ReturnSelfGeneric> for ReturnSelfGeneric
+// where 
+//     SourceGeneric: GetSource + GetCodeOccurence,
+//     ReturnSelfGeneric: NewErrorTest<SourceGeneric> + LogErrorCodeOccurence,
+//     ConfigGeneric: tufa_common::config_mods::traits::fields::GetSourcePlaceType + 
+//             tufa_common::config_mods::traits::fields::GetLogType + 
+//             tufa_common::traits::get_color::ErrorColorBold<ErrorColorBoldGeneric>
+// {
+//     fn new_error_test_test(
+//         source: SourceGeneric,
+//         config: ConfigGeneric,
+//         git_info: tufa_common::common::git::git_info::GitInformationWithoutLifetimes,
+//         file: String,
+//         line: u32,
+//         column: u32,
+//         should_trace: bool,
+//     ) -> ReturnSelfGeneric {
+//         let code_occurence = CodeOccurence::new(
+//                 git_info, 
+//                 file, 
+//                 line, 
+//                 column,
+//             ).add(source.get_code_occurence());
+//         let error = ReturnSelfGeneric::new_error_test(
+//             source,
+//             code_occurence,
+//         );
+//         if let true = should_trace {
+//             error.log_error_code_occurence(
+//                 config.get_source_place_type(),
+//                 config.get_log_type(),
+//                 config.get_error_color_bold(),
+//             );
+//         }
+//         error
+//     }
+// }
 
 pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
     if let Err(e) = tufa_common::common::code_occurence::three() {
