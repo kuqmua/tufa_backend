@@ -94,7 +94,7 @@ use tufa_common::traits::new_error::NewError;
 use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::traits::log_error_code_occurence::LogErrorCodeOccurence;
 use tufa_common::traits::new_error_test::NewErrorTest;
-use tufa_common::traits::new_error_test_test::NewErrorTestTest;
+use tufa_common::traits::new_error_with_addition::NewErrorWithAddition;
 use tufa_common::traits::code_occurence_methods::CodeOccurenceMethods;
 
 #[derive(ImplGetSourceFromTufaCommon)]
@@ -136,7 +136,7 @@ impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperErr
 
 pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
     if let Err(e) = tufa_common::common::code_occurence::three() {
-        return Err(Box::new(OneWrapperError::new_error_test_test(
+        return Err(Box::new(OneWrapperError::new_error_with_addition(
             OneWrapperErrorEnum::ThreeWrapper(*e), 
             once_cell::sync::Lazy::force(&crate::global_variables::runtime::config::CONFIG), 
             once_cell::sync::Lazy::force(&crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES), 
