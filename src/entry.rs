@@ -88,75 +88,30 @@ pub fn entry() {
     }
 }
 
-// use crate::global_variables::compile_time::git_info::GIT_INFO;
-// use crate::global_variables::compile_time::git_info::GIT_INFO;
-use once_cell::sync::Lazy;
-use std::collections::HashMap;
-use tufa_common::common::code_occurence::FileLineColumn;
-use tufa_common::common::code_occurence::TimeFileLineColumn;
-use tufa_common::common::code_occurence::TimeFileLineColumnIncrement;
-use tufa_common::config_mods::log_type::LogType;
-use tufa_common::config_mods::source_place_type::SourcePlaceType;
-use tufa_common::config_mods::tracing_type::TracingType;
-use tufa_common::traits::code_occurence_methods::CodeOccurenceMethods;
-use tufa_common::traits::get_color::ErrorColorBold;
-use tufa_common::common::code_occurence::CodeOccurence;
 use tufa_common::common::code_occurence::ThreeOriginError;
-use tufa_common::common::git::git_info::GitInformationWithoutLifetimes;
-use tufa_common::common::where_was::WhereWas;
+use impl_get_source::ImplGetSourceFromTufaCommon;
 use tufa_common::traits::new_error::NewError;
 use tufa_common::traits::with_tracing::WithTracing;
-use impl_get_source::ImplGetSourceFromTufaCommon;
-use tufa_common::traits::get_code_occurence::GetCodeOccurence;
 use tufa_common::traits::log_error_code_occurence::LogErrorCodeOccurence;
-use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::new_error_test::NewErrorTest;
 use tufa_common::traits::new_error_test_test::NewErrorTestTest;
 
 #[derive(ImplGetSourceFromTufaCommon)]
 pub struct OneWrapperError {
     source: OneWrapperErrorEnum,
-    code_occurence: CodeOccurence,
+    code_occurence: tufa_common::common::code_occurence::CodeOccurence,
 }
 
-impl GetCodeOccurence for OneWrapperError {
-    fn get_code_occurence(&self) -> &CodeOccurence {
+impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperError {
+    fn get_code_occurence(&self) -> &tufa_common::common::code_occurence::CodeOccurence {
         &self.code_occurence
     }
 }
-
-pub enum OneWrapperErrorEnum {
-    Three(ThreeOriginError),
-}
-
-impl GetSource for OneWrapperErrorEnum {
-    fn get_source(&self) -> String {
-        match self {
-            OneWrapperErrorEnum::Three(t) => t.get_source(),
-        }
-    }
-}
-
-impl GetCodeOccurence for OneWrapperErrorEnum {
-    fn get_code_occurence(&self) -> &tufa_common::common::code_occurence::CodeOccurence{
-        match self {
-            OneWrapperErrorEnum::Three(e) => e.get_code_occurence(),
-        }
-    }
-}
-
-pub trait WithTracingTest<T> {
-    fn with_tracing_test(
-        source: T,
-        where_was: HashMap<GitInformationWithoutLifetimes, Vec<TimeFileLineColumnIncrement>>,
-        source_place_type: &SourcePlaceType,
-    ) -> Self;
-}
  
-impl NewErrorTest<OneWrapperErrorEnum> for OneWrapperError {
+impl tufa_common::traits::new_error_test::NewErrorTest<OneWrapperErrorEnum> for OneWrapperError {
     fn new_error_test(
         source: OneWrapperErrorEnum,
-        code_occurence: CodeOccurence,
+        code_occurence: tufa_common::common::code_occurence::CodeOccurence,
     ) -> Self {
         Self {
             source,
@@ -165,95 +120,25 @@ impl NewErrorTest<OneWrapperErrorEnum> for OneWrapperError {
     }
 }
 
-pub trait InitErrorWithPossibleTraceTest<GenericErrorStruct, GenericErrorStructSource>
-where
-    GenericErrorStruct:
-        WithTracingTest<GenericErrorStructSource> + NewErrorTest<GenericErrorStructSource>,
-{
-    fn init_error_with_possible_trace_test(
-        source: GenericErrorStructSource,
-        where_was: HashMap<GitInformationWithoutLifetimes, Vec<TimeFileLineColumnIncrement>>,
-        source_place_type: &SourcePlaceType,
-        should_trace: bool,
-    ) -> Self;
+#[derive(ImplGetSourceFromTufaCommon)]
+pub enum OneWrapperErrorEnum {
+    ThreeWrapper(ThreeOriginError),
 }
 
-// impl<GenericErrorStruct, GenericErrorStructSource>
-//     InitErrorWithPossibleTraceTest<GenericErrorStruct, GenericErrorStructSource>
-//     for GenericErrorStruct
-// where
-//     GenericErrorStruct:
-//         WithTracingTest<GenericErrorStructSource> + NewErrorTest<GenericErrorStructSource>,
-// {
-//     fn init_error_with_possible_trace_test(
-//         source: GenericErrorStructSource,
-//         where_was: HashMap<GitInformationWithoutLifetimes, Vec<TimeFileLineColumnIncrement>>,
-//         source_place_type: &SourcePlaceType,
-//         should_trace: bool,
-//     ) -> Self {
-//         match should_trace {
-//             true => Self::with_tracing_test(source, where_was, source_place_type),
-//             false => Self::new_error_test(source, where_was),
-//         }
-//     }
-// }
-
-// pub trait NewErrorTestTest<SourceGeneric, ConfigGeneric, ErrorColorBoldGeneric, ReturnSelfGeneric> {//
-//     fn new_error_test_test(
-//         source: SourceGeneric,
-//         config: ConfigGeneric,
-//         git_info: tufa_common::common::git::git_info::GitInformationWithoutLifetimes,
-//         file: String,
-//         line: u32,
-//         column: u32,
-//         should_trace: bool,
-//     ) -> ReturnSelfGeneric;
-// }
- 
-// impl<SourceGeneric, ConfigGeneric, ErrorColorBoldGeneric, ReturnSelfGeneric> NewErrorTestTest<SourceGeneric, ConfigGeneric, ErrorColorBoldGeneric, ReturnSelfGeneric> for ReturnSelfGeneric
-// where 
-//     SourceGeneric: GetSource + GetCodeOccurence,
-//     ReturnSelfGeneric: NewErrorTest<SourceGeneric> + LogErrorCodeOccurence,
-//     ConfigGeneric: tufa_common::config_mods::traits::fields::GetSourcePlaceType + 
-//             tufa_common::config_mods::traits::fields::GetLogType + 
-//             tufa_common::traits::get_color::ErrorColorBold<ErrorColorBoldGeneric>
-// {
-//     fn new_error_test_test(
-//         source: SourceGeneric,
-//         config: ConfigGeneric,
-//         git_info: tufa_common::common::git::git_info::GitInformationWithoutLifetimes,
-//         file: String,
-//         line: u32,
-//         column: u32,
-//         should_trace: bool,
-//     ) -> ReturnSelfGeneric {
-//         let code_occurence = CodeOccurence::new(
-//                 git_info, 
-//                 file, 
-//                 line, 
-//                 column,
-//             ).add(source.get_code_occurence());
-//         let error = ReturnSelfGeneric::new_error_test(
-//             source,
-//             code_occurence,
-//         );
-//         if let true = should_trace {
-//             error.log_error_code_occurence(
-//                 config.get_source_place_type(),
-//                 config.get_log_type(),
-//                 config.get_error_color_bold(),
-//             );
-//         }
-//         error
-//     }
-// }
+impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperErrorEnum {
+    fn get_code_occurence(&self) -> &tufa_common::common::code_occurence::CodeOccurence{
+        match self {
+            OneWrapperErrorEnum::ThreeWrapper(e) => e.get_code_occurence(),
+        }
+    }
+}
 
 pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
     if let Err(e) = tufa_common::common::code_occurence::three() {
         return Err(Box::new(OneWrapperError::new_error_test_test(
-            OneWrapperErrorEnum::Three(*e), 
+            OneWrapperErrorEnum::ThreeWrapper(*e), 
             once_cell::sync::Lazy::force(&crate::global_variables::runtime::config::CONFIG), 
-            crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(), 
+            once_cell::sync::Lazy::force(&crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES), 
             String::from(file!()), 
             line!(), 
             column!(), 
@@ -261,9 +146,4 @@ pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
         )));
     }
     Ok(())
-}
-
-pub struct TwoError {
-    source: bool,
-    code_occurence: HashMap<GitInformationWithoutLifetimes, Vec<TimeFileLineColumnIncrement>>,
 }
