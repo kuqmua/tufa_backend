@@ -110,6 +110,7 @@ use impl_get_source::ImplGetSourceFromTufaCommon;
 use tufa_common::traits::get_code_occurence::GetCodeOccurence;
 use tufa_common::traits::log_error_code_occurence::LogErrorCodeOccurence;
 use tufa_common::traits::get_source::GetSource;
+use tufa_common::traits::new_error_test::NewErrorTest;
 
 #[derive(ImplGetSourceFromTufaCommon)]
 pub struct OneWrapperError {
@@ -123,25 +124,6 @@ impl GetCodeOccurence for OneWrapperError {
     }
 }
 
-// impl LogCodeOccurence for OneError {
-//     fn log_code_occurence(
-//         &self,
-//         source_place_type: &SourcePlaceType,
-//         log_type: LogType,
-//         source: String,
-//         style: ansi_term::Style,
-//     ) {
-//         self.code_occurence
-//             .log_code_occurence(source_place_type, log_type, source, style);
-//     }
-// }
-
-// #[derive(
-//         // Debug,
-//     // ImplDisplayForError,
-//     ImplGetSourceFromTufaCommon,
-//     // ImplGetWhereWasOriginOrWrapperFromTufaCommon,
-// )]
 pub enum OneWrapperErrorEnum {
     Three(ThreeOriginError),
 }
@@ -162,7 +144,6 @@ impl GetCodeOccurence for OneWrapperErrorEnum {
     }
 }
 
-
 pub trait WithTracingTest<T> {
     fn with_tracing_test(
         source: T,
@@ -171,14 +152,6 @@ pub trait WithTracingTest<T> {
     ) -> Self;
 }
  
-
-pub trait NewErrorTest<T> {
-    fn new_error_test(
-        source: T,
-        code_occurence: CodeOccurence,
-    ) -> Self;
-}
-
 impl NewErrorTest<OneWrapperErrorEnum> for OneWrapperError {
     fn new_error_test(
         source: OneWrapperErrorEnum,
