@@ -109,20 +109,8 @@ impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperErr
     }
 }
  
-impl tufa_common::traits::new_error_test::NewErrorTest<OneWrapperErrorEnum> for OneWrapperError {
-    fn new_with_git_info_file_line_column(
-        source: OneWrapperErrorEnum,
-        git_info: tufa_common::common::git::git_info::GitInformationWithoutLifetimes,
-        file: String, //&'a str
-        line: u32,
-        column: u32,
-    ) -> Self {
-        Self {
-            source,
-            code_occurence: tufa_common::common::code_occurence::CodeOccurence::new(git_info, file, line, column),
-        }
-    }
-    fn new_with_code_occurance(
+impl tufa_common::traits::new_error_test::NewErrorTestTestTest<OneWrapperErrorEnum> for OneWrapperError {
+    fn new(
         source: OneWrapperErrorEnum,
         code_occurence: tufa_common::common::code_occurence::CodeOccurence,
     ) -> Self {
