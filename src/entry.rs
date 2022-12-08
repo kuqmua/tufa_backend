@@ -95,6 +95,7 @@ use tufa_common::traits::with_tracing::WithTracing;
 use tufa_common::traits::log_error_code_occurence::LogErrorCodeOccurence;
 use tufa_common::traits::new_error_test::NewErrorTest;
 use tufa_common::traits::new_error_test_test::NewErrorTestTest;
+use tufa_common::traits::code_occurence_methods::CodeOccurenceMethods;
 
 #[derive(ImplGetSourceFromTufaCommon)]
 pub struct OneWrapperError {
@@ -109,13 +110,25 @@ impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperErr
 }
  
 impl tufa_common::traits::new_error_test::NewErrorTest<OneWrapperErrorEnum> for OneWrapperError {
-    fn new_error_test(
+    fn new_with_git_info_file_line_column(
+        source: OneWrapperErrorEnum,
+        git_info: tufa_common::common::git::git_info::GitInformationWithoutLifetimes,
+        file: String, //&'a str
+        line: u32,
+        column: u32,
+    ) -> Self {
+        Self {
+            source,
+            code_occurence: tufa_common::common::code_occurence::CodeOccurence::new(git_info, file, line, column),
+        }
+    }
+    fn new_with_code_occurance(
         source: OneWrapperErrorEnum,
         code_occurence: tufa_common::common::code_occurence::CodeOccurence,
     ) -> Self {
         Self {
             source,
-            code_occurence
+            code_occurence,
         }
     }
 }
