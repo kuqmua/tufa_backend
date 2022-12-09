@@ -90,12 +90,7 @@ pub fn entry() {
 
 use tufa_common::common::code_occurence::ThreeOriginError;
 use impl_get_source::ImplGetSourceFromTufaCommon;
-use tufa_common::traits::new_error::NewError;
-use tufa_common::traits::with_tracing::WithTracing;
-use tufa_common::traits::new_error_test::NewErrorTest;
 use tufa_common::traits::new_error_with_addition::NewErrorWithAddition;
-use tufa_common::traits::code_occurence_methods::CodeOccurenceMethods;
-use tufa_common::traits::code_occurence_methods::CodeOccurenceNewWithAddition;
 
 #[derive(ImplGetSourceFromTufaCommon)]
 pub struct OneWrapperError {
