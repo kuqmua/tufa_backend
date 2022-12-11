@@ -88,7 +88,7 @@ pub fn entry() {
     }
 }
 
-use tufa_common::common::code_occurence::ThreeOriginError;
+use tufa_common::common::code_occurence::ThreeWrapperError;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 use tufa_common::traits::new_error_with_addition::NewErrorWithAddition;
 
@@ -118,7 +118,7 @@ impl tufa_common::traits::new_error_test::NewErrorTestTestTest<OneWrapperErrorEn
 
 #[derive(ImplGetSourceFromTufaCommon)]
 pub enum OneWrapperErrorEnum {
-    ThreeWrapper(ThreeOriginError),
+    ThreeWrapper(ThreeWrapperError),
 }
 
 impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperErrorEnum {
@@ -130,7 +130,7 @@ impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperErr
 }
 
 pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
-    if let Err(e) = tufa_common::common::code_occurence::three() {
+    if let Err(e) = tufa_common::common::code_occurence::three(false) {
         return Err(Box::new(OneWrapperError::new_error_with_addition(
             OneWrapperErrorEnum::ThreeWrapper(*e), 
             once_cell::sync::Lazy::force(&crate::global_variables::runtime::config::CONFIG), 
