@@ -98,6 +98,12 @@ pub struct OneWrapperError {
     code_occurence: tufa_common::common::code_occurence::CodeOccurence,
 }
 
+// impl tufa_common::traits::get_source::GetSource for OneWrapperError {
+//     fn get_source(&self) -> String {
+//         self.source.get_source()
+//     }
+// }
+
 impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperError {
     fn get_code_occurence(&self) -> &tufa_common::common::code_occurence::CodeOccurence {
         &self.code_occurence
@@ -120,6 +126,15 @@ impl tufa_common::traits::new_error_test::NewErrorTestTestTest<OneWrapperErrorEn
 pub enum OneWrapperErrorEnum {
     ThreeWrapper(ThreeWrapperError),
 }
+
+// impl tufa_common::traits::get_source::GetSource for OneWrapperErrorEnum {
+//     fn get_source(&self) -> String {
+//         match self {
+//             OneWrapperErrorEnum::ThreeWrapper(e) => e.get_source(),
+//         }
+//         // self.source.get_source()
+//     }
+// }
 
 impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperErrorEnum {
     fn get_code_occurence(&self) -> &tufa_common::common::code_occurence::CodeOccurence{
