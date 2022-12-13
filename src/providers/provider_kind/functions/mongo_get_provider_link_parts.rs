@@ -7,7 +7,7 @@ use mongodb::bson::Document;
 use mongodb::options::ClientOptions;
 use mongodb::Client;
 use tufa_common::common::where_was::WhereWas;
-use tufa_common::config_mods::traits::get_mongo_url_trait::GetMongoUrl;
+use tufa_common::traits::get_mongo_url::GetMongoUrl;
 
 #[derive(Debug)]
 pub struct MongoGetProviderLinkPartsError {

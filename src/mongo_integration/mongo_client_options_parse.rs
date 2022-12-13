@@ -7,7 +7,7 @@ use init_error::InitErrorFromTufaCommon;
 use mongodb::error::Error;
 use mongodb::options::ClientOptions;
 use tufa_common::common::where_was::WhereWas;
-use tufa_common::config_mods::traits::get_mongo_url_trait::GetMongoUrl;
+use tufa_common::traits::get_mongo_url::GetMongoUrl;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::where_was_methods::WhereWasMethods;
 

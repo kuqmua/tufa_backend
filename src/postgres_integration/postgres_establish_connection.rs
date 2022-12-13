@@ -11,7 +11,7 @@ use sqlx::Postgres;
 use std::collections::HashMap;
 use std::time::Duration;
 use tufa_common::common::where_was::WhereWas;
-use tufa_common::config_mods::traits::get_postgres_url::GetPostgresUrl;
+use tufa_common::traits::get_postgres_url::GetPostgresUrl;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::where_was_methods::WhereWasMethods;
 

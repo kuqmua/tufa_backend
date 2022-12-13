@@ -14,10 +14,10 @@ use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufa
 use init_error::InitErrorFromTufaCommon;
 use std::ops::Deref;
 use tufa_common::common::where_was::WhereWas;
-use tufa_common::config_mods::traits::get_postgres_url::GetPostgresUrl;
 use tufa_common::server::mongo::mongo_check_availability::mongo_check_availability;
 use tufa_common::server::mongo::mongo_check_availability::MongoCheckAvailabilityWrapperError;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
+use tufa_common::traits::get_postgres_url::GetPostgresUrl;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 
