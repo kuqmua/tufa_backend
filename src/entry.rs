@@ -7,7 +7,7 @@ use crate::server_wrapper::server_wrapper;
 use crate::telemetry::get_subscriber::get_subscriber;
 use crate::telemetry::init_subscriber::init_subscriber;
 use tufa_common::config_mods::print_type::PrintType;
-use tufa_common::config_mods::traits::fields::GetLogType;
+use tufa_common::traits::fields::GetLogType;
 use tufa_common::traits::get_git_source_file_link::GetGitSourceFileLink;
 // use valuable::Valuable;
 
