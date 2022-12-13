@@ -111,8 +111,8 @@ impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperErr
     }
 }
  
-impl tufa_common::traits::new_error_test::NewErrorTestTestTest<OneWrapperErrorEnum> for OneWrapperError {
-    fn new(
+impl tufa_common::traits::init_error::InitError<OneWrapperErrorEnum> for OneWrapperError {
+    fn init_error(
         source: OneWrapperErrorEnum,
         code_occurence: tufa_common::common::code_occurence::CodeOccurence,
     ) -> Self {
@@ -147,7 +147,6 @@ impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperErr
 
 pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
     if let Err(e) = tufa_common::common::code_occurence::three(false) {
-        
         let eee = Box::new(OneWrapperError::new_error_with_one_addition(
             OneWrapperErrorEnum::ThreeWrapper(*e), 
             once_cell::sync::Lazy::force(&crate::global_variables::runtime::config::CONFIG), 
