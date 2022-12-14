@@ -4,12 +4,12 @@ use tufa_common::common::git::git_info::GitInformation;
 
 pub async fn git_info_json() -> impl Responder {
     web::Json(GitInformation {
-        commit_id: GIT_INFO.commit_id,
-        repo_link: GIT_INFO.repo_link,
-        author: GIT_INFO.author,
-        author_email: GIT_INFO.author_email,
-        commit_unix_time: GIT_INFO.commit_unix_time,
-        timezone: GIT_INFO.timezone,
-        message: GIT_INFO.message,
+        git_commit_id: GIT_INFO.git_commit_id,
+        git_repo_link: GIT_INFO.git_repo_link,
+        git_author: GIT_INFO.git_author,
+        git_author_email: GIT_INFO.git_author_email,
+        git_commit_unix_time: GIT_INFO.git_commit_unix_time,
+        git_timezone: GIT_INFO.git_timezone,
+        git_message: GIT_INFO.git_message,
     })
 }
