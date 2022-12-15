@@ -1,5 +1,5 @@
-use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
+use crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES;
 use crate::mongo_integration::mongo_check_collection_is_not_empty::mongo_check_collections_is_not_empty;
 use crate::mongo_integration::mongo_check_collection_is_not_empty::MongoCheckCollectionsIsNotEmptyWrapperError;
 use crate::mongo_integration::mongo_client_options_parse::mongo_client_options_parse;

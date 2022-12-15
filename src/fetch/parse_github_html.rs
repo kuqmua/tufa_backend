@@ -1,5 +1,5 @@
 use crate::fetch::info_structures::common_rss_structures::GithubInfoFromHtml;
-use crate::global_variables::compile_time::git_info::GIT_INFO;
+use crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES;
 use crate::prints::print_colorful_message::print_colorful_message;
 use html_parser::Dom;
 use html_parser::Node;
@@ -102,7 +102,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                                 None,
                                                                 tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                                                vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                                                 warning_message,
                                                             );
                                                         }
@@ -112,7 +112,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                     None,
                                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                                     "different node".to_string(),
                                                 ),
                                             },
@@ -125,7 +125,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                     None,
                                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             );
                                             }
@@ -135,7 +135,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                     None,
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                                 },
@@ -146,7 +146,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                                     None,
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                                 }
@@ -156,7 +156,8 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                 None,
                                 tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                vec![GIT_INFO_WITHOUT_LIFETIMES
+                                    .get_git_source_file_link(file!(), line!())],
                                 "different node".to_string(),
                             ),
                         },
@@ -167,7 +168,8 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                                 None,
                                 tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                vec![GIT_INFO_WITHOUT_LIFETIMES
+                                    .get_git_source_file_link(file!(), line!())],
                                 warning_message,
                             )
                         }
@@ -179,7 +181,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         error_message,
                     )
                 }
@@ -189,7 +191,7 @@ pub fn parse_github_html(option_content: Option<String>) -> GithubInfoFromHtml {
             None,
             tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
             "option content is None".to_string(),
         ),
     }
@@ -258,7 +260,7 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                                         None,
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -268,7 +270,8 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                             None,
                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                            vec![GIT_INFO_WITHOUT_LIFETIMES
+                                .get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     },
@@ -281,7 +284,8 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                             None,
                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                            vec![GIT_INFO_WITHOUT_LIFETIMES
+                                .get_git_source_file_link(file!(), line!())],
                             warning_message,
                         )
                     }
@@ -290,7 +294,7 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                     None,
                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -301,7 +305,7 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
                     None,
                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -310,7 +314,7 @@ fn parse_github_html_first_part(node: &Node) -> Option<String> {
             None,
             tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -401,7 +405,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -422,7 +426,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -436,7 +440,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -452,7 +456,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -476,7 +480,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -497,7 +501,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -511,7 +515,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -551,7 +555,7 @@ fn parse_github_html_second_part(
                                                                     None,
                                                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                                                     warning_message,
                                                                 )
                                                                 }
@@ -576,7 +580,7 @@ fn parse_github_html_second_part(
                                                     None,
                                                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                                                 "different node".to_string(),
                                                             ),
                                                             }
@@ -590,7 +594,7 @@ fn parse_github_html_second_part(
                                                     None,
                                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
                                             }
@@ -605,7 +609,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![GIT_INFO
+                                                            vec![GIT_INFO_WITHOUT_LIFETIMES
                                                                 .get_git_source_file_link(
                                                                     file!(),
                                                                     line!(),
@@ -628,7 +632,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -642,7 +646,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -674,7 +678,7 @@ fn parse_github_html_second_part(
                                                     None,
                                                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                                                     "different node".to_string(),
                                                                 ),
                                                                 }
@@ -689,7 +693,7 @@ fn parse_github_html_second_part(
                                                     None,
                                                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                                                 warning_message,
                                                             )
                                                             }
@@ -704,7 +708,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![GIT_INFO
+                                                            vec![GIT_INFO_WITHOUT_LIFETIMES
                                                                 .get_git_source_file_link(
                                                                     file!(),
                                                                     line!(),
@@ -733,7 +737,7 @@ fn parse_github_html_second_part(
                                                     None,
                                                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                                                     "different node".to_string(),
                                                                 ),
                                                                 }
@@ -747,7 +751,7 @@ fn parse_github_html_second_part(
                                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                 warning_message,
                             )
                             }
@@ -762,7 +766,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![GIT_INFO
+                                                            vec![GIT_INFO_WITHOUT_LIFETIMES
                                                                 .get_git_source_file_link(
                                                                     file!(),
                                                                     line!(),
@@ -794,7 +798,7 @@ fn parse_github_html_second_part(
                                                     None,
                                                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                                                     "different node".to_string(),
                                                                 ),
                                                                 }
@@ -809,7 +813,7 @@ fn parse_github_html_second_part(
                                                     None,
         tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                                             }
@@ -824,7 +828,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![GIT_INFO
+                                                            vec![GIT_INFO_WITHOUT_LIFETIMES
                                                                 .get_git_source_file_link(
                                                                     file!(),
                                                                     line!(),
@@ -847,7 +851,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -861,7 +865,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -887,7 +891,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -908,7 +912,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -922,7 +926,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -946,7 +950,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -967,7 +971,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -981,7 +985,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -997,7 +1001,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -1021,7 +1025,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1042,7 +1046,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1056,7 +1060,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -1096,7 +1100,7 @@ fn parse_github_html_second_part(
                                                                     None,
                                                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                                                     warning_message,
                                                                 )
                                                                 }
@@ -1118,7 +1122,7 @@ fn parse_github_html_second_part(
                                                     None,
         tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
     ),
                                                                 }
@@ -1134,7 +1138,7 @@ fn parse_github_html_second_part(
                                                     None,
                                                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                                                 warning_message,
                                                             )
                                                             }
@@ -1149,7 +1153,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![GIT_INFO
+                                                            vec![GIT_INFO_WITHOUT_LIFETIMES
                                                                 .get_git_source_file_link(
                                                                     file!(),
                                                                     line!(),
@@ -1172,7 +1176,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1186,7 +1190,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -1218,7 +1222,7 @@ fn parse_github_html_second_part(
                                                     None,
         tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
     ),
                                                                 }
@@ -1233,7 +1237,7 @@ fn parse_github_html_second_part(
                                                     None,
         tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                                             }
@@ -1248,7 +1252,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![GIT_INFO
+                                                            vec![GIT_INFO_WITHOUT_LIFETIMES
                                                                 .get_git_source_file_link(
                                                                     file!(),
                                                                     line!(),
@@ -1277,7 +1281,7 @@ fn parse_github_html_second_part(
                                                     None,
         tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
     ),
                                                                 }
@@ -1291,7 +1295,7 @@ fn parse_github_html_second_part(
                                                     None,
         tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                             }
@@ -1306,7 +1310,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![GIT_INFO
+                                                            vec![GIT_INFO_WITHOUT_LIFETIMES
                                                                 .get_git_source_file_link(
                                                                     file!(),
                                                                     line!(),
@@ -1338,7 +1342,7 @@ fn parse_github_html_second_part(
                                                     None,
         tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
     ),
                                                                 }
@@ -1352,7 +1356,7 @@ fn parse_github_html_second_part(
                                                     None,
         tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                             }
@@ -1367,7 +1371,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![GIT_INFO
+                                                            vec![GIT_INFO_WITHOUT_LIFETIMES
                                                                 .get_git_source_file_link(
                                                                     file!(),
                                                                     line!(),
@@ -1390,7 +1394,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1404,7 +1408,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -1419,7 +1423,7 @@ fn parse_github_html_second_part(
                                         None,
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -1429,7 +1433,8 @@ fn parse_github_html_second_part(
                             None,
                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                            vec![GIT_INFO_WITHOUT_LIFETIMES
+                                .get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     }
@@ -1510,7 +1515,7 @@ fn parse_github_html_second_part(
                                                         line!(),
                                                         column!()
                                                     )],
-                                                    vec![GIT_INFO.get_git_source_file_link(
+                                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                         file!(),
                                                         line!(),
                                                     )],
@@ -1523,7 +1528,7 @@ fn parse_github_html_second_part(
                                         None,
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
                                     ),
                                 },
@@ -1547,7 +1552,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1568,7 +1573,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1582,7 +1587,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -1598,7 +1603,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -1623,7 +1628,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1644,7 +1649,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1658,7 +1663,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -1674,7 +1679,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -1698,7 +1703,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1719,7 +1724,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1733,7 +1738,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -1771,7 +1776,7 @@ fn parse_github_html_second_part(
                                                                     None,
                                                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                                                     warning_message,
                                                                 )
                                                                 }
@@ -1792,7 +1797,7 @@ fn parse_github_html_second_part(
                                                     None,
         tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
     ),
                                                                 }
@@ -1806,7 +1811,7 @@ fn parse_github_html_second_part(
                                                     None,
         tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                                             }
@@ -1821,7 +1826,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![GIT_INFO
+                                                            vec![GIT_INFO_WITHOUT_LIFETIMES
                                                                 .get_git_source_file_link(
                                                                     file!(),
                                                                     line!(),
@@ -1844,7 +1849,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -1858,7 +1863,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -1873,7 +1878,7 @@ fn parse_github_html_second_part(
                                         None,
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -1883,7 +1888,8 @@ fn parse_github_html_second_part(
                             None,
                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                            vec![GIT_INFO_WITHOUT_LIFETIMES
+                                .get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     }
@@ -1943,7 +1949,7 @@ fn parse_github_html_second_part(
                                                         line!(),
                                                         column!()
                                                     )],
-                                                    vec![GIT_INFO.get_git_source_file_link(
+                                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                         file!(),
                                                         line!(),
                                                     )],
@@ -1956,7 +1962,7 @@ fn parse_github_html_second_part(
                                         None,
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
                                     ),
                                 },
@@ -1981,7 +1987,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -2004,7 +2010,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -2018,7 +2024,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -2034,7 +2040,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -2061,7 +2067,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -2084,7 +2090,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -2098,7 +2104,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -2114,7 +2120,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -2140,7 +2146,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -2163,7 +2169,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -2177,7 +2183,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -2217,7 +2223,7 @@ fn parse_github_html_second_part(
                                                                     None,
                                                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                                                     warning_message,
                                                                 )
                                                                 }
@@ -2240,7 +2246,7 @@ fn parse_github_html_second_part(
                                                     None,
         tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
         "different node".to_string(),
     ),
                                                             },
@@ -2254,7 +2260,7 @@ fn parse_github_html_second_part(
                                                     None,
         tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                                             }
@@ -2269,7 +2275,7 @@ fn parse_github_html_second_part(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![GIT_INFO
+                                                            vec![GIT_INFO_WITHOUT_LIFETIMES
                                                                 .get_git_source_file_link(
                                                                     file!(),
                                                                     line!(),
@@ -2294,7 +2300,7 @@ fn parse_github_html_second_part(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -2308,7 +2314,7 @@ fn parse_github_html_second_part(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             "different node".to_string(),
                                         ),
@@ -2323,7 +2329,7 @@ fn parse_github_html_second_part(
                                         None,
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -2333,7 +2339,8 @@ fn parse_github_html_second_part(
                             None,
                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                            vec![GIT_INFO_WITHOUT_LIFETIMES
+                                .get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     }
@@ -2348,7 +2355,7 @@ fn parse_github_html_second_part(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         warning_message,
                     )
                 }
@@ -2358,7 +2365,7 @@ fn parse_github_html_second_part(
             None,
             tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -2433,7 +2440,8 @@ fn parse_github_html_second_part_inner_one_element(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES
+                                        .get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -2446,7 +2454,8 @@ fn parse_github_html_second_part_inner_one_element(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES
+                                        .get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -2456,7 +2465,7 @@ fn parse_github_html_second_part_inner_one_element(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 },
@@ -2488,7 +2497,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                                 line!(),
                                                                 column!()
                                                             )],
-                                                            vec![GIT_INFO
+                                                            vec![GIT_INFO_WITHOUT_LIFETIMES
                                                                 .get_git_source_file_link(
                                                                     file!(),
                                                                     line!(),
@@ -2534,7 +2543,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                                     line!(),
                                                                     column!()
                                                                 )],
-                                                                vec![GIT_INFO
+                                                                vec![GIT_INFO_WITHOUT_LIFETIMES
                                                                     .get_git_source_file_link(
                                                                         file!(),
                                                                         line!(),
@@ -2553,7 +2562,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                         line!(),
                                                         column!()
                                                     )],
-                                                    vec![GIT_INFO.get_git_source_file_link(
+                                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                         file!(),
                                                         line!(),
                                                     )],
@@ -2574,7 +2583,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                         line!(),
                                                         column!()
                                                     )],
-                                                    vec![GIT_INFO.get_git_source_file_link(
+                                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                         file!(),
                                                         line!(),
                                                     )],
@@ -2588,7 +2597,7 @@ fn parse_github_html_second_part_inner_one_element(
                                         None,
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
                                     ),
                                 },
@@ -2601,7 +2610,7 @@ fn parse_github_html_second_part_inner_one_element(
                                         None,
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -2611,7 +2620,8 @@ fn parse_github_html_second_part_inner_one_element(
                             None,
                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                            vec![GIT_INFO_WITHOUT_LIFETIMES
+                                .get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     }
@@ -2646,7 +2656,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                         line!(),
                                                         column!()
                                                     )],
-                                                    vec![GIT_INFO.get_git_source_file_link(
+                                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                         file!(),
                                                         line!(),
                                                     )],
@@ -2659,7 +2669,7 @@ fn parse_github_html_second_part_inner_one_element(
                                         None,
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
                                     ),
                                 },
@@ -2672,7 +2682,7 @@ fn parse_github_html_second_part_inner_one_element(
                                         None,
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -2682,7 +2692,8 @@ fn parse_github_html_second_part_inner_one_element(
                             None,
                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                            vec![GIT_INFO_WITHOUT_LIFETIMES
+                                .get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     }
@@ -2759,7 +2770,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                     None,
                                                                                 tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                                                             warning_message,
                                                                         )
                                                                 }
@@ -2771,7 +2782,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                     None,
                                                                                 tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                                                             warning_message,
                                                                         )
                                                                     }
@@ -2784,7 +2795,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                     None,
                                                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                                                     warning_message,
                                                                 )
                                                             },
@@ -2799,7 +2810,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                             line!(),
                                                             column!()
                                                         )],
-                                                        vec![GIT_INFO.get_git_source_file_link(
+                                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                             file!(),
                                                             line!(),
                                                         )],
@@ -2876,7 +2887,7 @@ fn parse_github_html_second_part_inner_one_element(
                                                         line!(),
                                                         column!()
                                                     )],
-                                                    vec![GIT_INFO.get_git_source_file_link(
+                                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(
                                                         file!(),
                                                         line!(),
                                                     )],
@@ -2889,7 +2900,7 @@ fn parse_github_html_second_part_inner_one_element(
                                         None,
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                         "different node".to_string(),
                                     ),
                                 },
@@ -2902,7 +2913,7 @@ fn parse_github_html_second_part_inner_one_element(
                                         None,
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     )
                                 }
@@ -2912,7 +2923,8 @@ fn parse_github_html_second_part_inner_one_element(
                             None,
                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                            vec![GIT_INFO_WITHOUT_LIFETIMES
+                                .get_git_source_file_link(file!(), line!())],
                             "different node".to_string(),
                         ),
                     }
@@ -2924,7 +2936,7 @@ fn parse_github_html_second_part_inner_one_element(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         warning_message,
                     )
                 }
@@ -2934,7 +2946,7 @@ fn parse_github_html_second_part_inner_one_element(
             None,
             tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -2969,7 +2981,7 @@ fn handle_text_element(node: &Node) -> Option<String> {
             None,
             tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -3061,7 +3073,8 @@ fn second_element(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES
+                                        .get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3074,7 +3087,8 @@ fn second_element(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES
+                                        .get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3084,7 +3098,7 @@ fn second_element(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 },
@@ -3095,7 +3109,7 @@ fn second_element(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         warning_message,
                     )
                 }
@@ -3105,7 +3119,7 @@ fn second_element(
             None,
             tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -3161,7 +3175,8 @@ fn two_elements_one_child(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES
+                                        .get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3174,7 +3189,8 @@ fn two_elements_one_child(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES
+                                        .get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3184,7 +3200,7 @@ fn two_elements_one_child(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3198,7 +3214,7 @@ fn two_elements_one_child(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3225,7 +3241,7 @@ fn two_elements_one_child(
                                                     None,
         tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                             }
@@ -3235,7 +3251,7 @@ fn two_elements_one_child(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3266,7 +3282,7 @@ fn two_elements_one_child(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![GIT_INFO
+                                                vec![GIT_INFO_WITHOUT_LIFETIMES
                                                     .get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
@@ -3288,7 +3304,7 @@ fn two_elements_one_child(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![GIT_INFO
+                                                vec![GIT_INFO_WITHOUT_LIFETIMES
                                                     .get_git_source_file_link(file!(), line!())],
                                                 "different node".to_string(),
                                             ),
@@ -3307,7 +3323,7 @@ fn two_elements_one_child(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![GIT_INFO
+                                                vec![GIT_INFO_WITHOUT_LIFETIMES
                                                     .get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
@@ -3318,7 +3334,8 @@ fn two_elements_one_child(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES
+                                        .get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3331,7 +3348,8 @@ fn two_elements_one_child(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES
+                                        .get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3341,7 +3359,7 @@ fn two_elements_one_child(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3360,7 +3378,8 @@ fn two_elements_one_child(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES
+                                        .get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3373,7 +3392,8 @@ fn two_elements_one_child(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES
+                                        .get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3383,7 +3403,7 @@ fn two_elements_one_child(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3397,7 +3417,7 @@ fn two_elements_one_child(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3424,7 +3444,7 @@ fn two_elements_one_child(
                                                     None,
         tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                 }
@@ -3434,7 +3454,7 @@ fn two_elements_one_child(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3448,7 +3468,7 @@ fn two_elements_one_child(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3472,7 +3492,7 @@ fn two_elements_one_child(
                                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                             vec![format!("{}:{}:{}", file!(), line!(), column!())],
                                             vec![
-                                                GIT_INFO.get_git_source_file_link(file!(), line!())
+                                                GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())
                                             ],
                                             format!("no {attribute} attrubite"),
                                         ),
@@ -3493,7 +3513,7 @@ fn two_elements_one_child(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![GIT_INFO
+                                                vec![GIT_INFO_WITHOUT_LIFETIMES
                                                     .get_git_source_file_link(file!(), line!())],
                                                 "different node".to_string(),
                                             ),
@@ -3512,7 +3532,7 @@ fn two_elements_one_child(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![GIT_INFO
+                                                vec![GIT_INFO_WITHOUT_LIFETIMES
                                                     .get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
@@ -3523,7 +3543,8 @@ fn two_elements_one_child(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES
+                                        .get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3536,7 +3557,8 @@ fn two_elements_one_child(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES
+                                        .get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3546,7 +3568,7 @@ fn two_elements_one_child(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3565,7 +3587,8 @@ fn two_elements_one_child(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES
+                                        .get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3578,7 +3601,8 @@ fn two_elements_one_child(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES
+                                        .get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3588,7 +3612,7 @@ fn two_elements_one_child(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3602,7 +3626,7 @@ fn two_elements_one_child(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3630,7 +3654,7 @@ fn two_elements_one_child(
                                                     None,
         tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
         warning_message,
     );
                                         }
@@ -3648,7 +3672,8 @@ fn two_elements_one_child(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES
+                                        .get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3661,7 +3686,8 @@ fn two_elements_one_child(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES
+                                        .get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3671,7 +3697,7 @@ fn two_elements_one_child(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3685,7 +3711,7 @@ fn two_elements_one_child(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3711,7 +3737,7 @@ fn two_elements_one_child(
                                                     None,
         tufa_common::config_mods::print_type::PrintType::WarningHigh,
         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
         warning_message,
     )
                                 }
@@ -3721,7 +3747,7 @@ fn two_elements_one_child(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3754,7 +3780,7 @@ fn two_elements_one_child(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![GIT_INFO
+                                                vec![GIT_INFO_WITHOUT_LIFETIMES
                                                     .get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
@@ -3776,7 +3802,7 @@ fn two_elements_one_child(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![GIT_INFO
+                                                vec![GIT_INFO_WITHOUT_LIFETIMES
                                                     .get_git_source_file_link(file!(), line!())],
                                                 "different node".to_string(),
                                             ),
@@ -3795,7 +3821,7 @@ fn two_elements_one_child(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![GIT_INFO
+                                                vec![GIT_INFO_WITHOUT_LIFETIMES
                                                     .get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
@@ -3806,7 +3832,8 @@ fn two_elements_one_child(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES
+                                        .get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -3819,7 +3846,8 @@ fn two_elements_one_child(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES
+                                        .get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
@@ -3829,7 +3857,7 @@ fn two_elements_one_child(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         "different node".to_string(),
                     ),
                 }
@@ -3841,7 +3869,7 @@ fn two_elements_one_child(
                     None,
                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -3850,7 +3878,7 @@ fn two_elements_one_child(
             None,
             tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -3889,7 +3917,7 @@ fn two_elements_four_children_first(node: &Node) -> Option<String> {
                     None,
                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -3900,7 +3928,7 @@ fn two_elements_four_children_first(node: &Node) -> Option<String> {
                     None,
                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -3909,7 +3937,7 @@ fn two_elements_four_children_first(node: &Node) -> Option<String> {
             None,
             tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -3929,7 +3957,7 @@ fn two_elements_four_children_second(node: &Node) -> Option<String> {
             None,
             tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -3951,7 +3979,7 @@ fn two_elements_four_children_third(node: &Node) -> Option<String> {
                     None,
                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -3962,7 +3990,7 @@ fn two_elements_four_children_third(node: &Node) -> Option<String> {
                     None,
                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -3971,7 +3999,7 @@ fn two_elements_four_children_third(node: &Node) -> Option<String> {
             None,
             tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -4002,7 +4030,8 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                                 None,
                                 tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                vec![GIT_INFO_WITHOUT_LIFETIMES
+                                    .get_git_source_file_link(file!(), line!())],
                                 warning_message,
                             )
                         }
@@ -4018,7 +4047,8 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                                 None,
                                 tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                vec![GIT_INFO_WITHOUT_LIFETIMES
+                                    .get_git_source_file_link(file!(), line!())],
                                 "different node".to_string(),
                             ),
                         },
@@ -4031,7 +4061,8 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                                 None,
                                 tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                vec![GIT_INFO_WITHOUT_LIFETIMES
+                                    .get_git_source_file_link(file!(), line!())],
                                 warning_message,
                             )
                         }
@@ -4041,7 +4072,7 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                     None,
                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -4052,7 +4083,7 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
                     None,
                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -4061,7 +4092,7 @@ fn two_elements_four_children_fourth(node: &Node) -> (Option<String>, Option<Str
             None,
             tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -4089,11 +4120,12 @@ fn parse_github_html_second_part_two_children_first(
     let mut datejs: Option<String> = None;
     let mut date: Option<String> = None;
     match node {
-        Node::Element(ref node_element) => match node_element.children.len() {
-            4 => {
-                match node_element.children[0] {
-                    Node::Element(ref node_element_first) => {
-                        match node_element_first.children.len() {
+        Node::Element(ref node_element) => {
+            match node_element.children.len() {
+                4 => {
+                    match node_element.children[0] {
+                        Node::Element(ref node_element_first) => {
+                            match node_element_first.children.len() {
                             1 => match node_element_first.children[0] {
                                 Node::Text(ref author_handle) => {
                                     if !author_handle.is_empty() {
@@ -4104,7 +4136,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -4117,37 +4149,39 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
                         }
-                    }
-                    _ => print_colorful_message(
-                        None,
-                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                        "different node".to_string(),
-                    ),
-                }
-                match node_element.children[1] {
-                    Node::Text(ref action_handle) => {
-                        if !action_handle.is_empty() {
-                            action = Some(action_handle.to_string())
                         }
+                        _ => print_colorful_message(
+                            None,
+                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
+                            vec![format!("{}:{}:{}", file!(), line!(), column!())],
+                            vec![GIT_INFO_WITHOUT_LIFETIMES
+                                .get_git_source_file_link(file!(), line!())],
+                            "different node".to_string(),
+                        ),
                     }
-                    _ => print_colorful_message(
-                        None,
-                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                        "different node".to_string(),
-                    ),
-                }
-                match node_element.children[2] {
-                    Node::Element(ref node_element_third) => {
-                        match node_element_third.children.len() {
+                    match node_element.children[1] {
+                        Node::Text(ref action_handle) => {
+                            if !action_handle.is_empty() {
+                                action = Some(action_handle.to_string())
+                            }
+                        }
+                        _ => print_colorful_message(
+                            None,
+                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
+                            vec![format!("{}:{}:{}", file!(), line!(), column!())],
+                            vec![GIT_INFO_WITHOUT_LIFETIMES
+                                .get_git_source_file_link(file!(), line!())],
+                            "different node".to_string(),
+                        ),
+                    }
+                    match node_element.children[2] {
+                        Node::Element(ref node_element_third) => {
+                            match node_element_third.children.len() {
                             1 => match node_element_third.children[0] {
                                 Node::Text(ref repository_handle) => {
                                     if !repository_handle.is_empty() {
@@ -4158,7 +4192,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -4171,23 +4205,24 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
                         }
+                        }
+                        _ => print_colorful_message(
+                            None,
+                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
+                            vec![format!("{}:{}:{}", file!(), line!(), column!())],
+                            vec![GIT_INFO_WITHOUT_LIFETIMES
+                                .get_git_source_file_link(file!(), line!())],
+                            "different node".to_string(),
+                        ),
                     }
-                    _ => print_colorful_message(
-                        None,
-                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                        "different node".to_string(),
-                    ),
-                }
-                match node_element.children[3] {
-                    Node::Element(ref node_element_fourth) => {
-                        match node_element_fourth.children.len() {
+                    match node_element.children[3] {
+                        Node::Element(ref node_element_fourth) => {
+                            match node_element_fourth.children.len() {
                             1 => match node_element_fourth.children[0] {
                                 Node::Element(ref node_element_fourth_first) => {
                                     let attribute = "datetime";
@@ -4212,7 +4247,7 @@ fn parse_github_html_second_part_two_children_first(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![GIT_INFO
+                                                vec![GIT_INFO_WITHOUT_LIFETIMES
                                                     .get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
@@ -4234,7 +4269,7 @@ fn parse_github_html_second_part_two_children_first(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![GIT_INFO
+                                                vec![GIT_INFO_WITHOUT_LIFETIMES
                                                     .get_git_source_file_link(file!(), line!())],
                                                 "different node".to_string(),
                                             ),
@@ -4253,7 +4288,7 @@ fn parse_github_html_second_part_two_children_first(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![GIT_INFO
+                                                vec![GIT_INFO_WITHOUT_LIFETIMES
                                                     .get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
@@ -4264,7 +4299,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -4277,28 +4312,29 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
                         }
+                        }
+                        _ => print_colorful_message(
+                            None,
+                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
+                            vec![format!("{}:{}:{}", file!(), line!(), column!())],
+                            vec![GIT_INFO_WITHOUT_LIFETIMES
+                                .get_git_source_file_link(file!(), line!())],
+                            "different node".to_string(),
+                        ),
                     }
-                    _ => print_colorful_message(
-                        None,
-                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                        "different node".to_string(),
-                    ),
                 }
-            }
-            5 => {
-                println!("todo 5 elements github parsing")
-            }
-            6 => {
-                match node_element.children[0] {
-                    Node::Element(ref node_element_first) => {
-                        match node_element_first.children.len() {
+                5 => {
+                    println!("todo 5 elements github parsing")
+                }
+                6 => {
+                    match node_element.children[0] {
+                        Node::Element(ref node_element_first) => {
+                            match node_element_first.children.len() {
                             1 => match node_element_first.children[0] {
                                 Node::Text(ref author_handle) => {
                                     if !author_handle.is_empty() {
@@ -4309,7 +4345,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -4322,37 +4358,39 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
                         }
-                    }
-                    _ => print_colorful_message(
-                        None,
-                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                        "different node".to_string(),
-                    ),
-                }
-                match node_element.children[1] {
-                    Node::Text(ref action_handle) => {
-                        if !action_handle.is_empty() {
-                            action = Some(action_handle.to_string())
                         }
+                        _ => print_colorful_message(
+                            None,
+                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
+                            vec![format!("{}:{}:{}", file!(), line!(), column!())],
+                            vec![GIT_INFO_WITHOUT_LIFETIMES
+                                .get_git_source_file_link(file!(), line!())],
+                            "different node".to_string(),
+                        ),
                     }
-                    _ => print_colorful_message(
-                        None,
-                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                        "different node".to_string(),
-                    ),
-                }
-                match node_element.children[2] {
-                    Node::Element(ref node_element_third) => {
-                        match node_element_third.children.len() {
+                    match node_element.children[1] {
+                        Node::Text(ref action_handle) => {
+                            if !action_handle.is_empty() {
+                                action = Some(action_handle.to_string())
+                            }
+                        }
+                        _ => print_colorful_message(
+                            None,
+                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
+                            vec![format!("{}:{}:{}", file!(), line!(), column!())],
+                            vec![GIT_INFO_WITHOUT_LIFETIMES
+                                .get_git_source_file_link(file!(), line!())],
+                            "different node".to_string(),
+                        ),
+                    }
+                    match node_element.children[2] {
+                        Node::Element(ref node_element_third) => {
+                            match node_element_third.children.len() {
                             1 => match node_element_third.children[0] {
                                 Node::Text(ref repository_handle) => {
                                     if !repository_handle.is_empty() {
@@ -4363,7 +4401,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -4376,37 +4414,39 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
                         }
-                    }
-                    _ => print_colorful_message(
-                        None,
-                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                        "different node".to_string(),
-                    ),
-                }
-                match node_element.children[3] {
-                    Node::Text(ref from_handle) => {
-                        if !from_handle.is_empty() {
-                            from = Some(from_handle.to_string())
                         }
+                        _ => print_colorful_message(
+                            None,
+                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
+                            vec![format!("{}:{}:{}", file!(), line!(), column!())],
+                            vec![GIT_INFO_WITHOUT_LIFETIMES
+                                .get_git_source_file_link(file!(), line!())],
+                            "different node".to_string(),
+                        ),
                     }
-                    _ => print_colorful_message(
-                        None,
-                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                        "different node".to_string(),
-                    ),
-                }
-                match node_element.children[4] {
-                    Node::Element(ref node_element_firth) => {
-                        match node_element_firth.children.len() {
+                    match node_element.children[3] {
+                        Node::Text(ref from_handle) => {
+                            if !from_handle.is_empty() {
+                                from = Some(from_handle.to_string())
+                            }
+                        }
+                        _ => print_colorful_message(
+                            None,
+                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
+                            vec![format!("{}:{}:{}", file!(), line!(), column!())],
+                            vec![GIT_INFO_WITHOUT_LIFETIMES
+                                .get_git_source_file_link(file!(), line!())],
+                            "different node".to_string(),
+                        ),
+                    }
+                    match node_element.children[4] {
+                        Node::Element(ref node_element_firth) => {
+                            match node_element_firth.children.len() {
                             1 => match node_element_firth.children[0] {
                                 Node::Text(ref from_what_repository_forked_handle) => {
                                     if !from_what_repository_forked_handle.is_empty() {
@@ -4418,7 +4458,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -4431,23 +4471,24 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
                         }
+                        }
+                        _ => print_colorful_message(
+                            None,
+                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
+                            vec![format!("{}:{}:{}", file!(), line!(), column!())],
+                            vec![GIT_INFO_WITHOUT_LIFETIMES
+                                .get_git_source_file_link(file!(), line!())],
+                            "different node".to_string(),
+                        ),
                     }
-                    _ => print_colorful_message(
-                        None,
-                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                        "different node".to_string(),
-                    ),
-                }
-                match node_element.children[5] {
-                    Node::Element(ref node_element_sixth) => {
-                        match node_element_sixth.children.len() {
+                    match node_element.children[5] {
+                        Node::Element(ref node_element_sixth) => {
+                            match node_element_sixth.children.len() {
                             1 => match node_element_sixth.children[0] {
                                 Node::Element(ref node_element_sixth_first) => {
                                     let attribute = "datetime";
@@ -4472,7 +4513,7 @@ fn parse_github_html_second_part_two_children_first(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![GIT_INFO
+                                                vec![GIT_INFO_WITHOUT_LIFETIMES
                                                     .get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
@@ -4494,7 +4535,7 @@ fn parse_github_html_second_part_two_children_first(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![GIT_INFO
+                                                vec![GIT_INFO_WITHOUT_LIFETIMES
                                                     .get_git_source_file_link(file!(), line!())],
                                                 "different node".to_string(),
                                             ),
@@ -4513,7 +4554,7 @@ fn parse_github_html_second_part_two_children_first(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![GIT_INFO
+                                                vec![GIT_INFO_WITHOUT_LIFETIMES
                                                     .get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             )
@@ -4524,7 +4565,7 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                     "different node".to_string(),
                                 ),
                             },
@@ -4537,38 +4578,40 @@ fn parse_github_html_second_part_two_children_first(
                                     None,
                                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                     warning_message,
                                 )
                             }
                         }
+                        }
+                        _ => print_colorful_message(
+                            None,
+                            tufa_common::config_mods::print_type::PrintType::WarningHigh,
+                            vec![format!("{}:{}:{}", file!(), line!(), column!())],
+                            vec![GIT_INFO_WITHOUT_LIFETIMES
+                                .get_git_source_file_link(file!(), line!())],
+                            "different node".to_string(),
+                        ),
                     }
-                    _ => print_colorful_message(
+                }
+                _ => {
+                    let warning_message =
+                        format!("different children.len(): {}", node_element.children.len());
+                    print_colorful_message(
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                        "different node".to_string(),
-                    ),
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
+                        warning_message,
+                    )
                 }
             }
-            _ => {
-                let warning_message =
-                    format!("different children.len(): {}", node_element.children.len());
-                print_colorful_message(
-                    None,
-                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                    vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                    warning_message,
-                )
-            }
-        },
+        }
         _ => print_colorful_message(
             None,
             tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -4616,7 +4659,7 @@ fn four_cases(
                     None,
                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -4627,7 +4670,7 @@ fn four_cases(
                     None,
                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -4636,7 +4679,7 @@ fn four_cases(
             None,
             tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -4650,7 +4693,7 @@ fn four_cases(
             None,
             tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -4666,7 +4709,7 @@ fn four_cases(
                     None,
                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -4677,7 +4720,7 @@ fn four_cases(
                     None,
                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -4686,7 +4729,7 @@ fn four_cases(
             None,
             tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }
@@ -4710,7 +4753,8 @@ fn four_cases(
                                 None,
                                 tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                vec![GIT_INFO_WITHOUT_LIFETIMES
+                                    .get_git_source_file_link(file!(), line!())],
                                 warning_message,
                             )
                         }
@@ -4727,7 +4771,8 @@ fn four_cases(
                                 None,
                                 tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                vec![GIT_INFO_WITHOUT_LIFETIMES
+                                    .get_git_source_file_link(file!(), line!())],
                                 "different node".to_string(),
                             ),
                         },
@@ -4740,7 +4785,8 @@ fn four_cases(
                                 None,
                                 tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                vec![GIT_INFO_WITHOUT_LIFETIMES
+                                    .get_git_source_file_link(file!(), line!())],
                                 warning_message,
                             )
                         }
@@ -4750,7 +4796,7 @@ fn four_cases(
                     None,
                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                     "different node".to_string(),
                 ),
             },
@@ -4763,7 +4809,7 @@ fn four_cases(
                     None,
                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                     warning_message,
                 )
             }
@@ -4772,7 +4818,7 @@ fn four_cases(
             None,
             tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
             "different node".to_string(),
         ),
     }

@@ -1,8 +1,8 @@
 use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::fetch::rss_parse_string_into_struct::rss_parse_string_into_struct;
-use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
+use crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use futures::future::join_all;
@@ -127,7 +127,7 @@ impl ProviderKind {
                 None,
                 tufa_common::config_mods::print_type::PrintType::WarningHigh,
                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                 format!(
                     "fetch_link {url} in {}.{}ms",
                     time.elapsed().as_secs(),

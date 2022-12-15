@@ -1,5 +1,5 @@
-use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
+use crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;

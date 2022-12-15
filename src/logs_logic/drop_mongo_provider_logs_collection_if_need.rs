@@ -1,5 +1,5 @@
-use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
+use crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES;
 use crate::mongo_integration::mongo_drop_empty_collection::mongo_drop_empty_collection;
 use crate::mongo_integration::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorEnum;
 use crate::prints::print_colorful_message::print_colorful_message;
@@ -29,7 +29,7 @@ pub async fn drop_mongo_provider_logs_collection_if_need(
             Some(pk),
             tufa_common::config_mods::print_type::PrintType::WarningHigh,
             vec![format!("{}:{}:{}", file!(), line!(), column!())],
-            vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+            vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
             format!("drop fail with error {e:#?}"),
         );
         return Err(e);

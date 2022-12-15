@@ -1,4 +1,4 @@
-use crate::global_variables::compile_time::git_info::GIT_INFO;
+use crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES;
 use crate::global_variables::hardcode::PROJECT_NAME;
 use crate::global_variables::runtime::config::CONFIG;
 use crate::preparation::prepare_server::prepare_server;
@@ -37,7 +37,7 @@ pub fn entry() {
                 None,
                 tufa_common::config_mods::print_type::PrintType::WarningHigh,
                 vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                 format!("Cannot build tokio runtime {e:#?}"),
             );
         }
@@ -53,7 +53,7 @@ pub fn entry() {
                         None,
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         format!("tracing init_subscriber error: {:#?}", e),
                     );
                     return;
@@ -80,7 +80,7 @@ pub fn entry() {
                     None,
                     tufa_common::config_mods::print_type::PrintType::WarningHigh,
                     vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                    vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                     format!("Cannot run actix-web HttpServer, error: {:#?}", e),
                 );
             }

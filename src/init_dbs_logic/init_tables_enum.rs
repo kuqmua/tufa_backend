@@ -1,5 +1,5 @@
-use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::runtime::config::CONFIG;
+use crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES;
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::init_dbs_with_providers_link_parts;
 use crate::init_dbs_logic::init_dbs_with_providers_link_parts::InitDbsProvidersLinkPartsWrapperError;
 use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;

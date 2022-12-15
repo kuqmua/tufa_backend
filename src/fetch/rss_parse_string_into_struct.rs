@@ -9,7 +9,6 @@ use crate::fetch::info_structures::structs_for_parsing::reddit_struct_for_parsin
 use crate::fetch::info_structures::structs_for_parsing::twitter_struct_for_parsing::TwitterStructForParsing;
 use crate::fetch::parse_github_html::parse_github_html;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
-use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::hardcode::BIORXIV_FILTER_HANDLE_TO_REMOVE_1;
 use crate::global_variables::hardcode::BIORXIV_FILTER_HANDLE_TO_REMOVE_2;
 use crate::global_variables::hardcode::BIORXIV_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
@@ -28,6 +27,7 @@ use crate::global_variables::hardcode::TWITTER_FILTER_HANDLE_TO_REMOVE_3;
 use crate::global_variables::hardcode::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
 use crate::global_variables::hardcode::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
 use crate::global_variables::hardcode::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_3;
+use crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES;
 use crate::prints::print_colorful_message::print_colorful_message;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_methods::ProviderKindMethods;
@@ -70,7 +70,7 @@ pub fn rss_parse_string_into_struct(
                                                     line!(),
                                                     column!()
                                                 )],
-                                                vec![GIT_INFO
+                                                vec![GIT_INFO_WITHOUT_LIFETIMES
                                                     .get_git_source_file_link(file!(), line!())],
                                                 warning_message,
                                             );
@@ -84,7 +84,8 @@ pub fn rss_parse_string_into_struct(
                                         Some(&pk),
                                         tufa_common::config_mods::print_type::PrintType::WarningLow,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO_WITHOUT_LIFETIMES
+                                            .get_git_source_file_link(file!(), line!())],
                                         warning_message,
                                     );
                                 }
@@ -289,7 +290,7 @@ pub fn rss_parse_string_into_struct(
                                         Some(&pk),
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {e}"),
                                     );
                                     Err(NoItemsError::ConversionFromStrError(
@@ -415,7 +416,7 @@ pub fn rss_parse_string_into_struct(
                                         Some(&pk),
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {e}"),
                                     );
                                     Err(NoItemsError::ConversionFromStrError(
@@ -546,7 +547,7 @@ pub fn rss_parse_string_into_struct(
                                         Some(&pk),
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {e}"),
                                     );
                                     Err(NoItemsError::ConversionFromStrError(
@@ -670,7 +671,7 @@ pub fn rss_parse_string_into_struct(
                                         Some(&pk),
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {e}"),
                                     );
                                     Err(NoItemsError::ConversionFromStrError(
@@ -796,7 +797,7 @@ pub fn rss_parse_string_into_struct(
                                         Some(&pk),
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {e}"),
                                     );
                                     Err(NoItemsError::ConversionFromStrError(
@@ -923,7 +924,7 @@ pub fn rss_parse_string_into_struct(
                                         Some(&pk),
                                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                                         format!("Rss conversion from str error: {e}"),
                                     );
                                     Err(NoItemsError::ConversionFromStrError(
@@ -941,7 +942,7 @@ pub fn rss_parse_string_into_struct(
                         Some(&pk),
                         tufa_common::config_mods::print_type::PrintType::WarningLow,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         warning_message,
                     );
                     Err(NoItemsError::NoTag(
@@ -1068,7 +1069,7 @@ pub fn rss_parse_string_into_struct(
                         Some(&pk),
                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
                         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+                        vec![GIT_INFO_WITHOUT_LIFETIMES.get_git_source_file_link(file!(), line!())],
                         format!("Rss conversion from str error: {e}"),
                     );
                     Err(NoItemsError::ConversionFromStrError(
