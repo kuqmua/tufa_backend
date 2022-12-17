@@ -147,7 +147,9 @@ impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperErr
 
 pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
     if let Err(e) = tufa_common::dev::three(false) {
-        let eee = Box::new(OneWrapperError::new_error_with_one_addition(
+        // let eee = ;
+        // println!("{}", eee.display_error(once_cell::sync::Lazy::force(&crate::global_variables::runtime::config::CONFIG)));
+        return Err(Box::new(OneWrapperError::new_error_with_one_addition(
             OneWrapperErrorEnum::ThreeWrapper(*e), 
             once_cell::sync::Lazy::force(&crate::global_variables::runtime::config::CONFIG), 
             once_cell::sync::Lazy::force(&crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES), 
@@ -155,9 +157,7 @@ pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
             line!(), 
             column!(), 
             should_trace
-        ));
-        println!("{}", eee.display_error(once_cell::sync::Lazy::force(&crate::global_variables::runtime::config::CONFIG)));
-        return Err(eee);
+        )));
     }
     Ok(())
 }
