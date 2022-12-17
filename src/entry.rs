@@ -104,6 +104,12 @@ pub struct OneWrapperError {
 //         self.source.get_source()
 //     }
 // }
+impl tufa_common::traits::get_source_value::GetSourceValue<OneWrapperErrorEnum> for OneWrapperError {
+    fn get_source_value(&self) -> &OneWrapperErrorEnum {
+        &self.source
+    }
+}
+
 
 impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperError {
     fn get_code_occurence(&self) -> &tufa_common::common::code_occurence::CodeOccurence {
