@@ -98,7 +98,8 @@ use tufa_common::traits::new_error_with_one_addition::NewErrorWithOneAddition;
 #[derive(ImplGetSourceFromTufaCommon)]
 pub struct OneWrapperError {
     source: OneWrapperErrorEnum,
-    code_occurence: tufa_common::common::code_occurence::CodeOccurence,
+    // code_occurence: tufa_common::common::code_occurence::CodeOccurence,
+    code_occurence: tufa_common::common::code_occurence::CodeOccurenceOldWay,
 }
 
 // impl tufa_common::traits::get_source::GetSource for OneWrapperError {
@@ -106,31 +107,31 @@ pub struct OneWrapperError {
 //         self.source.get_source()
 //     }
 // }
-impl tufa_common::traits::get_source_value::GetSourceValue<OneWrapperErrorEnum>
-    for OneWrapperError
-{
-    fn get_source_value(&self) -> &OneWrapperErrorEnum {
-        &self.source
-    }
-}
+// impl tufa_common::traits::get_source_value::GetSourceValue<OneWrapperErrorEnum>
+//     for OneWrapperError
+// {
+//     fn get_source_value(&self) -> &OneWrapperErrorEnum {
+//         &self.source
+//     }
+// }
 
-impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperError {
-    fn get_code_occurence(&self) -> &tufa_common::common::code_occurence::CodeOccurence {
-        &self.code_occurence
-    }
-}
+// impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperError {
+//     fn get_code_occurence(&self) -> &tufa_common::common::code_occurence::CodeOccurence {
+//         &self.code_occurence
+//     }
+// }
 
-impl tufa_common::traits::init_error::InitError<OneWrapperErrorEnum> for OneWrapperError {
-    fn init_error(
-        source: OneWrapperErrorEnum,
-        code_occurence: tufa_common::common::code_occurence::CodeOccurence,
-    ) -> Self {
-        Self {
-            source,
-            code_occurence,
-        }
-    }
-}
+// impl tufa_common::traits::init_error::InitError<OneWrapperErrorEnum> for OneWrapperError {
+//     fn init_error(
+//         source: OneWrapperErrorEnum,
+//         code_occurence: tufa_common::common::code_occurence::CodeOccurence,
+//     ) -> Self {
+//         Self {
+//             source,
+//             code_occurence,
+//         }
+//     }
+// }
 
 #[derive(ImplGetSourceFromTufaCommon)]
 pub enum OneWrapperErrorEnum {
@@ -146,13 +147,13 @@ pub enum OneWrapperErrorEnum {
 //     }
 // }
 
-impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperErrorEnum {
-    fn get_code_occurence(&self) -> &tufa_common::common::code_occurence::CodeOccurence {
-        match self {
-            OneWrapperErrorEnum::ThreeWrapper(e) => e.get_code_occurence(),
-        }
-    }
-}
+// impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperErrorEnum {
+//     fn get_code_occurence(&self) -> &tufa_common::common::code_occurence::CodeOccurence {
+//         match self {
+//             OneWrapperErrorEnum::ThreeWrapper(e) => e.get_code_occurence(),
+//         }
+//     }
+// }
 
 pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
     if let Err(e) = tufa_common::dev::three(false) {
@@ -169,9 +170,17 @@ pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
         // )));
         return Err(Box::new(OneWrapperError {
             source: OneWrapperErrorEnum::ThreeWrapper(*e),
-            code_occurence: tufa_common::common::code_occurence::CodeOccurence {
-                occurences: HashMap::new(),
-            },
+            // code_occurence: tufa_common::common::code_occurence::CodeOccurence {
+            //     occurences: HashMap::new(),
+            // },
+            code_occurence: tufa_common::common::code_occurence::CodeOccurenceOldWay {
+                git_info: once_cell::sync::Lazy::force(&crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES).clone(),
+                time_file_line_column: tufa_common::common::time_file_line_column::TimeFileLineColumn::new_file_line_column(
+                    String::from(file!()),
+                    line!(),
+                    column!(),
+                ),
+            }
         }));
     }
     Ok(())
