@@ -102,7 +102,7 @@ use tufa_common::traits::fields::GetSourcePlaceType;
 use tufa_common::traits::get_color::ErrorColorBold;
 use tufa_common::traits::separator_symbol::SeparatorSymbol;
 
-#[derive(ImplGetSourceFromTufaCommon)]
+// #[derive(ImplGetSourceFromTufaCommon)]
 pub struct OneWrapperError {
     source: OneWrapperErrorEnum,
     // code_occurence: tufa_common::common::code_occurence::CodeOccurence,
@@ -180,7 +180,7 @@ impl OneWrapperError {
 //     }
 // }
 
-#[derive(ImplGetSourceFromTufaCommon)]
+// #[derive(ImplGetSourceFromTufaCommon)]
 pub enum OneWrapperErrorEnum {
     ThreeWrapper(ThreeWrapperError),
 }
