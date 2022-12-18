@@ -44,7 +44,7 @@ pub fn entry() {
     //         );
     //     }
     //     Ok(runtime) => {
-    //         one(true);
+    one(true);
     //         if let tufa_common::config_mods::log_type::LogType::Tracing = CONFIG.log_type {
     //             if let Err(e) = init_subscriber(get_subscriber(
     //                 PROJECT_NAME.into(),
