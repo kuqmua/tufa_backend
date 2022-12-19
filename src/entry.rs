@@ -115,10 +115,11 @@ impl OneWrapperError {
         config: &tufa_common::config_mods::config_struct::ConfigStruct,
     ) -> String {
         //todo if origin - without config, if wrapper - with config
-        format!(
-            "{}",
-            self.source.get_source_and_code_occurence_as_string(config)
-        )
+        // format!(
+        //     "{}",
+        //     self.source.get_source_and_code_occurence_as_string(config)
+        // )
+        format!("{}", self.source.get_source_as_string(config))
     }
     pub fn get_code_occurence_as_string(
         &self,
@@ -129,22 +130,28 @@ impl OneWrapperError {
             config.get_source_place_type(),
         )
     }
-    pub fn get_source_and_code_occurence_as_string(
-        &self,
-        config: &tufa_common::config_mods::config_struct::ConfigStruct,
-    ) -> String {
-        format!(
-            "{}{}{}",
-            self.get_source_as_string(config),
-            config.get_log_type().symbol(),
-            self.get_code_occurence_as_string(config)
-        )
-    }
+    // pub fn get_source_and_code_occurence_as_string(
+    //     &self,
+    //     config: &tufa_common::config_mods::config_struct::ConfigStruct,
+    // ) -> String {
+    //     format!(
+    //         "{}{}{}",
+    //         self.get_source_as_string(config),
+    //         config.get_log_type().symbol(),
+    //         self.get_code_occurence_as_string(config)
+    //     )
+    // }
     pub fn log(&self, config: &tufa_common::config_mods::config_struct::ConfigStruct) {
         let log_type = config.get_log_type();
         log_type.console(
             &config.get_error_color_bold(),
-            self.get_source_and_code_occurence_as_string(config),
+            // self.get_source_and_code_occurence_as_string(config),
+            format!(
+                "{}{}{}",
+                self.get_source_as_string(config),
+                config.get_log_type().symbol(),
+                self.get_code_occurence_as_string(config)
+            ),
         )
     }
 }
@@ -193,7 +200,8 @@ impl OneWrapperErrorEnum {
         match self {
             //todo if origin - without config, if wrapper - with config
             OneWrapperErrorEnum::ThreeWrapper(i) => {
-                i.get_source_and_code_occurence_as_string(config)
+                // i.get_source_and_code_occurence_as_string(config)
+                i.get_source_as_string(config)
             }
         }
     }
@@ -206,16 +214,16 @@ impl OneWrapperErrorEnum {
         }
     }
     //does it need to be implemented here?
-    fn get_source_and_code_occurence_as_string(
-        &self,
-        config: &tufa_common::config_mods::config_struct::ConfigStruct,
-    ) -> String {
-        match self {
-            OneWrapperErrorEnum::ThreeWrapper(i) => {
-                i.get_source_and_code_occurence_as_string(config)
-            }
-        }
-    }
+    // fn get_source_and_code_occurence_as_string(
+    //     &self,
+    //     config: &tufa_common::config_mods::config_struct::ConfigStruct,
+    // ) -> String {
+    //     match self {
+    //         OneWrapperErrorEnum::ThreeWrapper(i) => {
+    //             i.get_source_and_code_occurence_as_string(config)
+    //         }
+    //     }
+    // }
 }
 
 // impl tufa_common::traits::get_source::GetSource for OneWrapperErrorEnum {
