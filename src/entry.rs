@@ -263,6 +263,8 @@ pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
             }
         };
         println!("one f {}", std::mem::size_of_val(&f));
+        println!("one source {}", std::mem::size_of_val(&f.source));
+        println!("one source {}", std::mem::size_of_val(&f.code_occurence));
         println!("one-----");
         f.log(once_cell::sync::Lazy::force(
             &crate::global_variables::runtime::config::CONFIG,
