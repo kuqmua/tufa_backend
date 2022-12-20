@@ -130,6 +130,20 @@ impl OneWrapperError {
             config.get_source_place_type(),
         )
     }
+    pub fn get_inner_source_and_code_occurence_as_string(
+        &self,
+        config: &tufa_common::config_mods::config_struct::ConfigStruct, //todo maybe remove
+    ) -> Vec<tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString> {
+        let mut vec = self.get_inner_source_and_code_occurence_as_string(config);
+        vec.push(
+            tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString {
+                source: None,
+                code_occurence: self.get_code_occurence_as_string(config),
+                increment: 0,
+            },
+        );
+        vec
+    }
     // pub fn get_source_and_code_occurence_as_string(
     //     &self,
     //     config: &tufa_common::config_mods::config_struct::ConfigStruct,
