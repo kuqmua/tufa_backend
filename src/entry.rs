@@ -213,6 +213,16 @@ impl OneWrapperErrorEnum {
             OneWrapperErrorEnum::ThreeWrapper(i) => i.get_code_occurence_as_string(config),
         }
     }
+    pub fn get_inner_source_and_code_occurence_as_string(
+        &self,
+        config: &tufa_common::config_mods::config_struct::ConfigStruct,
+    ) -> Vec<tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString> {
+        match self {
+            OneWrapperErrorEnum::ThreeWrapper(i) => {
+                i.get_inner_source_and_code_occurence_as_string(config)
+            }
+        }
+    }
     //does it need to be implemented here?
     // fn get_source_and_code_occurence_as_string(
     //     &self,
