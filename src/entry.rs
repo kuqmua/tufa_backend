@@ -191,6 +191,7 @@ impl OneWrapperError {
                     Some(source_enum) => match source_enum {
                         tufa_common::common::source_and_code_occurence::SourceEnum::SourceWithKeys(source_with_keys) => {
                             let mut prepared_keys = format!("{}[key: ", increment_spaces);
+                            //todo maybe for each key add symbol and additional spaces for log structs where key is
                             source_with_keys.keys.iter().for_each(|e|{
                                 prepared_keys.push_str(e);
                                 prepared_keys.push_str(", ");
