@@ -206,6 +206,12 @@ impl OneWrapperError {
                             prepared_keys.pop();
                             prepared_keys.pop();
                             format!("{}] {}{}{}{}", prepared_keys, source_with_keys.source, symbol, increment_spaces, element.code_occurence)
+                            //
+                            
+                            source_with_keys.keys.iter().fold(String::from(""), |mut acc, element| { 
+                                format!("{}] {}{}{}{}", prepared_keys, source_with_keys.source, symbol, increment_spaces, element.code_occurence)
+                                acc 
+                            });
                         },
                         tufa_common::common::source_and_code_occurence::SourceEnum::Source(source) => format!("{}{}{}{}{}", increment_spaces, source, symbol, increment_spaces, element.code_occurence),
                     },
