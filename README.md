@@ -3,6 +3,8 @@ If you clone this repo without [tufa_project](https://github.com/kuqmua/tufa_pro
 repo may not work as expected </br>
 (coz some deps from tufa_project)
 
+### [setup](https://github.com/kuqmua/tufa_project/blob/main/setup.md#heading27)
+
 Status of last deployment: <br/>
 <img src="https://github.com/kuqmua/tufa_server/workflows/CI/badge.svg?branch=master"><br/>
 
