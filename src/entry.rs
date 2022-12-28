@@ -159,71 +159,83 @@ impl OneWrapperError {
     pub fn log(&self, config: &tufa_common::config_mods::config_struct::ConfigStruct) {
         let log_type = config.get_log_type();
         let symbol = log_type.symbol();
-        let mut prepared_log = self.source
-            .get_inner_source_and_code_occurence_as_string(config)
-            .iter()
-            .fold(String::from(""), |mut acc, element| {
-                //
-                // #[derive(Debug, Clone)]
-                // pub struct SourceAndCodeOccurenceAsString {
-                //     pub source: Option<SourceEnum>, //only original
-                //     pub code_occurence: String,
-                //     pub increment: u64, //i think its incorrect
-                //                         // maybe add another field like paralel index?
-                // }
-
-                // #[derive(Debug, Clone)]
-                // pub enum SourceEnum {
-                //     SourceWithKeys(SourceWithKeys),
-                //     Source(String),
-                // }
-
-                // #[derive(Debug, Clone)]
-                // pub struct SourceWithKeys {
-                //     pub keys: Vec<String>,
-                //     pub source: String,
-                // }
-                let mut increment_spaces = String::from("");
-                for x in (0..element.increment) {//0 or 1 ?
-                    increment_spaces.push(' ');
+        // println!("{:#?}", self.source
+        // .get_inner_source_and_code_occurence_as_string(config));
+        // println!("_______________");
+        // println!("{:#?}", &self.get_code_occurence_as_string(config));
+        let mut is_keys_exists = false;
+        let code_occurence_as_string_vec = self
+            .source
+            .get_inner_source_and_code_occurence_as_string(config);
+        // let len = code_occurence_as_string_vec.len();
+        for c in &code_occurence_as_string_vec {
+            if let Some(source_enum) = &c.source {
+                if let tufa_common::common::source_and_code_occurence::SourceEnum::SourceWithKeys(
+                    _,
+                ) = source_enum
+                {
+                    is_keys_exists = true;
+                    break;
                 }
-                let formatted_handle = match &element.source {
-                    Some(source_enum) => match source_enum {
-                        tufa_common::common::source_and_code_occurence::SourceEnum::SourceWithKeys(source_with_keys) => {
-                            let mut addition_to_increment_spaces = String::from("");
-                            let increment_spaces_prepared = increment_spaces.clone();
-//                             source_with_keys.keys.iter().for_each(|e|{
-//                                 prepared_keys.push_str(e);
-//                                 prepared_keys.push_str(", ");
-//                             });
-                            let mut prepared_keys = format!("{}[key: ", increment_spaces);
-                            
-                            //todo maybe for each key add symbol and additional spaces for log structs where key is
-                            source_with_keys.keys.iter().for_each(|e|{
-                                prepared_keys.push_str(e);
-                                prepared_keys.push_str(", ");
-                            });
-                            prepared_keys.pop();
-                            prepared_keys.pop();
-                            // format!("{}] {}{}{}{}", prepared_keys, source_with_keys.source, symbol, increment_spaces, element.code_occurence)
-                            //
-                            
-                            source_with_keys.keys.iter().fold(String::from(""), |mut acc, element| { 
-                                // format!("{}] {}{}{}{}", prepared_keys, source_with_keys.source, symbol, increment_spaces, element.code_occurence)
-                                acc 
-                            });
-                            String::from("")
-                        },
-                        tufa_common::common::source_and_code_occurence::SourceEnum::Source(source) => format!("{}{}{}{}{}", increment_spaces, source, symbol, increment_spaces, element.code_occurence),
-                    },
-                    None => format!("{}{}", increment_spaces, element.code_occurence),
-                };
-                let formatted = format!("{}{}", formatted_handle, symbol);
-                acc.push_str(&formatted);
-                acc
-            });
-        prepared_log.push_str(&self.get_code_occurence_as_string(config));
-        log_type.console(&config.get_error_color_bold(), prepared_log)
+            }
+        }
+        let mut prepared_log =
+            code_occurence_as_string_vec
+                .iter()
+                .fold(String::from(""), |mut acc, element| {
+                    println!("{:#?}", element);
+                    // // #[derive(Debug, Clone)]
+                    // // pub struct SourceAndCodeOccurenceAsString {
+                    // //     pub source: Option<SourceEnum>, //only original
+                    // //     pub code_occurence: String,
+                    // //     pub increment: u64, //i think its incorrect
+                    // //                         // maybe add another field like paralel index?
+                    // // }
+                    // // #[derive(Debug, Clone)]
+                    // // pub enum SourceEnum {
+                    // //     SourceWithKeys(SourceWithKeys),
+                    // //     Source(String),
+                    // // }
+                    // // #[derive(Debug, Clone)]
+                    // // pub struct SourceWithKeys {
+                    // //     pub keys: Vec<String>,
+                    // //     pub source: String,
+                    // // }
+                    // let mut increment_spaces = String::from("");
+                    // for x in (0..element.increment) {//0 or 1 ?
+                    //     increment_spaces.push(' ');
+                    // }
+                    // let formatted_handle = match &element.source {
+                    //     Some(source_enum) => match source_enum {
+                    //         tufa_common::common::source_and_code_occurence::SourceEnum::SourceWithKeys(source_with_keys) => {
+                    //             let mut addition_to_increment_spaces = String::from("");
+                    //             let increment_spaces_prepared = increment_spaces.clone();
+                    //             let mut prepared_keys = format!("{}[key: ", increment_spaces);
+                    //             //todo maybe for each key add symbol and additional spaces for log structs where key is
+                    //             source_with_keys.keys.iter().for_each(|e|{
+                    //                 prepared_keys.push_str(e);
+                    //                 prepared_keys.push_str(", ");
+                    //             });
+                    //             prepared_keys.pop();
+                    //             prepared_keys.pop();
+                    //             // format!("{}] {}{}{}{}", prepared_keys, source_with_keys.source, symbol, increment_spaces, element.code_occurence)
+                    //             source_with_keys.keys.iter().fold(String::from(""), |mut acc, element| {
+                    //                 // format!("{}] {}{}{}{}", prepared_keys, source_with_keys.source, symbol, increment_spaces, element.code_occurence)
+                    //                 acc
+                    //             });
+                    //             String::from("")
+                    //         },
+                    //         tufa_common::common::source_and_code_occurence::SourceEnum::Source(source) => format!("{}{}{}{}{}", increment_spaces, source, symbol, increment_spaces, element.code_occurence),
+                    //     },
+                    //     None => format!("{}{}", increment_spaces, element.code_occurence),
+                    // };
+                    // let formatted = format!("{}{}", formatted_handle, symbol);
+                    // acc.push_str(&formatted);
+                    // acc
+                    String::from("")
+                });
+        // prepared_log.push_str(&self.get_code_occurence_as_string(config));
+        // log_type.console(&config.get_error_color_bold(), prepared_log)
     }
 }
 
