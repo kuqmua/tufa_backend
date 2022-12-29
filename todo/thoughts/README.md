@@ -583,3 +583,5 @@ https://youtu.be/JkSa-qA2jnY
 * using vector in tracing macro example https://github.com/tokio-rs/tracing/blob/v0.1.x/examples/examples/valuable_json.rs
 
 * parallel find in rust ?
+
+* habr rss https://habr.com/ru/rss/post/553356/https://habr.com/ru/rss/post/553356/?with_hubs=true:?with_tags=true:?limit=100
