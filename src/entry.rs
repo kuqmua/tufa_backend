@@ -105,7 +105,11 @@ use tufa_common::traits::separator_symbol::SeparatorSymbol;
 
 pub struct PrepareForLog {
     pub error_as_string: Option<String>,
-    pub code_occurences_as_string: Vec<String>
+    pub code_occurences_as_string: String,
+}
+pub struct ContentPrep {
+    pub key_as_string: Option<String>,
+    pub inner: String,
 }
 // #[derive(ImplGetSourceFromTufaCommon)]
 pub struct OneWrapperError {
@@ -210,29 +214,33 @@ impl OneWrapperError {
                             //wrong logic!!!
                             should_insert_full_new = false;
                             if !v.contains(&element.clone()) {
-                                 let mut v_cloned = v.clone();
+                                let mut v_cloned = v.clone();
                                 v_cloned.push(element.clone());
                                 prepared_by_increments_hashmap.insert(element.increment, v_cloned);
                                 break;
                             }
-                            
+
                             // break;
                         }
                     }
                     if should_insert_full_new {
-                        prepared_by_increments_hashmap.insert(element.increment, vec![element.clone()]);
+                        prepared_by_increments_hashmap
+                            .insert(element.increment, vec![element.clone()]);
                     }
                 });
                 let mut prepared_by_increments_vec = Vec::new();
-                prepared_by_increments_hashmap.iter().for_each(|(k, v)|{
+                prepared_by_increments_hashmap.iter().for_each(|(k, v)| {
                     prepared_by_increments_vec.push((k, v));
                 });
                 prepared_by_increments_vec.sort_by(|(k1, v1), (k2, v2)| k1.cmp(k2));
                 prepared_by_increments_vec.reverse();
                 println!("{:#?}", prepared_by_increments_vec);
-                let mut content = String::from("");
+                let mut content = ContentPrep {
+                    key_as_string: None,
+                    inner: String::from(""),
+                };
                 prepared_by_increments_vec.iter().for_each(|(_, v)| {
-                    let folded = v.iter().fold(String::from(""), |mut acc, element| {
+                    let folded = v.iter().map(|element| {
                         // let mut increment_spaces = String::from("");
                         // for x in (0..element.increment) {
                         //     //0 or 1 ?
@@ -250,26 +258,26 @@ impl OneWrapperError {
                                     });
                                     prepared_keys.pop();
                                     prepared_keys.pop();
-                                    // PrepareForLog {
-                                    //     error_as_string: Some(format!("{}] {}", prepared_keys, source_with_keys.source)),
-                                    //     code_occurences_as_string: element.code_occurence.clone(),
-                                    // }
-                                    format!("{}] {} {}{}{}", prepared_keys, source_with_keys.source, symbol, element.code_occurence, symbol)
+                                    PrepareForLog {
+                                        error_as_string: Some(format!("{}] {}", prepared_keys, source_with_keys.source)),
+                                        code_occurences_as_string: element.code_occurence.clone(),
+                                    }
+                                    // format!("{}] {} {}{}{}", prepared_keys, source_with_keys.source, symbol, element.code_occurence, symbol)
                                 },
                                 tufa_common::common::source_and_code_occurence::SourceEnum::Source(source) => {
-                                    // PrepareForLog {
-                                    //     error_as_string: Some(source.clone()),
-                                    //     code_occurences_as_string: element.code_occurence.clone(),
-                                    // }
-                                    format!("{}{}{}{}{}", symbol, source, symbol, element.code_occurence, symbol)
+                                    PrepareForLog {
+                                        error_as_string: Some(source.clone()),
+                                        code_occurences_as_string: element.code_occurence.clone(),
+                                    }
+                                    // format!("{}{}{}{}{}", symbol, source, symbol, element.code_occurence, symbol)
                                 },
                             },
                             None => {
-                                // PrepareForLog {
-                                //     error_as_string: None,
-                                //     code_occurences_as_string: element.code_occurence.clone(),
-                                // }
-                                format!("{}{}{}", symbol, element.code_occurence, symbol)
+                                PrepareForLog {
+                                    error_as_string: None,
+                                    code_occurences_as_string: element.code_occurence.clone(),
+                                }
+                                // format!("{}{}{}", symbol, element.code_occurence, symbol)
                             },
                         };
                         // log_type.pop_last(&mut formatted_handle);
@@ -277,14 +285,46 @@ impl OneWrapperError {
                         // acc.push_str(&format!("{}{}", formatted_handle, symbol));
                         // log_type.pop_last(&mut acc);
                         // println!("--{}--", acc);
-                        acc
-                    });
-                    let content_part = format!("[{}{}]", folded, symbol);
-                    
-                    println!("{}", content_part);
+                        // acc
+                        prepare_for_log
+                    }).collect::<Vec<PrepareForLog>>();
+                    // let content_part = format!("[{}{}]", folded, symbol);
+                    // println!("{}", content_part);
                     // content.push_str(&folded);
                     // content = content_part
+                    match folded.len() == 1 {
+                        true => {
+                            match content.inner.is_empty() {
+                                true => {
+                                    content = ContentPrep {
+                                        key_as_string: folded[0].error_as_string.clone(),
+                                        inner: folded[0].code_occurences_as_string.clone(),
+                                    }
+                                },
+                                false => {
+                                    match &folded[0].error_as_string {
+                                        Some(eas) => {
+                                            content = ContentPrep {
+                                                key_as_string: folded[0].error_as_string.clone(),
+                                                inner: format!("[{}{}{}{}{}]", symbol, eas, symbol, folded[0].code_occurences_as_string.clone(), symbol),
+                                            }
+                                        },
+                                        None => {
+                                            content = ContentPrep {
+                                                key_as_string: folded[0].error_as_string.clone(),
+                                                inner: format!("[{}{}{}]", symbol, folded[0].code_occurences_as_string.clone(), symbol),
+                                            }
+                                        },
+                                    }
+                                },
+                            }
+                        },
+                        false => {
+                            todo!()
+                        },
+                    }
                 });
+
                 // println!("{}", content);
                 //
                 String::from("")
