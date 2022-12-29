@@ -101,7 +101,12 @@ use tufa_common::traits::fields::GetLogType;
 use tufa_common::traits::fields::GetSourcePlaceType;
 use tufa_common::traits::get_color::ErrorColorBold;
 use tufa_common::traits::separator_symbol::SeparatorSymbol;
+// use itertools::Itertools;
 
+pub struct PrepareForLog {
+    pub error_as_string: Option<String>,
+    pub code_occurences_as_string: Vec<String>
+}
 // #[derive(ImplGetSourceFromTufaCommon)]
 pub struct OneWrapperError {
     source: OneWrapperErrorEnum,
@@ -167,6 +172,7 @@ impl OneWrapperError {
         let code_occurence_as_string_vec = self
             .source
             .get_inner_source_and_code_occurence_as_string(config);
+        println!("{:#?}", code_occurence_as_string_vec);
         // let mut source_and_code_occurence_as_string_version_one = Vec::new();
         // let mut source_and_code_occurence_as_string_version_two = Vec::new();
         // let len = code_occurence_as_string_vec.len();
@@ -193,69 +199,46 @@ impl OneWrapperError {
         }
         let mut prepared_log = match is_keys_exists {
             true => {
-                //
                 // let mut addition_to_increment_spaces = String::from("");
-
-                //
-                let mut prepared_by_increments_vec: Vec::<(u64, Vec<tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString>)> = Vec::new();
+                let mut prepared_by_increments_hashmap: HashMap::<u64, Vec<tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString>> = HashMap::new();
                 code_occurence_as_string_vec.iter().for_each(|element| {
                     // println!("{:#?}", element);
                     let mut should_insert_full_new = true;
-                    let mut fff = prepared_by_increments_vec.clone();
+                    let mut fff = prepared_by_increments_hashmap.clone();
                     for (k, v) in &mut fff {
                         if element.increment == *k {
+                            //wrong logic!!!
                             should_insert_full_new = false;
-                            let mut v_cloned = v.clone();
-                            v_cloned.push(element.clone());
-                            prepared_by_increments_vec.push((element.increment, v_cloned));
+                            if !v.contains(&element.clone()) {
+                                 let mut v_cloned = v.clone();
+                                v_cloned.push(element.clone());
+                                prepared_by_increments_hashmap.insert(element.increment, v_cloned);
+                                break;
+                            }
+                            
+                            // break;
                         }
                     }
                     if should_insert_full_new {
-                        prepared_by_increments_vec.push((element.increment, vec![element.clone()]));
+                        prepared_by_increments_hashmap.insert(element.increment, vec![element.clone()]);
                     }
-
-                    // let formatted_handle = match &element.source {
-                    //     Some(source_enum) => match source_enum {
-                    //         tufa_common::common::source_and_code_occurence::SourceEnum::SourceWithKeys(source_with_keys) => {
-
-                    //             let increment_spaces_prepared = increment_spaces.clone();
-                    //             let mut prepared_keys = format!("{}[key: ", increment_spaces);
-                    //             //todo maybe for each key add symbol and additional spaces for log structs where key is
-                    //             source_with_keys.keys.iter().for_each(|e|{
-                    //                 prepared_keys.push_str(e);
-                    //                 prepared_keys.push_str(", ");
-                    //             });
-                    //             prepared_keys.pop();
-                    //             prepared_keys.pop();
-                    //             // format!("{}] {}{}{}{}", prepared_keys, source_with_keys.source, symbol, increment_spaces, element.code_occurence)
-                    //             source_with_keys.keys.iter().fold(String::from(""), |mut acc, element| {
-                    //                 // format!("{}] {}{}{}{}", prepared_keys, source_with_keys.source, symbol, increment_spaces, element.code_occurence)
-                    //                 acc
-                    //             });
-                    //             String::from("")
-                    //         },
-                    //         tufa_common::common::source_and_code_occurence::SourceEnum::Source(source) => format,
-                    //     },
-                    //     None => format!("{}{}", increment_spaces, element.code_occurence),
-                    // };
-                    // let formatted = format!("{}{}", formatted_handle, symbol);
-                    // acc.push_str(&formatted);
-                    // acc
+                });
+                let mut prepared_by_increments_vec = Vec::new();
+                prepared_by_increments_hashmap.iter().for_each(|(k, v)|{
+                    prepared_by_increments_vec.push((k, v));
                 });
                 prepared_by_increments_vec.sort_by(|(k1, v1), (k2, v2)| k1.cmp(k2));
                 prepared_by_increments_vec.reverse();
                 println!("{:#?}", prepared_by_increments_vec);
                 let mut content = String::from("");
-                //
                 prepared_by_increments_vec.iter().for_each(|(_, v)| {
-                    //&format!("{}", formatted_handle)
                     let folded = v.iter().fold(String::from(""), |mut acc, element| {
                         // let mut increment_spaces = String::from("");
                         // for x in (0..element.increment) {
                         //     //0 or 1 ?
                         //     increment_spaces.push(' ');
                         // }
-                        let mut formatted_handle = match &element.source {
+                        let prepare_for_log = match &element.source {
                             Some(source_enum) => match source_enum {
                                 tufa_common::common::source_and_code_occurence::SourceEnum::SourceWithKeys(source_with_keys) => {
                                     // let increment_spaces_prepared = increment_spaces.clone();
@@ -267,14 +250,30 @@ impl OneWrapperError {
                                     });
                                     prepared_keys.pop();
                                     prepared_keys.pop();
+                                    // PrepareForLog {
+                                    //     error_as_string: Some(format!("{}] {}", prepared_keys, source_with_keys.source)),
+                                    //     code_occurences_as_string: element.code_occurence.clone(),
+                                    // }
                                     format!("{}] {} {}{}{}", prepared_keys, source_with_keys.source, symbol, element.code_occurence, symbol)
                                 },
-                                tufa_common::common::source_and_code_occurence::SourceEnum::Source(source) => format!("{}{}{}{}{}", symbol, source, symbol, element.code_occurence, symbol),
+                                tufa_common::common::source_and_code_occurence::SourceEnum::Source(source) => {
+                                    // PrepareForLog {
+                                    //     error_as_string: Some(source.clone()),
+                                    //     code_occurences_as_string: element.code_occurence.clone(),
+                                    // }
+                                    format!("{}{}{}{}{}", symbol, source, symbol, element.code_occurence, symbol)
+                                },
                             },
-                            None => format!("{}{}{}", symbol, element.code_occurence, symbol),
+                            None => {
+                                // PrepareForLog {
+                                //     error_as_string: None,
+                                //     code_occurences_as_string: element.code_occurence.clone(),
+                                // }
+                                format!("{}{}{}", symbol, element.code_occurence, symbol)
+                            },
                         };
-                        log_type.pop_last(&mut formatted_handle);
-                        acc.push_str(&formatted_handle);
+                        // log_type.pop_last(&mut formatted_handle);
+                        // acc.push_str(&formatted_handle);
                         // acc.push_str(&format!("{}{}", formatted_handle, symbol));
                         // log_type.pop_last(&mut acc);
                         // println!("--{}--", acc);
