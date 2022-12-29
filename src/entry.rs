@@ -195,13 +195,9 @@ impl OneWrapperError {
             true => {
                 //
                 // let mut addition_to_increment_spaces = String::from("");
-                //         let mut increment_spaces = String::from("");
-                //         for x in (0..element.increment) {
-                //             //0 or 1 ?
-                //             increment_spaces.push(' ');
-                //         }
+
                 //
-                let mut prepared_by_increments_vec: HashMap::<u64, Vec<tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString>> = HashMap::new();
+                let mut prepared_by_increments_vec: Vec::<(u64, Vec<tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString>)> = Vec::new();
                 code_occurence_as_string_vec.iter().for_each(|element| {
                     // println!("{:#?}", element);
                     let mut should_insert_full_new = true;
@@ -211,11 +207,11 @@ impl OneWrapperError {
                             should_insert_full_new = false;
                             let mut v_cloned = v.clone();
                             v_cloned.push(element.clone());
-                            prepared_by_increments_vec.insert(element.increment, v_cloned);
+                            prepared_by_increments_vec.push((element.increment, v_cloned));
                         }
                     }
                     if should_insert_full_new {
-                        prepared_by_increments_vec.insert(element.increment, vec![element.clone()]);
+                        prepared_by_increments_vec.push((element.increment, vec![element.clone()]));
                     }
 
                     // let formatted_handle = match &element.source {
@@ -246,7 +242,48 @@ impl OneWrapperError {
                     // acc.push_str(&formatted);
                     // acc
                 });
-                println!("!!!{:#?}!!!", prepared_by_increments_vec);
+                prepared_by_increments_vec.sort_by(|(k1, v1), (k2, v2)| k1.cmp(k2));
+                prepared_by_increments_vec.reverse();
+                println!("{:#?}", prepared_by_increments_vec);
+                let mut content = String::from("");
+                //
+                prepared_by_increments_vec.iter().for_each(|(_, v)| {
+                    //&format!("{}", formatted_handle)
+                    let folded = v.iter().fold(String::from(""), |mut acc, element| {
+                        // let mut increment_spaces = String::from("");
+                        // for x in (0..element.increment) {
+                        //     //0 or 1 ?
+                        //     increment_spaces.push(' ');
+                        // }
+                        let formatted_handle = match &element.source {
+                            Some(source_enum) => match source_enum {
+                                tufa_common::common::source_and_code_occurence::SourceEnum::SourceWithKeys(source_with_keys) => {
+                                    // let increment_spaces_prepared = increment_spaces.clone();
+                                    let mut prepared_keys = format!("[key: ");
+                                    // //todo maybe for each key add symbol and additional spaces for log structs where key is
+                                    source_with_keys.keys.iter().for_each(|e|{
+                                        prepared_keys.push_str(e);
+                                        prepared_keys.push_str(", ");
+                                    });
+                                    prepared_keys.pop();
+                                    prepared_keys.pop();
+                                    format!("{}] {} {}{}", prepared_keys, source_with_keys.source, symbol, element.code_occurence)
+                                },
+                                tufa_common::common::source_and_code_occurence::SourceEnum::Source(source) => format!("{}{}{}{}", source, symbol,element.code_occurence, symbol),
+                            },
+                            None => format!("{}", element.code_occurence),
+                        };
+                        acc.push_str(&formatted_handle);
+                        // println!("{}", acc);
+                        acc
+                    });
+                    let content_part = format!("[{}{}{}]{}", symbol, folded, symbol, symbol);
+                    println!("{}", content_part);
+                    // content.push_str(&folded);
+                    // content = content_part
+                });
+                // println!("{}", content);
+                //
                 String::from("")
             }
             false => {
