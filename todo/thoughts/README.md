@@ -585,3 +585,5 @@ https://youtu.be/JkSa-qA2jnY
 * parallel find in rust ?
 
 * habr rss https://habr.com/ru/rss/post/553356/https://habr.com/ru/rss/post/553356/?with_hubs=true:?with_tags=true:?limit=100
+
+* https://github.com/baptiste0928/cargo-install
