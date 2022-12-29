@@ -255,11 +255,11 @@ impl OneWrapperError {
                         //     //0 or 1 ?
                         //     increment_spaces.push(' ');
                         // }
-                        let formatted_handle = match &element.source {
+                        let mut formatted_handle = match &element.source {
                             Some(source_enum) => match source_enum {
                                 tufa_common::common::source_and_code_occurence::SourceEnum::SourceWithKeys(source_with_keys) => {
                                     // let increment_spaces_prepared = increment_spaces.clone();
-                                    let mut prepared_keys = format!("[key: ");
+                                    let mut prepared_keys = format!("{}[key: ", symbol);
                                     // //todo maybe for each key add symbol and additional spaces for log structs where key is
                                     source_with_keys.keys.iter().for_each(|e|{
                                         prepared_keys.push_str(e);
@@ -267,17 +267,21 @@ impl OneWrapperError {
                                     });
                                     prepared_keys.pop();
                                     prepared_keys.pop();
-                                    format!("{}] {} {}{}", prepared_keys, source_with_keys.source, symbol, element.code_occurence)
+                                    format!("{}] {} {}{}{}", prepared_keys, source_with_keys.source, symbol, element.code_occurence, symbol)
                                 },
-                                tufa_common::common::source_and_code_occurence::SourceEnum::Source(source) => format!("{}{}{}{}", source, symbol,element.code_occurence, symbol),
+                                tufa_common::common::source_and_code_occurence::SourceEnum::Source(source) => format!("{}{}{}{}{}", symbol, source, symbol, element.code_occurence, symbol),
                             },
-                            None => format!("{}", element.code_occurence),
+                            None => format!("{}{}{}", symbol, element.code_occurence, symbol),
                         };
+                        log_type.pop_last(&mut formatted_handle);
                         acc.push_str(&formatted_handle);
-                        // println!("{}", acc);
+                        // acc.push_str(&format!("{}{}", formatted_handle, symbol));
+                        // log_type.pop_last(&mut acc);
+                        // println!("--{}--", acc);
                         acc
                     });
-                    let content_part = format!("[{}{}{}]{}", symbol, folded, symbol, symbol);
+                    let content_part = format!("[{}{}]", folded, symbol);
+                    
                     println!("{}", content_part);
                     // content.push_str(&folded);
                     // content = content_part
