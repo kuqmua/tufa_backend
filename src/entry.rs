@@ -107,6 +107,8 @@ pub struct PrepareForLog {
     pub error_as_string: Option<String>,
     pub code_occurences_as_string: String,
 }
+
+#[derive(Debug)]
 pub struct ContentPrep {
     pub key_as_string: Option<String>,
     pub inner: String,
@@ -292,6 +294,7 @@ impl OneWrapperError {
                     // println!("{}", content_part);
                     // content.push_str(&folded);
                     // content = content_part
+                    println!("LEN{}LEN", folded.len());
                     match folded.len() == 1 {
                         true => {
                             match content.inner.is_empty() {
@@ -304,9 +307,20 @@ impl OneWrapperError {
                                 false => {
                                     match &folded[0].error_as_string {
                                         Some(eas) => {
-                                            content = ContentPrep {
-                                                key_as_string: folded[0].error_as_string.clone(),
-                                                inner: format!("[{}{}{}{}{}]", symbol, eas, symbol, folded[0].code_occurences_as_string.clone(), symbol),
+                                            let kk = content.key_as_string.clone();
+                                            match kk {
+                                                Some(ckey) => {
+                                                    content = ContentPrep {
+                                                        key_as_string: folded[0].error_as_string.clone(),
+                                                        inner: format!("{}[{}{}{}{}{}]{}", ckey, symbol, eas, symbol, folded[0].code_occurences_as_string.clone(), symbol, content.inner),
+                                                    }
+                                                },
+                                                None => {
+                                                    content = ContentPrep {
+                                                        key_as_string: folded[0].error_as_string.clone(),
+                                                        inner: format!("{}[{}{}{}{}]{}", symbol, eas, symbol, folded[0].code_occurences_as_string.clone(), symbol, content.inner),
+                                                    }
+                                                },
                                             }
                                         },
                                         None => {
@@ -320,12 +334,51 @@ impl OneWrapperError {
                             }
                         },
                         false => {
-                            todo!()
+                            let fold = folded.iter()
+                            .fold(String::from(""), |mut acc, element| {
+                                // pub error_as_string: Option<String>,
+                                // pub code_occurences_as_string: String,
+                                match &element.error_as_string {
+                                    Some(ke) => {
+                                        acc.push_str(&format!("{}{}{}{}", symbol, ke, symbol, element.code_occurences_as_string));
+                                    },
+                                    None => {
+                                        acc.push_str(&format!("{}{}{}", symbol, symbol, element.code_occurences_as_string));
+                                    },
+                                }
+                                
+                                acc
+                            });
+                            match &content.inner.is_empty() {
+                                true => {
+                                    content = ContentPrep {
+                                        key_as_string: None,
+                                        inner: format!("[{}{}{}]", symbol, fold, symbol),
+                                    }
+                                },
+                                false => {
+                                    match &content.key_as_string {
+                                        Some(ke) => {
+                                            content = ContentPrep {
+                                                key_as_string: None,
+                                                inner: format!("{}[{}{}{}{}]", fold, symbol, ke, content.inner, symbol),
+                                            }
+                                        },
+                                        None => {
+                                            content = ContentPrep {
+                                                key_as_string: None,
+                                                inner: format!("{}[{}{}]{}", fold, symbol, content.inner, symbol),
+                                            }
+                                        },
+                                    }
+                                },
+                            }
                         },
                     }
+                    println!("{:#?}", content);
                 });
 
-                // println!("{}", content);
+                println!("LAST{:#?}LAST", content);
                 //
                 String::from("")
             }
