@@ -323,8 +323,7 @@ impl OneWrapperError {
                                     println!("CONTENT INNER IS NOT EMPTY AND LEN IS 1");
                                     match &folded[0].error_as_string {
                                         Some(eas) => {
-                                            let kk = content.key_as_string.clone();
-                                            match kk {
+                                            match content.key_as_string.clone() {
                                                 Some(ckey) => {
                                                     content = ContentPrep {
                                                         key_as_string: Some(eas.clone()),
@@ -340,9 +339,19 @@ impl OneWrapperError {
                                             }
                                         },
                                         None => {
-                                            content = ContentPrep {
-                                                key_as_string: folded[0].error_as_string.clone(),
-                                                inner: format!("[{}{}{}]{}", symbol, content.inner, symbol, folded[0].code_occurences_as_string.clone()),
+                                            match content.key_as_string.clone() {
+                                                Some(k) => {
+                                                    content = ContentPrep {
+                                                        key_as_string: None,
+                                                        inner: format!("{}{}{}{}{}{}", symbol, k, symbol, content.inner, symbol, folded[0].code_occurences_as_string.clone()),
+                                                    }
+                                                },
+                                                None => {
+                                                    content = ContentPrep {
+                                                        key_as_string: None,
+                                                        inner: format!("{}{}{}{}", symbol, content.inner, symbol, folded[0].code_occurences_as_string.clone()),
+                                                    }
+                                                },
                                             }
                                         },
                                     }
