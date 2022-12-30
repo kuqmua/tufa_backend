@@ -103,6 +103,7 @@ use tufa_common::traits::get_color::ErrorColorBold;
 use tufa_common::traits::separator_symbol::SeparatorSymbol;
 // use itertools::Itertools;
 
+#[derive(Debug)]
 pub struct PrepareForLog {
     pub error_as_string: Option<String>,
     pub code_occurences_as_string: String,
@@ -178,7 +179,7 @@ impl OneWrapperError {
         let code_occurence_as_string_vec = self
             .source
             .get_inner_source_and_code_occurence_as_string(config);
-        println!("{:#?}", code_occurence_as_string_vec);
+        // println!("{:#?}", code_occurence_as_string_vec);
         // let mut source_and_code_occurence_as_string_version_one = Vec::new();
         // let mut source_and_code_occurence_as_string_version_two = Vec::new();
         // let len = code_occurence_as_string_vec.len();
@@ -236,13 +237,13 @@ impl OneWrapperError {
                 });
                 prepared_by_increments_vec.sort_by(|(k1, v1), (k2, v2)| k1.cmp(k2));
                 prepared_by_increments_vec.reverse();
-                println!("{:#?}", prepared_by_increments_vec);
+                // println!("{:#?}", prepared_by_increments_vec);
                 let mut content = ContentPrep {
                     key_as_string: None,
                     inner: String::from(""),
                 };
                 prepared_by_increments_vec.iter().for_each(|(_, v)| {
-                    let folded = v.iter().map(|element| {
+                    let mut folded = v.iter().map(|element| {
                         // let mut increment_spaces = String::from("");
                         // for x in (0..element.increment) {
                         //     //0 or 1 ?
@@ -295,16 +296,20 @@ impl OneWrapperError {
                     // content.push_str(&folded);
                     // content = content_part
                     println!("LEN{}LEN", folded.len());
+                    // folded.sort_by(|a, b| a.error_as_string.cmp(&b.error_as_string));
+                    // folded.reverse();
                     match folded.len() == 1 {
                         true => {
                             match content.inner.is_empty() {
                                 true => {
+                                    println!("CONTENT INNER IS EMPTY AND LEN IS 1");
                                     content = ContentPrep {
                                         key_as_string: folded[0].error_as_string.clone(),
                                         inner: folded[0].code_occurences_as_string.clone(),
                                     }
                                 },
                                 false => {
+                                    println!("CONTENT INNER IS NOT EMPTY AND LEN IS 1");
                                     match &folded[0].error_as_string {
                                         Some(eas) => {
                                             let kk = content.key_as_string.clone();
@@ -326,7 +331,7 @@ impl OneWrapperError {
                                         None => {
                                             content = ContentPrep {
                                                 key_as_string: folded[0].error_as_string.clone(),
-                                                inner: format!("[{}{}{}]", symbol, folded[0].code_occurences_as_string.clone(), symbol),
+                                                inner: format!("[{}{}{}]{}", symbol, content.inner, symbol, folded[0].code_occurences_as_string.clone()),
                                             }
                                         },
                                     }
@@ -334,10 +339,10 @@ impl OneWrapperError {
                             }
                         },
                         false => {
+                            // println!("{:#?}", content);
+                            // println!("{:#?}", folded);
                             let fold = folded.iter()
                             .fold(String::from(""), |mut acc, element| {
-                                // pub error_as_string: Option<String>,
-                                // pub code_occurences_as_string: String,
                                 match &element.error_as_string {
                                     Some(ke) => {
                                         acc.push_str(&format!("{}{}{}{}", symbol, ke, symbol, element.code_occurences_as_string));
@@ -379,6 +384,7 @@ impl OneWrapperError {
                 });
 
                 println!("LAST{:#?}LAST", content);
+                println!("{}", content.inner);
                 //
                 String::from("")
             }
