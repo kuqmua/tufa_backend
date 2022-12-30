@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::fmt::format;
 
 use crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES;
 // use crate::global_variables::hardcode::PROJECT_NAME;
@@ -303,9 +304,19 @@ impl OneWrapperError {
                             match content.inner.is_empty() {
                                 true => {
                                     println!("CONTENT INNER IS EMPTY AND LEN IS 1");
-                                    content = ContentPrep {
-                                        key_as_string: folded[0].error_as_string.clone(),
-                                        inner: folded[0].code_occurences_as_string.clone(),
+                                    match &folded[0].error_as_string {
+                                        Some(k) => {
+                                            content = ContentPrep {
+                                                key_as_string: Some(k.clone()),
+                                                inner: format!("[{}{}{}]", symbol, folded[0].code_occurences_as_string.clone(), symbol),
+                                            }
+                                        },
+                                        None => {
+                                            content = ContentPrep {
+                                                key_as_string: None,
+                                                inner: folded[0].code_occurences_as_string.clone(),
+                                            }
+                                        },
                                     }
                                 },
                                 false => {
@@ -316,14 +327,14 @@ impl OneWrapperError {
                                             match kk {
                                                 Some(ckey) => {
                                                     content = ContentPrep {
-                                                        key_as_string: folded[0].error_as_string.clone(),
-                                                        inner: format!("{}[{}{}{}{}{}]{}", ckey, symbol, eas, symbol, folded[0].code_occurences_as_string.clone(), symbol, content.inner),
+                                                        key_as_string: Some(eas.clone()),
+                                                        inner: format!("{}[{}{}{}]{}", ckey, symbol, folded[0].code_occurences_as_string.clone(), symbol, content.inner),
                                                     }
                                                 },
                                                 None => {
                                                     content = ContentPrep {
-                                                        key_as_string: folded[0].error_as_string.clone(),
-                                                        inner: format!("{}[{}{}{}{}]{}", symbol, eas, symbol, folded[0].code_occurences_as_string.clone(), symbol, content.inner),
+                                                        key_as_string: Some(eas.clone()),
+                                                        inner: format!("{}[{}{}]{}{}", symbol, folded[0].code_occurences_as_string.clone(), symbol, symbol, content.inner),
                                                     }
                                                 },
                                             }
@@ -339,8 +350,6 @@ impl OneWrapperError {
                             }
                         },
                         false => {
-                            // println!("{:#?}", content);
-                            // println!("{:#?}", folded);
                             let fold = folded.iter()
                             .fold(String::from(""), |mut acc, element| {
                                 match &element.error_as_string {
@@ -348,17 +357,17 @@ impl OneWrapperError {
                                         acc.push_str(&format!("{}{}{}{}", symbol, ke, symbol, element.code_occurences_as_string));
                                     },
                                     None => {
-                                        acc.push_str(&format!("{}{}{}", symbol, symbol, element.code_occurences_as_string));
+                                        acc.push_str(&format!("{}{}", symbol, element.code_occurences_as_string));
                                     },
                                 }
-                                
                                 acc
                             });
                             match &content.inner.is_empty() {
                                 true => {
+                                    //then content.inner.is_empty - content.key_as_string must be None
                                     content = ContentPrep {
                                         key_as_string: None,
-                                        inner: format!("[{}{}{}]", symbol, fold, symbol),
+                                        inner: fold,
                                     }
                                 },
                                 false => {
@@ -372,7 +381,7 @@ impl OneWrapperError {
                                         None => {
                                             content = ContentPrep {
                                                 key_as_string: None,
-                                                inner: format!("{}[{}{}]{}", fold, symbol, content.inner, symbol),
+                                                inner: format!("{}{}{}{}", fold, symbol, content.inner, symbol),
                                             }
                                         },
                                     }
@@ -384,9 +393,20 @@ impl OneWrapperError {
                 });
 
                 println!("LAST{:#?}LAST", content);
-                println!("{}", content.inner);
-                //
-                String::from("")
+                // content.key_as_string = Some(String::from("kekw for test"));
+                let prepared_content = match content.key_as_string {
+                    Some(key) => {
+                        let prepared_inner = content.inner.lines().collect::<Vec<&str>>()
+                        .iter().fold(String::from(""), |mut acc, element| {
+                            acc.push_str(&format!(" {}{}", element, element));
+                            acc
+                        });
+                        format!("{} [{}{}{}]", key, symbol, prepared_inner, symbol)
+                    },
+                    None => content.inner,
+                };
+                // println!("{}", prepared_content);
+                prepared_content
             }
             false => {
                 code_occurence_as_string_vec
@@ -412,7 +432,7 @@ impl OneWrapperError {
                     })
             }
         };
-        prepared_log.push_str(&self.get_code_occurence_as_string(config));
+        prepared_log.push_str(&format!("{}{}", symbol, &self.get_code_occurence_as_string(config)));
         log_type.console(&config.get_error_color_bold(), prepared_log)
     }
 }
