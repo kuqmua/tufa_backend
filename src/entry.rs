@@ -116,6 +116,7 @@ pub struct ContentPrep {
     pub inner: String,
 }
 // #[derive(ImplGetSourceFromTufaCommon)]
+#[derive(Debug)]
 pub struct OneWrapperError {
     source: OneWrapperErrorEnum,
     // code_occurence: tufa_common::common::code_occurence::CodeOccurence,
@@ -243,6 +244,7 @@ impl OneWrapperError {
                     key_as_string: None,
                     inner: String::from(""),
                 };
+                println!("{:#?}", prepared_by_increments_vec);
                 prepared_by_increments_vec.iter().for_each(|(_, v)| {
                     let mut folded = v.iter().map(|element| {
                         // let mut increment_spaces = String::from("");
@@ -292,18 +294,19 @@ impl OneWrapperError {
                         // acc
                         prepare_for_log
                     }).collect::<Vec<PrepareForLog>>();
+                    // println!("folded {:#?}", folded);
                     // let content_part = format!("[{}{}]", folded, symbol);
                     // println!("{}", content_part);
                     // content.push_str(&folded);
                     // content = content_part
-                    println!("LEN{}LEN", folded.len());
-                    // folded.sort_by(|a, b| a.error_as_string.cmp(&b.error_as_string));
-                    // folded.reverse();
+                    // println!("LEN{}LEN", folded.len());
+                    folded.sort_by(|a, b| a.error_as_string.cmp(&b.error_as_string));
+                    folded.reverse();
                     match folded.len() == 1 {
                         true => {
                             match content.inner.is_empty() {
                                 true => {
-                                    println!("CONTENT INNER IS EMPTY AND LEN IS 1");
+                                    // println!("CONTENT INNER IS EMPTY AND LEN IS 1");
                                     match &folded[0].error_as_string {
                                         Some(k) => {
                                             content = ContentPrep {
@@ -320,10 +323,10 @@ impl OneWrapperError {
                                     }
                                 },
                                 false => {
-                                    println!("CONTENT INNER IS NOT EMPTY AND LEN IS 1");
+                                    // println!("CONTENT INNER IS NOT EMPTY AND LEN IS 1");
                                     match &folded[0].error_as_string {
                                         Some(eas) => {
-                                            match content.key_as_string.clone() {
+                                            match &content.key_as_string {
                                                 Some(ckey) => {
                                                     content = ContentPrep {
                                                         key_as_string: Some(eas.clone()),
@@ -339,7 +342,7 @@ impl OneWrapperError {
                                             }
                                         },
                                         None => {
-                                            match content.key_as_string.clone() {
+                                            match &content.key_as_string {
                                                 Some(k) => {
                                                     content = ContentPrep {
                                                         key_as_string: None,
@@ -374,9 +377,19 @@ impl OneWrapperError {
                             match &content.inner.is_empty() {
                                 true => {
                                     //then content.inner.is_empty - content.key_as_string must be None
-                                    content = ContentPrep {
-                                        key_as_string: None,
-                                        inner: fold,
+                                    match &content.key_as_string {
+                                        Some(k) => {
+                                            content = ContentPrep {
+                                                key_as_string: None,
+                                                inner: format!("{}{}{}", symbol, k, fold),
+                                            }
+                                        },
+                                        None => {
+                                            content = ContentPrep {
+                                                key_as_string: None,
+                                                inner: fold,
+                                            }
+                                        },
                                     }
                                 },
                                 false => {
@@ -398,10 +411,10 @@ impl OneWrapperError {
                             }
                         },
                     }
-                    println!("{:#?}", content);
+                    // println!("{:#?}", content);
                 });
 
-                println!("LAST{:#?}LAST", content);
+                // println!("LAST{:#?}LAST", content);
                 // content.key_as_string = Some(String::from("kekw for test"));
                 let prepared_content = match content.key_as_string {
                     Some(key) => {
@@ -442,6 +455,7 @@ impl OneWrapperError {
             }
         };
         prepared_log.push_str(&format!("{}{}", symbol, &self.get_code_occurence_as_string(config)));
+        println!("@@{}@@", prepared_log);
         log_type.console(&config.get_error_color_bold(), prepared_log)
     }
 }
@@ -478,6 +492,7 @@ impl OneWrapperError {
 // }
 
 // #[derive(ImplGetSourceFromTufaCommon)]
+#[derive(Debug)]
 pub enum OneWrapperErrorEnum {
     ThreeWrapper(ThreeWrapperError),
 }
@@ -570,15 +585,37 @@ pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
                 ),
             }
         };
-        println!("one f {}", std::mem::size_of_val(&f));
-        println!("one source {}", std::mem::size_of_val(&f.source));
-        println!("one source {}", std::mem::size_of_val(&f.code_occurence));
-        println!("one-----");
+        // println!("one f {}", std::mem::size_of_val(&f));
+        // println!("one source {}", std::mem::size_of_val(&f.source));
+        // println!("one source {}", std::mem::size_of_val(&f.code_occurence));
+        // println!("one-----");
+        println!("{:#?}", f);
         f.log(once_cell::sync::Lazy::force(
             &crate::global_variables::runtime::config::CONFIG,
         ));
-        println!("one-----");
+        // println!("one-----");
         return Err(Box::new(f));
     }
     Ok(())
 }
+
+
+// example what i want
+
+// [
+//  [key: five_hashmap_key] error_five [
+//   tufa_common/src/dev.rs:693:17
+//  ],
+//  [
+//   [
+//    [key: six_hashmap_key] error_seven
+//    tufa_common/src/dev.rs:1090:17
+//    [key: six_hashmap_key] error_eight
+//    tufa_common/src/dev.rs:1176:17
+//   ]
+//   tufa_common/src/dev.rs:939:25
+//  ]
+// ]
+// tufa_common/src/dev.rs:562:25
+// tufa_common/src/dev.rs:167:21
+// tufa_server/src/entry.rs:583:21
