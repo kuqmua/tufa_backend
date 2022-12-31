@@ -418,13 +418,16 @@ impl OneWrapperError {
                 // content.key_as_string = Some(String::from("kekw for test"));
                 let prepared_content = match content.key_as_string {
                     Some(key) => {
-                        let prepared_inner = content.inner.lines().collect::<Vec<&str>>()
-                        .iter().fold(String::from(""), |mut acc, element| {
-                            acc.push_str(&format!(" {}{}", element, element));
-                            acc
-                        });
+                        let prepared_inner =
+                            content.inner.lines().collect::<Vec<&str>>().iter().fold(
+                                String::from(""),
+                                |mut acc, element| {
+                                    acc.push_str(&format!(" {}{}", element, element));
+                                    acc
+                                },
+                            );
                         format!("{} [{}{}{}]", key, symbol, prepared_inner, symbol)
-                    },
+                    }
                     None => content.inner,
                 };
                 // println!("{}", prepared_content);
@@ -454,7 +457,11 @@ impl OneWrapperError {
                     })
             }
         };
-        prepared_log.push_str(&format!("{}{}", symbol, &self.get_code_occurence_as_string(config)));
+        prepared_log.push_str(&format!(
+            "{}{}",
+            symbol,
+            &self.get_code_occurence_as_string(config)
+        ));
         println!("@@{}@@", prepared_log);
         log_type.console(&config.get_error_color_bold(), prepared_log)
     }
@@ -599,22 +606,22 @@ pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
     Ok(())
 }
 
-
 // example what i want
 
 // [
-//  [key: five_hashmap_key] error_five [
-//   tufa_common/src/dev.rs:693:17
-//  ],
-//  [
-//   [
-//    [key: six_hashmap_key] error_seven
-//    tufa_common/src/dev.rs:1090:17
-//    [key: six_hashmap_key] error_eight
-//    tufa_common/src/dev.rs:1176:17
+//   (key: five_hashmap_key) [
+//     error_five
+//     tufa_common/src/dev.rs:693:17
 //   ]
-//   tufa_common/src/dev.rs:939:25
-//  ]
+//   (key: six_hashmap_key) [
+//     [
+//       error_seven
+//       tufa_common/src/dev.rs:1090:17
+//       error_eight
+//       tufa_common/src/dev.rs:1176:17
+//     ]
+//     tufa_common/src/dev.rs:939:25
+//   ]
 // ]
 // tufa_common/src/dev.rs:562:25
 // tufa_common/src/dev.rs:167:21
