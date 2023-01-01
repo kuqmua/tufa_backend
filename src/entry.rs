@@ -642,7 +642,7 @@ pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
     Ok(())
 }
 
-// example what i want
+//todo - must ininitalize with keys not in the get_inner_source_and_code_occurence_as_string - its one step ahead of actual place
 
 // [
 //   (key: five_hashmap_key) [
@@ -663,21 +663,25 @@ pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
 // tufa_common/src/dev.rs:167:21
 // tufa_server/src/entry.rs:583:21
 
+// (key: five_hashmap_key) [
+//   error_five
+//   tufa_common/src/dev.rs:719:17
+// ]
+// (key: six_hashmap_key) [
+//   [
+//     error_seven
+//     tufa_common/src/dev.rs:1128:17
+//     error_eight
+//     tufa_common/src/dev.rs:1214:17
+//   ]
+//   tufa_common/src/dev.rs:977:25
+// ]
+// tufa_common/src/dev.rs:588:25
+// tufa_common/src/dev.rs:191:21
+
+// // tufa_server/src/entry.rs:583:21
+
 // [
-//     SourceAndCodeOccurenceAsString {
-//         source: Some(
-//             SourceWithKeys(
-//                 SourceWithKeys {
-//                     keys: [
-//                         "five_hashmap_key",
-//                     ],
-//                     source: "error_five",
-//                 },
-//             ),
-//         ),
-//         code_occurence: "tufa_common/src/dev.rs:701:17",
-//         increment: 2,
-//     },
 //     SourceAndCodeOccurenceAsString {
 //         source: Some(
 //             SourceWithKeys(
@@ -689,7 +693,7 @@ pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
 //                 },
 //             ),
 //         ),
-//         code_occurence: "tufa_common/src/dev.rs:1098:17",
+//         code_occurence: "tufa_common/src/dev.rs:1128:17",
 //         increment: 3,
 //     },
 //     SourceAndCodeOccurenceAsString {
@@ -703,22 +707,43 @@ pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
 //                 },
 //             ),
 //         ),
-//         code_occurence: "tufa_common/src/dev.rs:1184:17",
+//         code_occurence: "tufa_common/src/dev.rs:1214:17",
 //         increment: 3,
 //     },
 //     SourceAndCodeOccurenceAsString {
-//         source: None,
-//         code_occurence: "tufa_common/src/dev.rs:947:25",
+//         source: None,//todo add here info
+//         code_occurence: "tufa_common/src/dev.rs:977:25",
 //         increment: 2,
 //     },
 //     SourceAndCodeOccurenceAsString {
-//         source: None,
-//         code_occurence: "tufa_common/src/dev.rs:570:25",
+//         source: Some(
+//             SourceWithKeys(
+//                 SourceWithKeys {
+//                     keys: [
+//                         "five_hashmap_key",
+//                     ],
+//                     source: "error_five",
+//                 },
+//             ),
+//         ),
+//         code_occurence: "tufa_common/src/dev.rs:719:17",
+//         increment: 2,
+//     },
+//     SourceAndCodeOccurenceAsString {
+//         source: None,//todo add here info
+//         code_occurence: "tufa_common/src/dev.rs:588:25",
 //         increment: 1,
 //     },
 //     SourceAndCodeOccurenceAsString {
-//         source: None,
-//         code_occurence: "tufa_common/src/dev.rs:175:21",
+//         source: Some(
+//             Keys(
+//                 [
+//                     "six_hashmap_key",
+//                     "five_hashmap_key",
+//                 ],
+//             ),
+//         ),
+//         code_occurence: "tufa_common/src/dev.rs:191:21",
 //         increment: 0,
 //     },
 // ]
