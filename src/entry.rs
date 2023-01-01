@@ -96,13 +96,13 @@ use tufa_common::dev::ThreeWrapperError;
 use tufa_common::traits::my_custom_display::DisplayError;
 use tufa_common::traits::new_error_with_one_addition::NewErrorWithOneAddition;
 
+use itertools::Itertools;
 use tufa_common::traits::code_path::CodePath;
 use tufa_common::traits::console::Console;
 use tufa_common::traits::fields::GetLogType;
 use tufa_common::traits::fields::GetSourcePlaceType;
 use tufa_common::traits::get_color::ErrorColorBold;
 use tufa_common::traits::separator_symbol::SeparatorSymbol;
-// use itertools::Itertools;
 
 #[derive(Debug)]
 pub struct PrepareForLog {
@@ -148,11 +148,38 @@ impl OneWrapperError {
         &self,
         config: &tufa_common::config_mods::config_struct::ConfigStruct, //todo maybe remove
     ) -> Vec<tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString> {
+        let mut keys_handle_vec = vec![]; //todo - make unique?
         let mut vec = self.get_inner_source_and_code_occurence_as_string(config);
-        vec.iter_mut().for_each(|n| n.increment += 1);
+        vec.iter_mut().for_each(|n| {
+            n.increment += 1;
+            if let Some(source_enum) = &n.source {
+                match &source_enum {
+                    tufa_common::common::source_and_code_occurence::SourceEnum::SourceWithKeys(
+                        source_with_keys,
+                    ) => {
+                        source_with_keys.keys.iter().for_each(|k| {
+                            keys_handle_vec.push(k.clone());
+                        });
+                    }
+                    tufa_common::common::source_and_code_occurence::SourceEnum::Source(_) => (),
+                    tufa_common::common::source_and_code_occurence::SourceEnum::Keys(keys) => {
+                        keys.iter().for_each(|k| {
+                            keys_handle_vec.push(k.clone());
+                        });
+                    }
+                }
+            }
+        });
+        keys_handle_vec = keys_handle_vec.into_iter().unique().collect();
+        let keys_handle = match keys_handle_vec.is_empty() {
+            true => None,
+            false => Some(
+                tufa_common::common::source_and_code_occurence::SourceEnum::Keys(keys_handle_vec),
+            ),
+        };
         vec.push(
             tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString {
-                source: None,
+                source: keys_handle,
                 code_occurence: self.get_code_occurence_as_string(config),
                 increment: 0,
             },
@@ -279,7 +306,11 @@ impl OneWrapperError {
                                     // format!("{}{}{}{}{}", symbol, source, symbol, element.code_occurence, symbol)
                                 },
                                 tufa_common::common::source_and_code_occurence::SourceEnum::Keys(keys) => {
-                                    todo!();
+                                    println!("keys");
+                                    PrepareForLog {
+                                        error_as_string: None,
+                                        code_occurences_as_string: String::from(""),
+                                    }
                                 }
                             },
                             None => {
