@@ -210,6 +210,7 @@ impl OneWrapperError {
             true => {
                 // let mut addition_to_increment_spaces = String::from("");
                 let mut prepared_by_increments_hashmap: HashMap::<u64, Vec<tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString>> = HashMap::new();
+                println!("{:#?}", code_occurence_as_string_vec);
                 code_occurence_as_string_vec.iter().for_each(|element| {
                     // println!("{:#?}", element);
                     let mut should_insert_full_new = true;
@@ -244,7 +245,7 @@ impl OneWrapperError {
                     key_as_string: None,
                     inner: String::from(""),
                 };
-                println!("{:#?}", prepared_by_increments_vec);
+                // println!("{:#?}", prepared_by_increments_vec);
                 prepared_by_increments_vec.iter().for_each(|(_, v)| {
                     let mut folded = v.iter().map(|element| {
                         // let mut increment_spaces = String::from("");
@@ -462,7 +463,7 @@ impl OneWrapperError {
             symbol,
             &self.get_code_occurence_as_string(config)
         ));
-        println!("@@{}@@", prepared_log);
+        // println!("@@{}@@", prepared_log);
         log_type.console(&config.get_error_color_bold(), prepared_log)
     }
 }
@@ -596,7 +597,7 @@ pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
         // println!("one source {}", std::mem::size_of_val(&f.source));
         // println!("one source {}", std::mem::size_of_val(&f.code_occurence));
         // println!("one-----");
-        println!("{:#?}", f);
+        // println!("{:#?}", f);
         f.log(once_cell::sync::Lazy::force(
             &crate::global_variables::runtime::config::CONFIG,
         ));
@@ -626,3 +627,63 @@ pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
 // tufa_common/src/dev.rs:562:25
 // tufa_common/src/dev.rs:167:21
 // tufa_server/src/entry.rs:583:21
+
+// [
+//     SourceAndCodeOccurenceAsString {
+//         source: Some(
+//             SourceWithKeys(
+//                 SourceWithKeys {
+//                     keys: [
+//                         "five_hashmap_key",
+//                     ],
+//                     source: "error_five",
+//                 },
+//             ),
+//         ),
+//         code_occurence: "tufa_common/src/dev.rs:701:17",
+//         increment: 2,
+//     },
+//     SourceAndCodeOccurenceAsString {
+//         source: Some(
+//             SourceWithKeys(
+//                 SourceWithKeys {
+//                     keys: [
+//                         "six_hashmap_key",
+//                     ],
+//                     source: "error_seven",
+//                 },
+//             ),
+//         ),
+//         code_occurence: "tufa_common/src/dev.rs:1098:17",
+//         increment: 3,
+//     },
+//     SourceAndCodeOccurenceAsString {
+//         source: Some(
+//             SourceWithKeys(
+//                 SourceWithKeys {
+//                     keys: [
+//                         "six_hashmap_key",
+//                     ],
+//                     source: "error_eight",
+//                 },
+//             ),
+//         ),
+//         code_occurence: "tufa_common/src/dev.rs:1184:17",
+//         increment: 3,
+//     },
+//     SourceAndCodeOccurenceAsString {
+//         source: None,
+//         code_occurence: "tufa_common/src/dev.rs:947:25",
+//         increment: 2,
+//     },
+//     SourceAndCodeOccurenceAsString {
+//         source: None,
+//         code_occurence: "tufa_common/src/dev.rs:570:25",
+//         increment: 1,
+//     },
+//     SourceAndCodeOccurenceAsString {
+//         source: None,
+//         code_occurence: "tufa_common/src/dev.rs:175:21",
+//         increment: 0,
+//     },
+// ]
