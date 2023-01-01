@@ -278,6 +278,9 @@ impl OneWrapperError {
                                     }
                                     // format!("{}{}{}{}{}", symbol, source, symbol, element.code_occurence, symbol)
                                 },
+                                tufa_common::common::source_and_code_occurence::SourceEnum::Keys(keys) => {
+                                    todo!();
+                                }
                             },
                             None => {
                                 PrepareForLog {
@@ -449,6 +452,7 @@ impl OneWrapperError {
                                 match source_enum {
                                     tufa_common::common::source_and_code_occurence::SourceEnum::SourceWithKeys(_) => String::from(""),//todo rewrite it
                                     tufa_common::common::source_and_code_occurence::SourceEnum::Source(source) => format!("{}{}{}{}", increment_spaces, element.code_occurence, symbol, element.code_occurence),
+                                    tufa_common::common::source_and_code_occurence::SourceEnum::Keys(keys) => String::from(""),//todo rewrite it
                                 }
                             },
                             None => format!("{}{}", increment_spaces, element.code_occurence),
