@@ -280,18 +280,63 @@ impl OneWrapperError {
         keys_for_tracing = keys_for_tracing.into_iter().unique().collect(); //todo - optimize it?
         println!("{:#?}", sources_for_tracing);
         println!("{:#?}", keys_for_tracing);
-        let source_with_code_occurence_handle_vec: Vec<
+        let mut source_with_code_occurence_handle_vec: Vec<
             tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceHandle,
         > = Vec::new(); //todo - optimize
-        let source_with_code_occurence_finder_vec: Vec<
+        let mut source_with_code_occurence_finder_vec: Vec<
             tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinder,
         > = Vec::new(); //todo - optimize
-                        // let mut source_and_code_occurence_as_string_version_one = Vec::new();
-                        // let mut source_and_code_occurence_as_string_version_two = Vec::new();
-                        // let len = code_occurence_as_string_vec.len();
-                        // for c in &code_occurence_as_string_vec {
-                        //     // match &c.source {
-                        //     //     Some(_) => {
+        code_occurence_as_string_vec.iter().for_each(|code_occurence_as_string|{
+            //todo - remove option here
+            if let Some(source_handle) = &code_occurence_as_string.source {
+                match source_handle {
+                    tufa_common::common::source_and_code_occurence::SourceEnum::SourceWithKeys(source_with_keys) => {
+                        source_with_code_occurence_handle_vec.push(tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceHandle{
+                            source: tufa_common::common::source_and_code_occurence::SourceHandleEnum::SourceWithKeys(source_with_keys.clone()),
+                            code_occurence: code_occurence_as_string.code_occurence.clone(),
+                            increment: code_occurence_as_string.increment.clone(),
+                        });
+                    },
+                    tufa_common::common::source_and_code_occurence::SourceEnum::Source(source) => {
+                        // sources_for_tracing.push(source.clone());
+                        source_with_code_occurence_handle_vec.push(tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceHandle{
+                            source: tufa_common::common::source_and_code_occurence::SourceHandleEnum::Source(source.clone()),
+                            code_occurence: code_occurence_as_string.code_occurence.clone(),
+                            increment: code_occurence_as_string.increment.clone(),
+                        });
+                    },
+                    tufa_common::common::source_and_code_occurence::SourceEnum::SourcesForTracing(sources) => {
+                        source_with_code_occurence_finder_vec.push(tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinder{
+                            source: tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(sources.clone()),
+                            code_occurence: code_occurence_as_string.code_occurence.clone(),
+                            increment: code_occurence_as_string.increment.clone(),
+                        });
+                    },
+                    tufa_common::common::source_and_code_occurence::SourceEnum::KeysForTracing(keys) => {
+                        source_with_code_occurence_finder_vec.push(tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinder{
+                            source: tufa_common::common::source_and_code_occurence::SourceFinderEnum::KeysForTracing(keys.clone()),
+                            code_occurence: code_occurence_as_string.code_occurence.clone(),
+                            increment: code_occurence_as_string.increment.clone(),
+                        });
+                    },
+                    tufa_common::common::source_and_code_occurence::SourceEnum::SourcesAndKeysForTracing(sources_and_keys_for_tracing) => {
+                        source_with_code_occurence_finder_vec.push(tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinder{
+                            source: tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesAndKeysForTracing(sources_and_keys_for_tracing.clone()),
+                            code_occurence: code_occurence_as_string.code_occurence.clone(),
+                            increment: code_occurence_as_string.increment.clone(),
+                        });
+                    },
+                }
+            }
+        });
+        println!("111{:#?}111", source_with_code_occurence_handle_vec);
+        println!("222{:#?}222", source_with_code_occurence_finder_vec);
+        // let mut source_and_code_occurence_as_string_version_one = Vec::new();
+        // let mut source_and_code_occurence_as_string_version_two = Vec::new();
+        // let len = code_occurence_as_string_vec.len();
+        // for c in &code_occurence_as_string_vec {
+        //     // match &c.source {
+        //     //     Some(_) => {
 
         //     //     },
         //     //     None => {
