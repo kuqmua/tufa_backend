@@ -256,8 +256,8 @@ impl OneWrapperError {
         });
         sources_for_tracing = sources_for_tracing.into_iter().unique().collect(); //todo - optimize it?
         keys_for_tracing = keys_for_tracing.into_iter().unique().collect(); //todo - optimize it?
-        println!("{:#?}", sources_for_tracing);
-        println!("{:#?}", keys_for_tracing);
+        // println!("{:#?}", sources_for_tracing);
+        // println!("{:#?}", keys_for_tracing);
         let mut source_with_code_occurence_handle_vec: Vec<
             tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceHandle,
         > = Vec::new(); //todo - optimize
@@ -412,9 +412,9 @@ impl OneWrapperError {
                     },
                 }
         });
-        println!("111{:#?}111", source_with_code_occurence_handle_vec);
-        println!("222{:#?}222", source_with_code_occurence_finder_vec_partial);
-        println!("333{:#?}333", source_with_code_occurence_finder_vec_all);
+        // println!("111{:#?}111", source_with_code_occurence_handle_vec);
+        // println!("222{:#?}222", source_with_code_occurence_finder_vec_partial);
+        // println!("333{:#?}333", source_with_code_occurence_finder_vec_all);
         let mut stage_one_prep_hashmap: HashMap<
             tufa_common::common::source_and_code_occurence::SourceFinderEnum,
             Vec<String>,
@@ -450,7 +450,6 @@ impl OneWrapperError {
                         }
                     },
                 }
-                println!("{:#?}", handle_to_insert_vec);
                 match stage_one_keys.contains(&p.source) {
                     true => {
                         let mut inner = match stage_one_prep_hashmap.get_mut(&p.source) {
@@ -483,16 +482,32 @@ impl OneWrapperError {
                     stage_two_prep_hashmap.insert(key.clone(), fold);
                 },
                 tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesAndKeysForTracing(sources_and_keys_for_tracing) => {
-                    println!("))){:#?}(((", sources_and_keys_for_tracing);
+                    // println!("))){:#?}(((", sources_and_keys_for_tracing);
                     //todo - manage keys addition ordering with increments - maybe should add increment for each key and inside five() function add additional hashmap with errors?
-                    // let fold = value.iter().fold(String::from(""), |mut acc, v| {
-                    //     acc.push_str(&format!("{}{}", v, symbol));
-                    //     acc
-                    // });
-                    // stage_two_prep_hashmap.insert(key.clone(), fold);
+                    let fold = value.iter().fold(String::from(""), |mut acc, v| {
+                        acc.push_str(&format!("{}{}", v, symbol));
+                        acc
+                    });
+                    let mut first = true;
+                    let fold_with_keys = sources_and_keys_for_tracing.keys.iter().fold(String::from(""), |mut acc, k| {
+                        match first {
+                            true => {
+                                acc = format!("(key: {}) [{}[{}{}{}]{}CODE_OCCURENCE{}", k, symbol, symbol, fold, symbol, symbol, symbol);
+                                first = false;
+                            },
+                            false => {
+                                acc = format!("(key: {}) [{}[{}{}{}]{}CODE_OCCURENCE{}", k, symbol, symbol, acc, symbol, symbol, symbol);
+                            },
+                        }
+                        acc
+                    });
+                    stage_two_prep_hashmap.insert(key.clone(), fold_with_keys);
                 },
             }
 
+        });
+        stage_two_prep_hashmap.iter().for_each(|(k, v)|{
+            println!("{}", v)
         });
         println!("555{:#?}555", stage_two_prep_hashmap);
         match source_with_code_occurence_finder_vec_all.is_empty() {
@@ -502,7 +517,7 @@ impl OneWrapperError {
             false => {
                 source_with_code_occurence_finder_vec_all.sort_by(|a, b| a.increment.cmp(&b.increment));
                 source_with_code_occurence_finder_vec_all.reverse();
-                println!("3333{:#?}3333", source_with_code_occurence_finder_vec_all);
+                // println!("3333{:#?}3333", source_with_code_occurence_finder_vec_all);
             },
         }
 
