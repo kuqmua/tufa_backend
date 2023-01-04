@@ -469,6 +469,43 @@ impl OneWrapperError {
             });
         });
         println!("444{:#?}444", stage_one_prep_hashmap);
+        let mut stage_two_prep_hashmap: HashMap<
+            tufa_common::common::source_and_code_occurence::SourceFinderEnum,
+            String,
+        > = HashMap::new();
+        stage_one_prep_hashmap.iter().for_each(|(key, value)|{
+            match key {
+                tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(_) => {
+                    let fold = value.iter().fold(String::from(""), |mut acc, v| {
+                        acc.push_str(&format!("{}{}", v, symbol));
+                        acc
+                    });
+                    stage_two_prep_hashmap.insert(key.clone(), fold);
+                },
+                tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesAndKeysForTracing(sources_and_keys_for_tracing) => {
+                    //todo - manage keys addition ordering with increments 
+                    // let fold = value.iter().fold(String::from(""), |mut acc, v| {
+                    //     acc.push_str(&format!("{}{}", v, symbol));
+                    //     acc
+                    // });
+                    // stage_two_prep_hashmap.insert(key.clone(), fold);
+                },
+            }
+
+        });
+        println!("555{:#?}555", stage_two_prep_hashmap);
+        match source_with_code_occurence_finder_vec_all.is_empty() {
+            true => {
+
+            },
+            false => {
+                source_with_code_occurence_finder_vec_all.sort_by(|a, b| a.increment.cmp(&b.increment));
+                source_with_code_occurence_finder_vec_all.reverse();
+                println!("3333{:#?}3333", source_with_code_occurence_finder_vec_all);
+            },
+        }
+
+
         // let mut source_with_code_occurence_handle_with_sources_for_tracing_vec: Vec<(
         //     tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinder,
         //     Vec<tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceHandle>,
