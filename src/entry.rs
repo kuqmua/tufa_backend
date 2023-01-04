@@ -415,9 +415,11 @@ impl OneWrapperError {
         println!("111{:#?}111", source_with_code_occurence_handle_vec);
         println!("222{:#?}222", source_with_code_occurence_finder_vec_partial);
         println!("333{:#?}333", source_with_code_occurence_finder_vec_all);
-        let mut stage_one_prep_vec: Vec<
-            tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinderPrepLog,
-        > = Vec::new();
+        let mut stage_one_prep_hashmap: HashMap<
+            tufa_common::common::source_and_code_occurence::SourceFinderEnum,
+            Vec<String>,
+            //or maybe Vec<tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceHandle>
+        > = HashMap::new();
         source_with_code_occurence_finder_vec_partial.iter().for_each(|p|{
             source_with_code_occurence_handle_vec.iter().for_each(|origin|{
                 let s_handle = match &origin.source {
@@ -428,63 +430,45 @@ impl OneWrapperError {
                         source.clone()
                     },
                 };
+                let stage_one_keys = stage_one_prep_hashmap.keys().cloned().collect::<Vec<tufa_common::common::source_and_code_occurence::SourceFinderEnum>>();
+                let mut handle_to_insert_vec: Vec<String> = Vec::new(); 
                 match &p.source {
                     tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(sources_for_tracing) => {
                         match sources_for_tracing.contains(&s_handle) {
                             true => {
-                                let finder = tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinderPrepLog {
-                                    source: p.source.clone(),
-                                    prep_log: format!("{}{}{}{}", s_handle.clone(), symbol, origin.code_occurence, symbol),
-                                    increment: p.increment,
-                                };
-                                match stage_one_prep_vec.contains(&finder) {
-                                    true => (),
-                                    false => {
-                                        stage_one_prep_vec.push(finder);
-                                    },
-                                }
+                                handle_to_insert_vec.push(format!("{}{}{}{}", s_handle.clone(), symbol, origin.code_occurence, symbol));
                             },
                             false => (),
                         }
                     },
                     tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesAndKeysForTracing(sources_and_keys_for_tracing) => {
-                        println!("SourcesAndKeysForTracing");
-                        println!("{}", s_handle);
                         match sources_and_keys_for_tracing.sources.contains(&s_handle) {
                             true => {
-                                println!("::{}", s_handle);
-                                let finder = tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinderPrepLog {
-                                    source: p.source.clone(),
-                                    prep_log: format!("{}{}{}{}", s_handle.clone(), symbol, origin.code_occurence, symbol),
-                                    increment: p.increment,
-                                };
-                                match stage_one_prep_vec.contains(&finder) {
-                                    true => (),
-                                    false => {
-                                        stage_one_prep_vec.push(finder);
-                                    },
-                                }
+                                 handle_to_insert_vec.push(format!("{}{}{}{}", s_handle.clone(), symbol, origin.code_occurence, symbol));
                             },
-                            false => {
-                                println!("HERE");
-                                // let finder = tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinderPrepLog {
-                                //     source: p.source.clone(),
-                                //     prep_log: format!("{}{}{}{}", s_handle.clone(), symbol, origin.code_occurence, symbol),
-                                //     increment: p.increment,
-                                // };
-                                // match stage_one_prep_vec.contains(&finder) {
-                                //     true => (),
-                                //     false => {
-                                //         stage_one_prep_vec.push(finder);
-                                //     },
-                                // }
-                            },
+                            false => (),
                         }
+                    },
+                }
+                println!("{:#?}", handle_to_insert_vec);
+                match stage_one_keys.contains(&p.source) {
+                    true => {
+                        let mut inner = match stage_one_prep_hashmap.get_mut(&p.source) {
+                            Some(v) => v.clone(),
+                            None => vec![],
+                        };
+                        handle_to_insert_vec.iter().for_each(|h|{
+                            inner.push(h.clone());
+                        });
+                        *stage_one_prep_hashmap.entry(p.source.clone()).or_insert(vec![]) = inner.clone();
+                    },
+                    false => {
+                        stage_one_prep_hashmap.insert(p.source.clone(), handle_to_insert_vec.clone());
                     },
                 }
             });
         });
-        println!("444{:#?}444", stage_one_prep_vec);
+        println!("444{:#?}444", stage_one_prep_hashmap);
         // let mut source_with_code_occurence_handle_with_sources_for_tracing_vec: Vec<(
         //     tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinder,
         //     Vec<tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceHandle>,
