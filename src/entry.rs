@@ -582,58 +582,98 @@ impl OneWrapperError {
                                 sources_and_keys_with_tracing.keys.iter().for_each(|k|{
                                     match keys_from_partial.contains(k) {
                                         true => {
-                                            keys_in_the_partial.push(k);
+                                            keys_in_the_partial.push(k.clone());
                                         },
                                         false => {
-                                            keys_not_in_the_partial.push(k);
+                                            keys_not_in_the_partial.push((k.clone(), element.code_occurence.clone()));
                                         },
                                     }
                                 });
-                                //
                                 let mut stage_three_prep_hashmap: HashMap<
                                     tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinder,
                                     String,
                                 > = HashMap::new();
-                                stage_three_prep_hashmap.iter().for_each(|(ks, vs)|{
-                                    match ks.source {
+                                stage_two_prep_hashmap.iter().for_each(|(ks, vs)|{
+                                    match &ks.source {
                                         tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(_) => {
                                             stage_three_prep_hashmap.insert(ks.clone(), vs.clone());
                                         },
                                         tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesAndKeysForTracing(sources_and_keys_for_tracing) => {
-                                            let in_contains_all_keys = true;
-                                            for
-
+                                            let mut is_contains_all_keys = true;
+                                            for k in &sources_and_keys_for_tracing.keys {
+                                                match keys_in_the_partial.contains(&k) {
+                                                    true => (),
+                                                    false => {
+                                                        is_contains_all_keys = false;
+                                                        break;
+                                                    },
+                                                }
+                                            }
+                                            match is_contains_all_keys {
+                                                true => {
+                                                    let mut handle_vs = vs.clone().lines().collect::<Vec<&str>>().iter().fold(
+                                                        String::from(""),
+                                                        |mut acccc, element| {
+                                                            acccc.push_str(&format!("{}{}", element, symbol));
+                                                            acccc
+                                                        },
+                                                    );
+                                                    //
+                                                    let mut firstt = true;
+                                                    let mut ffold = keys_not_in_the_partial.iter().fold(
+                                                        String::from(""),
+                                                        |mut accu, (kn, code_occurencen)| {
+                                                            match firstt {
+                                                                true => {
+                                                                    accu.push_str(&format!("(key: {}) [{}{}{} {}{}]{}", kn, symbol, handle_vs, symbol, code_occurencen, symbol, symbol));
+                                                                    firstt = false;
+                                                                },
+                                                                false => {
+                                                                    accu = format!("(key: {}) [{}{}{} {}{}]{}", kn, symbol, accu, symbol, code_occurencen, symbol, symbol);
+                                                                },
+                                                            }
+                                                            accu
+                                                        },
+                                                    );
+                                                    log_type.pop_last(&mut ffold);
+                                                    stage_three_prep_hashmap.insert(ks.clone(), ffold);
+                                                },
+                                                false => {
+                                                    //todo - not sure its correct
+                                                    stage_three_prep_hashmap.insert(ks.clone(), vs.clone());
+                                                },
+                                            }
                                         },
                                     }
                                 });
-                                //
-                            //     let prep_value = stage_two_prep_hashmap.iter().fold(
-                            //   String::from(""),
-                            //         |mut acc, (_, v)| {
-                            //             acc.push_str(&format!("{}{}", v, symbol));
-                            //             acc
-                            //         },
-                            //     );
-                                //
-                                let mut handle_acc = prep_value.lines().collect::<Vec<&str>>().iter().fold(
+                                let mut prep_value = stage_three_prep_hashmap.iter().fold(
                                     String::from(""),
-                                    |mut accc, element| {
-                                        accc.push_str(&format!("{}{}", element, symbol));
-                                        accc
+                                    |mut accu, (_, v)| {
+                                        accu.push_str(&format!("{}{}", v, symbol));
+                                        accu
                                     },
                                 );
-                                log_type.pop_last(&mut handle_acc);
-                                println!("handle_acc\n{}\n handle_acc", handle_acc);
-                                match keys_not_in_the_partial.is_empty() {
-                                    true => (),
-                                    false => {
-                                        keys_not_in_the_partial.iter().for_each(|kk|{
-                                            handle_acc = format!("(key: {}) [{}{}{} {}{}]{}", kk, symbol, handle_acc, symbol, element.code_occurence, symbol, symbol);
-                                        });
-                                        // log_type.pop_last(&mut handle_acc);
-                                    },
-                                }
-                                acc = handle_acc;
+                                log_type.pop_last(&mut prep_value);
+                                acc.push_str(&format!("{}{}{}{}", prep_value, symbol, element.code_occurence, symbol));
+                                // let mut handle_acc = prep_value.lines().collect::<Vec<&str>>().iter().fold(
+                                //     String::from(""),
+                                //     |mut accc, element| {
+                                //         accc.push_str(&format!("{}{}", element, symbol));
+                                //         accc
+                                //     },
+                                // );
+                                // log_type.pop_last(&mut handle_acc);
+                                // println!("handle_acc\n{}\n handle_acc", handle_acc);
+                                // match keys_not_in_the_partial.is_empty() {
+                                //     true => (),
+                                //     false => {
+                                //         keys_not_in_the_partial.iter().for_each(|kk|{
+                                //             handle_acc = format!("(key: {}) [{}{}{} {}{}]{}", kk, symbol, handle_acc, symbol, element.code_occurence, symbol, symbol);
+                                //         });
+                                //         // log_type.pop_last(&mut handle_acc);
+                                //     },
+                                // }
+                                // acc = handle_acc;
                                 //maybe not correct logic for code_occurence
                             },
                         }
