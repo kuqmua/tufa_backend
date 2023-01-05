@@ -479,7 +479,6 @@ impl OneWrapperError {
             match &key.source {
                 tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(_) => {
                     let mut fold = value.iter().fold(String::from(""), |mut acc, v| {
-                        //
                         let mut handle_v = v.lines().collect::<Vec<&str>>().iter().fold(
                             String::from(""),
                             |mut acc, element| {
@@ -488,23 +487,19 @@ impl OneWrapperError {
                             },
                         );
                         log_type.pop_last(&mut handle_v);
-                        //
                         acc.push_str(&format!("{}{}", handle_v, symbol));
                         acc
                     });
-                    println!("fold\n{}\nfold", fold);
                     log_type.pop_last(&mut fold);
                     stage_two_prep_hashmap.insert(key.clone(), format!("[{}{}{}]{}{}", symbol, fold, symbol, symbol, key.code_occurence));
                 },
                 tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesAndKeysForTracing(sources_and_keys_for_tracing) => {
-                    // println!("))){:#?}(((", sources_and_keys_for_tracing);
                     //todo - manage keys addition ordering with increments - maybe should add increment for each key and inside five() function add additional hashmap with errors?
                     let mut fold = value.iter().fold(String::from(""), |mut acc, v| {
                         acc.push_str(&format!("{}{}", v, symbol));
                         acc
                     });
                     log_type.pop_last(&mut fold);
-                    // println!("&&&\n{}\n&&&", fold);
                     let mut first = true;
                     let mut fold_with_keys = sources_and_keys_for_tracing.keys.iter().fold(String::from(""), |mut acc, k| {
                         match first {
@@ -517,11 +512,8 @@ impl OneWrapperError {
                                     },
                                 );
                                 log_type.pop_last(&mut handle_fold);
-                                // println!("$$$\n{}\n$$$", handle_fold);
-                                //
-                                acc = format!("(key: {}) [{} [{}{}{} ]{}]", k, symbol, symbol, handle_fold, symbol, symbol);
+                                acc = format!("(key: {}) [{}{}{}]", k, symbol, handle_fold, symbol);
                                 first = false;
-                                // println!("***\n{}\n***", acc);
                             },
                             false => {
                                 let mut handle_acc = acc.lines().collect::<Vec<&str>>().iter().fold(
@@ -532,7 +524,7 @@ impl OneWrapperError {
                                     },
                                 );
                                 log_type.pop_last(&mut handle_acc);
-                                acc = format!("(key: {}) [{}[{}{}{}]{}", k, symbol, symbol, handle_acc, symbol, symbol);
+                                acc = format!("(key: {}) [{}{}{}]{}", k, symbol, handle_acc, symbol, symbol);
                             },
                         }
                         acc
