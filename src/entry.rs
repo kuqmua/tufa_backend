@@ -416,7 +416,7 @@ impl OneWrapperError {
         // println!("222{:#?}222", source_with_code_occurence_finder_vec_partial);
         // println!("333{:#?}333", source_with_code_occurence_finder_vec_all);
         let mut stage_one_prep_hashmap: HashMap<
-            tufa_common::common::source_and_code_occurence::SourceFinderEnum,
+            tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinder,
             Vec<String>,
             //or maybe Vec<tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceHandle>
         > = HashMap::new();
@@ -430,7 +430,9 @@ impl OneWrapperError {
                         source.clone()
                     },
                 };
-                let stage_one_keys = stage_one_prep_hashmap.keys().cloned().collect::<Vec<tufa_common::common::source_and_code_occurence::SourceFinderEnum>>();
+                let stage_one_keys = stage_one_prep_hashmap.iter().map(|(stage_key, _)|{
+                    stage_key.source.clone()
+                }).collect::<Vec<tufa_common::common::source_and_code_occurence::SourceFinderEnum>>();
                 let mut handle_to_insert_vec: Vec<String> = Vec::new(); 
                 match &p.source {
                     tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(sources_for_tracing) => {
@@ -452,28 +454,28 @@ impl OneWrapperError {
                 }
                 match stage_one_keys.contains(&p.source) {
                     true => {
-                        let mut inner = match stage_one_prep_hashmap.get_mut(&p.source) {
+                        let mut inner = match stage_one_prep_hashmap.get_mut(&p) {
                             Some(v) => v.clone(),
                             None => vec![],
                         };
                         handle_to_insert_vec.iter().for_each(|h|{
                             inner.push(h.clone());
                         });
-                        *stage_one_prep_hashmap.entry(p.source.clone()).or_insert(vec![]) = inner.clone();
+                        *stage_one_prep_hashmap.entry(p.clone()).or_insert(vec![]) = inner.clone();
                     },
                     false => {
-                        stage_one_prep_hashmap.insert(p.source.clone(), handle_to_insert_vec.clone());
+                        stage_one_prep_hashmap.insert(p.clone(), handle_to_insert_vec.clone());
                     },
                 }
             });
         });
         println!("444{:#?}444", stage_one_prep_hashmap);
         let mut stage_two_prep_hashmap: HashMap<
-            tufa_common::common::source_and_code_occurence::SourceFinderEnum,
+            tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinder,
             String,
         > = HashMap::new();
         stage_one_prep_hashmap.iter().for_each(|(key, value)|{
-            match key {
+            match &key.source {
                 tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(_) => {
                     let fold = value.iter().fold(String::from(""), |mut acc, v| {
                         acc.push_str(&format!("{}{}", v, symbol));
@@ -492,11 +494,11 @@ impl OneWrapperError {
                     let fold_with_keys = sources_and_keys_for_tracing.keys.iter().fold(String::from(""), |mut acc, k| {
                         match first {
                             true => {
-                                acc = format!("(key: {}) [{}[{}{}{}]{}CODE_OCCURENCE{}", k, symbol, symbol, fold, symbol, symbol, symbol);
+                                acc = format!("(key: {}) [{}[{}{}{}]{}{}{}", k, symbol, symbol, fold, symbol, symbol, key.code_occurence, symbol);
                                 first = false;
                             },
                             false => {
-                                acc = format!("(key: {}) [{}[{}{}{}]{}CODE_OCCURENCE{}", k, symbol, symbol, acc, symbol, symbol, symbol);
+                                acc = format!("(key: {}) [{}[{}{}{}]{}{}{}", k, symbol, symbol, acc, symbol, symbol, key.code_occurence, symbol);
                             },
                         }
                         acc
