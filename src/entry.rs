@@ -421,6 +421,7 @@ impl OneWrapperError {
             //or maybe Vec<tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceHandle>
         > = HashMap::new();
         //todo somewhere here lossing information about where vec of keys happens(code occurence)
+        //or maybe its just not all hashmap keys we implemented
         source_with_code_occurence_finder_vec_partial.iter().for_each(|p|{
             source_with_code_occurence_handle_vec.iter().for_each(|origin|{
                 let s_handle = match &origin.source {
@@ -496,6 +497,7 @@ impl OneWrapperError {
                 },
                 tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesAndKeysForTracing(sources_and_keys_for_tracing) => {
                     //todo - manage keys addition ordering with increments - maybe should add increment for each key and inside five() function add additional hashmap with errors?
+                    //maybe add all vec to partial ?
                     let mut fold = value.iter().fold(String::from(""), |mut acc, v| {
                         acc.push_str(&format!("{}{}", v, symbol));
                         acc
@@ -525,14 +527,14 @@ impl OneWrapperError {
                                     },
                                 );
                                 log_type.pop_last(&mut handle_acc);
-                                acc = format!("(key: {}) [{}{}{}]{}", k, symbol, handle_acc, symbol, symbol);
+                                acc = format!("(key: {}) [{}{}{} {}{}]{}", k, symbol, handle_acc, symbol, key.code_occurence, symbol, symbol);
                             },
                         }
                         acc
                     });
                     log_type.pop_last(&mut fold_with_keys);
-                    let prep = format!("{}{}{}", fold_with_keys, symbol, key.code_occurence);
-                    stage_two_prep_hashmap.insert(key.clone(), prep);
+                    // let prep = format!("{}{}{}", fold_with_keys, symbol, key.code_occurence);
+                    stage_two_prep_hashmap.insert(key.clone(), fold_with_keys);
                 },
             }
         });
