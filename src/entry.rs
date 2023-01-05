@@ -471,7 +471,7 @@ impl OneWrapperError {
                 }
             });
         });
-        println!("444{:#?}444", stage_one_prep_hashmap);
+        // println!("444{:#?}444", stage_one_prep_hashmap);
         
         let mut stage_two_prep_hashmap: HashMap<
             tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinder,
@@ -540,16 +540,17 @@ impl OneWrapperError {
             }
         });
         stage_two_prep_hashmap.iter().for_each(|(k, v)|{
-            println!("{}", v)
+            // println!("{}", v)
         });
-        println!("555{:#?}555", stage_two_prep_hashmap);
+        // println!("555{:#?}555", stage_two_prep_hashmap);
         let prep_value = stage_two_prep_hashmap.iter().fold(
             String::from(""),
             |mut acc, (_, v)| {
-                acc.push_str(&format!(" {}{}", v, symbol));
+                acc.push_str(&format!("{}{}", v, symbol));
                 acc
             },
         );
+        println!("prep_value\n{}\nprep_value", prep_value);
         source_with_code_occurence_finder_vec_all.sort_by(|a, b| a.increment.cmp(&b.increment));
         source_with_code_occurence_finder_vec_all.reverse();
         let mut first = true;
@@ -570,7 +571,7 @@ impl OneWrapperError {
                             acc
                         });
                         keys_from_partial = keys_from_partial.into_iter().unique().collect();
-                        // println!("{:#?}", keys_from_partial);
+                        println!("{:#?}", keys_from_partial);
                         match &element.source {
                             tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(_) => {
                                 acc.push_str(&format!("{}{}", element.code_occurence, symbol));
@@ -589,11 +590,12 @@ impl OneWrapperError {
                                 let mut handle_acc = prep_value.lines().collect::<Vec<&str>>().iter().fold(
                                     String::from(""),
                                     |mut accc, element| {
-                                        accc.push_str(&format!(" {}{}", element, symbol));
+                                        accc.push_str(&format!("{}{}", element, symbol));
                                         accc
                                     },
                                 );
                                 log_type.pop_last(&mut handle_acc);
+                                println!("handle_acc\n{}\n handle_acc", handle_acc);
                                 match keys_not_in_the_partial.is_empty() {
                                     true => (),
                                     false => {
@@ -603,7 +605,6 @@ impl OneWrapperError {
                                         // log_type.pop_last(&mut handle_acc);
                                     },
                                 }
-
                                 acc = handle_acc;
                                 //maybe not correct logic for code_occurence
                             },
@@ -612,391 +613,14 @@ impl OneWrapperError {
                         acc
                     },
                     false => {
-                        acc.push_str(&format!("{}", element.code_occurence));
+                        acc.push_str(&format!("{}{}", element.code_occurence, symbol));
                         acc
                     },
                 }
             },
         );
-        // println!("FFF\n{}\nFFF", fff);
-
-
-        // let mut source_with_code_occurence_handle_with_sources_for_tracing_vec: Vec<(
-        //     tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinder,
-        //     Vec<tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceHandle>,
-        // )> = Vec::new();
-        // let mut source_with_code_occurence_handle_with_keys_for_tracing_vec: Vec<(
-        //     tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinder,
-        //     Vec<tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinder>,
-        // )> = Vec::new();
-        // let mut source_with_code_occurence_handle_with_sources_and_keys_for_tracing_vec: Vec<(
-        //     tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinder,
-        //     Vec<tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinder>,
-        // )> = Vec::new();
-        //
-        // #[derive(Debug, Clone, Eq, PartialEq)]
-        // pub struct SourceWithCodeOccurenceSourcesForTracing {
-        //     pub sources_for_tracing: Vec<String>,
-        //     pub code_occurence: String,
-        //     pub increment: u64,
-        // }
-        // #[derive(Debug, Clone, Eq, PartialEq)]
-        // pub struct SourceWithCodeOccurenceKeysForTracing {
-        //     pub source: Vec<String>,
-        //     pub code_occurence: String,
-        //     pub increment: u64,
-        // }
-        // #[derive(Debug, Clone, Eq, PartialEq)]
-        // pub struct SourceWithCodeOccurenceSourcesAndKeysForTracing {
-        //     pub source: SourcesAndKeysForTracing,
-        //     pub code_occurence: String,
-        //     pub increment: u64,
-        // }
-        //
-        // source_with_code_occurence_finder_vec_partial.iter().for_each(|s|{
-        //     let mut contains = false;
-        //     match s.source {
-        //         tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(sources_for_tracing) => {
-        //             let sources_vec = sources_for_tracing.iter().map(|s|{
-        //                 s.clone()
-        //             }).collect::<Vec<String>>();
-        //             // source_with_code_occurence_handle_vec.iter().for_each(|original|{
-
-        //             // });
-        //         },
-        //         tufa_common::common::source_and_code_occurence::SourceFinderEnum::KeysForTracing(keys_for_tracing) => {
-        //             let keys_vec = keys_for_tracing.iter().for_each(|k|{
-        //                 k.clone()
-        //             }).collect::<Vec<String>>();
-        //         },
-        //         tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesAndKeysForTracing(sources_and_keys_for_tracing) => {
-        //             let sources_vec = sources_and_keys_for_tracing.sources.iter().map(|s|{
-        //                 s.clone()
-        //             }).collect::<Vec<String>>();
-        //             let keys_vec = sources_and_keys_for_tracing.keys.iter().map(|k|{
-        //                 k.clone()
-        //             }).collect::<Vec<String>>();
-        //         },
-        //     }
-        // });
-        //
-        //
-        //
-        //
-        // source_with_code_occurence_handle_vec
-        //     .iter()
-        //     .for_each(|e| {
-        //         source_with_code_occurence_finder_vec.iter().for_each(|f|{
-        //             match f.source {
-        //                 tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(sources) => {
-        //                     match sources.
-        //                 },
-        //                 tufa_common::common::source_and_code_occurence::SourceFinderEnum::KeysForTracing(keys) => {
-
-        //                 },
-        //                 tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesAndKeysForTracing(sources_and_keys_for_tracing) => {
-
-        //                 },
-        //             }
-        //         });
-        //     });
-
-        // let mut source_and_code_occurence_as_string_version_one = Vec::new();
-        // let mut source_and_code_occurence_as_string_version_two = Vec::new();
-        // let len = code_occurence_as_string_vec.len();
-        // for c in &code_occurence_as_string_vec {
-        //     // match &c.source {
-        //     //     Some(_) => {
-
-        //     //     },
-        //     //     None => {
-        //     //         source_and_code_occurence_as_string_version_one.push(tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsStringVersionOne{
-
-        //     //         })
-        //     //     },
-        //     // }
-        //     if let Some(source_enum) = &c.source {
-        //         if let tufa_common::common::source_and_code_occurence::SourceEnum::SourceWithKeys(
-        //             _,
-        //         ) = source_enum
-        //         {
-        //             is_keys_exists = true;
-        //             break;
-        //         }
-        //     }
-        // }
-        // let mut prepared_log = match is_keys_exists {
-        //     true => {
-        //         // let mut addition_to_increment_spaces = String::from("");
-        //         let mut prepared_by_increments_hashmap: HashMap::<u64, Vec<tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString>> = HashMap::new();
-        //         println!("{:#?}", code_occurence_as_string_vec);
-        //         code_occurence_as_string_vec.iter().for_each(|element| {
-        //             // println!("{:#?}", element);
-        //             let mut should_insert_full_new = true;
-        //             let mut fff = prepared_by_increments_hashmap.clone();
-        //             for (k, v) in &mut fff {
-        //                 if element.increment == *k {
-        //                     //wrong logic!!!
-        //                     should_insert_full_new = false;
-        //                     if !v.contains(&element.clone()) {
-        //                         let mut v_cloned = v.clone();
-        //                         v_cloned.push(element.clone());
-        //                         prepared_by_increments_hashmap.insert(element.increment, v_cloned);
-        //                         break;
-        //                     }
-
-        //                     // break;
-        //                 }
-        //             }
-        //             if should_insert_full_new {
-        //                 prepared_by_increments_hashmap
-        //                     .insert(element.increment, vec![element.clone()]);
-        //             }
-        //         });
-        //         let mut prepared_by_increments_vec = Vec::new();
-        //         prepared_by_increments_hashmap.iter().for_each(|(k, v)| {
-        //             prepared_by_increments_vec.push((k, v));
-        //         });
-        //         prepared_by_increments_vec.sort_by(|(k1, v1), (k2, v2)| k1.cmp(k2));
-        //         prepared_by_increments_vec.reverse();
-        //         // println!("{:#?}", prepared_by_increments_vec);
-        //         let mut content = ContentPrep {
-        //             key_as_string: None,
-        //             inner: String::from(""),
-        //         };
-        //         // println!("{:#?}", prepared_by_increments_vec);
-        //         prepared_by_increments_vec.iter().for_each(|(_, v)| {
-        //             let mut folded = v.iter().map(|element| {
-        //                 // let mut increment_spaces = String::from("");
-        //                 // for x in (0..element.increment) {
-        //                 //     //0 or 1 ?
-        //                 //     increment_spaces.push(' ');
-        //                 // }
-        //                 let prepare_for_log = match &element.source {
-        //                     Some(source_enum) => match source_enum {
-        //                         tufa_common::common::source_and_code_occurence::SourceEnum::SourceWithKeys(source_with_keys) => {
-        //                             // let increment_spaces_prepared = increment_spaces.clone();
-        //                             let mut prepared_keys = format!("{}[key: ", symbol);
-        //                             // //todo maybe for each key add symbol and additional spaces for log structs where key is
-        //                             source_with_keys.keys.iter().for_each(|e|{
-        //                                 prepared_keys.push_str(e);
-        //                                 prepared_keys.push_str(", ");
-        //                             });
-        //                             prepared_keys.pop();
-        //                             prepared_keys.pop();
-        //                             PrepareForLog {
-        //                                 error_as_string: Some(format!("{}] {}", prepared_keys, source_with_keys.source)),
-        //                                 code_occurences_as_string: element.code_occurence.clone(),
-        //                             }
-        //                             // format!("{}] {} {}{}{}", prepared_keys, source_with_keys.source, symbol, element.code_occurence, symbol)
-        //                         },
-        //                         tufa_common::common::source_and_code_occurence::SourceEnum::Source(source) => {
-        //                             PrepareForLog {
-        //                                 error_as_string: Some(source.clone()),
-        //                                 code_occurences_as_string: element.code_occurence.clone(),
-        //                             }
-        //                             // format!("{}{}{}{}{}", symbol, source, symbol, element.code_occurence, symbol)
-        //                         },
-        //                         tufa_common::common::source_and_code_occurence::SourceEnum::SourcesForTracing(sources) => {
-        //                             println!("sources todo");
-        //                             PrepareForLog {
-        //                                 error_as_string: None,
-        //                                 code_occurences_as_string: String::from(""),
-        //                             }
-        //                         },
-        //                         tufa_common::common::source_and_code_occurence::SourceEnum::SourcesAndKeysForTracing(sources_and_keys_for_tracing) => {
-        //                             println!("sources_and_keys_for_tracing");
-        //                             PrepareForLog {
-        //                                 error_as_string: None,
-        //                                 code_occurences_as_string: String::from(""),
-        //                             }
-        //                         }
-        //                     },
-        //                     None => {
-        //                         PrepareForLog {
-        //                             error_as_string: None,
-        //                             code_occurences_as_string: element.code_occurence.clone(),
-        //                         }
-        //                         // format!("{}{}{}", symbol, element.code_occurence, symbol)
-        //                     },
-        //                 };
-        //                 // log_type.pop_last(&mut formatted_handle);
-        //                 // acc.push_str(&formatted_handle);
-        //                 // acc.push_str(&format!("{}{}", formatted_handle, symbol));
-        //                 // log_type.pop_last(&mut acc);
-        //                 // println!("--{}--", acc);
-        //                 // acc
-        //                 prepare_for_log
-        //             }).collect::<Vec<PrepareForLog>>();
-        //             // println!("folded {:#?}", folded);
-        //             // let content_part = format!("[{}{}]", folded, symbol);
-        //             // println!("{}", content_part);
-        //             // content.push_str(&folded);
-        //             // content = content_part
-        //             // println!("LEN{}LEN", folded.len());
-        //             folded.sort_by(|a, b| a.error_as_string.cmp(&b.error_as_string));
-        //             folded.reverse();
-        //             match folded.len() == 1 {
-        //                 true => {
-        //                     match content.inner.is_empty() {
-        //                         true => {
-        //                             // println!("CONTENT INNER IS EMPTY AND LEN IS 1");
-        //                             match &folded[0].error_as_string {
-        //                                 Some(k) => {
-        //                                     content = ContentPrep {
-        //                                         key_as_string: Some(k.clone()),
-        //                                         inner: format!("[{}{}{}]", symbol, folded[0].code_occurences_as_string.clone(), symbol),
-        //                                     }
-        //                                 },
-        //                                 None => {
-        //                                     content = ContentPrep {
-        //                                         key_as_string: None,
-        //                                         inner: folded[0].code_occurences_as_string.clone(),
-        //                                     }
-        //                                 },
-        //                             }
-        //                         },
-        //                         false => {
-        //                             // println!("CONTENT INNER IS NOT EMPTY AND LEN IS 1");
-        //                             match &folded[0].error_as_string {
-        //                                 Some(eas) => {
-        //                                     match &content.key_as_string {
-        //                                         Some(ckey) => {
-        //                                             content = ContentPrep {
-        //                                                 key_as_string: Some(eas.clone()),
-        //                                                 inner: format!("{}[{}{}{}]{}", ckey, symbol, folded[0].code_occurences_as_string.clone(), symbol, content.inner),
-        //                                             }
-        //                                         },
-        //                                         None => {
-        //                                             content = ContentPrep {
-        //                                                 key_as_string: Some(eas.clone()),
-        //                                                 inner: format!("{}[{}{}]{}{}", symbol, folded[0].code_occurences_as_string.clone(), symbol, symbol, content.inner),
-        //                                             }
-        //                                         },
-        //                                     }
-        //                                 },
-        //                                 None => {
-        //                                     match &content.key_as_string {
-        //                                         Some(k) => {
-        //                                             content = ContentPrep {
-        //                                                 key_as_string: None,
-        //                                                 inner: format!("{}{}{}{}{}{}", symbol, k, symbol, content.inner, symbol, folded[0].code_occurences_as_string.clone()),
-        //                                             }
-        //                                         },
-        //                                         None => {
-        //                                             content = ContentPrep {
-        //                                                 key_as_string: None,
-        //                                                 inner: format!("{}{}{}{}", symbol, content.inner, symbol, folded[0].code_occurences_as_string.clone()),
-        //                                             }
-        //                                         },
-        //                                     }
-        //                                 },
-        //                             }
-        //                         },
-        //                     }
-        //                 },
-        //                 false => {
-        //                     let fold = folded.iter()
-        //                     .fold(String::from(""), |mut acc, element| {
-        //                         match &element.error_as_string {
-        //                             Some(ke) => {
-        //                                 acc.push_str(&format!("{}{}{}{}", symbol, ke, symbol, element.code_occurences_as_string));
-        //                             },
-        //                             None => {
-        //                                 acc.push_str(&format!("{}{}", symbol, element.code_occurences_as_string));
-        //                             },
-        //                         }
-        //                         acc
-        //                     });
-        //                     match &content.inner.is_empty() {
-        //                         true => {
-        //                             //then content.inner.is_empty - content.key_as_string must be None
-        //                             match &content.key_as_string {
-        //                                 Some(k) => {
-        //                                     content = ContentPrep {
-        //                                         key_as_string: None,
-        //                                         inner: format!("{}{}{}", symbol, k, fold),
-        //                                     }
-        //                                 },
-        //                                 None => {
-        //                                     content = ContentPrep {
-        //                                         key_as_string: None,
-        //                                         inner: fold,
-        //                                     }
-        //                                 },
-        //                             }
-        //                         },
-        //                         false => {
-        //                             match &content.key_as_string {
-        //                                 Some(ke) => {
-        //                                     content = ContentPrep {
-        //                                         key_as_string: None,
-        //                                         inner: format!("{}[{}{}{}{}]", fold, symbol, ke, content.inner, symbol),
-        //                                     }
-        //                                 },
-        //                                 None => {
-        //                                     content = ContentPrep {
-        //                                         key_as_string: None,
-        //                                         inner: format!("{}{}{}{}", fold, symbol, content.inner, symbol),
-        //                                     }
-        //                                 },
-        //                             }
-        //                         },
-        //                     }
-        //                 },
-        //             }
-        //             // println!("{:#?}", content);
-        //         });
-
-        //         // println!("LAST{:#?}LAST", content);
-        //         // content.key_as_string = Some(String::from("kekw for test"));
-        //         let prepared_content = match content.key_as_string {
-        //             Some(key) => {
-        //                 let prepared_inner =
-        //                     content.inner.lines().collect::<Vec<&str>>().iter().fold(
-        //                         String::from(""),
-        //                         |mut acc, element| {
-        //                             acc.push_str(&format!(" {}{}", element, element));
-        //                             acc
-        //                         },
-        //                     );
-        //                 format!("{} [{}{}{}]", key, symbol, prepared_inner, symbol)
-        //             }
-        //             None => content.inner,
-        //         };
-        //         // println!("{}", prepared_content);
-        //         prepared_content
-        //     }
-        //     false => {
-        //         code_occurence_as_string_vec
-        //             .iter()
-        //             .fold(String::from(""), |mut acc, element| {
-        //                 // println!("{:#?}", element);
-        //                 let mut increment_spaces = String::from("");
-        //                 for x in (0..element.increment) {
-        //                     //0 or 1 ?
-        //                     increment_spaces.push(' ');
-        //                 }
-        //                 let formatted_handle = match &element.source {
-        //                     Some(source_enum) => {
-        //                         match source_enum {
-        //                             tufa_common::common::source_and_code_occurence::SourceEnum::SourceWithKeys(_) => String::from(""),//todo rewrite it
-        //                             tufa_common::common::source_and_code_occurence::SourceEnum::Source(source) => format!("{}{}{}{}", increment_spaces, element.code_occurence, symbol, element.code_occurence),
-        //                             tufa_common::common::source_and_code_occurence::SourceEnum::SourcesForTracing(sources) => String::from(""),//todo rewrite it
-        //                             tufa_common::common::source_and_code_occurence::SourceEnum::SourcesAndKeysForTracing(sources_and_keys_for_tracing) => String::from(""),//todo rewrite it
-        //                         }
-        //                     },
-        //                     None => format!("{}{}", increment_spaces, element.code_occurence),
-        //                 };
-        //                 acc.push_str(&format!("{}{}", formatted_handle, symbol));
-        //                 acc
-        //             })
-        //     }
-        // };
-        // let mut prepared_log = String::from("");
         prepared_log.push_str(&format!(
-            "{}{}",
-            symbol,
+            "{}",
             &self.get_code_occurence_as_string(config)
         ));
         // println!("@@{}@@", prepared_log);
