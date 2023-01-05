@@ -543,42 +543,77 @@ impl OneWrapperError {
             // println!("{}", v)
         });
         // println!("555{:#?}555", stage_two_prep_hashmap);
-        // let prep_value = stage_two_prep_hashmap.iter().fold(
-        //     String::from(""),
-        //     |mut acc, (_, v)| {
-        //         acc.push_str(&format!("{}{}", v, symbol));
-        //         acc
-        //     },
-        // );
         // println!("prep_value\n{}\nprep_value", prep_value);
         source_with_code_occurence_finder_vec_all.sort_by(|a, b| a.increment.cmp(&b.increment));
         source_with_code_occurence_finder_vec_all.reverse();
+        let mut sources_from_partial = stage_two_prep_hashmap.iter().fold(vec![], |mut acc, (key,v)|{
+            match &key.source {
+                tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(sources) => {
+                    sources.iter().for_each(|s|{
+                        acc.push(s.clone());
+                    });
+                },
+                tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesAndKeysForTracing(sakft) => {
+                    sakft.keys.iter().for_each(|k|{
+                        acc.push(k.clone());
+                    });
+                },
+            }
+            acc
+        });
+        sources_from_partial = sources_from_partial.into_iter().unique().collect();
+        let mut keys_from_partial = stage_two_prep_hashmap.iter().fold(vec![], |mut acc, (key,v)|{
+            match &key.source {
+                tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(_) => (),
+                tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesAndKeysForTracing(sakft) => {
+                    sakft.keys.iter().for_each(|k|{
+                        acc.push(k.clone());
+                    });
+                },
+            }
+            acc
+        });
+        keys_from_partial = keys_from_partial.into_iter().unique().collect();
         let mut first = true;
         let mut prepared_log = source_with_code_occurence_finder_vec_all.iter().fold(
             String::from(""),
             |mut acc, element| {
                 match first {
                     true => {
-                        let mut keys_from_partial = stage_two_prep_hashmap.iter().fold(vec![], |mut acc, (key,v)|{
-                            match &key.source {
-                                tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(_) => (),
-                                tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesAndKeysForTracing(sakft) => {
-                                    sakft.keys.iter().for_each(|k|{
-                                        acc.push(k.clone());
-                                    });
-                                },
-                            }
-                            acc
-                        });
-                        keys_from_partial = keys_from_partial.into_iter().unique().collect();
-                        println!("{:#?}", keys_from_partial);
                         match &element.source {
-                            tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(_) => {
+                            tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(sources) => {
+                                println!("SourcesForTracing1 {:#?}", element);
+                                let mut sources_in_the_partial = vec![];
+                                let mut sources_not_in_the_partial = vec![];
+                                sources.iter().for_each(|s|{
+                                    match sources_from_partial.contains(s) {
+                                        true => {
+                                            sources_in_the_partial.push(s.clone());
+                                        },
+                                        false => {
+                                            sources_not_in_the_partial.push((s.clone(), element.code_occurence.clone()));
+                                        },
+                                    }
+                                });
+                                println!("1sources_in_the_partial {:#?}", sources_in_the_partial);
+                                println!("1sources_not_in_the_partial {:#?}", sources_not_in_the_partial);
                                 acc.push_str(&format!("{}{}", element.code_occurence, symbol));
                             },
                             tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesAndKeysForTracing(sources_and_keys_with_tracing) => {
+                                let mut sources_in_the_partial = vec![];
+                                let mut sources_not_in_the_partial = vec![];
                                 let mut keys_in_the_partial = vec![];
                                 let mut keys_not_in_the_partial = vec![];
+                                sources_and_keys_with_tracing.sources.iter().for_each(|s|{
+                                    match sources_from_partial.contains(s) {
+                                        true => {
+                                            sources_in_the_partial.push(s.clone());
+                                        },
+                                        false => {
+                                            sources_not_in_the_partial.push((s.clone(), element.code_occurence.clone()));
+                                        },
+                                    }
+                                });
                                 sources_and_keys_with_tracing.keys.iter().for_each(|k|{
                                     match keys_from_partial.contains(k) {
                                         true => {
@@ -589,6 +624,23 @@ impl OneWrapperError {
                                         },
                                     }
                                 });
+                                println!("2sources_in_the_partial {:#?}", sources_in_the_partial);
+                                println!("2sources_not_in_the_partial {:#?}", sources_not_in_the_partial);
+                                println!("2keys_in_the_partial {:#?}", keys_in_the_partial);
+                                println!("2keys_not_in_the_partial {:#?}", keys_not_in_the_partial);
+                                match (sources_not_in_the_partial.is_empty(), keys_in_the_partial.is_empty()) {
+                                    (true, true) => todo!(),
+                                    (true, false) => {
+
+                                    },
+                                    (false, true) => {
+
+                                    },
+                                    (false, false) => {
+
+                                    },
+                                }
+                                //4 cases - contains only sources, contains only keys, contains sources and keys, contains nothing of it
                                 let mut stage_three_prep_hashmap: HashMap<
                                     tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinder,
                                     String,
@@ -596,6 +648,7 @@ impl OneWrapperError {
                                 stage_two_prep_hashmap.iter().for_each(|(ks, vs)|{
                                     match &ks.source {
                                         tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(_) => {
+                                            println!("SourcesForTracing2");
                                             stage_three_prep_hashmap.insert(ks.clone(), vs.clone());
                                         },
                                         tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesAndKeysForTracing(sources_and_keys_for_tracing) => {
@@ -661,26 +714,6 @@ impl OneWrapperError {
                                 );
                                 log_type.pop_last(&mut prep_value);
                                 acc.push_str(&format!("{}{}{}{}", prep_value, symbol, element.code_occurence, symbol));
-                                // let mut handle_acc = prep_value.lines().collect::<Vec<&str>>().iter().fold(
-                                //     String::from(""),
-                                //     |mut accc, element| {
-                                //         accc.push_str(&format!("{}{}", element, symbol));
-                                //         accc
-                                //     },
-                                // );
-                                // log_type.pop_last(&mut handle_acc);
-                                // println!("handle_acc\n{}\n handle_acc", handle_acc);
-                                // match keys_not_in_the_partial.is_empty() {
-                                //     true => (),
-                                //     false => {
-                                //         keys_not_in_the_partial.iter().for_each(|kk|{
-                                //             handle_acc = format!("(key: {}) [{}{}{} {}{}]{}", kk, symbol, handle_acc, symbol, element.code_occurence, symbol, symbol);
-                                //         });
-                                //         // log_type.pop_last(&mut handle_acc);
-                                //     },
-                                // }
-                                // acc = handle_acc;
-                                //maybe not correct logic for code_occurence
                             },
                         }
                         first = false;
@@ -844,105 +877,23 @@ pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
 //todo - must ininitalize with keys not in the get_inner_source_and_code_occurence_as_string - its one step ahead of actual place
 
 // [
-//   (key: five_hashmap_key) [
-//     error_five
-//     tufa_common/src/dev.rs:693:17
+//  (key: five_hashmap_key)[
+//   (key: five_one_hashmap key) [
+//    five_one error
+//    tufa_common/src/dev.rs:873:17
 //   ]
-//   (key: six_hashmap_key) [
-//     [
-//       error_seven
-//       tufa_common/src/dev.rs:1090:17
-//       error_eight
-//       tufa_common/src/dev.rs:1176:17
-//     ]
-//     tufa_common/src/dev.rs:939:25
-//   ]
-// ]
-// tufa_common/src/dev.rs:562:25
-// tufa_common/src/dev.rs:167:21
-// tufa_server/src/entry.rs:583:21
-
-// (key: five_hashmap_key) [
-//   error_five
-//   tufa_common/src/dev.rs:719:17
-// ]
-// (key: six_hashmap_key) [
+//   tufa_common/src/dev.rs:795:17
+//  ]
+//  (key: six_hashmap_key)[
 //   [
-//     error_seven
-//     tufa_common/src/dev.rs:1128:17
-//     error_eight
-//     tufa_common/src/dev.rs:1214:17
+//    error_seven
+//    tufa_common/src/dev.rs:1300:17
+//    error_eight
+//    tufa_common/src/dev.rs:1385:17
 //   ]
-//   tufa_common/src/dev.rs:977:25
+//   tufa_common/src/dev.rs:1150:25
+//  ]
 // ]
-// tufa_common/src/dev.rs:588:25
-// tufa_common/src/dev.rs:191:21
-
-// // tufa_server/src/entry.rs:583:21
-
-// [
-//     SourceAndCodeOccurenceAsString {
-//         source: Some(
-//             SourceWithKeys(
-//                 SourceWithKeys {
-//                     keys: [
-//                         "six_hashmap_key",
-//                     ],
-//                     source: "error_seven",
-//                 },
-//             ),
-//         ),
-//         code_occurence: "tufa_common/src/dev.rs:1128:17",
-//         increment: 3,
-//     },
-//     SourceAndCodeOccurenceAsString {
-//         source: Some(
-//             SourceWithKeys(
-//                 SourceWithKeys {
-//                     keys: [
-//                         "six_hashmap_key",
-//                     ],
-//                     source: "error_eight",
-//                 },
-//             ),
-//         ),
-//         code_occurence: "tufa_common/src/dev.rs:1214:17",
-//         increment: 3,
-//     },
-//     SourceAndCodeOccurenceAsString {
-//         source: None,//todo add here info
-//         code_occurence: "tufa_common/src/dev.rs:977:25",
-//         increment: 2,
-//     },
-//     SourceAndCodeOccurenceAsString {
-//         source: Some(
-//             SourceWithKeys(
-//                 SourceWithKeys {
-//                     keys: [
-//                         "five_hashmap_key",
-//                     ],
-//                     source: "error_five",
-//                 },
-//             ),
-//         ),
-//         code_occurence: "tufa_common/src/dev.rs:719:17",
-//         increment: 2,
-//     },
-//     SourceAndCodeOccurenceAsString {
-//         source: None,//todo add here info
-//         code_occurence: "tufa_common/src/dev.rs:588:25",
-//         increment: 1,
-//     },
-//     SourceAndCodeOccurenceAsString {
-//         source: Some(
-//             Keys(
-//                 [
-//                     "six_hashmap_key",
-//                     "five_hashmap_key",
-//                 ],
-//             ),
-//         ),
-//         code_occurence: "tufa_common/src/dev.rs:191:21",
-//         increment: 0,
-//     },
-// ]
+// tufa_common/src/dev.rs:554:25
+// tufa_common/src/dev.rs:211:21
+// tufa_server/src/entry.rs:860:21
