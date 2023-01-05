@@ -478,32 +478,66 @@ impl OneWrapperError {
         stage_one_prep_hashmap.iter().for_each(|(key, value)|{
             match &key.source {
                 tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(_) => {
-                    let fold = value.iter().fold(String::from(""), |mut acc, v| {
-                        acc.push_str(&format!("{}{}", v, symbol));
+                    let mut fold = value.iter().fold(String::from(""), |mut acc, v| {
+                        //
+                        let mut handle_v = v.lines().collect::<Vec<&str>>().iter().fold(
+                            String::from(""),
+                            |mut acc, element| {
+                                acc.push_str(&format!(" {}{}", element, symbol));
+                                acc
+                            },
+                        );
+                        log_type.pop_last(&mut handle_v);
+                        //
+                        acc.push_str(&format!("{}{}", handle_v, symbol));
                         acc
                     });
-                    stage_two_prep_hashmap.insert(key.clone(), fold);
+                    println!("fold\n{}\nfold", fold);
+                    log_type.pop_last(&mut fold);
+                    stage_two_prep_hashmap.insert(key.clone(), format!("[{}{}{}]{}{}", symbol, fold, symbol, symbol, key.code_occurence));
                 },
                 tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesAndKeysForTracing(sources_and_keys_for_tracing) => {
                     // println!("))){:#?}(((", sources_and_keys_for_tracing);
                     //todo - manage keys addition ordering with increments - maybe should add increment for each key and inside five() function add additional hashmap with errors?
-                    let fold = value.iter().fold(String::from(""), |mut acc, v| {
+                    let mut fold = value.iter().fold(String::from(""), |mut acc, v| {
                         acc.push_str(&format!("{}{}", v, symbol));
                         acc
                     });
+                    log_type.pop_last(&mut fold);
+                    // println!("&&&\n{}\n&&&", fold);
                     let mut first = true;
-                    let fold_with_keys = sources_and_keys_for_tracing.keys.iter().fold(String::from(""), |mut acc, k| {
+                    let mut fold_with_keys = sources_and_keys_for_tracing.keys.iter().fold(String::from(""), |mut acc, k| {
                         match first {
                             true => {
-                                acc = format!("(key: {}) [{}[{}{}{}]{}", k, symbol, symbol, fold, symbol, symbol);
+                                let mut handle_fold = fold.lines().collect::<Vec<&str>>().iter().fold(
+                                    String::from(""),
+                                    |mut acc, element| {
+                                        acc.push_str(&format!("  {}{}", element, symbol));
+                                        acc
+                                    },
+                                );
+                                log_type.pop_last(&mut handle_fold);
+                                // println!("$$$\n{}\n$$$", handle_fold);
+                                //
+                                acc = format!("(key: {}) [{} [{}{}{} ]{}]", k, symbol, symbol, handle_fold, symbol, symbol);
                                 first = false;
+                                // println!("***\n{}\n***", acc);
                             },
                             false => {
-                                acc = format!("(key: {}) [{}[{}{}{}]{}", k, symbol, symbol, acc, symbol, symbol);
+                                let mut handle_acc = acc.lines().collect::<Vec<&str>>().iter().fold(
+                                    String::from(""),
+                                    |mut acc, element| {
+                                        acc.push_str(&format!(" {}{}", element, symbol));
+                                        acc
+                                    },
+                                );
+                                log_type.pop_last(&mut handle_acc);
+                                acc = format!("(key: {}) [{}[{}{}{}]{}", k, symbol, symbol, handle_acc, symbol, symbol);
                             },
                         }
                         acc
                     });
+                    log_type.pop_last(&mut fold_with_keys);
                     let prep = format!("{}{}{}", fold_with_keys, symbol, key.code_occurence);
                     stage_two_prep_hashmap.insert(key.clone(), prep);
                 },
