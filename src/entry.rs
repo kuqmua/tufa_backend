@@ -551,6 +551,32 @@ impl OneWrapperError {
             |mut acc, element| {
                 match first {
                     true => {
+                        let mut keys_from_partial = stage_two_prep_hashmap.iter().fold(vec![], |mut acc, (k,v)|{
+                            match &k.source {
+                                tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(_) => (),
+                                tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesAndKeysForTracing(sakft) => {
+                                    sakft.keys.iter().for_each(|k|{
+                                        acc.push(k.clone());
+                                    });
+                                },
+                            }
+                            acc
+                        });
+                        keys_from_partial = keys_from_partial.into_iter().unique().collect();
+                        let mut keys_not_in_the_partial = vec![];
+                        match &element.source {
+                            tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(_) => (),
+                            tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesAndKeysForTracing(sources_and_keys_with_tracing) => {
+                                sources_and_keys_with_tracing.keys.iter().for_each(|k|{
+                                    match keys_from_partial.contains(k) {
+                                        true => (),
+                                        false => {
+                                            keys_not_in_the_partial.push(k.clone());
+                                        },
+                                    }
+                                });
+                            },
+                        }
                         first = false;
                         // stage_two_prep_hashmap.iter().fo
                         // // acc.push_str(&format!(" {}{}", element, symbol));
