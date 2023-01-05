@@ -412,9 +412,9 @@ impl OneWrapperError {
                     },
                 }
         });
-        // println!("111{:#?}111", source_with_code_occurence_handle_vec);
-        // println!("222{:#?}222", source_with_code_occurence_finder_vec_partial);
-        // println!("333{:#?}333", source_with_code_occurence_finder_vec_all);
+        println!("111{:#?}111", source_with_code_occurence_handle_vec);
+        println!("222{:#?}222", source_with_code_occurence_finder_vec_partial);
+        println!("333{:#?}333", source_with_code_occurence_finder_vec_all);
         let mut stage_one_prep_hashmap: HashMap<
             tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinder,
             Vec<String>,
@@ -470,6 +470,7 @@ impl OneWrapperError {
             });
         });
         println!("444{:#?}444", stage_one_prep_hashmap);
+        
         let mut stage_two_prep_hashmap: HashMap<
             tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinder,
             String,
@@ -494,19 +495,19 @@ impl OneWrapperError {
                     let fold_with_keys = sources_and_keys_for_tracing.keys.iter().fold(String::from(""), |mut acc, k| {
                         match first {
                             true => {
-                                acc = format!("(key: {}) [{}[{}{}{}]{}{}{}", k, symbol, symbol, fold, symbol, symbol, key.code_occurence, symbol);
+                                acc = format!("(key: {}) [{}[{}{}{}]{}", k, symbol, symbol, fold, symbol, symbol);
                                 first = false;
                             },
                             false => {
-                                acc = format!("(key: {}) [{}[{}{}{}]{}{}{}", k, symbol, symbol, acc, symbol, symbol, key.code_occurence, symbol);
+                                acc = format!("(key: {}) [{}[{}{}{}]{}", k, symbol, symbol, acc, symbol, symbol);
                             },
                         }
                         acc
                     });
-                    stage_two_prep_hashmap.insert(key.clone(), fold_with_keys);
+                    let prep = format!("{}{}{}", fold_with_keys, symbol, key.code_occurence);
+                    stage_two_prep_hashmap.insert(key.clone(), prep);
                 },
             }
-
         });
         stage_two_prep_hashmap.iter().for_each(|(k, v)|{
             println!("{}", v)
