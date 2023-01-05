@@ -614,21 +614,24 @@ impl OneWrapperError {
                                                     let mut handle_vs = vs.clone().lines().collect::<Vec<&str>>().iter().fold(
                                                         String::from(""),
                                                         |mut acccc, element| {
-                                                            acccc.push_str(&format!("{}{}", element, symbol));
+                                                            acccc.push_str(&format!(" {}{}", element, symbol));
                                                             acccc
                                                         },
                                                     );
-                                                    //
+                                                    log_type.pop_last(&mut handle_vs);
+                                                    println!("keys_not_in_the_partial\n{:#?}\nkeys_not_in_the_partial", keys_not_in_the_partial);
                                                     let mut firstt = true;
                                                     let mut ffold = keys_not_in_the_partial.iter().fold(
                                                         String::from(""),
                                                         |mut accu, (kn, code_occurencen)| {
                                                             match firstt {
                                                                 true => {
+                                                                    println!("first\n{}\nfirst", handle_vs);
                                                                     accu.push_str(&format!("(key: {}) [{}{}{} {}{}]{}", kn, symbol, handle_vs, symbol, code_occurencen, symbol, symbol));
                                                                     firstt = false;
                                                                 },
                                                                 false => {
+                                                                    //todo not sure its correct
                                                                     accu = format!("(key: {}) [{}{}{} {}{}]{}", kn, symbol, accu, symbol, code_occurencen, symbol, symbol);
                                                                 },
                                                             }
@@ -645,6 +648,9 @@ impl OneWrapperError {
                                             }
                                         },
                                     }
+                                });
+                                stage_three_prep_hashmap.iter().for_each(|(k, v)|{
+                                    println!("@@@\n{}\n@@@", v)
                                 });
                                 let mut prep_value = stage_three_prep_hashmap.iter().fold(
                                     String::from(""),
