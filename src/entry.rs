@@ -527,6 +527,7 @@ impl OneWrapperError {
                                     },
                                 );
                                 log_type.pop_last(&mut handle_acc);
+                                //maybe not correct logic for code_occurence
                                 acc = format!("(key: {}) [{}{}{} {}{}]{}", k, symbol, handle_acc, symbol, key.code_occurence, symbol, symbol);
                             },
                         }
@@ -542,16 +543,27 @@ impl OneWrapperError {
             println!("{}", v)
         });
         println!("555{:#?}555", stage_two_prep_hashmap);
-        match source_with_code_occurence_finder_vec_all.is_empty() {
-            true => {
-
+        source_with_code_occurence_finder_vec_all.sort_by(|a, b| a.increment.cmp(&b.increment));
+        source_with_code_occurence_finder_vec_all.reverse();
+        let mut first = true;
+        let mut fff = source_with_code_occurence_finder_vec_all.iter().fold(
+            String::from(""),
+            |mut acc, element| {
+                match first {
+                    true => {
+                        first = false;
+                        // stage_two_prep_hashmap.iter().fo
+                        // // acc.push_str(&format!(" {}{}", element, symbol));
+                        acc
+                    },
+                    false => {
+                        acc.push_str(&format!("{}", element.code_occurence));
+                        acc
+                    },
+                }
             },
-            false => {
-                source_with_code_occurence_finder_vec_all.sort_by(|a, b| a.increment.cmp(&b.increment));
-                source_with_code_occurence_finder_vec_all.reverse();
-                // println!("3333{:#?}3333", source_with_code_occurence_finder_vec_all);
-            },
-        }
+        );
+        println!("{}", fff);
 
 
         // let mut source_with_code_occurence_handle_with_sources_for_tracing_vec: Vec<(
