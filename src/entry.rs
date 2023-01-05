@@ -543,14 +543,14 @@ impl OneWrapperError {
             // println!("{}", v)
         });
         // println!("555{:#?}555", stage_two_prep_hashmap);
-        let prep_value = stage_two_prep_hashmap.iter().fold(
-            String::from(""),
-            |mut acc, (_, v)| {
-                acc.push_str(&format!("{}{}", v, symbol));
-                acc
-            },
-        );
-        println!("prep_value\n{}\nprep_value", prep_value);
+        // let prep_value = stage_two_prep_hashmap.iter().fold(
+        //     String::from(""),
+        //     |mut acc, (_, v)| {
+        //         acc.push_str(&format!("{}{}", v, symbol));
+        //         acc
+        //     },
+        // );
+        // println!("prep_value\n{}\nprep_value", prep_value);
         source_with_code_occurence_finder_vec_all.sort_by(|a, b| a.increment.cmp(&b.increment));
         source_with_code_occurence_finder_vec_all.reverse();
         let mut first = true;
@@ -577,15 +577,43 @@ impl OneWrapperError {
                                 acc.push_str(&format!("{}{}", element.code_occurence, symbol));
                             },
                             tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesAndKeysForTracing(sources_and_keys_with_tracing) => {
+                                let mut keys_in_the_partial = vec![];
                                 let mut keys_not_in_the_partial = vec![];
                                 sources_and_keys_with_tracing.keys.iter().for_each(|k|{
                                     match keys_from_partial.contains(k) {
-                                        true => (),
+                                        true => {
+                                            keys_in_the_partial.push(k);
+                                        },
                                         false => {
                                             keys_not_in_the_partial.push(k);
                                         },
                                     }
                                 });
+                                //
+                                let mut stage_three_prep_hashmap: HashMap<
+                                    tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceFinder,
+                                    String,
+                                > = HashMap::new();
+                                stage_three_prep_hashmap.iter().for_each(|(ks, vs)|{
+                                    match ks.source {
+                                        tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesForTracing(_) => {
+                                            stage_three_prep_hashmap.insert(ks.clone(), vs.clone());
+                                        },
+                                        tufa_common::common::source_and_code_occurence::SourceFinderEnum::SourcesAndKeysForTracing(sources_and_keys_for_tracing) => {
+                                            let in_contains_all_keys = true;
+                                            for
+
+                                        },
+                                    }
+                                });
+                                //
+                            //     let prep_value = stage_two_prep_hashmap.iter().fold(
+                            //   String::from(""),
+                            //         |mut acc, (_, v)| {
+                            //             acc.push_str(&format!("{}{}", v, symbol));
+                            //             acc
+                            //         },
+                            //     );
                                 //
                                 let mut handle_acc = prep_value.lines().collect::<Vec<&str>>().iter().fold(
                                     String::from(""),
