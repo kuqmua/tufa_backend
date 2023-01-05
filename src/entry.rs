@@ -420,6 +420,7 @@ impl OneWrapperError {
             Vec<String>,
             //or maybe Vec<tufa_common::common::source_and_code_occurence::SourceWithCodeOccurenceHandle>
         > = HashMap::new();
+        //todo somewhere here lossing information about where vec of keys happens(code occurence)
         source_with_code_occurence_finder_vec_partial.iter().for_each(|p|{
             source_with_code_occurence_handle_vec.iter().for_each(|origin|{
                 let s_handle = match &origin.source {
@@ -507,7 +508,7 @@ impl OneWrapperError {
                                 let mut handle_fold = fold.lines().collect::<Vec<&str>>().iter().fold(
                                     String::from(""),
                                     |mut acc, element| {
-                                        acc.push_str(&format!("  {}{}", element, symbol));
+                                        acc.push_str(&format!(" {}{}", element, symbol));
                                         acc
                                     },
                                 );
