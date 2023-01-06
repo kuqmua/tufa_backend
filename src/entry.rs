@@ -491,6 +491,7 @@ impl OneWrapperError {
                         ));
                         acc
                     });
+
                     log_type.pop_last(&mut fold);
                     let mut fold = fold.lines().collect::<Vec<&str>>().iter().fold(
                         String::from(""),
@@ -500,6 +501,7 @@ impl OneWrapperError {
                         },
                     );
                     println!("fold\n\n{}\n", fold);
+
                     log_type.pop_last(&mut fold);
                     let mut first = true;
                     let mut fold_handle =
@@ -512,6 +514,10 @@ impl OneWrapperError {
                                         acc.push_str(&format!(
                                             "{} [{}{}{}]",
                                             local_key, symbol, fold, symbol
+                                        ));
+                                        acc.push_str(&format!(
+                                            "{}{}",
+                                            symbol, source.code_occurence
                                         ));
                                         println!("acc after first\n\n{}\n\n", acc);
                                         first = false;
@@ -529,13 +535,23 @@ impl OneWrapperError {
                                         println!("lined \n\n{}\n\nlined", lined);
                                         acc = format!(
                                             "{} [{}{}{}]",
-                                            local_key, symbol, lined, symbol
+                                            local_key,
+                                            symbol,
+                                            lined,
+                                            symbol,
+                                            // symbol,
+                                            // source.code_occurence
                                         );
+                                        // acc.push_str(&format!(
+                                        //     "{}{}{}",
+                                        //     symbol, source.code_occurence, symbol
+                                        // ));
                                         println!("acc after others\n\n{}\n\n", acc);
                                     }
                                 }
                                 acc
                             });
+
                     additions_partial_with_origins_as_string
                         .push((source.clone(), fold_handle.clone()))
                 }
@@ -550,13 +566,32 @@ impl OneWrapperError {
             "additions_partial_with_origins_as_string\n{:#?}\nadditions_partial_with_origins_as_string",
             additions_partial_with_origins_as_string
         );
-        let f = additions_partial_with_origins_as_string.iter().fold(
+        let mut f = additions_partial_with_origins_as_string.iter().fold(
             String::from(""),
             |mut acc, (one, two)| {
                 acc.push_str(&format!("{}{}", two, symbol));
                 acc
             },
         );
+        let mut lined =
+            f.lines()
+                .collect::<Vec<&str>>()
+                .iter()
+                .fold(String::from(""), |mut acc, element| {
+                    acc.push_str(&format!(" {}{}", element, symbol));
+                    acc
+                });
+        log_type.pop_last(&mut lined);
+        f = format!("[{}{}{}]{}", symbol, lined, symbol, symbol);
+        // println!("{}", f);
+        match !additions_all.is_empty() {
+            true => {
+                additions_all.iter().for_each(|value| {
+                    f.push_str(&format!("{}{}", value.code_occurence, symbol));
+                });
+            }
+            false => (),
+        }
         println!("{}", f);
         //
         //todo - merge stage
@@ -1110,7 +1145,7 @@ impl OneWrapperError {
         // // );
         //     },
         // }
-        let mut prepared_log = String::from("");
+        let mut prepared_log = f.clone();
         prepared_log.push_str(&format!("{}", &self.get_code_occurence_as_string(config)));
         // println!("@@{}@@", prepared_log);
         log_type.console(&config.get_error_color_bold(), prepared_log)
