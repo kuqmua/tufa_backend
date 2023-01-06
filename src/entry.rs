@@ -375,112 +375,7 @@ impl OneWrapperError {
             additions_partial_with_origins
         );
         //
-        // let mut additions_partial_with_origins_as_string = vec![];
-        // additions_partial_with_origins
-        //     .iter()
-        //     .for_each(|(source, origins_vec)| {
-        //         //todo origins_vec - should i check origin keys or not?
-        //         let mut local_sources = vec![];
-        //         let mut local_keys = vec![];
-        //         source.source.iter().for_each(|v| {
-        //             v.iter().for_each(|(source, vecc)| {
-        //                 local_sources.push(source);
-        //                 vecc.iter().for_each(|ve| {
-        //                     local_keys.push(ve.clone());
-        //                 });
-        //             });
-        //         });
-        //         local_sources = local_sources.into_iter().unique().collect();
-        //         local_keys = local_keys.into_iter().unique().collect();
-        //         match local_keys.is_empty() {
-        //             true => {
-        //                 let mut fold = origins_vec.iter().fold(String::from(""), |mut acc, o| {
-        //                     let source = o.source[0][0].0.clone(); //todo
-        //                     acc.push_str(&format!(
-        //                         "{}{}{}{}",
-        //                         source, symbol, o.code_occurence, symbol
-        //                     ));
-        //                     acc
-        //                 });
-        //                 log_type.pop_last(&mut fold);
-        //                 let mut fold = fold.lines().collect::<Vec<&str>>().iter().fold(
-        //                     String::from(""),
-        //                     |mut acc, element| {
-        //                         acc.push_str(&format!(" {}{}", element, symbol));
-        //                         acc
-        //                     },
-        //                 );
-        //                 log_type.pop_last(&mut fold);
-        //                 let fold = format!("[{}{}{}]", symbol, fold, symbol);
-        //                 additions_partial_with_origins_as_string
-        //                     .push((source.clone(), fold.clone()));
-        //             }
-        //             false => {
-        //                 // println!("local_keys\n{:#?}\nlocal_keys", local_keys);
-        //                 let mut fold = origins_vec.iter().fold(String::from(""), |mut acc, o| {
-        //                     let source = o.source[0][0].0.clone(); //todo
-        //                     acc.push_str(&format!(
-        //                         "{}{}{}{}",
-        //                         source, symbol, o.code_occurence, symbol
-        //                     ));
-        //                     acc
-        //                 });
-        //                 log_type.pop_last(&mut fold);
-        //                 let mut fold = fold.lines().collect::<Vec<&str>>().iter().fold(
-        //                     String::from(""),
-        //                     |mut acc, element| {
-        //                         acc.push_str(&format!(" {}{}", element, symbol));
-        //                         acc
-        //                     },
-        //                 );
-        //                 log_type.pop_last(&mut fold);
-        //                 let mut first = true;
-        //                 let mut fold_handle =
-        //                     local_keys
-        //                         .iter()
-        //                         .fold(String::from(""), |mut acc, local_key| {
-        //                             match first {
-        //                                 true => {
-        //                                     acc.push_str(&format!(
-        //                                         "{} [{}{}{}]",
-        //                                         local_key, symbol, fold, symbol
-        //                                     ));
-        //                                     first = false;
-        //                                 }
-        //                                 false => {
-        //                                     let lined = acc
-        //                                         .lines()
-        //                                         .collect::<Vec<&str>>()
-        //                                         .iter()
-        //                                         .fold(String::from(""), |mut acc, element| {
-        //                                             acc.push_str(&format!(
-        //                                                 " {}{}",
-        //                                                 element, symbol
-        //                                             ));
-        //                                             acc
-        //                                         });
-        //                                     acc.push_str(&format!(
-        //                                         "{} [{}{}{}]",
-        //                                         local_key, symbol, lined, symbol
-        //                                     ));
-        //                                 }
-        //                             }
-        //                             acc
-        //                         });
-        //                 additions_partial_with_origins_as_string
-        //                     .push((source.clone(), fold_handle.clone()))
-        //             }
-        //         }
-        //     });
-        // additions_partial_with_origins_as_string
-        //     .iter()
-        //     .for_each(|i| {
-        //         println!("{}", i.1);
-        //     });
-        // println!(
-        //     "additions_partial_with_origins_as_string\n{:#?}\nadditions_partial_with_origins_as_string",
-        //     additions_partial_with_origins_as_string
-        // );
+
         //
         additions_all.sort_by(|a, b| a.increment.cmp(&b.increment));
         additions_all.reverse();
@@ -546,7 +441,105 @@ impl OneWrapperError {
         println!("almost_all\n{:#?}\nalmost_all", almost_all);
 
         //
-
+        let mut additions_partial_with_origins_as_string = vec![];
+        almost_all.iter().for_each(|(source, origins_vec)| {
+            //todo origins_vec - should i check origin keys or not?
+            let mut local_sources = vec![];
+            let mut local_keys = vec![];
+            source.source.iter().for_each(|v| {
+                v.iter().for_each(|(source, vecc)| {
+                    local_sources.push(source);
+                    vecc.iter().for_each(|ve| {
+                        local_keys.push(ve.clone());
+                    });
+                });
+            });
+            local_sources = local_sources.into_iter().unique().collect();
+            local_keys = local_keys.into_iter().unique().collect();
+            match local_keys.is_empty() {
+                true => {
+                    let mut fold = origins_vec.iter().fold(String::from(""), |mut acc, o| {
+                        let source = o.source[0][0].0.clone(); //todo
+                        acc.push_str(&format!(
+                            "{}{}{}{}",
+                            source, symbol, o.code_occurence, symbol
+                        ));
+                        acc
+                    });
+                    log_type.pop_last(&mut fold);
+                    let mut fold = fold.lines().collect::<Vec<&str>>().iter().fold(
+                        String::from(""),
+                        |mut acc, element| {
+                            acc.push_str(&format!(" {}{}", element, symbol));
+                            acc
+                        },
+                    );
+                    log_type.pop_last(&mut fold);
+                    let fold = format!("[{}{}{}]", symbol, fold, symbol);
+                    additions_partial_with_origins_as_string.push((source.clone(), fold.clone()));
+                }
+                false => {
+                    // println!("local_keys\n{:#?}\nlocal_keys", local_keys);
+                    let mut fold = origins_vec.iter().fold(String::from(""), |mut acc, o| {
+                        let source = o.source[0][0].0.clone(); //todo
+                        acc.push_str(&format!(
+                            "{}{}{}{}",
+                            source, symbol, o.code_occurence, symbol
+                        ));
+                        acc
+                    });
+                    log_type.pop_last(&mut fold);
+                    let mut fold = fold.lines().collect::<Vec<&str>>().iter().fold(
+                        String::from(""),
+                        |mut acc, element| {
+                            acc.push_str(&format!(" {}{}", element, symbol));
+                            acc
+                        },
+                    );
+                    log_type.pop_last(&mut fold);
+                    let mut first = true;
+                    let mut fold_handle =
+                        local_keys
+                            .iter()
+                            .fold(String::from(""), |mut acc, local_key| {
+                                match first {
+                                    true => {
+                                        acc.push_str(&format!(
+                                            "{} [{}{}{}]",
+                                            local_key, symbol, fold, symbol
+                                        ));
+                                        first = false;
+                                    }
+                                    false => {
+                                        let lined = acc.lines().collect::<Vec<&str>>().iter().fold(
+                                            String::from(""),
+                                            |mut acc, element| {
+                                                acc.push_str(&format!(" {}{}", element, symbol));
+                                                acc
+                                            },
+                                        );
+                                        acc.push_str(&format!(
+                                            "{} [{}{}{}]",
+                                            local_key, symbol, lined, symbol
+                                        ));
+                                    }
+                                }
+                                acc
+                            });
+                    additions_partial_with_origins_as_string
+                        .push((source.clone(), fold_handle.clone()))
+                }
+            }
+        });
+        additions_partial_with_origins_as_string
+            .iter()
+            .for_each(|i| {
+                println!("{}", i.1);
+            });
+        println!(
+            "additions_partial_with_origins_as_string\n{:#?}\nadditions_partial_with_origins_as_string",
+            additions_partial_with_origins_as_string
+        );
         //
         //todo - merge stage
         //
