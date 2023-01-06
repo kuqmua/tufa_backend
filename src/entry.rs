@@ -185,7 +185,150 @@ impl OneWrapperError {
             .source
             .get_inner_source_and_code_occurence_as_string(config);
         code_occurence_as_string_vec = code_occurence_as_string_vec.into_iter().unique().collect(); //todo - optimize it?
-        println!("{:#?}", code_occurence_as_string_vec);
+                                                                                                    // println!("{:#?}", code_occurence_as_string_vec);
+        let mut sources_all = vec![];
+        let mut keys_all = vec![];
+        let mut originals = vec![];
+        let mut additions = vec![];
+        code_occurence_as_string_vec.iter().for_each(|c| {
+            match c.source.len() == 1 {
+                true => match c.source[0].len() == 1 {
+                    true => match c.source[0][0].1.is_empty() {
+                        true => {
+                            originals.push(c.clone());
+                        }
+                        false => {
+                            additions.push(c.clone());
+                        }
+                    },
+                    false => {
+                        additions.push(c.clone());
+                    }
+                },
+                false => {
+                    additions.push(c.clone());
+                }
+            }
+            match c.increment == 0 {
+                true => {
+                    c.source.iter().for_each(|v| {
+                        v.iter().for_each(|(source, keys)| {
+                            sources_all.push(source.clone());
+                            keys.iter().for_each(|k| {
+                                keys_all.push(k.clone());
+                            });
+                        });
+                    });
+                }
+                false => (),
+            }
+        });
+        sources_all = sources_all.into_iter().unique().collect(); //todo - optimize it?
+        sources_all.sort();
+        keys_all = keys_all.into_iter().unique().collect(); //todo - optimize it?
+        keys_all.sort();
+        // println!("originals\n{:#?}\noriginals", originals);
+        // println!("additions\n{:#?}\nadditions", additions);
+        // println!("sources_all\n{:#?}\nsources_all", sources_all);
+        // println!("keys_all\n{:#?}\nkeys_all", keys_all);
+        let mut additions_partial = vec![];
+        let mut additions_all = vec![];
+        additions.iter().for_each(|c| {
+            let mut local_sources = vec![];
+            let mut local_keys = vec![];
+            c.source.iter().for_each(|v| {
+                v.iter().for_each(|(source, keys)| {
+                    local_sources.push(source.clone());
+                    keys.iter().for_each(|k| {
+                        local_keys.push(k.clone());
+                    });
+                });
+            });
+            local_sources = local_sources.into_iter().unique().collect(); //todo - optimize it?
+            local_sources.sort();
+            local_keys = local_keys.into_iter().unique().collect(); //todo - optimize it?
+            local_keys.sort();
+            match (
+                sources_all.len() == local_sources.len(),
+                keys_all.len() == local_keys.len(),
+            ) {
+                (true, true) => {
+                    let mut equal = true;
+                    for i in 0..local_sources.len() {
+                        match local_sources[i] == sources_all[i] {
+                            true => (),
+                            false => {
+                                equal = false;
+                                break;
+                            }
+                        }
+                    }
+                    match equal {
+                        true => {
+                            additions_all.push(c.clone());
+                        }
+                        false => {
+                            additions_partial.push(c.clone());
+                        }
+                    }
+                }
+                (true, false) => {
+                    additions_partial.push(c.clone());
+                }
+                (false, true) => {
+                    additions_partial.push(c.clone());
+                }
+                (false, false) => {
+                    additions_partial.push(c.clone());
+                }
+            }
+        });
+        println!(
+            "additions_partial\n{:#?}\nadditions_partial",
+            additions_partial
+        );
+        println!("additions_all\n{:#?}\nadditions_all", additions_all);
+        let mut origins_with_additions = vec![];
+        originals.iter().for_each(|o| {
+            let source = o.source[0][0].0.clone(); //todo
+            let mut vec_of_additions = vec![];
+            additions_partial.iter().for_each(|a| {
+                let mut contains = false;
+                for v in &a.source {
+                    let mut inner_contains = false;
+                    for (s, vec) in v {
+                        match &source == s {
+                            true => {
+                                inner_contains = true;
+                                break;
+                            }
+                            false => (),
+                        }
+                    }
+                    match inner_contains {
+                        true => {
+                            contains = true;
+                            break;
+                        }
+                        false => (),
+                    }
+                }
+                match contains {
+                    true => {
+                        vec_of_additions.push(a.clone());
+                    }
+                    false => (),
+                }
+            });
+            origins_with_additions.push((o.clone(), vec_of_additions));
+        });
+        println!(
+            "origins_with_additions\n{:#?}\norigins_with_additions",
+            origins_with_additions
+        );
+        //
+        //todo - merge stage
+        //
         // let mut sources_for_tracing = vec![];
         // let mut keys_for_tracing = vec![];
         // code_occurence_as_string_vec.iter().for_each(|code_occurence_as_string|{
