@@ -115,11 +115,9 @@ pub struct ContentPrep {
     pub key_as_string: Option<String>,
     pub inner: String,
 }
-// #[derive(ImplGetSourceFromTufaCommon)]
 #[derive(Debug)]
 pub struct OneWrapperError {
     source: OneWrapperErrorEnum,
-    // code_occurence: tufa_common::common::code_occurence::CodeOccurence,
     code_occurence: tufa_common::common::code_occurence::CodeOccurenceOldWay,
 }
 
@@ -128,11 +126,6 @@ impl OneWrapperError {
         &self,
         config: &tufa_common::config_mods::config_struct::ConfigStruct,
     ) -> String {
-        //todo if origin - without config, if wrapper - with config
-        // format!(
-        //     "{}",
-        //     self.source.get_source_and_code_occurence_as_string(config)
-        // )
         format!("{}", self.source.get_source_as_string(config))
     }
     pub fn get_code_occurence_as_string(
@@ -156,7 +149,6 @@ impl OneWrapperError {
                 sources_for_tracing.push(f.clone());
             });
         });
-        // sources_for_tracing = sources_for_tracing.into_iter().unique().collect(); //todo - optimize it?
         vec.push(
             tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString {
                 source: sources_for_tracing.clone(),
@@ -166,17 +158,6 @@ impl OneWrapperError {
         );
         vec
     }
-    // pub fn get_source_and_code_occurence_as_string(
-    //     &self,
-    //     config: &tufa_common::config_mods::config_struct::ConfigStruct,
-    // ) -> String {
-    //     format!(
-    //         "{}{}{}",
-    //         self.get_source_as_string(config),
-    //         config.get_log_type().symbol(),
-    //         self.get_code_occurence_as_string(config)
-    //     )
-    // }
     pub fn log(&self, config: &tufa_common::config_mods::config_struct::ConfigStruct) {
         let log_type = config.get_log_type();
         let symbol = log_type.symbol();
@@ -185,7 +166,6 @@ impl OneWrapperError {
             .source
             .get_inner_source_and_code_occurence_as_string(config);
         code_occurence_as_string_vec = code_occurence_as_string_vec.into_iter().unique().collect(); //todo - optimize it?
-                                                                                                    // println!("{:#?}", code_occurence_as_string_vec);
         let mut sources_all = vec![];
         let mut keys_all = vec![];
         let mut originals = vec![];
@@ -227,10 +207,6 @@ impl OneWrapperError {
         sources_all.sort();
         keys_all = keys_all.into_iter().unique().collect(); //todo - optimize it?
         keys_all.sort();
-        // println!("originals\n{:#?}\noriginals", originals);
-        // println!("additions\n{:#?}\nadditions", additions);
-        // println!("sources_all\n{:#?}\nsources_all", sources_all);
-        // println!("keys_all\n{:#?}\nkeys_all", keys_all);
         let mut additions_partial = vec![];
         let mut additions_all = vec![];
         additions.iter().for_each(|c| {
@@ -283,51 +259,6 @@ impl OneWrapperError {
                 }
             }
         });
-        // println!(
-        //     "additions_partial\n{:#?}\nadditions_partial",
-        //     additions_partial
-        // );
-        // println!("additions_all\n{:#?}\nadditions_all", additions_all);
-        //variant 1
-        // let mut origins_with_additions = vec![];
-        // originals.iter().for_each(|o| {
-        //     let source = o.source[0][0].0.clone(); //todo
-        //     let mut vec_of_additions = vec![];
-        //     additions_partial.iter().for_each(|a| {
-        //         let mut contains = false;
-        //         for v in &a.source {
-        //             let mut inner_contains = false;
-        //             for (s, vec) in v {
-        //                 match &source == s {
-        //                     true => {
-        //                         inner_contains = true;
-        //                         break;
-        //                     }
-        //                     false => (),
-        //                 }
-        //             }
-        //             match inner_contains {
-        //                 true => {
-        //                     contains = true;
-        //                     break;
-        //                 }
-        //                 false => (),
-        //             }
-        //         }
-        //         match contains {
-        //             true => {
-        //                 vec_of_additions.push(a.clone());
-        //             }
-        //             false => (),
-        //         }
-        //     });
-        //     origins_with_additions.push((o.clone(), vec_of_additions));
-        // });
-        // println!(
-        //     "origins_with_additions\n{:#?}\norigins_with_additions",
-        //     origins_with_additions
-        // );
-        //variant 2
         let mut additions_partial_with_origins = vec![];
         additions_partial.iter().for_each(|o| {
             let mut local_sources = vec![];
@@ -370,16 +301,8 @@ impl OneWrapperError {
             });
             additions_partial_with_origins.push((o.clone(), vec_of_origins));
         });
-        // println!(
-        //     "additions_partial_with_origins\n{:#?}\nadditions_partial_with_origins",
-        //     additions_partial_with_origins
-        // );
-        //
-
-        //
         additions_all.sort_by(|a, b| a.increment.cmp(&b.increment));
         additions_all.reverse();
-        // println!("additions_all\n{:#?}\nadditions_all", additions_all);
         let mut almost_all = vec![];
         additions_partial_with_origins
             .iter()
@@ -410,8 +333,6 @@ impl OneWrapperError {
                         }
                         match equals {
                             Some(vvv) => {
-                                // println!("vvv\n{:#?}\nvvv", vvv);
-                                // println!("vec\n{:#?}\nvec", vec);
                                 let mut difference = vec.clone();
                                 //not sure about ordering
                                 vvv.iter().for_each(|vvve| match difference.contains(vvve) {
@@ -421,29 +342,20 @@ impl OneWrapperError {
                                     }
                                 });
                                 new_vec.push((source.clone(), difference.clone()));
-                                // origins_stack.push((source.clone(), difference.clone()));
                             }
                             None => {
                                 new_vec.push((source.clone(), vec.clone()));
-                                // origins_stack.push((source.clone(), vec.clone()));
                             }
                         }
-                        // local_sources.push(source);
                     });
                     origins_stack.push(new_vec.clone());
                 });
-                // println!("***{:#?}***", part.source);
-                // println!("###{:#?}###", origins_stack);
                 let mut cloned_part = part.clone();
                 cloned_part.source = origins_stack;
                 almost_all.push((cloned_part.clone(), origins));
             });
-        // println!("almost_all\n{:#?}\nalmost_all", almost_all);
-
-        //
         let mut additions_partial_with_origins_as_string = vec![];
         almost_all.iter().for_each(|(source, origins_vec)| {
-            //todo origins_vec - should i check origin keys or not?
             let mut local_sources = vec![];
             let mut local_keys = vec![];
             source.source.iter().for_each(|v| {
@@ -482,7 +394,6 @@ impl OneWrapperError {
                     additions_partial_with_origins_as_string.push((source.clone(), fold.clone()));
                 }
                 false => {
-                    // println!("local_keys\n{:#?}\nlocal_keys", local_keys);
                     let mut fold = origins_vec.iter().fold(String::from(""), |mut acc, o| {
                         let source = o.source[0][0].0.clone(); //todo
                         acc.push_str(&format!(
@@ -501,7 +412,6 @@ impl OneWrapperError {
                         },
                     );
                     println!("fold\n\n{}\n", fold);
-
                     log_type.pop_last(&mut fold);
                     let mut first = true;
                     let mut fold_handle =
