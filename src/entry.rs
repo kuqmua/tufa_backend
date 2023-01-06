@@ -283,11 +283,11 @@ impl OneWrapperError {
                 }
             }
         });
-        println!(
-            "additions_partial\n{:#?}\nadditions_partial",
-            additions_partial
-        );
-        println!("additions_all\n{:#?}\nadditions_all", additions_all);
+        // println!(
+        //     "additions_partial\n{:#?}\nadditions_partial",
+        //     additions_partial
+        // );
+        // println!("additions_all\n{:#?}\nadditions_all", additions_all);
         //variant 1
         // let mut origins_with_additions = vec![];
         // originals.iter().for_each(|o| {
@@ -370,11 +370,80 @@ impl OneWrapperError {
             });
             additions_partial_with_origins.push((o.clone(), vec_of_origins));
         });
+        // println!(
+        //     "additions_partial_with_origins\n{:#?}\nadditions_partial_with_origins",
+        //     additions_partial_with_origins
+        // );
+        //
+        let mut additions_partial_with_origins_as_string = vec![];
+        additions_partial_with_origins
+            .iter()
+            .for_each(|(source, origins_vec)| {
+                //todo origins_vec - should i check origin keys or not?
+                let mut local_sources = vec![];
+                let mut local_keys = vec![];
+                source.source.iter().for_each(|v| {
+                    v.iter().for_each(|(source, vecc)| {
+                        local_sources.push(source);
+                        vecc.iter().for_each(|ve| {
+                            local_keys.push(ve.clone());
+                        });
+                    });
+                });
+                local_sources = local_sources.into_iter().unique().collect();
+                local_keys = local_keys.into_iter().unique().collect();
+                match local_keys.is_empty() {
+                    true => {
+                        let mut fold = origins_vec.iter().fold(String::from(""), |mut acc, o| {
+                            let source = o.source[0][0].0.clone(); //todo
+                            acc.push_str(&format!(
+                                "{}{}{}{}",
+                                source, symbol, o.code_occurence, symbol
+                            ));
+                            acc
+                        });
+                        log_type.pop_last(&mut fold);
+                        additions_partial_with_origins_as_string
+                            .push((source.clone(), fold.clone()));
+                    }
+                    false => {}
+                }
+            });
+        additions_partial_with_origins_as_string
+            .iter()
+            .for_each(|i| {
+                println!("{}", i.1);
+            });
         println!(
-            "additions_partial_with_origins\n{:#?}\nadditions_partial_with_origins",
-            additions_partial_with_origins
+            "additions_partial_with_origins_as_string\n{:#?}\nadditions_partial_with_origins_as_string",
+            additions_partial_with_origins_as_string
         );
-
+        //
+        additions_all.sort_by(|a, b| a.increment.cmp(&b.increment));
+        additions_all.reverse();
+        // println!("additions_all\n{:#?}\nadditions_all", additions_all);
+        //         let mut almost_all = vec![];
+        //         // let addition_all_near = additions_all[0];
+        //         let mut addition_all_near_sources = vec![];
+        //         additions_all[0].source.iter().for_each(|v| {
+        //             v.iter().for_each(|(source, vec)| {
+        //                 addition_all_near_sources.push(source.clone());
+        //             });
+        //         });
+        // //
+        //         additions_partial_with_origins.iter().for_each(|(part, vec_origins)| {
+        //             let mut local_sources = vec![];
+        //             part.source.iter().for_each(|v| {
+        //                 v.iter().for_each(|(source, vec)| {
+        //                     local_sources.push(source);
+        //                 });
+        //             });
+        //             local_sources = local_sources.into_iter().unique().collect();
+        //             let mut filtered_sources = vec![];
+        //             local_sources.into_iter().for_each(|ls|{
+        //                 match
+        //             });
+        //         });
         //
         //todo - merge stage
         //
