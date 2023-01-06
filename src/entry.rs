@@ -288,44 +288,93 @@ impl OneWrapperError {
             additions_partial
         );
         println!("additions_all\n{:#?}\nadditions_all", additions_all);
-        let mut origins_with_additions = vec![];
-        originals.iter().for_each(|o| {
-            let source = o.source[0][0].0.clone(); //todo
-            let mut vec_of_additions = vec![];
-            additions_partial.iter().for_each(|a| {
-                let mut contains = false;
-                for v in &a.source {
-                    let mut inner_contains = false;
-                    for (s, vec) in v {
-                        match &source == s {
+        //variant 1
+        // let mut origins_with_additions = vec![];
+        // originals.iter().for_each(|o| {
+        //     let source = o.source[0][0].0.clone(); //todo
+        //     let mut vec_of_additions = vec![];
+        //     additions_partial.iter().for_each(|a| {
+        //         let mut contains = false;
+        //         for v in &a.source {
+        //             let mut inner_contains = false;
+        //             for (s, vec) in v {
+        //                 match &source == s {
+        //                     true => {
+        //                         inner_contains = true;
+        //                         break;
+        //                     }
+        //                     false => (),
+        //                 }
+        //             }
+        //             match inner_contains {
+        //                 true => {
+        //                     contains = true;
+        //                     break;
+        //                 }
+        //                 false => (),
+        //             }
+        //         }
+        //         match contains {
+        //             true => {
+        //                 vec_of_additions.push(a.clone());
+        //             }
+        //             false => (),
+        //         }
+        //     });
+        //     origins_with_additions.push((o.clone(), vec_of_additions));
+        // });
+        // println!(
+        //     "origins_with_additions\n{:#?}\norigins_with_additions",
+        //     origins_with_additions
+        // );
+        //variant 2
+        let mut additions_partial_with_origins = vec![];
+        additions_partial.iter().for_each(|o| {
+            let mut local_sources = vec![];
+            o.source.iter().for_each(|v| {
+                v.iter().for_each(|(source, vec)| {
+                    local_sources.push(source);
+                });
+            });
+            local_sources = local_sources.into_iter().unique().collect();
+            let mut vec_of_origins = vec![];
+            local_sources.into_iter().for_each(|source| {
+                originals.iter().for_each(|a| {
+                    let mut contains = false;
+                    for v in &a.source {
+                        let mut inner_contains = false;
+                        for (s, vec) in v {
+                            match source == s {
+                                true => {
+                                    inner_contains = true;
+                                    break;
+                                }
+                                false => (),
+                            }
+                        }
+                        match inner_contains {
                             true => {
-                                inner_contains = true;
+                                contains = true;
                                 break;
                             }
                             false => (),
                         }
                     }
-                    match inner_contains {
+                    match contains {
                         true => {
-                            contains = true;
-                            break;
+                            vec_of_origins.push(a.clone());
                         }
                         false => (),
                     }
-                }
-                match contains {
-                    true => {
-                        vec_of_additions.push(a.clone());
-                    }
-                    false => (),
-                }
+                });
             });
-            origins_with_additions.push((o.clone(), vec_of_additions));
+            additions_partial_with_origins.push((o.clone(), vec_of_origins));
         });
         println!(
-            "origins_with_additions\n{:#?}\norigins_with_additions",
-            origins_with_additions
+            "additions_partial_with_origins\n{:#?}\nadditions_partial_with_origins",
+            additions_partial_with_origins
         );
+
         //
         //todo - merge stage
         //
