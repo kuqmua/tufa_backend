@@ -370,10 +370,10 @@ impl OneWrapperError {
             });
             additions_partial_with_origins.push((o.clone(), vec_of_origins));
         });
-        // println!(
-        //     "additions_partial_with_origins\n{:#?}\nadditions_partial_with_origins",
-        //     additions_partial_with_origins
-        // );
+        println!(
+            "additions_partial_with_origins\n{:#?}\nadditions_partial_with_origins",
+            additions_partial_with_origins
+        );
         //
         let mut additions_partial_with_origins_as_string = vec![];
         additions_partial_with_origins
@@ -403,10 +403,73 @@ impl OneWrapperError {
                             acc
                         });
                         log_type.pop_last(&mut fold);
+                        let mut fold = fold.lines().collect::<Vec<&str>>().iter().fold(
+                            String::from(""),
+                            |mut acc, element| {
+                                acc.push_str(&format!(" {}{}", element, symbol));
+                                acc
+                            },
+                        );
+                        log_type.pop_last(&mut fold);
+                        let fold = format!("[{}{}{}]", symbol, fold, symbol);
                         additions_partial_with_origins_as_string
                             .push((source.clone(), fold.clone()));
                     }
-                    false => {}
+                    false => {
+                        // println!("local_keys\n{:#?}\nlocal_keys", local_keys);
+                        let mut fold = origins_vec.iter().fold(String::from(""), |mut acc, o| {
+                            let source = o.source[0][0].0.clone(); //todo
+                            acc.push_str(&format!(
+                                "{}{}{}{}",
+                                source, symbol, o.code_occurence, symbol
+                            ));
+                            acc
+                        });
+                        log_type.pop_last(&mut fold);
+                        let mut fold = fold.lines().collect::<Vec<&str>>().iter().fold(
+                            String::from(""),
+                            |mut acc, element| {
+                                acc.push_str(&format!(" {}{}", element, symbol));
+                                acc
+                            },
+                        );
+                        log_type.pop_last(&mut fold);
+                        let mut first = true;
+                        let mut fold_handle =
+                            local_keys
+                                .iter()
+                                .fold(String::from(""), |mut acc, local_key| {
+                                    match first {
+                                        true => {
+                                            acc.push_str(&format!(
+                                                "{} [{}{}{}]",
+                                                local_key, symbol, fold, symbol
+                                            ));
+                                            first = false;
+                                        }
+                                        false => {
+                                            let lined = acc
+                                                .lines()
+                                                .collect::<Vec<&str>>()
+                                                .iter()
+                                                .fold(String::from(""), |mut acc, element| {
+                                                    acc.push_str(&format!(
+                                                        " {}{}",
+                                                        element, symbol
+                                                    ));
+                                                    acc
+                                                });
+                                            acc.push_str(&format!(
+                                                "{} [{}{}{}]",
+                                                local_key, symbol, lined, symbol
+                                            ));
+                                        }
+                                    }
+                                    acc
+                                });
+                        additions_partial_with_origins_as_string
+                            .push((source.clone(), fold_handle.clone()))
+                    }
                 }
             });
         additions_partial_with_origins_as_string
