@@ -370,16 +370,16 @@ impl OneWrapperError {
             });
             additions_partial_with_origins.push((o.clone(), vec_of_origins));
         });
-        println!(
-            "additions_partial_with_origins\n{:#?}\nadditions_partial_with_origins",
-            additions_partial_with_origins
-        );
+        // println!(
+        //     "additions_partial_with_origins\n{:#?}\nadditions_partial_with_origins",
+        //     additions_partial_with_origins
+        // );
         //
 
         //
         additions_all.sort_by(|a, b| a.increment.cmp(&b.increment));
         additions_all.reverse();
-        println!("additions_all\n{:#?}\nadditions_all", additions_all);
+        // println!("additions_all\n{:#?}\nadditions_all", additions_all);
         let mut almost_all = vec![];
         additions_partial_with_origins
             .iter()
@@ -410,8 +410,8 @@ impl OneWrapperError {
                         }
                         match equals {
                             Some(vvv) => {
-                                println!("vvv\n{:#?}\nvvv", vvv);
-                                println!("vec\n{:#?}\nvec", vec);
+                                // println!("vvv\n{:#?}\nvvv", vvv);
+                                // println!("vec\n{:#?}\nvec", vec);
                                 let mut difference = vec.clone();
                                 //not sure about ordering
                                 vvv.iter().for_each(|vvve| match difference.contains(vvve) {
@@ -438,7 +438,7 @@ impl OneWrapperError {
                 cloned_part.source = origins_stack;
                 almost_all.push((cloned_part.clone(), origins));
             });
-        println!("almost_all\n{:#?}\nalmost_all", almost_all);
+        // println!("almost_all\n{:#?}\nalmost_all", almost_all);
 
         //
         let mut additions_partial_with_origins_as_string = vec![];
@@ -475,7 +475,10 @@ impl OneWrapperError {
                         },
                     );
                     log_type.pop_last(&mut fold);
-                    let fold = format!("[{}{}{}]", symbol, fold, symbol);
+                    let fold = format!(
+                        "[{}{}{}]{}{}",
+                        symbol, fold, symbol, symbol, source.code_occurence
+                    );
                     additions_partial_with_origins_as_string.push((source.clone(), fold.clone()));
                 }
                 false => {
@@ -496,32 +499,39 @@ impl OneWrapperError {
                             acc
                         },
                     );
+                    println!("fold\n\n{}\n", fold);
                     log_type.pop_last(&mut fold);
                     let mut first = true;
                     let mut fold_handle =
                         local_keys
                             .iter()
                             .fold(String::from(""), |mut acc, local_key| {
+                                println!("acc\n\n{}\n\n", acc);
                                 match first {
                                     true => {
                                         acc.push_str(&format!(
                                             "{} [{}{}{}]",
                                             local_key, symbol, fold, symbol
                                         ));
+                                        println!("acc after first\n\n{}\n\n", acc);
                                         first = false;
                                     }
                                     false => {
-                                        let lined = acc.lines().collect::<Vec<&str>>().iter().fold(
-                                            String::from(""),
-                                            |mut acc, element| {
+                                        let mut lined = acc
+                                            .lines()
+                                            .collect::<Vec<&str>>()
+                                            .iter()
+                                            .fold(String::from(""), |mut acc, element| {
                                                 acc.push_str(&format!(" {}{}", element, symbol));
                                                 acc
-                                            },
-                                        );
-                                        acc.push_str(&format!(
+                                            });
+                                        log_type.pop_last(&mut lined);
+                                        println!("lined \n\n{}\n\nlined", lined);
+                                        acc = format!(
                                             "{} [{}{}{}]",
                                             local_key, symbol, lined, symbol
-                                        ));
+                                        );
+                                        println!("acc after others\n\n{}\n\n", acc);
                                     }
                                 }
                                 acc
@@ -540,6 +550,14 @@ impl OneWrapperError {
             "additions_partial_with_origins_as_string\n{:#?}\nadditions_partial_with_origins_as_string",
             additions_partial_with_origins_as_string
         );
+        let f = additions_partial_with_origins_as_string.iter().fold(
+            String::from(""),
+            |mut acc, (one, two)| {
+                acc.push_str(&format!("{}{}", two, symbol));
+                acc
+            },
+        );
+        println!("{}", f);
         //
         //todo - merge stage
         //
