@@ -484,29 +484,65 @@ impl OneWrapperError {
         //
         additions_all.sort_by(|a, b| a.increment.cmp(&b.increment));
         additions_all.reverse();
-        // println!("additions_all\n{:#?}\nadditions_all", additions_all);
-        //         let mut almost_all = vec![];
-        //         // let addition_all_near = additions_all[0];
-        //         let mut addition_all_near_sources = vec![];
-        //         additions_all[0].source.iter().for_each(|v| {
-        //             v.iter().for_each(|(source, vec)| {
-        //                 addition_all_near_sources.push(source.clone());
-        //             });
-        //         });
-        // //
-        //         additions_partial_with_origins.iter().for_each(|(part, vec_origins)| {
-        //             let mut local_sources = vec![];
-        //             part.source.iter().for_each(|v| {
-        //                 v.iter().for_each(|(source, vec)| {
-        //                     local_sources.push(source);
-        //                 });
-        //             });
-        //             local_sources = local_sources.into_iter().unique().collect();
-        //             let mut filtered_sources = vec![];
-        //             local_sources.into_iter().for_each(|ls|{
-        //                 match
-        //             });
-        //         });
+        println!("additions_all\n{:#?}\nadditions_all", additions_all);
+        let mut almost_all = vec![];
+        additions_partial_with_origins_as_string
+            .iter()
+            .for_each(|(part, origins_as_string)| {
+                let mut origins_stack = vec![];
+                part.source.iter().for_each(|v| {
+                    // let mut new_vec = vec![];
+                    v.iter().for_each(|(source, vec)| {
+                        let mut equals = None;
+                        for vv in &additions_all[0].source {
+                            let mut contains = None;
+                            for (source_in_all, vec_in_all) in vv {
+                                match source == source_in_all {
+                                    true => {
+                                        contains = Some(vec_in_all.clone());
+                                        break;
+                                    }
+                                    false => (),
+                                }
+                            }
+                            match contains {
+                                Some(vf) => {
+                                    equals = Some(vf.clone());
+                                    break;
+                                }
+                                None => (),
+                            }
+                        }
+                        match equals {
+                            Some(vvv) => {
+                                println!("vvv\n{:#?}\nvvv", vvv);
+                                println!("vec\n{:#?}\nvec", vec);
+                                let mut difference = vec.clone();
+                                //not sure about ordering
+                                vvv.iter().for_each(|vvve| match difference.contains(vvve) {
+                                    true => (),
+                                    false => {
+                                        difference.push(vvve.clone());
+                                    }
+                                });
+                                // new_vec.push((source.clone(), difference.clone()));
+                                origins_stack.push((source.clone(), difference.clone()));
+                            }
+                            None => {
+                                // new_vec.push((source.clone(), vec.clone()));
+                                origins_stack.push((source.clone(), vec.clone()));
+                            }
+                        }
+                        // local_sources.push(source);
+                    });
+                    // origins_stack.push(new_vec.clone());
+                });
+                almost_all.push((part.clone(), origins_stack));
+            });
+        println!("almost_all\n{:#?}\nalmost_all", almost_all);
+
+        //
+
         //
         //todo - merge stage
         //
