@@ -148,7 +148,7 @@ impl OneWrapperError {
         &self,
         config: &tufa_common::config_mods::config_struct::ConfigStruct, //todo maybe remove
     ) -> Vec<tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString> {
-        let mut sources_for_tracing: Vec<std::collections::HashMap<String, Vec<String>>> = vec![];
+        let mut sources_for_tracing: Vec<Vec<(String, Vec<String>)>> = vec![];
         let mut vec = self.get_inner_source_and_code_occurence_as_string(config);
         vec.iter_mut().for_each(|n| {
             n.increment += 1;
@@ -181,9 +181,10 @@ impl OneWrapperError {
         let log_type = config.get_log_type();
         let symbol = log_type.symbol();
         let mut is_keys_exists = false;
-        let code_occurence_as_string_vec = self
+        let mut code_occurence_as_string_vec = self
             .source
             .get_inner_source_and_code_occurence_as_string(config);
+        code_occurence_as_string_vec = code_occurence_as_string_vec.into_iter().unique().collect(); //todo - optimize it?
         println!("{:#?}", code_occurence_as_string_vec);
         // let mut sources_for_tracing = vec![];
         // let mut keys_for_tracing = vec![];
