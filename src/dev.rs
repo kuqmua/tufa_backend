@@ -65,8 +65,8 @@ impl OneWrapperError {
         );
         let mut new_vec = Vec::with_capacity(vec.len() + 1);
         vec.into_iter().for_each(|mut s| {
-            s.source.iter().for_each(|f| {
-                sources_for_tracing.push(f.clone());
+            s.source.iter().for_each(|v| {
+                sources_for_tracing.push(v.clone());
             });
             s.add_one();
             new_vec.push(s);
@@ -83,7 +83,6 @@ impl OneWrapperError {
     pub fn log(&self, config: &tufa_common::config_mods::config_struct::ConfigStruct) {
         let log_type = config.get_log_type();
         let symbol = log_type.symbol();
-        let mut is_keys_exists = false;
         let mut code_occurence_as_string_vec = self
             .source
             .get_inner_source_and_code_occurence_as_string(config);
