@@ -55,22 +55,30 @@ impl OneWrapperError {
         &self,
         config: &tufa_common::config_mods::config_struct::ConfigStruct, //todo maybe remove
     ) -> Vec<tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString> {
-        let mut sources_for_tracing: Vec<Vec<(String, Vec<String>)>> = vec![];
-        let mut vec = self.get_inner_source_and_code_occurence_as_string(config);
-        vec.iter_mut().for_each(|n| {
-            n.increment += 1;
-            n.source.iter().for_each(|f| {
+        let vec = self.get_inner_source_and_code_occurence_as_string(config);
+        let mut sources_for_tracing: Vec<Vec<(String, Vec<String>)>> = Vec::with_capacity(
+            vec.iter()
+                .map(|e| e.source.len())
+                .collect::<Vec<usize>>()
+                .iter()
+                .sum(),
+        );
+        let mut new_vec = Vec::with_capacity(vec.len() + 1);
+        vec.into_iter().for_each(|mut s| {
+            s.source.iter().for_each(|f| {
                 sources_for_tracing.push(f.clone());
             });
+            s.add_one();
+            new_vec.push(s);
         });
-        vec.push(
+        new_vec.push(
             tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString {
-                source: sources_for_tracing.clone(),
+                source: sources_for_tracing,
                 code_occurence: self.get_code_occurence_as_string(config),
                 increment: 0,
             },
         );
-        vec
+        new_vec
     }
     pub fn log(&self, config: &tufa_common::config_mods::config_struct::ConfigStruct) {
         let log_type = config.get_log_type();
