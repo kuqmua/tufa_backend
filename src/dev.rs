@@ -4,6 +4,7 @@ use impl_get_source::ImplGetSourceFromTufaCommon;
 use itertools::Itertools;
 use std::collections::HashMap;
 use std::fmt::format;
+use tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString;
 use tufa_common::dev::ThreeWrapperError;
 use tufa_common::traits::code_path::CodePath;
 use tufa_common::traits::console::Console;
@@ -81,8 +82,10 @@ impl OneWrapperError {
         let symbol = log_type.symbol();
         let mut code_occurence_as_string_vec = self
             .source
-            .get_inner_source_and_code_occurence_as_string(config);
-        code_occurence_as_string_vec = code_occurence_as_string_vec.into_iter().unique().collect(); //todo - optimize it?
+            .get_inner_source_and_code_occurence_as_string(config)
+            .into_iter()
+            .unique() //todo - optimize it
+            .collect::<Vec<SourceAndCodeOccurenceAsString>>();
         let mut sources_all = vec![];
         let mut keys_all = vec![];
         let mut originals = vec![];
@@ -126,17 +129,19 @@ impl OneWrapperError {
         keys_all.sort();
         let mut additions_partial = vec![];
         let mut additions_all = vec![];
-        additions.iter().for_each(|c| {
-            let mut local_sources = vec![];
-            let mut local_keys = vec![];
-            c.source.iter().for_each(|v| {
-                v.iter().for_each(|(source, keys)| {
-                    local_sources.push(source.clone());
-                    keys.iter().for_each(|k| {
-                        local_keys.push(k.clone());
+        additions.into_iter().for_each(|c| {
+            let (mut local_sources, mut local_keys) =
+                c.source
+                    .iter()
+                    .fold((Vec::new(), Vec::new()), |mut acc, v| {
+                        v.iter().for_each(|(source, vecc)| {
+                            acc.0.push(source);
+                            vecc.iter().for_each(|ve| {
+                                acc.1.push(ve.clone());
+                            });
+                        });
+                        acc
                     });
-                });
-            });
             local_sources = local_sources.into_iter().unique().collect(); //todo - optimize it?
             local_sources.sort();
             local_keys = local_keys.into_iter().unique().collect(); //todo - optimize it?
@@ -148,9 +153,23 @@ impl OneWrapperError {
                 (true, true) => {
                     let mut equal = true;
                     for i in 0..local_sources.len() {
-                        match local_sources[i] == sources_all[i] {
-                            true => (),
-                            false => {
+                        match local_sources.get(i) {
+                            Some(local_sources_element) => match sources_all.get(i) {
+                                Some(sources_all_element) => {
+                                    match *local_sources_element == sources_all_element {
+                                        true => (),
+                                        false => {
+                                            equal = false;
+                                            break;
+                                        }
+                                    }
+                                }
+                                None => {
+                                    equal = false;
+                                    break;
+                                }
+                            },
+                            None => {
                                 equal = false;
                                 break;
                             }
@@ -158,21 +177,21 @@ impl OneWrapperError {
                     }
                     match equal {
                         true => {
-                            additions_all.push(c.clone());
+                            additions_all.push(c);
                         }
                         false => {
-                            additions_partial.push(c.clone());
+                            additions_partial.push(c);
                         }
                     }
                 }
                 (true, false) => {
-                    additions_partial.push(c.clone());
+                    additions_partial.push(c);
                 }
                 (false, true) => {
-                    additions_partial.push(c.clone());
+                    additions_partial.push(c);
                 }
                 (false, false) => {
-                    additions_partial.push(c.clone());
+                    additions_partial.push(c);
                 }
             }
         });
@@ -243,7 +262,7 @@ impl OneWrapperError {
                             }
                             match contains {
                                 Some(vf) => {
-                                    equals = Some(vf.clone());
+                                    equals = Some(vf);
                                     break;
                                 }
                                 None => (),
