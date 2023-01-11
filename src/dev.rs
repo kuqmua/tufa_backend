@@ -90,25 +90,7 @@ impl OneWrapperError {
         let mut keys_all = vec![];
         let mut originals = vec![];
         let mut additions = vec![];
-        code_occurence_as_string_vec.iter().for_each(|c| {
-            match c.source.len() == 1 {
-                true => match c.source[0].len() == 1 {
-                    true => match c.source[0][0].1.is_empty() {
-                        true => {
-                            originals.push(c.clone());
-                        }
-                        false => {
-                            additions.push(c.clone());
-                        }
-                    },
-                    false => {
-                        additions.push(c.clone());
-                    }
-                },
-                false => {
-                    additions.push(c.clone());
-                }
-            }
+        code_occurence_as_string_vec.into_iter().for_each(|c| {
             match c.increment == 0 {
                 true => {
                     c.source.iter().for_each(|v| {
@@ -121,6 +103,36 @@ impl OneWrapperError {
                     });
                 }
                 false => (),
+            }
+            match c.source.len() == 1 {
+                true => match c.source.get(0) {
+                    Some(first_element) => match first_element.len() == 1 {
+                        true => match first_element.get(0) {
+                            Some(first_element_of_the_first_element) => {
+                                match first_element_of_the_first_element.1.is_empty() {
+                                    true => {
+                                        originals.push(c);
+                                    }
+                                    false => {
+                                        additions.push(c);
+                                    }
+                                }
+                            }
+                            None => {
+                                additions.push(c);
+                            }
+                        },
+                        false => {
+                            additions.push(c);
+                        }
+                    },
+                    None => {
+                        additions.push(c);
+                    }
+                },
+                false => {
+                    additions.push(c);
+                }
             }
         });
         sources_all = sources_all.into_iter().unique().collect(); //todo - optimize it?
@@ -195,51 +207,74 @@ impl OneWrapperError {
                 }
             }
         });
-        let mut additions_partial_with_origins = vec![];
-        additions_partial.iter().for_each(|o| {
-            let mut local_sources = vec![];
-            o.source.iter().for_each(|v| {
-                v.iter().for_each(|(source, vec)| {
-                    local_sources.push(source);
-                });
-            });
-            local_sources = local_sources.into_iter().unique().collect();
-            let mut vec_of_origins = vec![];
-            local_sources.into_iter().for_each(|source| {
-                originals.iter().for_each(|a| {
-                    let mut contains = false;
-                    for v in &a.source {
-                        let mut inner_contains = false;
-                        for (s, vec) in v {
-                            match source == s {
+        additions_all.sort_by(|a, b| a.increment.cmp(&b.increment));
+        additions_all.reverse();
+        let additions_partial_len = additions_partial.len();
+        let mut additions_partial_with_origins = additions_partial.into_iter().fold(
+            Vec::with_capacity(additions_partial_len),
+            |mut acc, o| {
+                let vec_of_origins = o
+                    .source
+                    .iter()
+                    .fold(
+                        Vec::with_capacity(
+                            o.source
+                                .iter()
+                                .map(|v| v.len())
+                                .collect::<Vec<usize>>()
+                                .iter()
+                                .sum(),
+                        ),
+                        |mut acc, v| {
+                            v.iter().for_each(|(source, _vec)| {
+                                acc.push(source);
+                            });
+                            acc
+                        },
+                    )
+                    .into_iter()
+                    .unique()
+                    .collect::<Vec<&String>>()
+                    .into_iter()
+                    .fold(Vec::with_capacity(originals.len()), |mut acc, source| {
+                        originals.iter().for_each(|a| {
+                            let mut contains = false;
+                            for v in &a.source {
+                                let mut inner_contains = false;
+                                for (s, vec) in v {
+                                    match source == s {
+                                        true => {
+                                            inner_contains = true;
+                                            break;
+                                        }
+                                        false => (),
+                                    }
+                                }
+                                match inner_contains {
+                                    true => {
+                                        contains = true;
+                                        break;
+                                    }
+                                    false => (),
+                                }
+                            }
+                            match contains {
                                 true => {
-                                    inner_contains = true;
-                                    break;
+                                    acc.push(a.clone());
                                 }
                                 false => (),
                             }
-                        }
-                        match inner_contains {
-                            true => {
-                                contains = true;
-                                break;
-                            }
-                            false => (),
-                        }
-                    }
-                    match contains {
-                        true => {
-                            vec_of_origins.push(a.clone());
-                        }
-                        false => (),
-                    }
-                });
-            });
-            additions_partial_with_origins.push((o.clone(), vec_of_origins));
-        });
-        additions_all.sort_by(|a, b| a.increment.cmp(&b.increment));
-        additions_all.reverse();
-        let mut almost_all = vec![];
+                        });
+                        acc
+                    })
+                    .into_iter()
+                    .unique()
+                    .collect::<Vec<SourceAndCodeOccurenceAsString>>();
+                acc.push((o, vec_of_origins));
+                acc
+            },
+        );
+        let mut almost_all = Vec::with_capacity(additions_partial_with_origins.len());
         additions_partial_with_origins
             .into_iter()
             .for_each(|(part, origins)| {
@@ -248,25 +283,29 @@ impl OneWrapperError {
                     let mut new_vec = vec![];
                     v.iter().for_each(|(source, vec)| {
                         let mut equals = None;
-                        for vv in &additions_all[0].source {
-                            //todo
-                            let mut contains = None;
-                            for (source_in_all, vec_in_all) in vv {
-                                match source == source_in_all {
-                                    true => {
-                                        contains = Some(vec_in_all.clone());
-                                        break;
+                        match additions_all.get(0) {
+                            Some(additions_all_first_element) => {
+                                for vv in &additions_all_first_element.source {
+                                    let mut contains = None;
+                                    for (source_in_all, vec_in_all) in vv {
+                                        match source == source_in_all {
+                                            true => {
+                                                contains = Some(vec_in_all.clone());
+                                                break;
+                                            }
+                                            false => (),
+                                        }
                                     }
-                                    false => (),
+                                    match contains {
+                                        Some(vf) => {
+                                            equals = Some(vf);
+                                            break;
+                                        }
+                                        None => (),
+                                    }
                                 }
                             }
-                            match contains {
-                                Some(vf) => {
-                                    equals = Some(vf);
-                                    break;
-                                }
-                                None => (),
-                            }
+                            None => (),
                         }
                         match equals {
                             Some(mut vvv) => {
