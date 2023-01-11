@@ -10,8 +10,6 @@ use tufa_common::traits::console::Console;
 use tufa_common::traits::fields::GetLogType;
 use tufa_common::traits::fields::GetSourcePlaceType;
 use tufa_common::traits::get_color::ErrorColorBold;
-use tufa_common::traits::my_custom_display::DisplayError;
-use tufa_common::traits::new_error_with_one_addition::NewErrorWithOneAddition;
 use tufa_common::traits::separator_symbol::SeparatorSymbol;
 
 pub fn dev() {
@@ -40,16 +38,14 @@ impl OneWrapperError {
         &self,
         config: &tufa_common::config_mods::config_struct::ConfigStruct,
     ) -> String {
-        format!("{}", self.source.get_source_as_string(config))
+        self.source.get_source_as_string(config)
     }
     pub fn get_code_occurence_as_string(
         &self,
         config: &tufa_common::config_mods::config_struct::ConfigStruct,
     ) -> String {
-        self.code_occurence.time_file_line_column.get_code_path(
-            &self.code_occurence.git_info,
-            config.get_source_place_type(),
-        )
+        self.code_occurence
+            .get_code_path(config.get_source_place_type())
     }
     pub fn get_inner_source_and_code_occurence_as_string(
         &self,
@@ -487,3 +483,23 @@ pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
 // tufa_common/src/dev.rs:554:25
 // tufa_common/src/dev.rs:211:21
 // tufa_server/src/entry.rs:860:21
+
+// five_hashmap_key [
+//  five_one_hashmap key [
+//   five_one error
+//   tufa_common/src/dev.rs:524:17
+//  ]
+//  tufa_common/src/dev.rs:463:21
+// ]
+// six_hashmap_key [
+//  [
+//   error_seven
+//   tufa_common/src/dev.rs:729:17
+//   error_eight
+//   tufa_common/src/dev.rs:789:17
+//  ]
+//  tufa_common/src/dev.rs:626:25
+// ]
+// tufa_common/src/dev.rs:314:25
+// tufa_common/src/dev.rs:117:21
+// tufa_server/src/dev.rs:457:21
