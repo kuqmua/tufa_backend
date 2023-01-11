@@ -333,7 +333,6 @@ impl OneWrapperError {
                         local_keys
                             .iter()
                             .fold(String::from(""), |mut acc, local_key| {
-                                println!("acc\n\n{}\n\n", acc);
                                 match first {
                                     true => {
                                         acc.push_str(&format!(
@@ -344,7 +343,6 @@ impl OneWrapperError {
                                             "{}{}",
                                             symbol, source.code_occurence
                                         ));
-                                        println!("acc after first\n\n{}\n\n", acc);
                                         first = false;
                                     }
                                     false => {
@@ -357,7 +355,6 @@ impl OneWrapperError {
                                                 acc
                                             });
                                         log_type.pop_last(&mut lined);
-                                        println!("lined \n\n{}\n\nlined", lined);
                                         acc = format!(
                                             "{} [{}{}{}]",
                                             local_key, symbol, lined, symbol,
@@ -371,34 +368,30 @@ impl OneWrapperError {
                 }
             }
         });
-        let mut f = additions_partial_with_origins_as_string.iter().fold(
-            String::from(""),
-            |mut acc, (one, two)| {
+        let mut lined = additions_partial_with_origins_as_string
+            .iter()
+            .fold(String::from(""), |mut acc, (one, two)| {
                 acc.push_str(&format!("{}{}", two, symbol));
                 acc
-            },
-        );
-        let mut lined =
-            f.lines()
-                .collect::<Vec<&str>>()
-                .iter()
-                .fold(String::from(""), |mut acc, element| {
-                    acc.push_str(&format!(" {}{}", element, symbol));
-                    acc
-                });
+            })
+            .lines()
+            .collect::<Vec<&str>>()
+            .iter()
+            .fold(String::from(""), |mut acc, element| {
+                acc.push_str(&format!(" {}{}", element, symbol));
+                acc
+            });
         log_type.pop_last(&mut lined);
-        f = format!("[{}{}{}]{}", symbol, lined, symbol, symbol);
-        match !additions_all.is_empty() {
-            true => {
+        let mut prepared_log = format!("[{}{}{}]{}", symbol, lined, symbol, symbol);
+        match additions_all.is_empty() {
+            true => (),
+            false => {
                 additions_all.iter().for_each(|value| {
-                    f.push_str(&format!("{}{}", value.code_occurence, symbol));
+                    prepared_log.push_str(&format!("{}{}", value.code_occurence, symbol));
                 });
             }
-            false => (),
         }
-        println!("{}", f);
-        let mut prepared_log = f.clone();
-        prepared_log.push_str(&format!("{}", &self.get_code_occurence_as_string(config)));
+        prepared_log.push_str(&self.get_code_occurence_as_string(config));
         log_type.console(&config.get_error_color_bold(), prepared_log)
     }
 }
