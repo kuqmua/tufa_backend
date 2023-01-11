@@ -277,7 +277,7 @@ impl OneWrapperError {
         let mut almost_all = Vec::with_capacity(additions_partial_with_origins.len());
         additions_partial_with_origins
             .into_iter()
-            .for_each(|(part, origins)| {
+            .for_each(|(mut part, origins)| {
                 let mut origins_stack = Vec::with_capacity(part.source.len());
                 part.source.iter().for_each(|v| {
                     let mut new_vec = vec![];
@@ -326,9 +326,8 @@ impl OneWrapperError {
                     });
                     origins_stack.push(new_vec.clone());
                 });
-                let mut cloned_part = part.clone();
-                cloned_part.source = origins_stack;
-                almost_all.push((cloned_part.clone(), origins));
+                part.source = origins_stack;
+                almost_all.push((part, origins));
             });
         //todo - maybe just filter map?
         let mut additions_partial_with_origins_as_string = Vec::with_capacity(almost_all.len());
