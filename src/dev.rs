@@ -208,12 +208,12 @@ impl OneWrapperError {
                 }
             }
         });
-        additions_all.sort_by(|a, b| a.increment.cmp(&b.increment));
-        additions_all.reverse();
+        additions_all.sort_by(|a, b| b.increment.cmp(&a.increment));
         let additions_partial_len = additions_partial.len();
-        let mut additions_partial_with_origins = additions_partial.into_iter().fold(
-            Vec::with_capacity(additions_partial_len),
-            |mut acc, o| {
+        let cannot_get_source_handle = String::from("cannot get source");
+        let mut lined = additions_partial
+            .into_iter()
+            .fold(Vec::with_capacity(additions_partial_len), |mut acc, o| {
                 let vec_of_origins = o
                     .source
                     .iter()
@@ -273,199 +273,195 @@ impl OneWrapperError {
                     .collect::<Vec<SourceAndCodeOccurenceAsString>>();
                 acc.push((o, vec_of_origins));
                 acc
-            },
-        );
-        let mut almost_all = additions_partial_with_origins.into_iter().fold(
-            Vec::with_capacity(additions_partial_len),
-            |mut acc, (mut part, origins)| {
-                let mut origins_stack = Vec::with_capacity(part.source.len());
-                part.source.iter().for_each(|v| {
-                    let mut new_vec = vec![];
-                    v.iter().for_each(|(source, vec)| {
-                        let mut equals = None;
-                        match additions_all.get(0) {
-                            Some(additions_all_first_element) => {
-                                for vv in &additions_all_first_element.source {
-                                    let mut contains = None;
-                                    for (source_in_all, vec_in_all) in vv {
-                                        match source == source_in_all {
-                                            true => {
-                                                contains = Some(vec_in_all.clone());
+            })
+            .into_iter()
+            .fold(
+                Vec::with_capacity(additions_partial_len),
+                |mut acc, (mut part, origins)| {
+                    let mut origins_stack = Vec::with_capacity(part.source.len());
+                    part.source.iter().for_each(|v| {
+                        let mut new_vec = vec![];
+                        v.iter().for_each(|(source, vec)| {
+                            let mut equals = None;
+                            match additions_all.get(0) {
+                                Some(additions_all_first_element) => {
+                                    for vv in &additions_all_first_element.source {
+                                        let mut contains = None;
+                                        for (source_in_all, vec_in_all) in vv {
+                                            match source == source_in_all {
+                                                true => {
+                                                    contains = Some(vec_in_all.clone());
+                                                    break;
+                                                }
+                                                false => (),
+                                            }
+                                        }
+                                        match contains {
+                                            Some(vf) => {
+                                                equals = Some(vf);
                                                 break;
                                             }
-                                            false => (),
+                                            None => (),
                                         }
-                                    }
-                                    match contains {
-                                        Some(vf) => {
-                                            equals = Some(vf);
-                                            break;
-                                        }
-                                        None => (),
                                     }
                                 }
+                                None => (),
                             }
-                            None => (),
-                        }
-                        match equals {
-                            Some(mut vvv) => {
-                                let mut difference = vec.clone();
-                                //not sure about ordering
-                                vvv.iter().for_each(|vvve| match difference.contains(vvve) {
-                                    true => (),
-                                    false => {
-                                        difference.push(vvve.clone());
-                                    }
-                                });
-                                new_vec.push((source.clone(), difference.clone()));
-                            }
-                            None => {
-                                new_vec.push((source.clone(), vec.clone()));
-                            }
-                        }
-                    });
-                    origins_stack.push(new_vec.clone());
-                });
-                part.source = origins_stack;
-                acc.push((part, origins));
-                acc
-            },
-        );
-        //todo - maybe just filter map?
-        let cannot_get_source_handle = String::from("cannot get source");
-        let mut additions_partial_with_origins_as_string = almost_all.into_iter().fold(
-            Vec::with_capacity(additions_partial_len),
-            |mut accc, (source, origins_vec)| {
-                let (mut local_sources, mut local_keys) =
-                    source
-                        .source
-                        .iter()
-                        .fold((Vec::new(), Vec::new()), |mut acc, v| {
-                            v.iter().for_each(|(source, vecc)| {
-                                acc.0.push(source);
-                                vecc.iter().for_each(|ve| {
-                                    acc.1.push(ve.clone());
-                                });
-                            });
-                            acc
-                        });
-                local_sources = local_sources.into_iter().unique().collect();
-                local_keys = local_keys.into_iter().unique().collect();
-                match local_keys.is_empty() {
-                    true => {
-                        let mut fold_original_source =
-                            origins_vec.iter().fold(String::from(""), |mut acc, o| {
-                                let source = match o.source.first() {
-                                    Some(first_element) => match first_element.first() {
-                                        Some(first_inner_element) => &first_inner_element.0,
-                                        None => &cannot_get_source_handle,
-                                    },
-                                    None => &cannot_get_source_handle,
-                                };
-                                acc.push_str(&format!(
-                                    "{}{}{}{}",
-                                    source, symbol, o.code_occurence, symbol
-                                ));
-                                acc
-                            });
-                        log_type.pop_last(&mut fold_original_source);
-                        let mut fold = fold_original_source
-                            .lines()
-                            .collect::<Vec<&str>>()
-                            .iter()
-                            .fold(String::from(""), |mut acc, element| {
-                                acc.push_str(&format!(" {}{}", element, symbol));
-                                acc
-                            });
-                        log_type.pop_last(&mut fold);
-                        accc.push(format!(
-                            "[{}{}{}]{}{}",
-                            symbol, fold, symbol, symbol, source.code_occurence
-                        ));
-                    }
-                    false => {
-                        let mut fold = origins_vec.iter().fold(String::from(""), |mut acc, o| {
-                            let source = match o.source.first() {
-                                Some(first_element) => match first_element.first() {
-                                    Some(first_inner_element) => &first_inner_element.0,
-                                    None => &cannot_get_source_handle,
-                                },
-                                None => &cannot_get_source_handle,
-                            };
-                            acc.push_str(&format!(
-                                "{}{}{}{}",
-                                source, symbol, o.code_occurence, symbol
-                            ));
-                            acc
-                        });
-                        log_type.pop_last(&mut fold);
-                        let mut fold = fold.lines().collect::<Vec<&str>>().iter().fold(
-                            String::from(""),
-                            |mut acc, element| {
-                                acc.push_str(&format!(" {}{}", element, symbol));
-                                acc
-                            },
-                        );
-                        log_type.pop_last(&mut fold);
-                        let mut first = true;
-                        let handle_value =
-                            local_keys
-                                .iter()
-                                .fold(String::from(""), |mut acc, local_key| {
-                                    match first {
-                                        true => {
-                                            acc.push_str(&format!(
-                                                "{} [{}{}{}]",
-                                                local_key, symbol, fold, symbol
-                                            ));
-                                            acc.push_str(&format!(
-                                                "{}{}",
-                                                symbol, source.code_occurence
-                                            ));
-                                            first = false;
-                                        }
+                            match equals {
+                                Some(mut vvv) => {
+                                    let mut difference = vec.clone();
+                                    //not sure about ordering
+                                    vvv.iter().for_each(|vvve| match difference.contains(vvve) {
+                                        true => (),
                                         false => {
-                                            let mut lined = acc
-                                                .lines()
-                                                .collect::<Vec<&str>>()
-                                                .iter()
-                                                .fold(String::from(""), |mut acc, element| {
-                                                    acc.push_str(&format!(
-                                                        " {}{}",
-                                                        element, symbol
-                                                    ));
-                                                    acc
-                                                });
-                                            log_type.pop_last(&mut lined);
-                                            acc = format!(
-                                                "{} [{}{}{}]",
-                                                local_key, symbol, lined, symbol,
-                                            );
+                                            difference.push(vvve.clone());
                                         }
-                                    }
+                                    });
+                                    new_vec.push((source.clone(), difference.clone()));
+                                }
+                                None => {
+                                    new_vec.push((source.clone(), vec.clone()));
+                                }
+                            }
+                        });
+                        origins_stack.push(new_vec.clone());
+                    });
+                    part.source = origins_stack;
+                    acc.push((part, origins));
+                    acc
+                },
+            )
+            .into_iter()
+            .fold(
+                Vec::with_capacity(additions_partial_len),
+                |mut accc, (source, origins_vec)| {
+                    let (mut local_sources, mut local_keys) =
+                        source
+                            .source
+                            .iter()
+                            .fold((Vec::new(), Vec::new()), |mut acc, v| {
+                                v.iter().for_each(|(source, vecc)| {
+                                    acc.0.push(source);
+                                    vecc.iter().for_each(|ve| {
+                                        acc.1.push(ve.clone());
+                                    });
+                                });
+                                acc
+                            });
+                    local_sources = local_sources.into_iter().unique().collect();
+                    local_keys = local_keys.into_iter().unique().collect();
+                    match local_keys.is_empty() {
+                        true => {
+                            let mut fold_original_source =
+                                origins_vec.iter().fold(String::from(""), |mut acc, o| {
+                                    let source = match o.source.first() {
+                                        Some(first_element) => match first_element.first() {
+                                            Some(first_inner_element) => &first_inner_element.0,
+                                            None => &cannot_get_source_handle,
+                                        },
+                                        None => &cannot_get_source_handle,
+                                    };
+                                    acc.push_str(&format!(
+                                        "{}{}{}{}",
+                                        source, symbol, o.code_occurence, symbol
+                                    ));
                                     acc
                                 });
-                        accc.push(handle_value);
+                            log_type.pop_last(&mut fold_original_source);
+                            let mut fold = fold_original_source
+                                .lines()
+                                .collect::<Vec<&str>>()
+                                .iter()
+                                .fold(String::from(""), |mut acc, element| {
+                                    acc.push_str(&format!(" {}{}", element, symbol));
+                                    acc
+                                });
+                            log_type.pop_last(&mut fold);
+                            accc.push(format!(
+                                "[{}{}{}]{}{}",
+                                symbol, fold, symbol, symbol, source.code_occurence
+                            ));
+                        }
+                        false => {
+                            let mut fold =
+                                origins_vec.iter().fold(String::from(""), |mut acc, o| {
+                                    let source = match o.source.first() {
+                                        Some(first_element) => match first_element.first() {
+                                            Some(first_inner_element) => &first_inner_element.0,
+                                            None => &cannot_get_source_handle,
+                                        },
+                                        None => &cannot_get_source_handle,
+                                    };
+                                    acc.push_str(&format!(
+                                        "{}{}{}{}",
+                                        source, symbol, o.code_occurence, symbol
+                                    ));
+                                    acc
+                                });
+                            log_type.pop_last(&mut fold);
+                            let mut fold = fold.lines().collect::<Vec<&str>>().iter().fold(
+                                String::from(""),
+                                |mut acc, element| {
+                                    acc.push_str(&format!(" {}{}", element, symbol));
+                                    acc
+                                },
+                            );
+                            log_type.pop_last(&mut fold);
+                            let mut first = true;
+                            let handle_value =
+                                local_keys
+                                    .iter()
+                                    .fold(String::from(""), |mut acc, local_key| {
+                                        match first {
+                                            true => {
+                                                acc.push_str(&format!(
+                                                    "{} [{}{}{}]",
+                                                    local_key, symbol, fold, symbol
+                                                ));
+                                                acc.push_str(&format!(
+                                                    "{}{}",
+                                                    symbol, source.code_occurence
+                                                ));
+                                                first = false;
+                                            }
+                                            false => {
+                                                let mut lined = acc
+                                                    .lines()
+                                                    .collect::<Vec<&str>>()
+                                                    .iter()
+                                                    .fold(String::from(""), |mut acc, element| {
+                                                        acc.push_str(&format!(
+                                                            " {}{}",
+                                                            element, symbol
+                                                        ));
+                                                        acc
+                                                    });
+                                                log_type.pop_last(&mut lined);
+                                                acc = format!(
+                                                    "{} [{}{}{}]",
+                                                    local_key, symbol, lined, symbol,
+                                                );
+                                            }
+                                        }
+                                        acc
+                                    });
+                            accc.push(handle_value);
+                        }
                     }
-                }
-                accc
-            },
-        );
-        let mut lined = additions_partial_with_origins_as_string
+                    accc
+                },
+            )
             .into_iter()
             .fold(String::from(""), |mut acc, element| {
                 acc.push_str(&format!("{}{}", element, symbol));
                 acc
             })
             .lines()
-            .collect::<Vec<&str>>()
-            .iter()
             .fold(String::from(""), |mut acc, element| {
                 acc.push_str(&format!(" {}{}", element, symbol));
                 acc
             });
-        log_type.pop_last(&mut lined);
-        let mut prepared_log = format!("[{}{}{}]{}", symbol, lined, symbol, symbol);
+        let mut prepared_log = format!("[{}{}]{}", symbol, lined, symbol);
         match additions_all.is_empty() {
             true => (),
             false => {
