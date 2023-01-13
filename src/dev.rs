@@ -68,6 +68,7 @@ impl OneWrapperError {
             s.add_one();
             new_vec.push(s);
         });
+        //
         new_vec.push(
             tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString {
                 source: sources_for_tracing,
@@ -274,10 +275,9 @@ impl OneWrapperError {
                 acc
             },
         );
-        let mut almost_all = Vec::with_capacity(additions_partial_with_origins.len());
-        additions_partial_with_origins
-            .into_iter()
-            .for_each(|(mut part, origins)| {
+        let mut almost_all = additions_partial_with_origins.into_iter().fold(
+            Vec::with_capacity(additions_partial_len),
+            |mut acc, (mut part, origins)| {
                 let mut origins_stack = Vec::with_capacity(part.source.len());
                 part.source.iter().for_each(|v| {
                     let mut new_vec = vec![];
@@ -327,8 +327,10 @@ impl OneWrapperError {
                     origins_stack.push(new_vec.clone());
                 });
                 part.source = origins_stack;
-                almost_all.push((part, origins));
-            });
+                acc.push((part, origins));
+                acc
+            },
+        );
         //todo - maybe just filter map?
         let mut additions_partial_with_origins_as_string = Vec::with_capacity(almost_all.len());
         let cannot_get_source_handle = String::from("cannot get source");
