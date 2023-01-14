@@ -60,15 +60,17 @@ impl OneWrapperError {
                 .iter()
                 .sum(),
         );
-        let mut new_vec = Vec::with_capacity(vec.len() + 1);
-        vec.into_iter().for_each(|mut s| {
-            s.source.iter().for_each(|v| {
-                sources_for_tracing.push(v.clone());
-            });
-            s.add_one();
-            new_vec.push(s);
-        });
-        //
+        let vec_capacity = vec.len() + 1;
+        let mut new_vec =
+            vec.into_iter()
+                .fold(Vec::with_capacity(vec_capacity), |mut acc, mut s| {
+                    s.source.iter().for_each(|v| {
+                        sources_for_tracing.push(v.clone());
+                    });
+                    s.add_one();
+                    acc.push(s);
+                    acc
+                });
         new_vec.push(
             tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString {
                 source: sources_for_tracing,
