@@ -134,7 +134,7 @@ impl OneWrapperError {
                                             v.iter().for_each(|(source, vecc)| {
                                                 acc.0.push(source);
                                                 vecc.iter().for_each(|ve| {
-                                                    acc.1.push(ve.clone());
+                                                    acc.1.push(ve);
                                                 });
                                             });
                                             acc
@@ -143,58 +143,46 @@ impl OneWrapperError {
                                     local_sources = local_sources.into_iter().unique().collect(); //todo - optimize it?
                                     local_sources.sort();
                                     local_keys = local_keys.into_iter().unique().collect(); //todo - optimize it?
-                                    local_keys.sort();
-                                    match (
+                                    if let (true, true) = (
                                         sources_all_len == local_sources.len(),
                                         keys_all_len == local_keys.len(),
                                     ) {
-                                        (true, true) => {
-                                            let mut equal = true;
-                                            for i in 0..local_sources.len() {
-                                                match local_sources.get(i) {
-                                                    Some(local_sources_element) => {
-                                                        match sources_all.get(i) {
-                                                            Some(sources_all_element) => {
-                                                                match *local_sources_element
-                                                                    == sources_all_element
-                                                                {
-                                                                    true => (),
-                                                                    false => {
-                                                                        equal = false;
-                                                                        break;
-                                                                    }
-                                                                }
-                                                            }
-                                                            None => {
-                                                                equal = false;
+                                        let mut sources_equal = true;
+                                        //todo: maybe need to check keys too?
+                                        for i in 0..local_sources.len() {
+                                            match local_sources.get(i) {
+                                                Some(local_sources_element) => {
+                                                    match sources_all.get(i) {
+                                                        Some(sources_all_element) => {
+                                                            if let false = *local_sources_element
+                                                                == sources_all_element
+                                                            {
+                                                                sources_equal = false;
                                                                 break;
                                                             }
                                                         }
-                                                    }
-                                                    None => {
-                                                        equal = false;
-                                                        break;
+                                                        None => {
+                                                            sources_equal = false;
+                                                            break;
+                                                        }
                                                     }
                                                 }
-                                            }
-                                            match equal {
-                                                true => {
-                                                    accc.2.push(c);
-                                                }
-                                                false => {
-                                                    accc.1.push(c);
+                                                None => {
+                                                    sources_equal = false;
+                                                    break;
                                                 }
                                             }
                                         }
-                                        (true, false) => {
-                                            accc.1.push(c);
+                                        match sources_equal {
+                                            true => {
+                                                accc.2.push(c);
+                                            }
+                                            false => {
+                                                accc.1.push(c);
+                                            }
                                         }
-                                        (false, true) => {
-                                            accc.1.push(c);
-                                        }
-                                        (false, false) => {
-                                            accc.1.push(c);
-                                        }
+                                    } else {
+                                        accc.1.push(c);
                                     }
                                 }
                             }
