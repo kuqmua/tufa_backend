@@ -89,127 +89,130 @@ impl OneWrapperError {
             .into_iter()
             .unique() //todo - optimize it
             .collect::<Vec<SourceAndCodeOccurenceAsString>>();
-        let mut sources_all = vec![];
-        let mut keys_all = vec![];
-        let mut originals = vec![];
-        let mut additions = vec![];
-        code_occurence_as_string_vec.into_iter().for_each(|c| {
-            match c.increment == 0 {
-                true => {
-                    c.source.iter().for_each(|v| {
-                        v.iter().for_each(|(source, keys)| {
-                            sources_all.push(source.clone());
-                            keys.iter().for_each(|k| {
-                                keys_all.push(k.clone());
+        let (mut sources_all, mut keys_all, mut originals, mut additions) =
+            code_occurence_as_string_vec.into_iter().fold(
+                (Vec::new(), Vec::new(), Vec::new(), Vec::new()),
+                |mut acc, c| {
+                    match c.increment == 0 {
+                        true => {
+                            c.source.iter().for_each(|v| {
+                                v.iter().for_each(|(source, keys)| {
+                                    acc.0.push(source.clone());
+                                    keys.iter().for_each(|k| {
+                                        acc.1.push(k.clone());
+                                    });
+                                });
                             });
-                        });
-                    });
-                }
-                false => (),
-            }
-            match c.source.len() == 1 {
-                true => match c.source.get(0) {
-                    Some(first_element) => match first_element.len() == 1 {
-                        true => match first_element.get(0) {
-                            Some(first_element_of_the_first_element) => {
-                                match first_element_of_the_first_element.1.is_empty() {
-                                    true => {
-                                        originals.push(c);
+                        }
+                        false => (),
+                    }
+                    match c.source.len() == 1 {
+                        true => match c.source.get(0) {
+                            Some(first_element) => match first_element.len() == 1 {
+                                true => match first_element.get(0) {
+                                    Some(first_element_of_the_first_element) => {
+                                        match first_element_of_the_first_element.1.is_empty() {
+                                            true => {
+                                                acc.2.push(c);
+                                            }
+                                            false => {
+                                                acc.3.push(c);
+                                            }
+                                        }
                                     }
-                                    false => {
-                                        additions.push(c);
+                                    None => {
+                                        acc.3.push(c);
                                     }
+                                },
+                                false => {
+                                    acc.3.push(c);
                                 }
-                            }
+                            },
                             None => {
-                                additions.push(c);
+                                acc.3.push(c);
                             }
                         },
                         false => {
-                            additions.push(c);
+                            acc.3.push(c);
                         }
-                    },
-                    None => {
-                        additions.push(c);
                     }
+                    acc
                 },
-                false => {
-                    additions.push(c);
-                }
-            }
-        });
+            );
         sources_all = sources_all.into_iter().unique().collect(); //todo - optimize it?
         sources_all.sort();
         keys_all = keys_all.into_iter().unique().collect(); //todo - optimize it?
         keys_all.sort();
-        let mut additions_partial = vec![];
-        let mut additions_all = vec![];
-        additions.into_iter().for_each(|c| {
-            let (mut local_sources, mut local_keys) =
-                c.source
-                    .iter()
-                    .fold((Vec::new(), Vec::new()), |mut acc, v| {
-                        v.iter().for_each(|(source, vecc)| {
-                            acc.0.push(source);
-                            vecc.iter().for_each(|ve| {
-                                acc.1.push(ve.clone());
+        let (mut additions_partial, mut additions_all) =
+            additions
+                .into_iter()
+                .fold((Vec::new(), Vec::new()), |mut accc, c| {
+                    let (mut local_sources, mut local_keys) =
+                        c.source
+                            .iter()
+                            .fold((Vec::new(), Vec::new()), |mut acc, v| {
+                                v.iter().for_each(|(source, vecc)| {
+                                    acc.0.push(source);
+                                    vecc.iter().for_each(|ve| {
+                                        acc.1.push(ve.clone());
+                                    });
+                                });
+                                acc
                             });
-                        });
-                        acc
-                    });
-            local_sources = local_sources.into_iter().unique().collect(); //todo - optimize it?
-            local_sources.sort();
-            local_keys = local_keys.into_iter().unique().collect(); //todo - optimize it?
-            local_keys.sort();
-            match (
-                sources_all.len() == local_sources.len(),
-                keys_all.len() == local_keys.len(),
-            ) {
-                (true, true) => {
-                    let mut equal = true;
-                    for i in 0..local_sources.len() {
-                        match local_sources.get(i) {
-                            Some(local_sources_element) => match sources_all.get(i) {
-                                Some(sources_all_element) => {
-                                    match *local_sources_element == sources_all_element {
-                                        true => (),
-                                        false => {
+                    local_sources = local_sources.into_iter().unique().collect(); //todo - optimize it?
+                    local_sources.sort();
+                    local_keys = local_keys.into_iter().unique().collect(); //todo - optimize it?
+                    local_keys.sort();
+                    match (
+                        sources_all.len() == local_sources.len(),
+                        keys_all.len() == local_keys.len(),
+                    ) {
+                        (true, true) => {
+                            let mut equal = true;
+                            for i in 0..local_sources.len() {
+                                match local_sources.get(i) {
+                                    Some(local_sources_element) => match sources_all.get(i) {
+                                        Some(sources_all_element) => {
+                                            match *local_sources_element == sources_all_element {
+                                                true => (),
+                                                false => {
+                                                    equal = false;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        None => {
                                             equal = false;
                                             break;
                                         }
+                                    },
+                                    None => {
+                                        equal = false;
+                                        break;
                                     }
                                 }
-                                None => {
-                                    equal = false;
-                                    break;
+                            }
+                            match equal {
+                                true => {
+                                    accc.1.push(c);
                                 }
-                            },
-                            None => {
-                                equal = false;
-                                break;
+                                false => {
+                                    accc.0.push(c);
+                                }
                             }
                         }
-                    }
-                    match equal {
-                        true => {
-                            additions_all.push(c);
+                        (true, false) => {
+                            accc.0.push(c);
                         }
-                        false => {
-                            additions_partial.push(c);
+                        (false, true) => {
+                            accc.0.push(c);
+                        }
+                        (false, false) => {
+                            accc.0.push(c);
                         }
                     }
-                }
-                (true, false) => {
-                    additions_partial.push(c);
-                }
-                (false, true) => {
-                    additions_partial.push(c);
-                }
-                (false, false) => {
-                    additions_partial.push(c);
-                }
-            }
-        });
+                    accc
+                });
         additions_all.sort_by(|a, b| b.increment.cmp(&a.increment));
         let additions_partial_len = additions_partial.len();
         let cannot_get_source_handle = String::from("cannot get source");
@@ -385,68 +388,76 @@ impl OneWrapperError {
                             ));
                         }
                         false => {
-                            let mut fold =
-                                origins_vec.iter().fold(String::from(""), |mut acc, o| {
-                                    let source = match o.source.first() {
-                                        Some(first_element) => match first_element.first() {
-                                            Some(first_inner_element) => &first_inner_element.0,
-                                            None => &cannot_get_source_handle,
-                                        },
-                                        None => &cannot_get_source_handle,
-                                    };
-                                    acc.push_str(&format!(
-                                        "{}{}{}{}",
-                                        source, symbol, o.code_occurence, symbol
-                                    ));
-                                    acc
-                                });
-                            log_type.pop_last(&mut fold);
-                            let mut fold = fold.lines().collect::<Vec<&str>>().iter().fold(
+                            let mut first = true;
+                            let handle_value = local_keys.into_iter().fold(
                                 String::from(""),
-                                |mut acc, element| {
-                                    acc.push_str(&format!(" {}{}", element, symbol));
+                                |mut acc, local_key| {
+                                    match first {
+                                        true => {
+                                            let mut fold_lines = origins_vec
+                                                .iter()
+                                                .fold(String::from(""), |mut acc, o| {
+                                                    let source = match o.source.first() {
+                                                        Some(first_element) => {
+                                                            match first_element.first() {
+                                                                Some(first_inner_element) => {
+                                                                    &first_inner_element.0
+                                                                }
+                                                                None => &cannot_get_source_handle,
+                                                            }
+                                                        }
+                                                        None => &cannot_get_source_handle,
+                                                    };
+                                                    acc.push_str(&format!(
+                                                        "{}{}{}{}",
+                                                        source, symbol, o.code_occurence, symbol
+                                                    ));
+                                                    acc
+                                                })
+                                                .lines()
+                                                .collect::<Vec<&str>>()
+                                                .iter()
+                                                .fold(String::from(""), |mut acc, element| {
+                                                    acc.push_str(&format!(
+                                                        " {}{}",
+                                                        element, symbol
+                                                    ));
+                                                    acc
+                                                });
+                                            acc.push_str(&format!(
+                                                "{} [{}{}]{}{}",
+                                                local_key,
+                                                symbol,
+                                                fold_lines,
+                                                symbol,
+                                                source.code_occurence
+                                            ));
+                                            first = false;
+                                        }
+                                        false => {
+                                            acc = format!(
+                                                "{} [{}{}]",
+                                                local_key,
+                                                symbol,
+                                                acc.lines()
+                                                    .collect::<Vec<&str>>()
+                                                    .into_iter()
+                                                    .fold(
+                                                        String::from(""),
+                                                        |mut acc_inner, element| {
+                                                            acc_inner.push_str(&format!(
+                                                                " {}{}",
+                                                                element, symbol
+                                                            ));
+                                                            acc_inner
+                                                        }
+                                                    )
+                                            );
+                                        }
+                                    }
                                     acc
                                 },
                             );
-                            log_type.pop_last(&mut fold);
-                            let mut first = true;
-                            let handle_value =
-                                local_keys
-                                    .iter()
-                                    .fold(String::from(""), |mut acc, local_key| {
-                                        match first {
-                                            true => {
-                                                acc.push_str(&format!(
-                                                    "{} [{}{}{}]",
-                                                    local_key, symbol, fold, symbol
-                                                ));
-                                                acc.push_str(&format!(
-                                                    "{}{}",
-                                                    symbol, source.code_occurence
-                                                ));
-                                                first = false;
-                                            }
-                                            false => {
-                                                let mut lined = acc
-                                                    .lines()
-                                                    .collect::<Vec<&str>>()
-                                                    .iter()
-                                                    .fold(String::from(""), |mut acc, element| {
-                                                        acc.push_str(&format!(
-                                                            " {}{}",
-                                                            element, symbol
-                                                        ));
-                                                        acc
-                                                    });
-                                                log_type.pop_last(&mut lined);
-                                                acc = format!(
-                                                    "{} [{}{}{}]",
-                                                    local_key, symbol, lined, symbol,
-                                                );
-                                            }
-                                        }
-                                        acc
-                                    });
                             accc.push(handle_value);
                         }
                     }
@@ -467,7 +478,7 @@ impl OneWrapperError {
         match additions_all.is_empty() {
             true => (),
             false => {
-                additions_all.iter().for_each(|value| {
+                additions_all.into_iter().for_each(|value| {
                     prepared_log.push_str(&format!("{}{}", value.code_occurence, symbol));
                 });
             }
