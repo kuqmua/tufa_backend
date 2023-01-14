@@ -218,7 +218,7 @@ impl OneWrapperError {
         let cannot_get_source_handle = String::from("cannot get source");
         let mut lined = additions_partial
             .into_iter()
-            .fold(Vec::with_capacity(additions_partial_len), |mut acc, o| {
+            .map(|o| {
                 let vec_of_origins = o
                     .source
                     .iter()
@@ -276,12 +276,9 @@ impl OneWrapperError {
                     .into_iter()
                     .unique()
                     .collect::<Vec<SourceAndCodeOccurenceAsString>>();
-                acc.push((o, vec_of_origins));
-                acc
+                (o, vec_of_origins)
             })
-            //
-            .iter_mut()
-            .map(|(part, origins)| {
+            .map(|(mut part, origins)| {
                 part.source.iter_mut().for_each(|mut v| {
                     v.iter_mut().for_each(|(source, vec)| {
                         let mut equals = None;
@@ -312,134 +309,119 @@ impl OneWrapperError {
                 });
                 (part, origins)
             })
-            .fold(
-                Vec::with_capacity(additions_partial_len),
-                |mut accc, (source, origins_vec)| {
-                    let (mut local_sources, mut local_keys) =
-                        source
-                            .source
-                            .iter()
-                            .fold((Vec::new(), Vec::new()), |mut acc, v| {
-                                v.iter().for_each(|(source, vecc)| {
-                                    acc.0.push(source);
-                                    vecc.iter().for_each(|ve| {
-                                        acc.1.push(ve.clone());
-                                    });
+            .map(|(source, origins_vec)| {
+                let (mut local_sources, mut local_keys) =
+                    source
+                        .source
+                        .iter()
+                        .fold((Vec::new(), Vec::new()), |mut acc, v| {
+                            v.iter().for_each(|(source, vecc)| {
+                                acc.0.push(source);
+                                vecc.iter().for_each(|ve| {
+                                    acc.1.push(ve.clone());
                                 });
+                            });
+                            acc
+                        });
+                local_sources = local_sources.into_iter().unique().collect();
+                local_keys = local_keys.into_iter().unique().collect();
+                match local_keys.is_empty() {
+                    true => {
+                        let mut fold_original_source_lines = origins_vec
+                            .iter()
+                            .fold(String::from(""), |mut acc, o| {
+                                let source = match o.source.first() {
+                                    Some(first_element) => match first_element.first() {
+                                        Some(first_inner_element) => &first_inner_element.0,
+                                        None => &cannot_get_source_handle,
+                                    },
+                                    None => &cannot_get_source_handle,
+                                };
+                                acc.push_str(&format!(
+                                    "{}{}{}{}",
+                                    source, symbol, o.code_occurence, symbol
+                                ));
+                                acc
+                            })
+                            .lines()
+                            .collect::<Vec<&str>>()
+                            .iter()
+                            .fold(String::from(""), |mut acc, element| {
+                                acc.push_str(&format!(" {}{}", element, symbol));
                                 acc
                             });
-                    local_sources = local_sources.into_iter().unique().collect();
-                    local_keys = local_keys.into_iter().unique().collect();
-                    match local_keys.is_empty() {
-                        true => {
-                            let mut fold_original_source =
-                                origins_vec.iter().fold(String::from(""), |mut acc, o| {
-                                    let source = match o.source.first() {
-                                        Some(first_element) => match first_element.first() {
-                                            Some(first_inner_element) => &first_inner_element.0,
-                                            None => &cannot_get_source_handle,
-                                        },
-                                        None => &cannot_get_source_handle,
-                                    };
-                                    acc.push_str(&format!(
-                                        "{}{}{}{}",
-                                        source, symbol, o.code_occurence, symbol
-                                    ));
-                                    acc
-                                });
-                            log_type.pop_last(&mut fold_original_source);
-                            let mut fold = fold_original_source
-                                .lines()
-                                .collect::<Vec<&str>>()
-                                .iter()
-                                .fold(String::from(""), |mut acc, element| {
-                                    acc.push_str(&format!(" {}{}", element, symbol));
-                                    acc
-                                });
-                            log_type.pop_last(&mut fold);
-                            accc.push(format!(
-                                "[{}{}{}]{}{}",
-                                symbol, fold, symbol, symbol, source.code_occurence
-                            ));
-                        }
-                        false => {
-                            let mut first = true;
-                            let handle_value = local_keys.into_iter().fold(
-                                String::from(""),
-                                |mut acc, local_key| {
-                                    match first {
-                                        true => {
-                                            let mut fold_lines = origins_vec
-                                                .iter()
-                                                .fold(String::from(""), |mut acc, o| {
-                                                    let source = match o.source.first() {
-                                                        Some(first_element) => {
-                                                            match first_element.first() {
-                                                                Some(first_inner_element) => {
-                                                                    &first_inner_element.0
-                                                                }
-                                                                None => &cannot_get_source_handle,
+                        format!(
+                            "[{}{}]{}{}",
+                            symbol, fold_original_source_lines, symbol, source.code_occurence
+                        )
+                    }
+                    false => {
+                        let mut first = true;
+                        local_keys
+                            .into_iter()
+                            .fold(String::from(""), |mut acc, local_key| {
+                                match first {
+                                    true => {
+                                        let mut fold_lines = origins_vec
+                                            .iter()
+                                            .fold(String::from(""), |mut acc, o| {
+                                                let source = match o.source.first() {
+                                                    Some(first_element) => {
+                                                        match first_element.first() {
+                                                            Some(first_inner_element) => {
+                                                                &first_inner_element.0
                                                             }
+                                                            None => &cannot_get_source_handle,
                                                         }
-                                                        None => &cannot_get_source_handle,
-                                                    };
-                                                    acc.push_str(&format!(
-                                                        "{}{}{}{}",
-                                                        source, symbol, o.code_occurence, symbol
-                                                    ));
-                                                    acc
-                                                })
-                                                .lines()
-                                                .collect::<Vec<&str>>()
-                                                .iter()
-                                                .fold(String::from(""), |mut acc, element| {
-                                                    acc.push_str(&format!(
+                                                    }
+                                                    None => &cannot_get_source_handle,
+                                                };
+                                                acc.push_str(&format!(
+                                                    "{}{}{}{}",
+                                                    source, symbol, o.code_occurence, symbol
+                                                ));
+                                                acc
+                                            })
+                                            .lines()
+                                            .collect::<Vec<&str>>()
+                                            .iter()
+                                            .fold(String::from(""), |mut acc, element| {
+                                                acc.push_str(&format!(" {}{}", element, symbol));
+                                                acc
+                                            });
+                                        acc.push_str(&format!(
+                                            "{} [{}{}]{}{}",
+                                            local_key,
+                                            symbol,
+                                            fold_lines,
+                                            symbol,
+                                            source.code_occurence
+                                        ));
+                                        first = false;
+                                    }
+                                    false => {
+                                        acc = format!(
+                                            "{} [{}{}]",
+                                            local_key,
+                                            symbol,
+                                            acc.lines().collect::<Vec<&str>>().into_iter().fold(
+                                                String::from(""),
+                                                |mut acc_inner, element| {
+                                                    acc_inner.push_str(&format!(
                                                         " {}{}",
                                                         element, symbol
                                                     ));
-                                                    acc
-                                                });
-                                            acc.push_str(&format!(
-                                                "{} [{}{}]{}{}",
-                                                local_key,
-                                                symbol,
-                                                fold_lines,
-                                                symbol,
-                                                source.code_occurence
-                                            ));
-                                            first = false;
-                                        }
-                                        false => {
-                                            acc = format!(
-                                                "{} [{}{}]",
-                                                local_key,
-                                                symbol,
-                                                acc.lines()
-                                                    .collect::<Vec<&str>>()
-                                                    .into_iter()
-                                                    .fold(
-                                                        String::from(""),
-                                                        |mut acc_inner, element| {
-                                                            acc_inner.push_str(&format!(
-                                                                " {}{}",
-                                                                element, symbol
-                                                            ));
-                                                            acc_inner
-                                                        }
-                                                    )
-                                            );
-                                        }
+                                                    acc_inner
+                                                }
+                                            )
+                                        );
                                     }
-                                    acc
-                                },
-                            );
-                            accc.push(handle_value);
-                        }
+                                }
+                                acc
+                            })
                     }
-                    accc
-                },
-            )
-            .into_iter()
+                }
+            })
             .fold(String::from(""), |mut acc, element| {
                 acc.push_str(&format!("{}{}", element, symbol));
                 acc
