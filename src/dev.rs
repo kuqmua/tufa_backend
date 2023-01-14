@@ -276,9 +276,8 @@ impl OneWrapperError {
                         local_keys = local_keys.into_iter().unique().collect();
                         match local_keys.is_empty() {
                             true => {
-                                let fold_original_source_lines = vec_of_origins
-                                    .iter()
-                                    .fold(String::from(""), |mut acc, o| {
+                                let fold_original_source_lines =
+                                    vec_of_origins.iter().fold(String::from(""), |mut acc, o| {
                                         let source = match o.source.first() {
                                             Some(first_element) => match first_element.first() {
                                                 Some(first_inner_element) => &first_inner_element.0,
@@ -287,16 +286,9 @@ impl OneWrapperError {
                                             None => &cannot_get_source_handle,
                                         };
                                         acc.push_str(&format!(
-                                            "{}{}{}{}",
+                                            " {}{} {}{}",
                                             source, symbol, o.code_occurence, symbol
                                         ));
-                                        acc
-                                    })
-                                    .lines()
-                                    .collect::<Vec<&str>>()
-                                    .iter()
-                                    .fold(String::from(""), |mut acc, element| {
-                                        acc.push_str(&format!(" {}{}", element, symbol));
                                         acc
                                     });
                                 acccc.push_str(&format!(
@@ -315,9 +307,9 @@ impl OneWrapperError {
                                     |mut acc, local_key| {
                                         match first {
                                             true => {
-                                                let fold_lines = vec_of_origins
-                                                    .iter()
-                                                    .fold(String::from(""), |mut acc, o| {
+                                                let fold_lines = vec_of_origins.iter().fold(
+                                                    String::from(""),
+                                                    |mut acc, o| {
                                                         let source = match o.source.first() {
                                                             Some(first_element) => {
                                                                 match first_element.first() {
@@ -332,24 +324,15 @@ impl OneWrapperError {
                                                             None => &cannot_get_source_handle,
                                                         };
                                                         acc.push_str(&format!(
-                                                            "{}{}{}{}",
+                                                            " {}{} {}{}",
                                                             source,
                                                             symbol,
                                                             o.code_occurence,
                                                             symbol
                                                         ));
                                                         acc
-                                                    })
-                                                    .lines()
-                                                    .collect::<Vec<&str>>()
-                                                    .iter()
-                                                    .fold(String::from(""), |mut acc, element| {
-                                                        acc.push_str(&format!(
-                                                            " {}{}",
-                                                            element, symbol
-                                                        ));
-                                                        acc
-                                                    });
+                                                    },
+                                                );
                                                 acc.push_str(&format!(
                                                     "{} [{}{}]{}{}",
                                                     local_key,
