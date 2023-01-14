@@ -224,27 +224,18 @@ impl OneWrapperError {
                                     for v in &a.source {
                                         let mut inner_contains = false;
                                         for (s, vec) in v {
-                                            match source == s {
-                                                true => {
-                                                    inner_contains = true;
-                                                    break;
-                                                }
-                                                false => (),
-                                            }
-                                        }
-                                        match inner_contains {
-                                            true => {
-                                                contains = true;
+                                            if let true = source == s {
+                                                inner_contains = true;
                                                 break;
                                             }
-                                            false => (),
+                                        }
+                                        if let true = inner_contains {
+                                            contains = true;
+                                            break;
                                         }
                                     }
-                                    match contains {
-                                        true => {
-                                            acc.push(a.clone());
-                                        }
-                                        false => (),
+                                    if let true = contains {
+                                        acc.push(a.clone());
                                     }
                                 });
                                 acc
