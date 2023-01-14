@@ -218,7 +218,7 @@ impl OneWrapperError {
         let cannot_get_source_handle = String::from("cannot get source");
         let mut lined = additions_partial
             .into_iter()
-            .map(|o| {
+            .map(|mut o| {
                 let vec_of_origins = o
                     .source
                     .iter()
@@ -276,10 +276,7 @@ impl OneWrapperError {
                     .into_iter()
                     .unique()
                     .collect::<Vec<SourceAndCodeOccurenceAsString>>();
-                (o, vec_of_origins)
-            })
-            .map(|(mut part, origins)| {
-                part.source.iter_mut().for_each(|mut v| {
+                o.source.iter_mut().for_each(|mut v| {
                     v.iter_mut().for_each(|(source, vec)| {
                         let mut equals = None;
                         if let Some(additions_all_first_element) = additions_all.get(0) {
@@ -307,12 +304,8 @@ impl OneWrapperError {
                         }
                     });
                 });
-                (part, origins)
-            })
-            .map(|(source, origins_vec)| {
                 let (mut local_sources, mut local_keys) =
-                    source
-                        .source
+                    o.source
                         .iter()
                         .fold((Vec::new(), Vec::new()), |mut acc, v| {
                             v.iter().for_each(|(source, vecc)| {
@@ -327,7 +320,7 @@ impl OneWrapperError {
                 local_keys = local_keys.into_iter().unique().collect();
                 match local_keys.is_empty() {
                     true => {
-                        let mut fold_original_source_lines = origins_vec
+                        let fold_original_source_lines = vec_of_origins
                             .iter()
                             .fold(String::from(""), |mut acc, o| {
                                 let source = match o.source.first() {
@@ -352,7 +345,7 @@ impl OneWrapperError {
                             });
                         format!(
                             "[{}{}]{}{}",
-                            symbol, fold_original_source_lines, symbol, source.code_occurence
+                            symbol, fold_original_source_lines, symbol, o.code_occurence
                         )
                     }
                     false => {
@@ -362,7 +355,7 @@ impl OneWrapperError {
                             .fold(String::from(""), |mut acc, local_key| {
                                 match first {
                                     true => {
-                                        let mut fold_lines = origins_vec
+                                        let fold_lines = vec_of_origins
                                             .iter()
                                             .fold(String::from(""), |mut acc, o| {
                                                 let source = match o.source.first() {
@@ -391,11 +384,7 @@ impl OneWrapperError {
                                             });
                                         acc.push_str(&format!(
                                             "{} [{}{}]{}{}",
-                                            local_key,
-                                            symbol,
-                                            fold_lines,
-                                            symbol,
-                                            source.code_occurence
+                                            local_key, symbol, fold_lines, symbol, o.code_occurence
                                         ));
                                         first = false;
                                     }
