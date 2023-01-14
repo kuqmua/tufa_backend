@@ -209,37 +209,29 @@ impl OneWrapperError {
                                 ),
                                 |mut acc, v| {
                                     v.iter().for_each(|(source, _vec)| {
-                                        acc.push(source);
+                                        originals.iter().for_each(|a| {
+                                            let mut contains = false;
+                                            for v in &a.source {
+                                                let mut inner_contains = false;
+                                                for (s, vec) in v {
+                                                    if let true = source == s {
+                                                        inner_contains = true;
+                                                        break;
+                                                    }
+                                                }
+                                                if let true = inner_contains {
+                                                    contains = true;
+                                                    break;
+                                                }
+                                            }
+                                            if let true = contains {
+                                                acc.push(a.clone());
+                                            }
+                                        });
                                     });
                                     acc
                                 },
                             )
-                            .into_iter()
-                            .unique()
-                            .collect::<Vec<&String>>()
-                            .into_iter()
-                            .fold(Vec::with_capacity(originals.len()), |mut acc, source| {
-                                originals.iter().for_each(|a| {
-                                    let mut contains = false;
-                                    for v in &a.source {
-                                        let mut inner_contains = false;
-                                        for (s, vec) in v {
-                                            if let true = source == s {
-                                                inner_contains = true;
-                                                break;
-                                            }
-                                        }
-                                        if let true = inner_contains {
-                                            contains = true;
-                                            break;
-                                        }
-                                    }
-                                    if let true = contains {
-                                        acc.push(a.clone());
-                                    }
-                                });
-                                acc
-                            })
                             .into_iter()
                             .unique()
                             .collect::<Vec<SourceAndCodeOccurenceAsString>>();
