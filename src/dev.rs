@@ -18,17 +18,6 @@ pub fn dev() {
 }
 
 #[derive(Debug)]
-pub struct PrepareForLog {
-    pub error_as_string: Option<String>,
-    pub code_occurences_as_string: String,
-}
-
-#[derive(Debug)]
-pub struct ContentPrep {
-    pub key_as_string: Option<String>,
-    pub inner: String,
-}
-#[derive(Debug)]
 pub struct OneWrapperError {
     source: OneWrapperErrorEnum,
     code_occurence: tufa_common::common::code_occurence::CodeOccurenceOldWay,
@@ -498,45 +487,3 @@ pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
     }
     Ok(())
 }
-
-// [
-//  (key: five_hashmap_key)[
-//   (key: five_one_hashmap key) [
-//    five_one error
-//    tufa_common/src/dev.rs:873:17
-//   ]
-//   tufa_common/src/dev.rs:795:17
-//  ]
-//  (key: six_hashmap_key)[
-//   [
-//    error_seven
-//    tufa_common/src/dev.rs:1300:17
-//    error_eight
-//    tufa_common/src/dev.rs:1385:17
-//   ]
-//   tufa_common/src/dev.rs:1150:25
-//  ]
-// ]
-// tufa_common/src/dev.rs:554:25
-// tufa_common/src/dev.rs:211:21
-// tufa_server/src/entry.rs:860:21
-
-// five_hashmap_key [
-//  five_one_hashmap key [
-//   five_one error
-//   tufa_common/src/dev.rs:524:17
-//  ]
-//  tufa_common/src/dev.rs:463:21
-// ]
-// six_hashmap_key [
-//  [
-//   error_seven
-//   tufa_common/src/dev.rs:729:17
-//   error_eight
-//   tufa_common/src/dev.rs:789:17
-//  ]
-//  tufa_common/src/dev.rs:626:25
-// ]
-// tufa_common/src/dev.rs:314:25
-// tufa_common/src/dev.rs:117:21
-// tufa_server/src/dev.rs:457:21
