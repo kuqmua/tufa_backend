@@ -288,37 +288,27 @@ impl OneWrapperError {
                         let mut new_vec = vec![];
                         v.iter().for_each(|(source, vec)| {
                             let mut equals = None;
-                            match additions_all.get(0) {
-                                Some(additions_all_first_element) => {
-                                    for vv in &additions_all_first_element.source {
-                                        let mut contains = None;
-                                        for (source_in_all, vec_in_all) in vv {
-                                            match source == source_in_all {
-                                                true => {
-                                                    contains = Some(vec_in_all.clone());
-                                                    break;
-                                                }
-                                                false => (),
-                                            }
-                                        }
-                                        match contains {
-                                            Some(vf) => {
-                                                equals = Some(vf);
-                                                break;
-                                            }
-                                            None => (),
+                            if let Some(additions_all_first_element) = additions_all.get(0) {
+                                for vv in &additions_all_first_element.source {
+                                    let mut contains = None;
+                                    for (source_in_all, vec_in_all) in vv {
+                                        if let true = source == source_in_all {
+                                            contains = Some(vec_in_all.clone());
+                                            break;
                                         }
                                     }
+                                    if let Some(vf) = contains {
+                                        equals = Some(vf);
+                                        break;
+                                    }
                                 }
-                                None => (),
                             }
                             match equals {
                                 Some(mut vvv) => {
                                     let mut difference = vec.clone();
                                     //not sure about ordering
-                                    vvv.iter().for_each(|vvve| match difference.contains(vvve) {
-                                        true => (),
-                                        false => {
+                                    vvv.iter().for_each(|vvve| {
+                                        if let false = difference.contains(vvve) {
                                             difference.push(vvve.clone());
                                         }
                                     });
