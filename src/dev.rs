@@ -217,8 +217,8 @@ impl OneWrapperError {
         let additions_partial_len = additions_partial.len();
         let cannot_get_source_handle = String::from("cannot get source");
         let mut lined = additions_partial
-            .into_iter()
-            .map(|mut o| {
+            .iter_mut()
+            .fold(String::from(""), |mut acccc, o| {
                 let vec_of_origins = o
                     .source
                     .iter()
@@ -343,77 +343,86 @@ impl OneWrapperError {
                                 acc.push_str(&format!(" {}{}", element, symbol));
                                 acc
                             });
-                        format!(
-                            "[{}{}]{}{}",
-                            symbol, fold_original_source_lines, symbol, o.code_occurence
-                        )
+                        acccc.push_str(&format!(
+                            "[{}{}]{}{}{}",
+                            symbol, fold_original_source_lines, symbol, o.code_occurence, symbol
+                        ))
                     }
                     false => {
                         let mut first = true;
-                        local_keys
-                            .into_iter()
-                            .fold(String::from(""), |mut acc, local_key| {
-                                match first {
-                                    true => {
-                                        let fold_lines = vec_of_origins
-                                            .iter()
-                                            .fold(String::from(""), |mut acc, o| {
-                                                let source = match o.source.first() {
-                                                    Some(first_element) => {
-                                                        match first_element.first() {
-                                                            Some(first_inner_element) => {
-                                                                &first_inner_element.0
+                        let handle =
+                            local_keys
+                                .into_iter()
+                                .fold(String::from(""), |mut acc, local_key| {
+                                    match first {
+                                        true => {
+                                            let fold_lines = vec_of_origins
+                                                .iter()
+                                                .fold(String::from(""), |mut acc, o| {
+                                                    let source = match o.source.first() {
+                                                        Some(first_element) => {
+                                                            match first_element.first() {
+                                                                Some(first_inner_element) => {
+                                                                    &first_inner_element.0
+                                                                }
+                                                                None => &cannot_get_source_handle,
                                                             }
-                                                            None => &cannot_get_source_handle,
                                                         }
-                                                    }
-                                                    None => &cannot_get_source_handle,
-                                                };
-                                                acc.push_str(&format!(
-                                                    "{}{}{}{}",
-                                                    source, symbol, o.code_occurence, symbol
-                                                ));
-                                                acc
-                                            })
-                                            .lines()
-                                            .collect::<Vec<&str>>()
-                                            .iter()
-                                            .fold(String::from(""), |mut acc, element| {
-                                                acc.push_str(&format!(" {}{}", element, symbol));
-                                                acc
-                                            });
-                                        acc.push_str(&format!(
-                                            "{} [{}{}]{}{}",
-                                            local_key, symbol, fold_lines, symbol, o.code_occurence
-                                        ));
-                                        first = false;
-                                    }
-                                    false => {
-                                        acc = format!(
-                                            "{} [{}{}]",
-                                            local_key,
-                                            symbol,
-                                            acc.lines().collect::<Vec<&str>>().into_iter().fold(
-                                                String::from(""),
-                                                |mut acc_inner, element| {
-                                                    acc_inner.push_str(&format!(
+                                                        None => &cannot_get_source_handle,
+                                                    };
+                                                    acc.push_str(&format!(
+                                                        "{}{}{}{}",
+                                                        source, symbol, o.code_occurence, symbol
+                                                    ));
+                                                    acc
+                                                })
+                                                .lines()
+                                                .collect::<Vec<&str>>()
+                                                .iter()
+                                                .fold(String::from(""), |mut acc, element| {
+                                                    acc.push_str(&format!(
                                                         " {}{}",
                                                         element, symbol
                                                     ));
-                                                    acc_inner
-                                                }
-                                            )
-                                        );
+                                                    acc
+                                                });
+                                            acc.push_str(&format!(
+                                                "{} [{}{}]{}{}",
+                                                local_key,
+                                                symbol,
+                                                fold_lines,
+                                                symbol,
+                                                o.code_occurence
+                                            ));
+                                            first = false;
+                                        }
+                                        false => {
+                                            acc = format!(
+                                                "{} [{}{}]",
+                                                local_key,
+                                                symbol,
+                                                acc.lines()
+                                                    .collect::<Vec<&str>>()
+                                                    .into_iter()
+                                                    .fold(
+                                                        String::from(""),
+                                                        |mut acc_inner, element| {
+                                                            acc_inner.push_str(&format!(
+                                                                " {}{}",
+                                                                element, symbol
+                                                            ));
+                                                            acc_inner
+                                                        }
+                                                    )
+                                            );
+                                        }
                                     }
-                                }
-                                acc
-                            })
+                                    acc
+                                });
+                        acccc.push_str(&format!("{}{}", handle, symbol));
                     }
                 }
-            })
-            .fold(String::from(""), |mut acc, element| {
-                acc.push_str(&format!("{}{}", element, symbol));
-                acc
+                acccc
             })
             .lines()
             .fold(String::from(""), |mut acc, element| {
@@ -421,16 +430,13 @@ impl OneWrapperError {
                 acc
             });
         let mut prepared_log = format!("[{}{}]{}", symbol, lined, symbol);
-        match additions_all.is_empty() {
-            true => (),
-            false => {
-                additions_all.into_iter().for_each(|value| {
-                    prepared_log.push_str(&format!("{}{}", value.code_occurence, symbol));
-                });
-            }
+        if let false = additions_all.is_empty() {
+            additions_all.into_iter().for_each(|value| {
+                prepared_log.push_str(&format!("{}{}", value.code_occurence, symbol));
+            });
         }
         prepared_log.push_str(&self.get_code_occurence_as_string(config));
-        log_type.console(&config.get_error_color_bold(), prepared_log)
+        log_type.console(&config.get_error_color_bold(), prepared_log);
     }
 }
 
