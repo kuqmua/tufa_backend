@@ -189,128 +189,136 @@ impl OneWrapperError {
                 let cannot_get_source_handle = String::from("cannot get source");
                 let log_type = config.get_log_type();
                 let symbol = log_type.symbol();
-                let mut lined = additions_partial
-                    .iter_mut()
-                    .fold(String::from(""), |mut acccc, o| {
-                        let vec_of_origins = o
-                            .source
-                            .iter()
-                            .fold(
-                                Vec::with_capacity(
-                                    o.source
-                                        .iter()
-                                        .map(|v| v.len())
-                                        .collect::<Vec<usize>>()
-                                        .iter()
-                                        .sum(),
-                                ),
-                                |mut acc, v| {
-                                    v.iter().for_each(|(source, _vec)| {
-                                        originals.iter().for_each(|a| {
-                                            let mut contains = false;
-                                            for v in &a.source {
-                                                let mut inner_contains = false;
-                                                for (s, vec) in v {
-                                                    if let true = source == s {
-                                                        inner_contains = true;
+                let mut lined =
+                    additions_partial
+                        .iter_mut()
+                        .fold(String::from(""), |mut acccc, o| {
+                            let vec_of_origins = o
+                                .source
+                                .iter()
+                                .fold(
+                                    Vec::with_capacity(
+                                        o.source
+                                            .iter()
+                                            .map(|v| v.len())
+                                            .collect::<Vec<usize>>()
+                                            .iter()
+                                            .sum(),
+                                    ),
+                                    |mut acc, v| {
+                                        v.iter().for_each(|(source, _vec)| {
+                                            originals.iter().for_each(|a| {
+                                                let mut contains = false;
+                                                for v in &a.source {
+                                                    let mut inner_contains = false;
+                                                    for (s, vec) in v {
+                                                        if let true = source == s {
+                                                            inner_contains = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                    if let true = inner_contains {
+                                                        contains = true;
                                                         break;
                                                     }
                                                 }
-                                                if let true = inner_contains {
-                                                    contains = true;
+                                                if let true = contains {
+                                                    acc.push(a.clone());
+                                                }
+                                            });
+                                        });
+                                        acc
+                                    },
+                                )
+                                .into_iter()
+                                .unique()
+                                .collect::<Vec<SourceAndCodeOccurenceAsString>>();
+                            o.source.iter_mut().for_each(|mut v| {
+                                v.iter_mut().for_each(|(source, vec)| {
+                                    let mut equals = None;
+                                    if let Some(additions_all_first_element) = additions_all.get(0)
+                                    {
+                                        for vv in &additions_all_first_element.source {
+                                            let mut contains = None;
+                                            for (source_in_all, vec_in_all) in vv {
+                                                if let true = source == source_in_all {
+                                                    contains = Some(vec_in_all);
                                                     break;
                                                 }
                                             }
-                                            if let true = contains {
-                                                acc.push(a.clone());
-                                            }
-                                        });
-                                    });
-                                    acc
-                                },
-                            )
-                            .into_iter()
-                            .unique()
-                            .collect::<Vec<SourceAndCodeOccurenceAsString>>();
-                        o.source.iter_mut().for_each(|mut v| {
-                            v.iter_mut().for_each(|(source, vec)| {
-                                let mut equals = None;
-                                if let Some(additions_all_first_element) = additions_all.get(0) {
-                                    for vv in &additions_all_first_element.source {
-                                        let mut contains = None;
-                                        for (source_in_all, vec_in_all) in vv {
-                                            if let true = source == source_in_all {
-                                                contains = Some(vec_in_all);
+                                            if let Some(vf) = contains {
+                                                equals = Some(vf);
                                                 break;
                                             }
                                         }
-                                        if let Some(vf) = contains {
-                                            equals = Some(vf);
-                                            break;
-                                        }
                                     }
-                                }
-                                if let Some(mut vvv) = equals {
-                                    //not sure about ordering
-                                    vvv.iter().for_each(|vvve| {
-                                        if let false = vec.contains(vvve) {
-                                            vec.push(vvve.clone());
-                                        }
-                                    });
-                                }
-                            });
-                        });
-                        let (mut local_sources, mut local_keys) =
-                            o.source
-                                .iter()
-                                .fold((Vec::new(), Vec::new()), |mut acc, v| {
-                                    v.iter().for_each(|(source, vecc)| {
-                                        acc.0.push(source);
-                                        vecc.iter().for_each(|ve| {
-                                            acc.1.push(ve.clone());
+                                    if let Some(mut vvv) = equals {
+                                        //not sure about ordering
+                                        vvv.iter().for_each(|vvve| {
+                                            if let false = vec.contains(vvve) {
+                                                vec.push(vvve.clone());
+                                            }
                                         });
-                                    });
-                                    acc
+                                    }
                                 });
-                        local_sources = local_sources.into_iter().unique().collect();
-                        local_keys = local_keys.into_iter().unique().collect();
-                        match local_keys.is_empty() {
-                            true => {
-                                let fold_original_source_lines =
-                                    vec_of_origins.iter().fold(String::from(""), |mut acc, o| {
-                                        let source = match o.source.first() {
-                                            Some(first_element) => match first_element.first() {
-                                                Some(first_inner_element) => &first_inner_element.0,
-                                                None => &cannot_get_source_handle,
-                                            },
-                                            None => &cannot_get_source_handle,
-                                        };
-                                        acc.push_str(&format!(
-                                            " {}{} {}{}",
-                                            source, symbol, o.code_occurence, symbol
-                                        ));
+                            });
+                            let (mut local_sources, mut local_keys) =
+                                o.source
+                                    .iter()
+                                    .fold((Vec::new(), Vec::new()), |mut acc, v| {
+                                        v.iter().for_each(|(source, vecc)| {
+                                            acc.0.push(source);
+                                            vecc.iter().for_each(|ve| {
+                                                acc.1.push(ve.clone());
+                                            });
+                                        });
                                         acc
                                     });
-                                acccc.push_str(&format!(
-                                    "[{}{}]{}{}{}",
-                                    symbol,
-                                    fold_original_source_lines,
-                                    symbol,
-                                    o.code_occurence,
-                                    symbol
-                                ))
-                            }
-                            false => {
-                                let mut first = true;
-                                let handle = local_keys.into_iter().fold(
-                                    String::from(""),
-                                    |mut acc, local_key| {
-                                        match first {
-                                            true => {
-                                                let fold_lines = vec_of_origins.iter().fold(
-                                                    String::from(""),
-                                                    |mut acc, o| {
-                                                        let source = match o.source.first() {
+                            local_sources = local_sources.into_iter().unique().collect();
+                            local_keys = local_keys.into_iter().unique().collect();
+                            match local_keys.is_empty() {
+                                true => {
+                                    let fold_original_source_lines = vec_of_origins.iter().fold(
+                                        String::from(""),
+                                        |mut acc, o| {
+                                            let source = match o.source.first() {
+                                                Some(first_element) => {
+                                                    match first_element.first() {
+                                                        Some(first_inner_element) => {
+                                                            &first_inner_element.0
+                                                        }
+                                                        None => &cannot_get_source_handle,
+                                                    }
+                                                }
+                                                None => &cannot_get_source_handle,
+                                            };
+                                            acc.push_str(&format!(
+                                                "  {}{}  {}{}",
+                                                source, symbol, o.code_occurence, symbol
+                                            ));
+                                            acc
+                                        },
+                                    );
+                                    acccc.push_str(&format!(
+                                        " [{}{} ]{} {}{}",
+                                        symbol,
+                                        fold_original_source_lines,
+                                        symbol,
+                                        o.code_occurence,
+                                        symbol
+                                    ))
+                                }
+                                false => {
+                                    let mut first = true;
+                                    let handle = local_keys.into_iter().fold(
+                                        String::from(""),
+                                        |mut acc, local_key| {
+                                            match first {
+                                                true => {
+                                                    let fold_lines = vec_of_origins.iter().fold(
+                                                        String::from(""),
+                                                        |mut acc, o| {
+                                                            let source = match o.source.first() {
                                                             Some(first_element) => {
                                                                 match first_element.first() {
                                                                     Some(first_inner_element) => {
@@ -323,60 +331,55 @@ impl OneWrapperError {
                                                             }
                                                             None => &cannot_get_source_handle,
                                                         };
-                                                        acc.push_str(&format!(
-                                                            " {}{} {}{}",
-                                                            source,
-                                                            symbol,
-                                                            o.code_occurence,
-                                                            symbol
-                                                        ));
-                                                        acc
-                                                    },
-                                                );
-                                                acc.push_str(&format!(
-                                                    "{} [{}{}]{}{}",
-                                                    local_key,
-                                                    symbol,
-                                                    fold_lines,
-                                                    symbol,
-                                                    o.code_occurence
-                                                ));
-                                                first = false;
+                                                            acc.push_str(&format!(
+                                                                "  {}{}  {}{}",
+                                                                source,
+                                                                symbol,
+                                                                o.code_occurence,
+                                                                symbol
+                                                            ));
+                                                            acc
+                                                        },
+                                                    );
+                                                    acc.push_str(&format!(
+                                                        " {} [{}{} ]{} {}",
+                                                        local_key,
+                                                        symbol,
+                                                        fold_lines,
+                                                        symbol,
+                                                        o.code_occurence
+                                                    ));
+                                                    first = false;
+                                                }
+                                                false => {
+                                                    acc = format!(
+                                                        " {} [{}{} ]",
+                                                        local_key,
+                                                        symbol,
+                                                        acc.lines()
+                                                            .collect::<Vec<&str>>()
+                                                            .into_iter()
+                                                            .fold(
+                                                                String::from(""),
+                                                                |mut acc_inner, element| {
+                                                                    acc_inner.push_str(&format!(
+                                                                        " {}{}",
+                                                                        element, symbol
+                                                                    ));
+                                                                    acc_inner
+                                                                }
+                                                            )
+                                                    );
+                                                }
                                             }
-                                            false => {
-                                                acc = format!(
-                                                    "{} [{}{}]",
-                                                    local_key,
-                                                    symbol,
-                                                    acc.lines()
-                                                        .collect::<Vec<&str>>()
-                                                        .into_iter()
-                                                        .fold(
-                                                            String::from(""),
-                                                            |mut acc_inner, element| {
-                                                                acc_inner.push_str(&format!(
-                                                                    " {}{}",
-                                                                    element, symbol
-                                                                ));
-                                                                acc_inner
-                                                            }
-                                                        )
-                                                );
-                                            }
-                                        }
-                                        acc
-                                    },
-                                );
-                                acccc.push_str(&format!("{}{}", handle, symbol));
+                                            acc
+                                        },
+                                    );
+                                    acccc.push_str(&format!("{}{}", handle, symbol));
+                                }
                             }
-                        }
-                        acccc
-                    })
-                    .lines()
-                    .fold(String::from(""), |mut acc, element| {
-                        acc.push_str(&format!(" {}{}", element, symbol));
-                        acc
-                    });
+                            acccc
+                        });
                 let mut prepared_log = format!("[{}{}]{}", symbol, lined, symbol);
                 additions_all.into_iter().for_each(|value| {
                     prepared_log.push_str(&format!("{}{}", value.code_occurence, symbol));
