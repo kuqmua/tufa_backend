@@ -70,14 +70,9 @@ impl OneWrapperError {
         new_vec
     }
     pub fn log(&self, config: &tufa_common::config_mods::config_struct::ConfigStruct) {
-        let log_type = config.get_log_type();
-        let symbol = log_type.symbol();
         let mut code_occurence_as_string_vec = self
             .source
-            .get_inner_source_and_code_occurence_as_string(config)
-            .into_iter()
-            .unique() //todo - optimize it
-            .collect::<Vec<SourceAndCodeOccurenceAsString>>();
+            .get_inner_source_and_code_occurence_as_string(config);
         if let Some(last) = code_occurence_as_string_vec.last() {
             if let true = last.increment == 0 {
                 let (mut sources_all, mut keys_all) =
@@ -192,6 +187,8 @@ impl OneWrapperError {
                 additions_all.sort_by(|a, b| b.increment.cmp(&a.increment));
                 let additions_partial_len = additions_partial.len();
                 let cannot_get_source_handle = String::from("cannot get source");
+                let log_type = config.get_log_type();
+                let symbol = log_type.symbol();
                 let mut lined = additions_partial
                     .iter_mut()
                     .fold(String::from(""), |mut acccc, o| {
@@ -398,11 +395,9 @@ impl OneWrapperError {
                         acc
                     });
                 let mut prepared_log = format!("[{}{}]{}", symbol, lined, symbol);
-                if let false = additions_all.is_empty() {
-                    additions_all.into_iter().for_each(|value| {
-                        prepared_log.push_str(&format!("{}{}", value.code_occurence, symbol));
-                    });
-                }
+                additions_all.into_iter().for_each(|value| {
+                    prepared_log.push_str(&format!("{}{}", value.code_occurence, symbol));
+                });
                 prepared_log.push_str(&self.get_code_occurence_as_string(config));
                 log_type.console(&config.get_error_color_bold(), prepared_log);
             }
