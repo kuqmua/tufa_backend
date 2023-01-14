@@ -262,20 +262,15 @@ impl OneWrapperError {
                                     }
                                 });
                             });
-                            let (mut local_sources, mut local_keys) =
-                                o.source
-                                    .iter()
-                                    .fold((Vec::new(), Vec::new()), |mut acc, v| {
-                                        v.iter().for_each(|(source, vecc)| {
-                                            acc.0.push(source);
-                                            vecc.iter().for_each(|ve| {
-                                                acc.1.push(ve.clone());
-                                            });
-                                        });
-                                        acc
+                            let mut local_keys = o.source.iter().fold(Vec::new(), |mut acc, v| {
+                                v.iter().for_each(|(source, vecc)| {
+                                    vecc.iter().for_each(|ve| {
+                                        acc.push(ve.clone());
                                     });
-                            local_sources = local_sources.into_iter().unique().collect();
-                            local_keys = local_keys.into_iter().unique().collect();
+                                });
+                                acc
+                            });
+                            local_keys = local_keys.into_iter().unique().collect(); //todo - optimize it
                             match local_keys.is_empty() {
                                 true => {
                                     let fold_original_source_lines = vec_of_origins.iter().fold(
