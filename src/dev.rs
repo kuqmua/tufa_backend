@@ -279,60 +279,39 @@ impl OneWrapperError {
                 acc.push((o, vec_of_origins));
                 acc
             })
-            .into_iter()
-            .fold(
-                Vec::with_capacity(additions_partial_len),
-                |mut acc, (mut part, origins)| {
-                    let origins_stack = part.source.iter().fold(
-                        Vec::with_capacity(part.source.len()),
-                        |mut accc, v| {
-                            accc.push(v.iter().fold(
-                                Vec::with_capacity(v.len()),
-                                |mut acc, (source, vec)| {
-                                    let mut equals = None;
-                                    if let Some(additions_all_first_element) = additions_all.get(0)
-                                    {
-                                        for vv in &additions_all_first_element.source {
-                                            let mut contains = None;
-                                            for (source_in_all, vec_in_all) in vv {
-                                                if let true = source == source_in_all {
-                                                    contains = Some(vec_in_all);
-                                                    break;
-                                                }
-                                            }
-                                            if let Some(vf) = contains {
-                                                equals = Some(vf);
-                                                break;
-                                            }
-                                        }
+            //
+            .iter_mut()
+            .map(|(part, origins)| {
+                part.source.iter_mut().for_each(|mut v| {
+                    v.iter_mut().for_each(|(source, vec)| {
+                        let mut equals = None;
+                        if let Some(additions_all_first_element) = additions_all.get(0) {
+                            for vv in &additions_all_first_element.source {
+                                let mut contains = None;
+                                for (source_in_all, vec_in_all) in vv {
+                                    if let true = source == source_in_all {
+                                        contains = Some(vec_in_all);
+                                        break;
                                     }
-                                    match equals {
-                                        Some(mut vvv) => {
-                                            let mut difference = vec.clone();
-                                            //not sure about ordering
-                                            vvv.iter().for_each(|vvve| {
-                                                if let false = difference.contains(vvve) {
-                                                    difference.push(vvve.clone());
-                                                }
-                                            });
-                                            acc.push((source.clone(), difference));
-                                        }
-                                        None => {
-                                            acc.push((source.clone(), vec.clone()));
-                                        }
-                                    }
-                                    acc
-                                },
-                            ));
-                            accc
-                        },
-                    );
-                    part.source = origins_stack;
-                    acc.push((part, origins));
-                    acc
-                },
-            )
-            .into_iter()
+                                }
+                                if let Some(vf) = contains {
+                                    equals = Some(vf);
+                                    break;
+                                }
+                            }
+                        }
+                        if let Some(mut vvv) = equals {
+                            //not sure about ordering
+                            vvv.iter().for_each(|vvve| {
+                                if let false = vec.contains(vvve) {
+                                    vec.push(vvve.clone());
+                                }
+                            });
+                        }
+                    });
+                });
+                (part, origins)
+            })
             .fold(
                 Vec::with_capacity(additions_partial_len),
                 |mut accc, (source, origins_vec)| {
