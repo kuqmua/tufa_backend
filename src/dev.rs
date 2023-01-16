@@ -4,6 +4,7 @@ use itertools::Itertools;
 use tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString;
 use tufa_common::dev::ThreeWrapperError;
 use tufa_common::traits::code_path::CodePath;
+use tufa_common::traits::config_log::ConfigLog;
 use tufa_common::traits::console::Console;
 use tufa_common::traits::fields::GetLogType;
 use tufa_common::traits::fields::GetSourcePlaceType;
@@ -194,8 +195,7 @@ impl OneWrapperError {
                         source: String::from("cannot get source"),
                         uuid: uuid::Uuid::new_v4(),
                     };
-                let log_type = config.get_log_type();
-                let symbol = log_type.symbol();
+                let symbol = config.symbol();
                 let lined = additions_partial
                     .iter_mut()
                     .fold(String::from(""), |mut acccc, o| {
@@ -379,7 +379,7 @@ impl OneWrapperError {
                     prepared_log.push_str(&format!("{}{}", value.code_occurence, symbol));
                 });
                 prepared_log.push_str(&self.get_code_occurence_as_string(config));
-                log_type.console(&config.get_error_color_bold(), prepared_log);
+                config.log(prepared_log);
             }
         }
     }
