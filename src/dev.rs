@@ -42,7 +42,12 @@ impl OneWrapperError {
         config: &tufa_common::config_mods::config_struct::ConfigStruct, //todo maybe remove
     ) -> Vec<tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString> {
         let vec = self.get_inner_source_and_code_occurence_as_string(config);
-        let mut sources_for_tracing: Vec<Vec<(String, Vec<String>)>> = Vec::with_capacity(
+        let mut sources_for_tracing: Vec<
+            Vec<(
+                tufa_common::common::source_and_code_occurence::Source,
+                Vec<tufa_common::common::source_and_code_occurence::Key>,
+            )>,
+        > = Vec::with_capacity(
             vec.iter()
                 .map(|e| e.source.len())
                 .collect::<Vec<usize>>()
@@ -73,6 +78,7 @@ impl OneWrapperError {
         let mut code_occurence_as_string_vec = self
             .source
             .get_inner_source_and_code_occurence_as_string(config);
+        println!("{:#?}", code_occurence_as_string_vec);
         if let Some(last) = code_occurence_as_string_vec.last() {
             if let true = last.increment == 0 {
                 let (mut sources_all, mut keys_all) =
@@ -88,9 +94,9 @@ impl OneWrapperError {
                             acc
                         });
                 sources_all = sources_all.into_iter().unique().collect(); //todo - optimize it?
-                sources_all.sort();
+                sources_all.sort_by(|a, b| b.uuid.cmp(&a.uuid));
                 keys_all = keys_all.into_iter().unique().collect(); //todo - optimize it?
-                keys_all.sort();
+                keys_all.sort_by(|a, b| b.uuid.cmp(&a.uuid));
                 let sources_all_len = sources_all.len();
                 let keys_all_len = keys_all.len();
                 let (mut originals, mut additions_partial, mut additions_all) =
@@ -136,7 +142,7 @@ impl OneWrapperError {
                                         },
                                     );
                                     local_sources = local_sources.into_iter().unique().collect(); //todo - optimize it?
-                                    local_sources.sort();
+                                    local_sources.sort_by(|a, b| b.uuid.cmp(&a.uuid));
                                     local_keys = local_keys.into_iter().unique().collect(); //todo - optimize it?
                                     if let (true, true) = (
                                         sources_all_len == local_sources.len(),
@@ -186,7 +192,11 @@ impl OneWrapperError {
                     );
                 additions_all.sort_by(|a, b| b.increment.cmp(&a.increment));
                 let additions_partial_len = additions_partial.len();
-                let cannot_get_source_handle = String::from("cannot get source");
+                let cannot_get_source_handle =
+                    tufa_common::common::source_and_code_occurence::Source {
+                        source: String::from("cannot get source"),
+                        uuid: uuid::Uuid::new_v4(),
+                    };
                 let log_type = config.get_log_type();
                 let symbol = log_type.symbol();
                 let mut lined =
@@ -289,7 +299,7 @@ impl OneWrapperError {
                                             };
                                             acc.push_str(&format!(
                                                 "  {}{}  {}{}",
-                                                source, symbol, o.code_occurence, symbol
+                                                source.source, symbol, o.code_occurence, symbol
                                             ));
                                             acc
                                         },
@@ -328,7 +338,7 @@ impl OneWrapperError {
                                                         };
                                                             acc.push_str(&format!(
                                                                 "  {}{}  {}{}",
-                                                                source,
+                                                                source.source,
                                                                 symbol,
                                                                 o.code_occurence,
                                                                 symbol
@@ -338,7 +348,7 @@ impl OneWrapperError {
                                                     );
                                                     acc.push_str(&format!(
                                                         " {} [{}{} ]{} {}",
-                                                        local_key,
+                                                        local_key.key,
                                                         symbol,
                                                         fold_lines,
                                                         symbol,
@@ -349,7 +359,7 @@ impl OneWrapperError {
                                                 false => {
                                                     acc = format!(
                                                         " {} [{}{} ]",
-                                                        local_key,
+                                                        local_key.key,
                                                         symbol,
                                                         acc.lines()
                                                             .collect::<Vec<&str>>()
