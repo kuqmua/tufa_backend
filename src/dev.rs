@@ -13,12 +13,30 @@ use tufa_common::traits::separator_symbol::SeparatorSymbol;
 
 pub fn dev() {
     let _f = one(true);
+    if let Err(e) = _f {
+        println!("{}", e);
+    }
 }
 
 #[derive(Debug)]
 pub struct OneWrapperError {
     source: OneWrapperErrorEnum,
     code_occurence: tufa_common::common::code_occurence::CodeOccurenceOldWay,
+}
+
+impl std::fmt::Display for OneWrapperError {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        let config =
+            once_cell::sync::Lazy::force(&crate::global_variables::runtime::config::CONFIG);
+        write!(
+            f,
+            "{}{}{}",
+            self.source,
+            config.symbol(),
+            self.code_occurence
+                .get_code_path(config.get_source_place_type())
+        )
+    }
 }
 
 impl OneWrapperError {
@@ -390,6 +408,14 @@ pub enum OneWrapperErrorEnum {
     ThreeWrapper(ThreeWrapperError),
 }
 
+impl std::fmt::Display for OneWrapperErrorEnum {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            OneWrapperErrorEnum::ThreeWrapper(e) => write!(f, "{}", e),
+        }
+    }
+}
+
 impl OneWrapperErrorEnum {
     fn get_source_as_string(
         &self,
@@ -422,8 +448,6 @@ impl OneWrapperErrorEnum {
 
 pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
     if let Err(e) = tufa_common::dev::three(false) {
-        println!("{}", e);
-        println!("-----------");
         let f = OneWrapperError {
             source: OneWrapperErrorEnum::ThreeWrapper(*e),
             code_occurence: tufa_common::common::code_occurence::CodeOccurenceOldWay {
