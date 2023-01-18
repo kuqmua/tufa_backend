@@ -422,6 +422,8 @@ impl OneWrapperErrorEnum {
 
 pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
     if let Err(e) = tufa_common::dev::three(false) {
+        println!("{}", e);
+        println!("-----------");
         let f = OneWrapperError {
             source: OneWrapperErrorEnum::ThreeWrapper(*e),
             code_occurence: tufa_common::common::code_occurence::CodeOccurenceOldWay {
