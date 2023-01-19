@@ -38,7 +38,7 @@ impl std::fmt::Display for OneWrapperError {
             chrono::DateTime::<chrono::Utc>::from(
                 std::time::UNIX_EPOCH + self.code_occurence.time_file_line_column.time,
             )
-            .with_timezone(&chrono::FixedOffset::east_opt(3 * 3600).unwrap())
+            .with_timezone(&chrono::FixedOffset::east_opt(config.timezone).unwrap())
             .format("%Y-%m-%d %H:%M:%S")
             .to_string()
         )
