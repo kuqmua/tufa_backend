@@ -8,6 +8,7 @@ use tufa_common::traits::config_log::ConfigLog;
 use tufa_common::traits::console::Console;
 use tufa_common::traits::fields::GetLogType;
 use tufa_common::traits::fields::GetSourcePlaceType;
+use tufa_common::traits::get_code_occurence::GetCodeOccurenceAsString;
 use tufa_common::traits::get_color::ErrorColorBold;
 use tufa_common::traits::separator_symbol::SeparatorSymbol;
 
@@ -44,6 +45,25 @@ impl std::fmt::Display for OneWrapperError {
         )
     }
 }
+
+// impl tufa_common::traits::get_code_occurence::GetCodeOccurenceAsString for OneWrapperError {
+//     fn get_code_occurence_as_string(
+//         &self,
+//         config: &crate::config_mods::config_struct::ConfigStruct,
+//     ) -> String {
+//         format!(
+//             "{} {}",
+//             self.code_occurence
+//                 .get_code_path(config.get_source_place_type()),
+//             chrono::DateTime::<chrono::Utc>::from(
+//                 std::time::UNIX_EPOCH + self.code_occurence.time_file_line_column.time,
+//             )
+//             .with_timezone(&chrono::FixedOffset::east_opt(config.timezone).unwrap())
+//             .format("%Y-%m-%d %H:%M:%S")
+//             .to_string()
+//         )
+//     }
+// }
 
 impl OneWrapperError {
     pub fn get_source_as_string(
