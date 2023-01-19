@@ -30,11 +30,17 @@ impl std::fmt::Display for OneWrapperError {
             once_cell::sync::Lazy::force(&crate::global_variables::runtime::config::CONFIG);
         write!(
             f,
-            "{}{}{}",
+            "{}{}{} {}",
             self.source,
             config.symbol(),
             self.code_occurence
-                .get_code_path(config.get_source_place_type())
+                .get_code_path(config.get_source_place_type()),
+            chrono::DateTime::<chrono::Utc>::from(
+                std::time::UNIX_EPOCH + self.code_occurence.time_file_line_column.time,
+            )
+            .with_timezone(&chrono::FixedOffset::east_opt(3 * 3600).unwrap())
+            .format("%Y-%m-%d %H:%M:%S")
+            .to_string()
         )
     }
 }
