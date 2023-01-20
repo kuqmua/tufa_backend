@@ -5,6 +5,7 @@ use tufa_common::traits::code_path::CodePath;
 use tufa_common::traits::config_log::ConfigLog;
 use tufa_common::traits::fields::GetSourcePlaceType;
 use tufa_common::traits::get_code_occurence::GetCodeOccurenceAsString;
+use tufa_common::traits::get_inner_source_and_code_occurence_vec::GetInnerSourceAndCodeOccurenceVec;
 use tufa_common::traits::separator_symbol::SeparatorSymbol;
 
 pub fn dev() {
@@ -61,14 +62,20 @@ where
     }
 }
 
-impl OneWrapperError {
-    pub fn get_inner_source_and_code_occurence_as_string(
+impl<ConfigGeneric>
+    tufa_common::traits::get_inner_source_and_code_occurence_vec::GetInnerSourceAndCodeOccurenceVec<
+        ConfigGeneric,
+    > for OneWrapperError
+where
+    ConfigGeneric: tufa_common::traits::fields::GetTimezone
+        + tufa_common::traits::fields::GetLogType
+        + tufa_common::traits::fields::GetSourcePlaceType,
+{
+    fn get_inner_source_and_code_occurence_vec(
         &self,
-        config: &tufa_common::config_mods::config_struct::ConfigStruct, //todo maybe remove
+        config: &ConfigGeneric,
     ) -> Vec<tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString> {
-        let vec = self
-            .source
-            .get_inner_source_and_code_occurence_as_string(config);
+        let vec = self.source.get_inner_source_and_code_occurence_vec(config);
         let mut sources_for_tracing: Vec<
             Vec<(
                 tufa_common::common::source_and_code_occurence::Source,
@@ -101,10 +108,12 @@ impl OneWrapperError {
         );
         new_vec
     }
+}
+
+impl OneWrapperError {
     pub fn log(&self, config: &tufa_common::config_mods::config_struct::ConfigStruct) {
-        let code_occurence_as_string_vec = self
-            .source
-            .get_inner_source_and_code_occurence_as_string(config);
+        let code_occurence_as_string_vec =
+            self.source.get_inner_source_and_code_occurence_vec(config);
         if let Some(last) = code_occurence_as_string_vec.last() {
             if let true = last.increment == 0 {
                 let (mut sources_all, mut keys_all) =
@@ -451,14 +460,22 @@ where
     }
 }
 
-impl OneWrapperErrorEnum {
-    pub fn get_inner_source_and_code_occurence_as_string(
+impl<ConfigGeneric>
+    tufa_common::traits::get_inner_source_and_code_occurence_vec::GetInnerSourceAndCodeOccurenceVec<
+        ConfigGeneric,
+    > for OneWrapperErrorEnum
+where
+    ConfigGeneric: tufa_common::traits::fields::GetTimezone
+        + tufa_common::traits::fields::GetLogType
+        + tufa_common::traits::fields::GetSourcePlaceType,
+{
+    fn get_inner_source_and_code_occurence_vec(
         &self,
-        config: &tufa_common::config_mods::config_struct::ConfigStruct,
+        config: &ConfigGeneric,
     ) -> Vec<tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsString> {
         match self {
             OneWrapperErrorEnum::ThreeWrapper(i) => {
-                i.get_inner_source_and_code_occurence_as_string(config)
+                i.get_inner_source_and_code_occurence_vec(config)
             }
         }
     }
