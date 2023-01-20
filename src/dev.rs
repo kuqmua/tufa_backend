@@ -5,11 +5,8 @@ use tufa_common::common::source_and_code_occurence::SourceAndCodeOccurenceAsStri
 use tufa_common::dev::ThreeWrapperError;
 use tufa_common::traits::code_path::CodePath;
 use tufa_common::traits::config_log::ConfigLog;
-use tufa_common::traits::console::Console;
-use tufa_common::traits::fields::GetLogType;
 use tufa_common::traits::fields::GetSourcePlaceType;
 use tufa_common::traits::get_code_occurence::GetCodeOccurenceAsString;
-use tufa_common::traits::get_color::ErrorColorBold;
 use tufa_common::traits::separator_symbol::SeparatorSymbol;
 
 pub fn dev() {
@@ -46,36 +43,24 @@ impl std::fmt::Display for OneWrapperError {
     }
 }
 
-// impl tufa_common::traits::get_code_occurence::GetCodeOccurenceAsString for OneWrapperError {
-//     fn get_code_occurence_as_string(
-//         &self,
-//         config: &crate::config_mods::config_struct::ConfigStruct,
-//     ) -> String {
-//         format!(
-//             "{} {}",
-//             self.code_occurence
-//                 .get_code_path(config.get_source_place_type()),
-//             chrono::DateTime::<chrono::Utc>::from(
-//                 std::time::UNIX_EPOCH + self.code_occurence.time_file_line_column.time,
-//             )
-//             .with_timezone(&chrono::FixedOffset::east_opt(config.timezone).unwrap())
-//             .format("%Y-%m-%d %H:%M:%S")
-//             .to_string()
-//         )
-//     }
-// }
-
-impl OneWrapperError {
-    pub fn get_source_as_string(
-        &self,
-        config: &tufa_common::config_mods::config_struct::ConfigStruct,
-    ) -> String {
+impl<ConfigGeneric> tufa_common::traits::get_source::GetSourceAsString<ConfigGeneric>
+    for OneWrapperError
+where
+    ConfigGeneric: tufa_common::traits::fields::GetLogType
+        + tufa_common::traits::fields::GetSourcePlaceType
+        + tufa_common::traits::fields::GetTimezone,
+{
+    fn get_source_as_string(&self, config: &ConfigGeneric) -> String {
         self.source.get_source_as_string(config)
     }
-    pub fn get_code_occurence_as_string(
-        &self,
-        config: &tufa_common::config_mods::config_struct::ConfigStruct,
-    ) -> String {
+}
+
+impl<ConfigGeneric> GetCodeOccurenceAsString<ConfigGeneric> for OneWrapperError
+where
+    ConfigGeneric:
+        tufa_common::traits::fields::GetTimezone + tufa_common::traits::fields::GetSourcePlaceType,
+{
+    fn get_code_occurence_as_string(&self, config: &ConfigGeneric) -> String {
         format!(
             "{} {}",
             self.code_occurence
@@ -83,11 +68,14 @@ impl OneWrapperError {
             chrono::DateTime::<chrono::Utc>::from(
                 std::time::UNIX_EPOCH + self.code_occurence.time_file_line_column.time,
             )
-            .with_timezone(&chrono::FixedOffset::east_opt(config.timezone).unwrap())
+            .with_timezone(&chrono::FixedOffset::east_opt(*config.get_timezone()).unwrap())
             .format("%Y-%m-%d %H:%M:%S")
             .to_string()
         )
     }
+}
+
+impl OneWrapperError {
     pub fn get_inner_source_and_code_occurence_as_string(
         &self,
         config: &tufa_common::config_mods::config_struct::ConfigStruct, //todo maybe remove
@@ -451,24 +439,33 @@ impl std::fmt::Display for OneWrapperErrorEnum {
     }
 }
 
-impl OneWrapperErrorEnum {
-    fn get_source_as_string(
-        &self,
-        config: &tufa_common::config_mods::config_struct::ConfigStruct,
-    ) -> String {
+impl<ConfigGeneric> tufa_common::traits::get_source::GetSourceAsString<ConfigGeneric>
+    for OneWrapperErrorEnum
+where
+    ConfigGeneric: tufa_common::traits::fields::GetLogType
+        + tufa_common::traits::fields::GetSourcePlaceType
+        + tufa_common::traits::fields::GetTimezone,
+{
+    fn get_source_as_string(&self, config: &ConfigGeneric) -> String {
         match self {
-            //todo if origin - without config, if wrapper - with config
             OneWrapperErrorEnum::ThreeWrapper(i) => i.get_source_as_string(config),
         }
     }
-    fn get_code_occurence_as_string(
-        &self,
-        config: &tufa_common::config_mods::config_struct::ConfigStruct,
-    ) -> String {
+}
+
+impl<ConfigGeneric> GetCodeOccurenceAsString<ConfigGeneric> for OneWrapperErrorEnum
+where
+    ConfigGeneric:
+        tufa_common::traits::fields::GetTimezone + tufa_common::traits::fields::GetSourcePlaceType,
+{
+    fn get_code_occurence_as_string(&self, config: &ConfigGeneric) -> String {
         match self {
             OneWrapperErrorEnum::ThreeWrapper(i) => i.get_code_occurence_as_string(config),
         }
     }
+}
+
+impl OneWrapperErrorEnum {
     pub fn get_inner_source_and_code_occurence_as_string(
         &self,
         config: &tufa_common::config_mods::config_struct::ConfigStruct,
