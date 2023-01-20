@@ -18,14 +18,6 @@ pub struct OneWrapperError {
     code_occurence: tufa_common::common::code_occurence::CodeOccurenceOldWay,
 }
 
-impl tufa_common::traits::get_code_occurence::GetCodeOccurenceOldWay for OneWrapperError {
-    fn get_code_occurence_old_way(
-        &self,
-    ) -> &tufa_common::common::code_occurence::CodeOccurenceOldWay {
-        &self.code_occurence
-    }
-}
-
 impl std::fmt::Display for OneWrapperError {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         let config =
@@ -56,6 +48,14 @@ where
 {
     fn get_source_as_string(&self, config: &ConfigGeneric) -> String {
         self.source.get_source_as_string(config)
+    }
+}
+
+impl tufa_common::traits::get_code_occurence::GetCodeOccurenceOldWay for OneWrapperError {
+    fn get_code_occurence_old_way(
+        &self,
+    ) -> &tufa_common::common::code_occurence::CodeOccurenceOldWay {
+        &self.code_occurence
     }
 }
 
