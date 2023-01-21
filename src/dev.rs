@@ -35,7 +35,8 @@ impl<ConfigGeneric> tufa_common::traits::get_source::GetSourceAsString<ConfigGen
 where
     ConfigGeneric: tufa_common::traits::fields::GetLogType
         + tufa_common::traits::fields::GetSourcePlaceType
-        + tufa_common::traits::fields::GetTimezone,
+        + tufa_common::traits::fields::GetTimezone
+        + tufa_common::traits::fields::GetServerPort,
 {
     fn get_source_as_string(&self, config: &ConfigGeneric) -> String {
         self.source.get_source_as_string(config)
@@ -57,7 +58,8 @@ impl<ConfigGeneric>
 where
     ConfigGeneric: tufa_common::traits::fields::GetTimezone
         + tufa_common::traits::fields::GetLogType
-        + tufa_common::traits::fields::GetSourcePlaceType,
+        + tufa_common::traits::fields::GetSourcePlaceType
+        + tufa_common::traits::fields::GetServerPort,
 {
     fn get_inner_source_and_code_occurence_vec(
         &self,
@@ -116,7 +118,8 @@ impl<ConfigGeneric> tufa_common::traits::get_source::GetSourceAsString<ConfigGen
 where
     ConfigGeneric: tufa_common::traits::fields::GetLogType
         + tufa_common::traits::fields::GetSourcePlaceType
-        + tufa_common::traits::fields::GetTimezone,
+        + tufa_common::traits::fields::GetTimezone
+        + tufa_common::traits::fields::GetServerPort,
 {
     fn get_source_as_string(&self, config: &ConfigGeneric) -> String {
         match self {
@@ -127,8 +130,9 @@ where
 
 impl<ConfigGeneric> GetCodeOccurenceAsString<ConfigGeneric> for OneWrapperErrorEnum
 where
-    ConfigGeneric:
-        tufa_common::traits::fields::GetTimezone + tufa_common::traits::fields::GetSourcePlaceType,
+    ConfigGeneric: tufa_common::traits::fields::GetTimezone
+        + tufa_common::traits::fields::GetSourcePlaceType
+        + tufa_common::traits::fields::GetServerPort,
 {
     fn get_code_occurence_as_string(&self, config: &ConfigGeneric) -> String {
         match self {
@@ -144,7 +148,8 @@ impl<ConfigGeneric>
 where
     ConfigGeneric: tufa_common::traits::fields::GetTimezone
         + tufa_common::traits::fields::GetLogType
-        + tufa_common::traits::fields::GetSourcePlaceType,
+        + tufa_common::traits::fields::GetSourcePlaceType
+        + tufa_common::traits::fields::GetServerPort,
 {
     fn get_inner_source_and_code_occurence_vec(
         &self,
