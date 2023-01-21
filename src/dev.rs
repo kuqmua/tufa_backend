@@ -1,7 +1,5 @@
 use tufa_common::dev::ThreeWrapperError;
-use tufa_common::traits::code_path::CodePath;
 use tufa_common::traits::error_log::ErrorLog;
-use tufa_common::traits::fields::GetSourcePlaceType;
 use tufa_common::traits::get_code_occurence::GetCodeOccurenceAsString;
 use tufa_common::traits::separator_symbol::SeparatorSymbol;
 
@@ -24,10 +22,12 @@ impl std::fmt::Display for OneWrapperError {
             once_cell::sync::Lazy::force(&crate::global_variables::runtime::config::CONFIG);
         write!(
             f,
-            "{}{}{}",
+            "{}{}{} host: {:?} pid: {}",
             self.source,
             config.symbol(),
-            self.get_code_occurence_as_string(config)
+            self.get_code_occurence_as_string(config),
+            gethostname::gethostname(),
+            std::process::id()
         )
     }
 }
