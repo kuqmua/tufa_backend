@@ -22,11 +22,10 @@ impl std::fmt::Display for OneWrapperError {
             once_cell::sync::Lazy::force(&crate::global_variables::runtime::config::CONFIG);
         write!(
             f,
-            "{}{}{} host: {:?}",
+            "{}{}{}",
             self.source,
             config.symbol(),
             self.get_code_occurence_as_string(config),
-            gethostname::gethostname(),
         )
     }
 }
