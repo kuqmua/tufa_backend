@@ -22,12 +22,11 @@ impl std::fmt::Display for OneWrapperError {
             once_cell::sync::Lazy::force(&crate::global_variables::runtime::config::CONFIG);
         write!(
             f,
-            "{}{}{} host: {:?} pid: {}",
+            "{}{}{} host: {:?}",
             self.source,
             config.symbol(),
             self.get_code_occurence_as_string(config),
             gethostname::gethostname(),
-            std::process::id()
         )
     }
 }
@@ -166,7 +165,7 @@ pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
             source: OneWrapperErrorEnum::ThreeWrapper(*e),
             code_occurence: tufa_common::common::code_occurence::CodeOccurenceOldWay {
                 git_info: once_cell::sync::Lazy::force(&crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES).clone(),
-                time_file_line_column: tufa_common::common::time_file_line_column::TimeFileLineColumn::new_file_line_column(
+                pid_time_file_line_column: tufa_common::common::pid_time_file_line_column::PidTimeFileLineColumn::new_file_line_column(
                     String::from(file!()),
                     line!(),
                     column!(),
