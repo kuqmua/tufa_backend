@@ -1,3 +1,4 @@
+use serde::{Deserialize, Serialize};
 use tufa_common::dev::ThreeWrapperError;
 use tufa_common::traits::get_code_occurence::GetCodeOccurenceAsString;
 use tufa_common::traits::separator_symbol::SeparatorSymbol;
@@ -9,7 +10,7 @@ pub fn dev() {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct OneWrapperError {
     source: OneWrapperErrorEnum,
     code_occurence: tufa_common::common::code_occurence::CodeOccurenceOldWay,
@@ -54,7 +55,7 @@ impl tufa_common::traits::get_code_occurence::GetCodeOccurenceOldWay for OneWrap
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub enum OneWrapperErrorEnum {
     ThreeWrapper(ThreeWrapperError),
 }
