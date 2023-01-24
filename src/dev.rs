@@ -176,6 +176,7 @@ pub fn one(should_trace: bool) -> Result<(), Box<OneWrapperError>> {
                 ),
             }
         };
+        //start removing trait ErrorLog
         f.log(once_cell::sync::Lazy::force(
             &crate::global_variables::runtime::config::CONFIG,
         ));
