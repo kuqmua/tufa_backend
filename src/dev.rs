@@ -100,14 +100,12 @@ pub fn one() -> Result<(), Box<OneWrapperError>> {
     if let Err(e) = tufa_common::dev::three() {
         return Err(Box::new(OneWrapperError {
             source: OneWrapperErrorEnum::ThreeWrapper(*e),
-            code_occurence: tufa_common::common::code_occurence::CodeOccurenceOldWay {
-                git_info: once_cell::sync::Lazy::force(&crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES).clone(),
-                pid_hostname_time_file_line_column: tufa_common::common::pid_hostname_time_file_line_column::PidHostnameTimeFileLineColumn::new_file_line_column(
+            code_occurence: tufa_common::common::code_occurence::CodeOccurenceOldWay::new(
+                once_cell::sync::Lazy::force(&crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES).clone(),
                     String::from(file!()),
                     line!(),
                     column!(),
-                ),
-            }
+                )
         }));
     }
     Ok(())
