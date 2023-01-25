@@ -10,7 +10,7 @@ pub fn dev() {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Error)]
 pub struct OneWrapperError {
     source: OneWrapperErrorEnum,
     code_occurence: tufa_common::common::code_occurence::CodeOccurenceOldWay,
@@ -55,7 +55,7 @@ impl tufa_common::traits::get_code_occurence::GetCodeOccurenceOldWay for OneWrap
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Error)]
 pub enum OneWrapperErrorEnum {
     ThreeWrapper(ThreeWrapperError),
 }
