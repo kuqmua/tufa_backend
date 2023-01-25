@@ -102,7 +102,7 @@ pub fn one() -> Result<(), Box<OneWrapperError>> {
             source: OneWrapperErrorEnum::ThreeWrapper(*e),
             code_occurence: tufa_common::common::code_occurence::CodeOccurenceOldWay {
                 git_info: once_cell::sync::Lazy::force(&crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES).clone(),
-                pid_time_file_line_column: tufa_common::common::pid_time_file_line_column::PidTimeFileLineColumn::new_file_line_column(
+                pid_hostname_time_file_line_column: tufa_common::common::pid_hostname_time_file_line_column::PidHostnameTimeFileLineColumn::new_file_line_column(
                     String::from(file!()),
                     line!(),
                     column!(),
