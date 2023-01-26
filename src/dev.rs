@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use thiserror::Error;
 use tufa_common::dev::ThreeWrapperError;
 use tufa_common::traits::get_code_occurence::GetCodeOccurenceAsString;
 use tufa_common::traits::separator_symbol::SeparatorSymbol;
