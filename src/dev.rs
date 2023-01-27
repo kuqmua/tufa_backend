@@ -2,7 +2,6 @@ use serde::{Deserialize, Serialize};
 use thiserror::Error;
 use tufa_common::dev::ThreeWrapperError;
 use tufa_common::traits::get_code_occurence::GetCodeOccurenceAsString;
-use tufa_common::traits::separator_symbol::SeparatorSymbol;
 
 pub fn dev() {
     let _f = one();
@@ -26,25 +25,17 @@ impl std::fmt::Display for OneWrapperError {
             f,
             "{}",
             config.get_error_color_bold().paint(format!(
-                "{}{}{}",
+                "{}\n{}",
                 self.source,
-                config.symbol(),
-                self.get_code_occurence_as_string(config),
+                self.get_code_occurence_as_string(),
             ))
         )
     }
 }
 
-impl<ConfigGeneric> tufa_common::traits::get_source::GetSourceAsString<ConfigGeneric>
-    for OneWrapperError
-where
-    ConfigGeneric: tufa_common::traits::fields::GetLogType
-        + tufa_common::traits::fields::GetSourcePlaceType
-        + tufa_common::traits::fields::GetTimezone
-        + tufa_common::traits::get_server_address::GetServerAddress,
-{
-    fn get_source_as_string(&self, config: &ConfigGeneric) -> String {
-        self.source.get_source_as_string(config)
+impl tufa_common::traits::get_source::GetSourceAsString for OneWrapperError {
+    fn get_source_as_string(&self) -> String {
+        self.source.get_source_as_string()
     }
 }
 
@@ -69,30 +60,18 @@ impl std::fmt::Display for OneWrapperErrorEnum {
     }
 }
 
-impl<ConfigGeneric> tufa_common::traits::get_source::GetSourceAsString<ConfigGeneric>
-    for OneWrapperErrorEnum
-where
-    ConfigGeneric: tufa_common::traits::fields::GetLogType
-        + tufa_common::traits::fields::GetSourcePlaceType
-        + tufa_common::traits::fields::GetTimezone
-        + tufa_common::traits::get_server_address::GetServerAddress,
-{
-    fn get_source_as_string(&self, config: &ConfigGeneric) -> String {
+impl tufa_common::traits::get_source::GetSourceAsString for OneWrapperErrorEnum {
+    fn get_source_as_string(&self) -> String {
         match self {
-            OneWrapperErrorEnum::ThreeWrapper(i) => i.get_source_as_string(config),
+            OneWrapperErrorEnum::ThreeWrapper(i) => i.get_source_as_string(),
         }
     }
 }
 
-impl<ConfigGeneric> GetCodeOccurenceAsString<ConfigGeneric> for OneWrapperErrorEnum
-where
-    ConfigGeneric: tufa_common::traits::fields::GetTimezone
-        + tufa_common::traits::fields::GetSourcePlaceType
-        + tufa_common::traits::get_server_address::GetServerAddress,
-{
-    fn get_code_occurence_as_string(&self, config: &ConfigGeneric) -> String {
+impl GetCodeOccurenceAsString for OneWrapperErrorEnum {
+    fn get_code_occurence_as_string(&self) -> String {
         match self {
-            OneWrapperErrorEnum::ThreeWrapper(i) => i.get_code_occurence_as_string(config),
+            OneWrapperErrorEnum::ThreeWrapper(i) => i.get_code_occurence_as_string(),
         }
     }
 }
