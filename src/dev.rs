@@ -47,22 +47,6 @@ where
     }
 }
 
-impl<ConfigGeneric> GetSourceAsString<ConfigGeneric> for OneWrapperError
-where
-    ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
-        + tufa_common::traits::fields::GetTimezone
-        + tufa_common::traits::get_server_address::GetServerAddress,
-{
-    fn get_source_as_string(&self, config: &ConfigGeneric) -> String {
-        match self {
-            OneWrapperError::Something {
-                source,
-                code_occurence,
-            } => source.get_source_as_string(config),
-        }
-    }
-}
-
 impl tufa_common::traits::get_code_occurence::GetCodeOccurenceOldWay for OneWrapperError {
     fn get_code_occurence_old_way(
         &self,
@@ -92,20 +76,6 @@ where
     fn to_string_handle(&self, config: &ConfigGeneric) -> String {
         match self {
             OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_handle(config),
-        }
-    }
-}
-
-impl<ConfigGeneric> tufa_common::traits::get_source::GetSourceAsString<ConfigGeneric>
-    for OneWrapperErrorEnum
-where
-    ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
-        + tufa_common::traits::fields::GetTimezone
-        + tufa_common::traits::get_server_address::GetServerAddress,
-{
-    fn get_source_as_string(&self, config: &ConfigGeneric) -> String {
-        match self {
-            OneWrapperErrorEnum::ThreeWrapper(i) => i.get_source_as_string(config),
         }
     }
 }
