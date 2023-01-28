@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 use thiserror::Error;
 use tufa_common::dev::ThreeWrapperError;
 use tufa_common::traits::get_code_occurence::GetCodeOccurenceAsString;
+use tufa_common::traits::get_source::GetSourceAsString;
 
 pub fn dev() {
     let _f = one();
@@ -21,21 +22,36 @@ impl std::fmt::Display for OneWrapperError {
         use tufa_common::traits::get_color::ErrorColorBold;
         let config =
             once_cell::sync::Lazy::force(&crate::global_variables::runtime::config::CONFIG);
-        write!(
-            f,
-            "{}",
-            config.get_error_color_bold().paint(format!(
-                "{}\n{}",
-                self.source,
-                self.get_code_occurence_as_string(),
-            ))
-        )
+        write!(f, "{}", self.source)
     }
 }
 
-impl tufa_common::traits::get_source::GetSourceAsString for OneWrapperError {
-    fn get_source_as_string(&self) -> String {
-        self.source.get_source_as_string()
+// impl std::fmt::Display for OneWrapperError {
+//     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+//         use tufa_common::traits::get_color::ErrorColorBold;
+//         let config =
+//             once_cell::sync::Lazy::force(&crate::global_variables::runtime::config::CONFIG);
+//         write!(
+//             f,
+//             "{}",
+//             config.get_error_color_bold().paint(format!(
+//                 "{}\n{}",
+//                 self.source,
+//                 self.get_code_occurence_as_string(),
+//             ))
+//         )
+//     }
+// }
+
+impl<ConfigGeneric> GetSourceAsString<ConfigGeneric> for OneWrapperError
+where
+    ConfigGeneric: tufa_common::traits::fields::GetLogType
+        + tufa_common::traits::fields::GetSourcePlaceType
+        + tufa_common::traits::fields::GetTimezone
+        + tufa_common::traits::get_server_address::GetServerAddress,
+{
+    fn get_source_as_string(&self, config: &ConfigGeneric) -> String {
+        self.source.get_source_as_string(config)
     }
 }
 
@@ -60,18 +76,30 @@ impl std::fmt::Display for OneWrapperErrorEnum {
     }
 }
 
-impl tufa_common::traits::get_source::GetSourceAsString for OneWrapperErrorEnum {
-    fn get_source_as_string(&self) -> String {
+impl<ConfigGeneric> tufa_common::traits::get_source::GetSourceAsString<ConfigGeneric>
+    for OneWrapperErrorEnum
+where
+    ConfigGeneric: tufa_common::traits::fields::GetLogType
+        + tufa_common::traits::fields::GetSourcePlaceType
+        + tufa_common::traits::fields::GetTimezone
+        + tufa_common::traits::get_server_address::GetServerAddress,
+{
+    fn get_source_as_string(&self, config: &ConfigGeneric) -> String {
         match self {
-            OneWrapperErrorEnum::ThreeWrapper(i) => i.get_source_as_string(),
+            OneWrapperErrorEnum::ThreeWrapper(i) => i.get_source_as_string(config),
         }
     }
 }
 
-impl GetCodeOccurenceAsString for OneWrapperErrorEnum {
-    fn get_code_occurence_as_string(&self) -> String {
+impl<ConfigGeneric> GetCodeOccurenceAsString<ConfigGeneric> for OneWrapperErrorEnum
+where
+    ConfigGeneric: tufa_common::traits::fields::GetTimezone
+        + tufa_common::traits::fields::GetSourcePlaceType
+        + tufa_common::traits::get_server_address::GetServerAddress,
+{
+    fn get_code_occurence_as_string(&self, config: &ConfigGeneric) -> String {
         match self {
-            OneWrapperErrorEnum::ThreeWrapper(i) => i.get_code_occurence_as_string(),
+            OneWrapperErrorEnum::ThreeWrapper(i) => i.get_code_occurence_as_string(config),
         }
     }
 }
