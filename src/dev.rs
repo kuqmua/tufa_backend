@@ -9,7 +9,7 @@ use tufa_common::traits::get_source::GetSourceAsString;
 pub fn dev() {
     let _f = one();
     if let Err(e) = _f {
-        // println!("{}", e);
+        println!("{}", e);
         e.error_log(once_cell::sync::Lazy::force(
             &crate::global_variables::runtime::config::CONFIG,
         ));
@@ -68,15 +68,8 @@ impl tufa_common::traits::get_code_occurence::GetCodeOccurenceOldWay for OneWrap
 
 #[derive(Debug, Serialize, Deserialize, Error)]
 pub enum OneWrapperErrorEnum {
+    #[error("{0}")]
     ThreeWrapper(ThreeWrapperError),
-}
-
-impl std::fmt::Display for OneWrapperErrorEnum {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match self {
-            OneWrapperErrorEnum::ThreeWrapper(e) => write!(f, "{}", e),
-        }
-    }
 }
 
 impl<ConfigGeneric> tufa_common::traits::error_display::ToStringHandle<ConfigGeneric>
