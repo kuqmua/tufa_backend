@@ -45,8 +45,7 @@ impl std::fmt::Display for OneWrapperError {
 
 impl<ConfigGeneric> GetSourceAsString<ConfigGeneric> for OneWrapperError
 where
-    ConfigGeneric: tufa_common::traits::fields::GetLogType
-        + tufa_common::traits::fields::GetSourcePlaceType
+    ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
         + tufa_common::traits::fields::GetTimezone
         + tufa_common::traits::get_server_address::GetServerAddress,
 {
@@ -79,8 +78,7 @@ impl std::fmt::Display for OneWrapperErrorEnum {
 impl<ConfigGeneric> tufa_common::traits::get_source::GetSourceAsString<ConfigGeneric>
     for OneWrapperErrorEnum
 where
-    ConfigGeneric: tufa_common::traits::fields::GetLogType
-        + tufa_common::traits::fields::GetSourcePlaceType
+    ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
         + tufa_common::traits::fields::GetTimezone
         + tufa_common::traits::get_server_address::GetServerAddress,
 {
