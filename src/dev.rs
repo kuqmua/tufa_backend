@@ -3,7 +3,8 @@ use thiserror::Error;
 use tufa_common::dev::ThreeWrapperError;
 use tufa_common::traits::error_display::ToStringHandle;
 use tufa_common::traits::error_log::ErrorLog;
-use tufa_common::traits::get_code_occurence::GetCodeOccurenceAsString;
+use tufa_common::traits::get_code_occurence::GetCodeOccurenceOldWay;
+use tufa_common::traits::error_display::ToStringHandleCodeOccurence;
 use tufa_common::traits::get_source::GetSourceAsString;
 
 pub fn dev() {
@@ -40,7 +41,7 @@ where
             } => format!(
                 "{}\n{}",
                 source.to_string_handle(config),
-                self.get_code_occurence_as_string(config),
+                self.get_code_occurence_old_way().to_string_handle_code_occurence(config),
             ),
         }
     }
@@ -109,15 +110,11 @@ where
     }
 }
 
-impl<ConfigGeneric> GetCodeOccurenceAsString<ConfigGeneric> for OneWrapperErrorEnum
-where
-    ConfigGeneric: tufa_common::traits::fields::GetTimezone
-        + tufa_common::traits::fields::GetSourcePlaceType
-        + tufa_common::traits::get_server_address::GetServerAddress,
+impl tufa_common::traits::get_code_occurence::GetCodeOccurenceOldWay for OneWrapperErrorEnum
 {
-    fn get_code_occurence_as_string(&self, config: &ConfigGeneric) -> String {
+    fn get_code_occurence_old_way(&self) -> &tufa_common::common::code_occurence::CodeOccurenceOldWay {
         match self {
-            OneWrapperErrorEnum::ThreeWrapper(i) => i.get_code_occurence_as_string(config),
+            OneWrapperErrorEnum::ThreeWrapper(i) => i.get_code_occurence_old_way(),
         }
     }
 }
