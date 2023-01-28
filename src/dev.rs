@@ -31,24 +31,6 @@ impl std::fmt::Display for OneWrapperError {
     }
 }
 
-impl<ConfigGeneric> tufa_common::traits::error_log::ErrorLog<ConfigGeneric> for OneWrapperError
-where
-    ConfigGeneric: tufa_common::traits::get_color::ErrorColorBold
-        + tufa_common::traits::fields::GetServerPort
-        + tufa_common::traits::fields::GetSourcePlaceType
-        + tufa_common::traits::fields::GetTimezone
-        + tufa_common::traits::fields::GetServerIp,
-{
-    fn error_log(&self, config: &ConfigGeneric) {
-        eprintln!(
-            "{}",
-            config
-                .get_error_color_bold()
-                .paint(self.to_string_handle(config))
-        );
-    }
-}
-
 impl<ConfigGeneric> tufa_common::traits::error_display::ToStringHandle<ConfigGeneric>
     for OneWrapperError
 where
