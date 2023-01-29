@@ -4,7 +4,6 @@ use tufa_common::dev::ThreeWrapperError;
 use tufa_common::traits::to_string_with_config::ToStringWithConfig;
 use tufa_common::traits::error_log::ErrorLog;
 use tufa_common::traits::get_code_occurence::GetCodeOccurence;
-use tufa_common::traits::error_display::ToStringHandleCodeOccurence;
 
 pub fn dev() {
     let _f = one();
@@ -40,7 +39,7 @@ where
             } => format!(
                 "{}\n{}",
                 source.to_string_with_config(config),
-                self.get_code_occurence().to_string_handle_code_occurence(config),
+                self.get_code_occurence().to_string_with_config(config),
             ),
         }
     }
