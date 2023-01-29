@@ -3,7 +3,7 @@ use thiserror::Error;
 use tufa_common::dev::ThreeWrapperError;
 use tufa_common::traits::error_display::ToStringHandle;
 use tufa_common::traits::error_log::ErrorLog;
-use tufa_common::traits::get_code_occurence::GetCodeOccurenceOldWay;
+use tufa_common::traits::get_code_occurence::GetCodeOccurence;
 use tufa_common::traits::error_display::ToStringHandleCodeOccurence;
 
 pub fn dev() {
@@ -21,7 +21,7 @@ pub enum OneWrapperError {
     #[error("{source}\n{code_occurence}")]
     Something {
         source: OneWrapperErrorEnum,
-        code_occurence: tufa_common::common::code_occurence::CodeOccurenceOldWay,
+        code_occurence: tufa_common::common::code_occurence::CodeOccurence,
     },
 }
 
@@ -40,16 +40,16 @@ where
             } => format!(
                 "{}\n{}",
                 source.to_string_handle(config),
-                self.get_code_occurence_old_way().to_string_handle_code_occurence(config),
+                self.get_code_occurence().to_string_handle_code_occurence(config),
             ),
         }
     }
 }
 
-impl tufa_common::traits::get_code_occurence::GetCodeOccurenceOldWay for OneWrapperError {
-    fn get_code_occurence_old_way(
+impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperError {
+    fn get_code_occurence(
         &self,
-    ) -> &tufa_common::common::code_occurence::CodeOccurenceOldWay {
+    ) -> &tufa_common::common::code_occurence::CodeOccurence {
         match self {
             OneWrapperError::Something {
                 source,
@@ -79,11 +79,11 @@ where
     }
 }
 
-impl tufa_common::traits::get_code_occurence::GetCodeOccurenceOldWay for OneWrapperErrorEnum
+impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperErrorEnum
 {
-    fn get_code_occurence_old_way(&self) -> &tufa_common::common::code_occurence::CodeOccurenceOldWay {
+    fn get_code_occurence(&self) -> &tufa_common::common::code_occurence::CodeOccurence {
         match self {
-            OneWrapperErrorEnum::ThreeWrapper(i) => i.get_code_occurence_old_way(),
+            OneWrapperErrorEnum::ThreeWrapper(i) => i.get_code_occurence(),
         }
     }
 }
@@ -92,7 +92,7 @@ pub fn one() -> Result<(), Box<OneWrapperError>> {
     if let Err(e) = tufa_common::dev::three() {
         return Err(Box::new(OneWrapperError::Something { 
             source: OneWrapperErrorEnum::ThreeWrapper(*e), 
-            code_occurence: tufa_common::common::code_occurence::CodeOccurenceOldWay::new(
+            code_occurence: tufa_common::common::code_occurence::CodeOccurence::new(
                 once_cell::sync::Lazy::force(&crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES).clone(),
                     String::from(file!()),
                     line!(),
