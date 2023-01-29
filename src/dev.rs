@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 use tufa_common::dev::ThreeWrapperError;
-use tufa_common::traits::error_display::ToStringHandle;
+use tufa_common::traits::error_to_string_with_config::ErrorToStringWithConfig;
 use tufa_common::traits::error_log::ErrorLog;
 use tufa_common::traits::get_code_occurence::GetCodeOccurence;
 use tufa_common::traits::error_display::ToStringHandleCodeOccurence;
@@ -25,21 +25,21 @@ pub enum OneWrapperError {
     },
 }
 
-impl<ConfigGeneric> tufa_common::traits::error_display::ToStringHandle<ConfigGeneric>
+impl<ConfigGeneric> tufa_common::traits::error_to_string_with_config::ErrorToStringWithConfig<ConfigGeneric>
     for OneWrapperError
 where
     ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
         + tufa_common::traits::fields::GetTimezone
         + tufa_common::traits::get_server_address::GetServerAddress,
 {
-    fn to_string_handle(&self, config: &ConfigGeneric) -> String {
+    fn error_to_string_with_config(&self, config: &ConfigGeneric) -> String {
         match self {
             OneWrapperError::Something {
                 source,
                 code_occurence,
             } => format!(
                 "{}\n{}",
-                source.to_string_handle(config),
+                source.error_to_string_with_config(config),
                 self.get_code_occurence().to_string_handle_code_occurence(config),
             ),
         }
@@ -65,16 +65,16 @@ pub enum OneWrapperErrorEnum {
     ThreeWrapper(ThreeWrapperError),
 }
 
-impl<ConfigGeneric> tufa_common::traits::error_display::ToStringHandle<ConfigGeneric>
+impl<ConfigGeneric> tufa_common::traits::error_to_string_with_config::ErrorToStringWithConfig<ConfigGeneric>
     for OneWrapperErrorEnum
 where
     ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
         + tufa_common::traits::fields::GetTimezone
         + tufa_common::traits::get_server_address::GetServerAddress,
 {
-    fn to_string_handle(&self, config: &ConfigGeneric) -> String {
+    fn error_to_string_with_config(&self, config: &ConfigGeneric) -> String {
         match self {
-            OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_handle(config),
+            OneWrapperErrorEnum::ThreeWrapper(i) => i.error_to_string_with_config(config),
         }
     }
 }
