@@ -4,6 +4,7 @@ use tufa_common::dev::ThreeWrapperError;
 use tufa_common::traits::to_string_with_config::ToStringWithConfig;
 use tufa_common::traits::error_log::ErrorLog;
 use tufa_common::traits::get_code_occurence::GetCodeOccurence;
+use tufa_common::traits::get_source::GetErrorWrapperSourceAsSting;
 
 pub fn dev() {
     let _f = one();
@@ -37,10 +38,23 @@ where
                 source,
                 code_occurence,
             } => format!(
-                "{}\n{}",
-                source.to_string_with_config(config),
+                "{}{}",
+                self.get_error_wrapper_source_as_string(config),
                 self.get_code_occurence().to_string_with_config(config),
             ),
+        }
+    }
+}
+
+impl<ConfigGeneric> tufa_common::traits::get_source::GetErrorWrapperSourceAsSting<ConfigGeneric> for OneWrapperError
+where
+    ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
+        + tufa_common::traits::fields::GetTimezone
+        + tufa_common::traits::get_server_address::GetServerAddress,
+{
+    fn get_error_wrapper_source_as_string(&self, config: &ConfigGeneric) -> String {
+        match self {
+            OneWrapperError::Something { source, code_occurence } => format!("{}\n", source.to_string_with_config(config)),
         }
     }
 }
