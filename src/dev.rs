@@ -33,16 +33,17 @@ where
         + tufa_common::traits::get_server_address::GetServerAddress,
 {
     fn to_string_with_config(&self, config: &ConfigGeneric) -> String {
-        match self {
-            OneWrapperError::Something {
-                source,
-                code_occurence,
-            } => format!(
-                "{}{}",
-                self.get_error_wrapper_source_as_string(config),
-                self.get_code_occurence().to_string_with_config(config),
-            ),
-        }
+        todo!()
+        // match self {
+        //     OneWrapperError::Something {
+        //         source,
+        //         code_occurence,
+        //     } => format!(
+        //         "{}{}",
+        //         self.get_error_wrapper_source_as_string(config),
+        //         self.get_code_occurence().to_string_with_config(config),
+        //     ),
+        // }
     }
 }
 
@@ -53,9 +54,10 @@ where
         + tufa_common::traits::get_server_address::GetServerAddress,
 {
     fn get_error_wrapper_source_as_string(&self, config: &ConfigGeneric) -> String {
-        match self {
-            OneWrapperError::Something { source, code_occurence } => format!("{}\n", source.to_string_with_config(config)),
-        }
+        todo!()
+        // match self {
+        //     OneWrapperError::Something { source, code_occurence } => format!("{}\n", source.to_string_with_config(config)),
+        // }
     }
 }
 
@@ -86,9 +88,10 @@ where
         + tufa_common::traits::get_server_address::GetServerAddress,
 {
     fn to_string_with_config(&self, config: &ConfigGeneric) -> String {
-        match self {
-            OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_with_config(config),
-        }
+        todo!()
+        // match self {
+        //     OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_with_config(config),
+        // }
     }
 }
 
