@@ -9,10 +9,10 @@ use tufa_common::traits::get_source::GetErrorWrapperSourceAsSting;
 pub fn dev() {
     let _f = one();
     if let Err(e) = _f {
-        println!("{}", e);
-        e.error_log(once_cell::sync::Lazy::force(
-            &crate::global_variables::runtime::config::CONFIG,
-        ));
+        // println!("{}", e);
+        // e.error_log(once_cell::sync::Lazy::force(
+        //     &crate::global_variables::runtime::config::CONFIG,
+        // ));
     }
 }
 
