@@ -5,59 +5,80 @@ use tufa_common::traits::to_string_with_config::ToStringWithConfig;
 use tufa_common::traits::error_log::ErrorLog;
 use tufa_common::traits::get_code_occurence::GetCodeOccurence;
 use tufa_common::traits::get_source::GetErrorWrapperSourceAsSting;
+use tufa_common::traits::to_string_without_config::ToStringWithoutConfig;
+use tufa_common::traits::to_string_with_config::SourceToStringWithConfig;
+use tufa_common::traits::to_string_without_config::SourceToStringWithoutConfig;
 
 pub fn dev() {
     let _f = one();
     if let Err(e) = _f {
-        // println!("{}", e);
-        // e.error_log(once_cell::sync::Lazy::force(
-        //     &crate::global_variables::runtime::config::CONFIG,
-        // ));
+        println!("{}", e);
+        e.error_log(once_cell::sync::Lazy::force(
+            &crate::global_variables::runtime::config::CONFIG,
+        ));
     }
 }
 
 #[derive(Debug, Serialize, Deserialize, Error)]
 pub enum OneWrapperError {
-    #[error("{source}\n{code_occurence}")]
+    // #[error("{source}\n{code_occurence}")]
     Something {
         source: OneWrapperErrorEnum,
         code_occurence: tufa_common::common::code_occurence::CodeOccurence,
     },
 }
 
-impl<ConfigGeneric> tufa_common::traits::to_string_with_config::ToStringWithConfig<ConfigGeneric>
-    for OneWrapperError
+//cannot make it with generics
+impl std::fmt::Display for OneWrapperError {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{}", self.to_string_without_config())
+    }
+}
+
+impl<ConfigGeneric> tufa_common::traits::to_string_with_config::ToStringWithConfig<ConfigGeneric> for OneWrapperError
 where
     ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
         + tufa_common::traits::fields::GetTimezone
         + tufa_common::traits::get_server_address::GetServerAddress,
 {
     fn to_string_with_config(&self, config: &ConfigGeneric) -> String {
-        todo!()
-        // match self {
-        //     OneWrapperError::Something {
-        //         source,
-        //         code_occurence,
-        //     } => format!(
-        //         "{}{}",
-        //         self.get_error_wrapper_source_as_string(config),
-        //         self.get_code_occurence().to_string_with_config(config),
-        //     ),
-        // }
+        format!(
+            "{}\n{}",
+            self.source_to_string_with_config(config),//- difference origin\wrapper, for origin source_to_string_with_config can be not implemented 
+            self.get_code_occurence().to_string_with_config(config),
+        )
     }
 }
 
-impl<ConfigGeneric> tufa_common::traits::get_source::GetErrorWrapperSourceAsSting<ConfigGeneric> for OneWrapperError
+impl tufa_common::traits::to_string_without_config::ToStringWithoutConfig for OneWrapperError
+{
+    fn to_string_without_config(&self) -> String {
+        format!(
+            "{}\n{}",
+            self.source_to_string_without_config(),
+            self.get_code_occurence()
+        )
+    }
+}
+
+impl<ConfigGeneric> tufa_common::traits::to_string_with_config::SourceToStringWithConfig<ConfigGeneric> for OneWrapperError 
 where
     ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
         + tufa_common::traits::fields::GetTimezone
         + tufa_common::traits::get_server_address::GetServerAddress,
 {
-    fn get_error_wrapper_source_as_string(&self, config: &ConfigGeneric) -> String {
-        todo!()
-        // match self {
-        //     OneWrapperError::Something { source, code_occurence } => format!("{}\n", source.to_string_with_config(config)),
-        // }
+    fn source_to_string_with_config(&self, config: &ConfigGeneric) -> String {
+        match self {
+            OneWrapperError::Something { source, code_occurence } => source.to_string_with_config(config),
+        }
+    }
+}
+
+impl tufa_common::traits::to_string_without_config::SourceToStringWithoutConfig for OneWrapperError {
+    fn source_to_string_without_config(&self) -> String {
+        match self {
+            OneWrapperError::Something { source, code_occurence } => source.to_string_without_config(),
+        }
     }
 }
 
@@ -76,33 +97,38 @@ impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperErr
 
 #[derive(Debug, Serialize, Deserialize, Error)]
 pub enum OneWrapperErrorEnum {
-    #[error("{0}")]
+    // #[error("{0}")]
     ThreeWrapper(ThreeWrapperError),
 }
 
-impl<ConfigGeneric> tufa_common::traits::to_string_with_config::ToStringWithConfig<ConfigGeneric>
-    for OneWrapperErrorEnum
+//
+impl std::fmt::Display for OneWrapperErrorEnum {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{}", self.to_string_without_config())
+    }
+}
+
+impl<ConfigGeneric> tufa_common::traits::to_string_with_config::ToStringWithConfig<ConfigGeneric> for OneWrapperErrorEnum 
 where
     ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
         + tufa_common::traits::fields::GetTimezone
         + tufa_common::traits::get_server_address::GetServerAddress,
 {
     fn to_string_with_config(&self, config: &ConfigGeneric) -> String {
-        todo!()
-        // match self {
-        //     OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_with_config(config),
-        // }
-    }
-}
-
-impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperErrorEnum
-{
-    fn get_code_occurence(&self) -> &tufa_common::common::code_occurence::CodeOccurence {
         match self {
-            OneWrapperErrorEnum::ThreeWrapper(i) => i.get_code_occurence(),
+            OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_with_config(config),
         }
     }
 }
+
+impl tufa_common::traits::to_string_without_config::ToStringWithoutConfig for OneWrapperErrorEnum {
+    fn to_string_without_config(&self) -> String {
+        match self {
+            OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_without_config(),
+        }
+    }
+}
+//
 
 pub fn one() -> Result<(), Box<OneWrapperError>> {
     if let Err(e) = tufa_common::dev::three() {
