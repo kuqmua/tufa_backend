@@ -21,7 +21,6 @@ pub fn dev() {
 
 #[derive(Debug, Serialize, Deserialize, Error)]
 pub enum OneWrapperError {
-    // #[error("{source}\n{code_occurence}")]
     Something {
         source: OneWrapperErrorEnum,
         code_occurence: tufa_common::common::code_occurence::CodeOccurence,
@@ -97,11 +96,9 @@ impl tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperErr
 
 #[derive(Debug, Serialize, Deserialize, Error)]
 pub enum OneWrapperErrorEnum {
-    // #[error("{0}")]
     ThreeWrapper(ThreeWrapperError),
 }
 
-//
 impl std::fmt::Display for OneWrapperErrorEnum {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         write!(f, "{}", self.to_string_without_config())
@@ -128,7 +125,6 @@ impl tufa_common::traits::to_string_without_config::ToStringWithoutConfig for On
         }
     }
 }
-//
 
 pub fn one() -> Result<(), Box<OneWrapperError>> {
     if let Err(e) = tufa_common::dev::three() {
