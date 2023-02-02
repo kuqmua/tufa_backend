@@ -26,37 +26,10 @@ pub enum OneWrapperError {
         code_occurence: tufa_common::common::code_occurence::CodeOccurence,
     },
 }
-
 //cannot make it with generics
 impl std::fmt::Display for OneWrapperError {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         write!(f, "{}", self.to_string_without_config())
-    }
-}
-
-impl<ConfigGeneric> tufa_common::traits::to_string_with_config::ToStringWithConfig<ConfigGeneric> for OneWrapperError
-where
-    ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
-        + tufa_common::traits::fields::GetTimezone
-        + tufa_common::traits::get_server_address::GetServerAddress,
-{
-    fn to_string_with_config(&self, config: &ConfigGeneric) -> String {
-        format!(
-            "{}\n{}",
-            self.source_to_string_with_config(config),//- difference origin\wrapper, for origin source_to_string_with_config can be not implemented 
-            self.get_code_occurence().to_string_with_config(config),
-        )
-    }
-}
-
-impl tufa_common::traits::to_string_without_config::ToStringWithoutConfig for OneWrapperError
-{
-    fn to_string_without_config(&self) -> String {
-        format!(
-            "{}\n{}",
-            self.source_to_string_without_config(),
-            self.get_code_occurence()
-        )
     }
 }
 
@@ -68,7 +41,7 @@ where
 {
     fn source_to_string_with_config(&self, config: &ConfigGeneric) -> String {
         match self {
-            OneWrapperError::Something { source, code_occurence } => source.to_string_with_config(config),
+            OneWrapperError::Something { source, code_occurence } => format!("{}\n", source.to_string_with_config(config)),
         }
     }
 }
@@ -76,7 +49,7 @@ where
 impl tufa_common::traits::to_string_without_config::SourceToStringWithoutConfig for OneWrapperError {
     fn source_to_string_without_config(&self) -> String {
         match self {
-            OneWrapperError::Something { source, code_occurence } => source.to_string_without_config(),
+            OneWrapperError::Something { source, code_occurence } => format!("{}\n", source.to_string_without_config()) ,
         }
     }
 }
