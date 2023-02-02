@@ -1,13 +1,7 @@
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 use tufa_common::dev::ThreeWrapperError;
-use tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfig;
 use tufa_common::traits::error_logs_logic::error_log::ErrorLog;
-use tufa_common::traits::get_code_occurence::GetCodeOccurence;
-use tufa_common::traits::get_source::GetErrorWrapperSourceAsSting;
-use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfig;
-use tufa_common::traits::error_logs_logic::to_string_with_config::SourceToStringWithConfig;
-use tufa_common::traits::error_logs_logic::to_string_without_config::SourceToStringWithoutConfig;
 
 pub fn dev() {
     let _f = one();
@@ -29,6 +23,7 @@ pub enum OneWrapperError {
 //cannot make it with generics
 impl std::fmt::Display for OneWrapperError {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfig;
         write!(f, "{}", self.to_string_without_config())
     }
 }
@@ -40,6 +35,7 @@ where
         + tufa_common::traits::get_server_address::GetServerAddress,
 {
     fn source_to_string_with_config(&self, config: &ConfigGeneric) -> String {
+        use tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfig;
         match self {
             OneWrapperError::Something { source, code_occurence } => source.to_string_with_config(config),
         }
@@ -48,6 +44,7 @@ where
 
 impl tufa_common::traits::error_logs_logic::to_string_without_config::SourceToStringWithoutConfig for OneWrapperError {
     fn source_to_string_without_config(&self) -> String {
+        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfig;
         match self {
             OneWrapperError::Something { source, code_occurence } => source.to_string_without_config(),
         }
@@ -74,6 +71,7 @@ pub enum OneWrapperErrorEnum {
 
 impl std::fmt::Display for OneWrapperErrorEnum {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfig;
         write!(f, "{}", self.to_string_without_config())
     }
 }
