@@ -41,7 +41,7 @@ where
 {
     fn source_to_string_with_config(&self, config: &ConfigGeneric) -> String {
         match self {
-            OneWrapperError::Something { source, code_occurence } => format!("{}\n", source.to_string_with_config(config)),
+            OneWrapperError::Something { source, code_occurence } => source.to_string_with_config(config),
         }
     }
 }
@@ -49,7 +49,7 @@ where
 impl tufa_common::traits::to_string_without_config::SourceToStringWithoutConfig for OneWrapperError {
     fn source_to_string_without_config(&self) -> String {
         match self {
-            OneWrapperError::Something { source, code_occurence } => format!("{}\n", source.to_string_without_config()) ,
+            OneWrapperError::Something { source, code_occurence } => source.to_string_without_config(),
         }
     }
 }
