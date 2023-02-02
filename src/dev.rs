@@ -1,13 +1,13 @@
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 use tufa_common::dev::ThreeWrapperError;
-use tufa_common::traits::to_string_with_config::ToStringWithConfig;
-use tufa_common::traits::error_log::ErrorLog;
+use tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfig;
+use tufa_common::traits::error_logs_logic::error_log::ErrorLog;
 use tufa_common::traits::get_code_occurence::GetCodeOccurence;
 use tufa_common::traits::get_source::GetErrorWrapperSourceAsSting;
-use tufa_common::traits::to_string_without_config::ToStringWithoutConfig;
-use tufa_common::traits::to_string_with_config::SourceToStringWithConfig;
-use tufa_common::traits::to_string_without_config::SourceToStringWithoutConfig;
+use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfig;
+use tufa_common::traits::error_logs_logic::to_string_with_config::SourceToStringWithConfig;
+use tufa_common::traits::error_logs_logic::to_string_without_config::SourceToStringWithoutConfig;
 
 pub fn dev() {
     let _f = one();
@@ -33,7 +33,7 @@ impl std::fmt::Display for OneWrapperError {
     }
 }
 
-impl<ConfigGeneric> tufa_common::traits::to_string_with_config::SourceToStringWithConfig<ConfigGeneric> for OneWrapperError 
+impl<ConfigGeneric> tufa_common::traits::error_logs_logic::to_string_with_config::SourceToStringWithConfig<ConfigGeneric> for OneWrapperError 
 where
     ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
         + tufa_common::traits::fields::GetTimezone
@@ -46,7 +46,7 @@ where
     }
 }
 
-impl tufa_common::traits::to_string_without_config::SourceToStringWithoutConfig for OneWrapperError {
+impl tufa_common::traits::error_logs_logic::to_string_without_config::SourceToStringWithoutConfig for OneWrapperError {
     fn source_to_string_without_config(&self) -> String {
         match self {
             OneWrapperError::Something { source, code_occurence } => source.to_string_without_config(),
@@ -78,7 +78,7 @@ impl std::fmt::Display for OneWrapperErrorEnum {
     }
 }
 
-impl<ConfigGeneric> tufa_common::traits::to_string_with_config::ToStringWithConfig<ConfigGeneric> for OneWrapperErrorEnum 
+impl<ConfigGeneric> tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfig<ConfigGeneric> for OneWrapperErrorEnum 
 where
     ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
         + tufa_common::traits::fields::GetTimezone
@@ -91,7 +91,7 @@ where
     }
 }
 
-impl tufa_common::traits::to_string_without_config::ToStringWithoutConfig for OneWrapperErrorEnum {
+impl tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfig for OneWrapperErrorEnum {
     fn to_string_without_config(&self) -> String {
         match self {
             OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_without_config(),
