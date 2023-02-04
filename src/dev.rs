@@ -20,7 +20,7 @@ pub enum OneWrapperError<'a> {
         #[serde(borrow)]
         inner_error: OneWrapperErrorEnum<'a>,
         #[serde(borrow)]
-        code_occurence: tufa_common::common::code_occurence::CodeOccurence<'a>,
+        code_occurence: tufa_common::common::code_occurence::CodeOccurenceLifetime<'a>,
     },
 }
 //cannot make it with generics
@@ -54,10 +54,10 @@ impl<'a> tufa_common::traits::error_logs_logic::source_to_string_without_config:
     }
 }
 
-impl<'a> tufa_common::traits::get_code_occurence::GetCodeOccurence for OneWrapperError<'a> {
+impl<'a> tufa_common::traits::get_code_occurence::GetCodeOccurenceLifetime for OneWrapperError<'a> {
     fn get_code_occurence(
         &self,
-    ) -> &tufa_common::common::code_occurence::CodeOccurence {
+    ) -> &tufa_common::common::code_occurence::CodeOccurenceLifetime {
         match self {
             OneWrapperError::Something {
                 inner_error,
@@ -111,7 +111,7 @@ pub fn one<'a>() -> Result<(), Box<OneWrapperError<'a>>> {
         return Err(Box::new(OneWrapperError::Something { 
             // source: OneWrapperErrorEnum::ThreeWrapper(*e), 
             inner_error: OneWrapperErrorEnum::EightWrapper(*e), 
-            code_occurence: tufa_common::common::code_occurence::CodeOccurence::new(
+            code_occurence: tufa_common::common::code_occurence::CodeOccurenceLifetime::new(
                 once_cell::sync::Lazy::force(&crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES).clone(),
                     file!(),
                     line!(),
