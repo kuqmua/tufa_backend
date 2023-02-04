@@ -28,7 +28,7 @@ impl std::fmt::Display for OneWrapperError {
     }
 }
 
-impl<ConfigGeneric> tufa_common::traits::error_logs_logic::to_string_with_config::SourceToStringWithConfig<ConfigGeneric> for OneWrapperError 
+impl<ConfigGeneric> tufa_common::traits::error_logs_logic::source_to_string_with_config::SourceToStringWithConfig<ConfigGeneric> for OneWrapperError 
 where
     ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
         + tufa_common::traits::fields::GetTimezone
@@ -42,7 +42,7 @@ where
     }
 }
 
-impl tufa_common::traits::error_logs_logic::to_string_without_config::SourceToStringWithoutConfig for OneWrapperError {
+impl tufa_common::traits::error_logs_logic::source_to_string_without_config::SourceToStringWithoutConfig for OneWrapperError {
     fn source_to_string_without_config(&self) -> String {
         use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfig;
         match self {
