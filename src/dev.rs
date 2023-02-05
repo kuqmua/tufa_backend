@@ -133,7 +133,7 @@ pub fn one<'a>() -> Result<(), Box<OneWrapperError<'a>>> {
             // source: OneWrapperErrorEnum::ThreeWrapper(*e),
             inner_error: OneWrapperErrorEnum::EightWrapper(*e),
             code_occurence: tufa_common::common::code_occurence::CodeOccurenceLifetime::new(
-                &crate::global_variables::compile_time::git_info::GIT_INFO,
+                crate::global_variables::compile_time::git_info::GIT_INFO.clone(),
                 // once_cell::sync::Lazy::force(&crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES).clone(),
                 file!(),
                 line!(),
