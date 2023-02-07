@@ -5,7 +5,9 @@ use tufa_common::dev::EightOriginError;
 // use tufa_common::traits::error_logs_logic::error_log::{ErrorLog, ErrorLogLifetime};
 use tufa_common::traits::error_logs_logic::error_log::ErrorLogLifetime;
 use tufa_common::traits::error_logs_logic::origin_to_string_with_config::OriginToStringWithConfigLifetime;
-use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetime;
+use tufa_common::traits::error_logs_logic::to_string_without_config::{
+    ToStringWithoutConfigLifetime, ToStringWithoutConfigLifetimeWithSerializeDeserialize,
+};
 
 pub fn dev() {
     let _f = one();
@@ -25,7 +27,7 @@ pub enum OneWrapperError<'a> {
         code_occurence: tufa_common::common::code_occurence::CodeOccurenceLifetime<'a>,
     },
 }
-//cannot make it with generics
+
 impl<'a> std::fmt::Display for OneWrapperError<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetime;
@@ -78,59 +80,72 @@ impl<'a> tufa_common::traits::get_code_occurence::GetCodeOccurenceLifetime<'a>
     }
 }
 
-// #[derive(Debug, Error, Serialize, Deserialize)]
-// pub enum OneWrapperErrorWithSerializeDeserialize<'a> {
-//     Something {
-//         inner_error: OneWrapperErrorEnumWithSerializeDeserialize<'a>,
-//         code_occurence:
-//             tufa_common::common::code_occurence::CodeOccurenceWithSerializeDeserialize<'a>,
-//     },
-// }
+#[derive(Debug, Error, Serialize, Deserialize)]
+pub enum OneWrapperErrorWithSerializeDeserialize<'a> {
+    Something {
+        inner_error: OneWrapperErrorEnumWithSerializeDeserialize<'a>,
+        #[serde(borrow)]
+        code_occurence:
+            tufa_common::common::code_occurence::CodeOccurenceLifetimeWithSerializeDeserialize<'a>,
+    },
+}
 
-// impl<'a, ConfigGeneric>
-//     tufa_common::traits::error_logs_logic::source_to_string_with_config::SourceToStringWithConfigLifetime<
-//         'a,
-//         ConfigGeneric,
-//     > for OneWrapperErrorWithSerializeDeserialize<'a>
-// where
-//     ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
-//         + tufa_common::traits::fields::GetTimezone
-//         + tufa_common::traits::get_server_address::GetServerAddress,
-// {
-//     fn source_to_string_with_config_lifetime(&self, config: &ConfigGeneric) -> String {
-//         use tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfigLifetime;
-//         match self {
-//             OneWrapperErrorWithSerializeDeserialize::Something {
-//                 inner_error,
-//                 code_occurence,
-//             } => inner_error.to_string_with_config_lifetime(config),
-//         }
-//     }
-// }
+impl<'a> std::fmt::Display for OneWrapperErrorWithSerializeDeserialize<'a> {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetimeWithSerializeDeserialize;
+        write!(
+            f,
+            "{}",
+            self.to_string_without_config_lifetime_with_serialize_deserialize()
+        )
+    }
+}
 
-// impl<'a> tufa_common::traits::error_logs_logic::source_to_string_without_config::SourceToStringWithoutConfigLifetime<'a> for OneWrapperErrorWithSerializeDeserialize<'a> {
-//     fn source_to_string_without_config_lifetime(&self) -> String {
-//         use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetime;
-//         match self {
-//             OneWrapperErrorWithSerializeDeserialize::Something { inner_error, code_occurence } => inner_error.to_string_without_config_lifetime(),
-//         }
-//     }
-// }
+impl<'a, ConfigGeneric>
+    tufa_common::traits::error_logs_logic::source_to_string_with_config::SourceToStringWithConfigLifetime<
+        'a,
+        ConfigGeneric,
+    > for OneWrapperErrorWithSerializeDeserialize<'a>
+where
+    ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
+        + tufa_common::traits::fields::GetTimezone
+        + tufa_common::traits::get_server_address::GetServerAddress,
+{
+    fn source_to_string_with_config_lifetime(&self, config: &ConfigGeneric) -> String {
+        use tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfigLifetime;
+        match self {
+            OneWrapperErrorWithSerializeDeserialize::Something {
+                inner_error,
+                code_occurence,
+            } => inner_error.to_string_with_config_lifetime(config),
+        }
+    }
+}
 
-// impl<'a> tufa_common::traits::get_code_occurence::GetCodeOccurenceLifetime<'a>
-//     for OneWrapperErrorWithSerializeDeserialize<'a>
-// {
-//     fn get_code_occurence_lifetime(
-//         &self,
-//     ) -> &tufa_common::common::code_occurence::CodeOccurenceLifetime {
-//         match self {
-//             OneWrapperErrorWithSerializeDeserialize::Something {
-//                 inner_error,
-//                 code_occurence,
-//             } => code_occurence,
-//         }
-//     }
-// }
+impl<'a> tufa_common::traits::error_logs_logic::source_to_string_without_config::SourceToStringWithoutConfigLifetime<'a> for OneWrapperErrorWithSerializeDeserialize<'a> {
+    fn source_to_string_without_config_lifetime(&self) -> String {
+        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetimeWithSerializeDeserialize;
+        match self {
+            OneWrapperErrorWithSerializeDeserialize::Something { inner_error, code_occurence } => inner_error.to_string_without_config_lifetime_with_serialize_deserialize(),
+        }
+    }
+}
+
+impl<'a>
+    tufa_common::traits::get_code_occurence::GetCodeOccurenceLifetimeWithSerializeDeserialize<'a>
+    for OneWrapperErrorWithSerializeDeserialize<'a>
+{
+    fn get_code_occurence_lifetime_with_serialize_deserialize(
+        &self,
+    ) -> &tufa_common::common::code_occurence::CodeOccurenceLifetimeWithSerializeDeserialize {
+        match self {
+            OneWrapperErrorWithSerializeDeserialize::Something {
+                inner_error,
+                code_occurence,
+            } => code_occurence,
+        }
+    }
+}
 
 #[derive(Debug, Error, Serialize)]
 pub enum OneWrapperErrorEnum<'a> {
@@ -177,54 +192,59 @@ impl<'a>
     }
 }
 
-// #[derive(Debug, Error, Serialize, Deserialize)]
-// pub enum OneWrapperErrorEnumWithSerializeDeserialize<'a> {
-//     // ThreeWrapper(ThreeWrapperError),
-//     EightWrapper(tufa_common::dev::EightOriginErrorWithSerializeDeserialize<'a>),
-// }
+#[derive(Debug, Serialize, Deserialize)] //Error,
+pub enum OneWrapperErrorEnumWithSerializeDeserialize<'a> {
+    // ThreeWrapper(ThreeWrapperError),
+    #[serde(borrow)]
+    EightWrapper(tufa_common::dev::EightOriginErrorWithSerializeDeserialize<'a>),
+}
 
-// impl<'a> std::fmt::Display for OneWrapperErrorEnumWithSerializeDeserialize<'a> {
-//     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-//         use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetime;
-//         write!(f, "{}", self.to_string_without_config_lifetime())
-//     }
-// }
+impl<'a> std::fmt::Display for OneWrapperErrorEnumWithSerializeDeserialize<'a> {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetime;
+        write!(
+            f,
+            "{}",
+            self.to_string_without_config_lifetime_with_serialize_deserialize()
+        )
+    }
+}
 
-// impl<'a, ConfigGeneric>
-//     tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfigLifetime<
-//         'a,
-//         ConfigGeneric,
-//     > for OneWrapperErrorEnumWithSerializeDeserialize<'a>
-// where
-//     ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
-//         + tufa_common::traits::fields::GetTimezone
-//         + tufa_common::traits::get_server_address::GetServerAddress,
-// {
-//     fn to_string_with_config_lifetime(&self, config: &ConfigGeneric) -> String {
-//         use tufa_common::traits::error_logs_logic::origin_to_string_with_config::OriginToStringWithConfigLifetime; //remove later, it was only for lifetimes test
-//         match self {
-//             // OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_with_config(config),
-//             OneWrapperErrorEnumWithSerializeDeserialize::EightWrapper(i) => {
-//                 i.origin_to_string_with_config_lifetime(config)
-//             }
-//         }
-//     }
-// }
+impl<'a, ConfigGeneric>
+    tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfigLifetime<
+        'a,
+        ConfigGeneric,
+    > for OneWrapperErrorEnumWithSerializeDeserialize<'a>
+where
+    ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
+        + tufa_common::traits::fields::GetTimezone
+        + tufa_common::traits::get_server_address::GetServerAddress,
+{
+    fn to_string_with_config_lifetime(&self, config: &ConfigGeneric) -> String {
+        use tufa_common::traits::error_logs_logic::origin_to_string_with_config::OriginToStringWithConfigLifetimeWithSerializeDeserialize; //remove later, it was only for lifetimes test
+        match self {
+            // OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_with_config(config),
+            OneWrapperErrorEnumWithSerializeDeserialize::EightWrapper(i) => {
+                i.origin_to_string_with_config_lifetime_with_serialize_deserialize(config)
+            }
+        }
+    }
+}
 
-// impl<'a>
-//     tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetime<
-//         'a,
-//     > for OneWrapperErrorEnumWithSerializeDeserialize<'a>
-// {
-//     fn to_string_without_config_lifetime(&self) -> String {
-//         match self {
-//             // OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_without_config(),
-//             OneWrapperErrorEnumWithSerializeDeserialize::EightWrapper(i) => {
-//                 i.to_string_without_config_lifetime()
-//             }
-//         }
-//     }
-// }
+impl<'a>
+    tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetimeWithSerializeDeserialize<
+        'a,
+    > for OneWrapperErrorEnumWithSerializeDeserialize<'a>
+{
+    fn to_string_without_config_lifetime_with_serialize_deserialize(&self) -> String {
+        match self {
+            // OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_without_config(),
+            OneWrapperErrorEnumWithSerializeDeserialize::EightWrapper(i) => {
+                i.to_string_without_config_lifetime_with_serialize_deserialize()
+            }
+        }
+    }
+}
 
 pub fn one<'a>() -> Result<(), Box<OneWrapperError<'a>>> {
     // if let Err(e) = tufa_common::dev::three() {
