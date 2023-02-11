@@ -222,20 +222,11 @@ pub fn one<'a>() -> Result<(), Box<OneWrapperError<'a>>> {
     }
     // if let Err(e) = tufa_common::dev::three() {
     if let Err(e) = tufa_common::dev::eight() {
-        let g = tufa_common::code_occurence!();
-        println!(
-            "1 {}",
-            std::mem::size_of::<tufa_common::common::code_occurence::CodeOccurenceLifetime>()
-        );
-        println!("2 {}", std::mem::size_of_val(&g));
-        let f = OneWrapperError::Something {
+        return Err(Box::new(OneWrapperError::Something {
             // source: OneWrapperErrorEnum::ThreeWrapper(*e),
             inner_error: OneWrapperErrorEnum::EightWrapper(*e),
-            code_occurence: g,
-        };
-        println!("3 {}", std::mem::size_of::<OneWrapperError>());
-        println!("4 {}", std::mem::size_of_val(&f));
-        return Err(Box::new(f));
+            code_occurence: tufa_common::code_occurence!(),
+        }));
     }
     Ok(())
 }
