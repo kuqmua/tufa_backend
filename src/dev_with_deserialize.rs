@@ -1,6 +1,5 @@
 use serde::Serialize;
 use thiserror::Error;
-use tufa_common::traits::error_logs_logic::error_log::ErrorLogLifetimeWithDeserialize;
 
 pub fn dev_with_deserialize() {
     let _f = one_with_deserialize();
