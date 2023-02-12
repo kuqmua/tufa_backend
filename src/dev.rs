@@ -1,13 +1,7 @@
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
-// use tufa_common::dev::ThreeWrapperError;
-use tufa_common::dev::EightOriginError;
-// use tufa_common::traits::error_logs_logic::error_log::{ErrorLog, ErrorLogLifetime};
+use tufa_common::dev::ThreeWrapperError;
 use tufa_common::traits::error_logs_logic::error_log::ErrorLogLifetime;
-use tufa_common::traits::error_logs_logic::origin_to_string_with_config::OriginToStringWithConfigLifetime;
-use tufa_common::traits::error_logs_logic::to_string_without_config::{
-    ToStringWithoutConfigLifetime, ToStringWithoutConfigLifetimeWithDeserialize,
-};
 
 pub fn dev() {
     let _f = one();
@@ -82,8 +76,7 @@ impl<'a> tufa_common::traits::get_code_occurence::GetCodeOccurenceLifetime<'a>
 
 #[derive(Debug, Error, Serialize)]
 pub enum OneWrapperErrorEnum<'a> {
-    // ThreeWrapper(ThreeWrapperError),
-    EightWrapper(tufa_common::dev::EightOriginError<'a>),
+    ThreeWrapper(ThreeWrapperError<'a>),
 }
 
 impl<'a> std::fmt::Display for OneWrapperErrorEnum<'a> {
@@ -104,10 +97,9 @@ where
         + tufa_common::traits::get_server_address::GetServerAddress,
 {
     fn to_string_with_config_lifetime(&self, config: &ConfigGeneric) -> String {
-        use tufa_common::traits::error_logs_logic::origin_to_string_with_config::OriginToStringWithConfigLifetime; //remove later, it was only for lifetimes test
+        use tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfigLifetime;
         match self {
-            // OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_with_config(config),
-            OneWrapperErrorEnum::EightWrapper(i) => i.origin_to_string_with_config_lifetime(config),
+            OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_with_config_lifetime(config),
         }
     }
 }
@@ -119,34 +111,15 @@ impl<'a>
 {
     fn to_string_without_config_lifetime(&self) -> String {
         match self {
-            // OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_without_config(),
-            OneWrapperErrorEnum::EightWrapper(i) => i.to_string_without_config_lifetime(),
+            OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_without_config_lifetime(),
         }
     }
 }
 
 pub fn one<'a>() -> Result<(), Box<OneWrapperError<'a>>> {
-    // if let Err(e) = tufa_common::dev::eightds() {
-    //     let f = OneWrapperErrorWithDeserialize::Something {
-    //         // source: OneWrapperErrorEnum::ThreeWrapper(*e),
-    //         inner_error: OneWrapperErrorEnumWithDeserialize::EightWrapper(*e),
-    //         code_occurence:
-    //             tufa_common::common::code_occurence::CodeOccurenceLifetimeWithDeserialize::new(
-    //                 crate::global_variables::compile_time::git_info::GIT_INFO.clone(),
-    //                 file!(),
-    //                 line!(),
-    //                 column!(),
-    //             ),
-    //     };
-    //     println!("))))))))");
-    //     println!("{}", f);
-    //     println!("))))))))");
-    // }
-    // if let Err(e) = tufa_common::dev::three() {
-    if let Err(e) = tufa_common::dev::eight() {
+    if let Err(e) = tufa_common::dev::three() {
         return Err(Box::new(OneWrapperError::Something {
-            // source: OneWrapperErrorEnum::ThreeWrapper(*e),
-            inner_error: OneWrapperErrorEnum::EightWrapper(*e),
+            inner_error: OneWrapperErrorEnum::ThreeWrapper(*e),
             code_occurence: tufa_common::code_occurence!(),
         }));
     }
