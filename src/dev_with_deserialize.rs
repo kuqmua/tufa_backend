@@ -29,27 +29,6 @@ impl<'a> std::fmt::Display for OneWrapperErrorWithDeserialize<'a> {
     }
 }
 
-impl<'a, ConfigGeneric>
-    tufa_common::traits::error_logs_logic::source_to_string_with_config::SourceToStringWithConfigLifetimeWithDeserialize<
-        'a,
-        ConfigGeneric,
-    > for OneWrapperErrorWithDeserialize<'a>
-where
-    ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
-        + tufa_common::traits::fields::GetTimezone
-        + tufa_common::traits::get_server_address::GetServerAddress,
-{
-    fn source_to_string_with_config_lifetime_with_deserialize(&self, config: &ConfigGeneric) -> String {
-        use tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfigLifetimeWithDeserialize;
-        match self {
-            OneWrapperErrorWithDeserialize::Something {
-                inner_error,
-                code_occurence: _code_occurence,
-            } => inner_error.to_string_with_config_lifetime_with_deserialize(config),
-        }
-    }
-}
-
 impl<'a> tufa_common::traits::error_logs_logic::source_to_string_without_config::SourceToStringWithoutConfigLifetimeWithDeserialize<'a> for OneWrapperErrorWithDeserialize<'a> {
     fn source_to_string_without_config_lifetime_with_deserialize(&self) -> String {
         use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetimeWithDeserialize;
@@ -87,26 +66,6 @@ impl<'a> std::fmt::Display for OneWrapperErrorEnumWithDeserialize<'a> {
             "{}",
             self.to_string_without_config_lifetime_with_deserialize()
         )
-    }
-}
-
-impl<'a, ConfigGeneric>
-    tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfigLifetimeWithDeserialize<
-        'a,
-        ConfigGeneric,
-    > for OneWrapperErrorEnumWithDeserialize<'a>
-where
-    ConfigGeneric: tufa_common::traits::fields::GetSourcePlaceType
-        + tufa_common::traits::fields::GetTimezone
-        + tufa_common::traits::get_server_address::GetServerAddress,
-{
-    fn to_string_with_config_lifetime_with_deserialize(&self, config: &ConfigGeneric) -> String {
-        use tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfigLifetimeWithDeserialize;
-        match self {
-            OneWrapperErrorEnumWithDeserialize::ThreeWrapper(i) => {
-                i.to_string_with_config_lifetime_with_deserialize(config)
-            }
-        }
     }
 }
 
