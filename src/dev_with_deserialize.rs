@@ -28,8 +28,8 @@ impl<'a> std::fmt::Display for OneWrapperErrorWithDeserialize<'a> {
     }
 }
 
-impl<'a> tufa_common::traits::error_logs_logic::source_to_string_without_config::SourceToStringWithoutConfigLifetimeWithDeserialize<'a> for OneWrapperErrorWithDeserialize<'a> {
-    fn source_to_string_without_config_lifetime_with_deserialize(&self) -> String {
+impl<'a> tufa_common::traits::error_logs_logic::source_to_string_without_config::SourceToStringWithoutConfigLifetime<'a> for OneWrapperErrorWithDeserialize<'a> {
+    fn source_to_string_without_config_lifetime(&self) -> String {
         use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetimeWithDeserialize;
         match self {
             OneWrapperErrorWithDeserialize::Something { inner_error, code_occurence: _code_occurence } => inner_error.to_string_without_config_lifetime_with_deserialize(),
