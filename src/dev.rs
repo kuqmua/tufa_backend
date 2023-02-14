@@ -1,10 +1,10 @@
-use tufa_common::traits::error_logs_logic::error_log::ErrorLogLifetime;
+use tufa_common::traits::error_logs_logic::error_log::ErrorLog;
 
 pub fn dev() {
     let _f = one();
     if let Err(e) = _f {
-        //todo - this actually must be a config struct function, not an error - config.error_log_lifetime(e)
-        e.error_log_lifetime(once_cell::sync::Lazy::force(
+        //todo - this actually must be a config struct function, not an error - config.error_log(e)
+        e.error_log(once_cell::sync::Lazy::force(
             &crate::global_variables::runtime::config::CONFIG,
         ));
     }
