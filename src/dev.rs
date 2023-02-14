@@ -94,7 +94,6 @@ where
         + tufa_common::traits::get_server_address::GetServerAddress,
 {
     fn to_string_with_config_lifetime(&self, config: &ConfigGeneric) -> String {
-        use tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfigLifetime;
         match self {
             OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_with_config_lifetime(config),
         }
