@@ -4,6 +4,7 @@ pub fn dev() {
     let _f = one();
     if let Err(e) = _f {
         //todo - this actually must be a config struct function, not an error - config.error_log(e)
+        println!("{}", *e);
         e.error_log(once_cell::sync::Lazy::force(
             &crate::global_variables::runtime::config::CONFIG,
         ));
@@ -37,12 +38,12 @@ where
         + tufa_common::traits::get_server_address::GetServerAddress,
 {
     fn source_to_string_with_config_lifetime(&self, config: &ConfigGeneric) -> String {
-        use tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfigLifetime;
+        use tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfigForSourceToStringWithConfig;
         match self {
             OneWrapperError::Something {
                 inner_error,
                 code_occurence: _code_occurence,
-            } => inner_error.to_string_with_config_lifetime(config),
+            } => inner_error.to_string_with_config_for_source_to_string_with_config(config),
         }
     }
 }
@@ -82,7 +83,7 @@ impl<'a> std::fmt::Display for OneWrapperErrorEnum<'a> {
 }
 
 impl<'a, ConfigGeneric>
-    tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfigLifetime<
+    tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfigForSourceToStringWithConfig<
         'a,
         ConfigGeneric,
     > for OneWrapperErrorEnum<'a>
@@ -91,9 +92,11 @@ where
         + tufa_common::traits::fields::GetTimezone
         + tufa_common::traits::get_server_address::GetServerAddress,
 {
-    fn to_string_with_config_lifetime(&self, config: &ConfigGeneric) -> String {
+    fn to_string_with_config_for_source_to_string_with_config(&self, config: &ConfigGeneric) -> String {
         match self {
-            OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_with_config_lifetime(config),
+            OneWrapperErrorEnum::ThreeWrapper(i) => {
+                i.to_string_with_config_for_source_to_string_with_config(config)
+            }
         }
     }
 }
