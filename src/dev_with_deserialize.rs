@@ -89,7 +89,13 @@ pub fn one_with_deserialize<'a>() -> Result<(), Box<OneWrapperErrorWithDeseriali
         return Err(Box::new(OneWrapperErrorWithDeserialize::Something {
             inner_error:
                 crate::dev_with_deserialize::OneWrapperErrorEnumWithDeserialize::ThreeWrapper(*e),
-            code_occurence: tufa_common::code_occurence_d!(),
+            code_occurence:
+                tufa_common::common::code_occurence::CodeOccurenceLifetimeWithDeserialize::new(
+                    &tufa_common::global_variables::compile_time::git_info::GIT_INFO,
+                    file!(),
+                    line!(),
+                    column!(),
+                ),
         }));
     }
     Ok(())
