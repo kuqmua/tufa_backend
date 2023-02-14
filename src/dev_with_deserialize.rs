@@ -75,7 +75,6 @@ impl<'a>
     > for OneWrapperErrorEnumWithDeserialize<'a>
 {
     fn to_string_without_config_lifetime_with_deserialize(&self) -> String {
-        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetimeWithDeserialize;
         match self {
             OneWrapperErrorEnumWithDeserialize::ThreeWrapper(i) => {
                 i.to_string_without_config_lifetime_with_deserialize()

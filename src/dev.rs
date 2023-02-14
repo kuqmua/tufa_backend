@@ -107,7 +107,6 @@ impl<'a>
     > for OneWrapperErrorEnum<'a>
 {
     fn to_string_without_config_lifetime(&self) -> String {
-        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetime;
         match self {
             OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_without_config_lifetime(),
         }
