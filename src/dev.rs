@@ -56,7 +56,7 @@ impl<'a> tufa_common::traits::error_logs_logic::source_to_string_without_config:
     }
 }
 
-impl<'a> tufa_common::traits::get_code_occurence::GetCodeOccurenceLifetime<'a>
+impl<'a> tufa_common::traits::error_logs_logic::get_code_occurence::GetCodeOccurenceLifetime<'a>
     for OneWrapperError<'a>
 {
     fn get_code_occurence_lifetime(

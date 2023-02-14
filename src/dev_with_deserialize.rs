@@ -37,7 +37,7 @@ impl<'a> tufa_common::traits::error_logs_logic::source_to_string_without_config:
     }
 }
 
-impl<'a> tufa_common::traits::get_code_occurence::GetCodeOccurenceLifetimeWithDeserialize<'a>
+impl<'a> tufa_common::traits::error_logs_logic::get_code_occurence::GetCodeOccurenceLifetimeWithDeserialize<'a>
     for OneWrapperErrorWithDeserialize<'a>
 {
     fn get_code_occurence_lifetime_with_deserialize(
