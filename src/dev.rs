@@ -16,7 +16,7 @@ pub fn dev() {
 pub enum OneWrapperError<'a> {
     Something {
         inner_error: crate::dev::OneWrapperErrorEnum<'a>,
-        code_occurence: tufa_common::common::code_occurence::CodeOccurenceLifetime<'a>,
+        code_occurence: tufa_common::common::code_occurence::CodeOccurence<'a>,
     },
 }
 
@@ -60,7 +60,7 @@ impl<'a> tufa_common::traits::error_logs_logic::source_to_string_without_config:
 impl<'a> tufa_common::traits::error_logs_logic::get_code_occurence::GetCodeOccurence<'a>
     for OneWrapperError<'a>
 {
-    fn get_code_occurence(&self) -> &tufa_common::common::code_occurence::CodeOccurenceLifetime {
+    fn get_code_occurence(&self) -> &tufa_common::common::code_occurence::CodeOccurence {
         match self {
             OneWrapperError::Something {
                 inner_error: _inner_error,

@@ -12,8 +12,7 @@ pub enum OneWrapperErrorWithDeserialize<'a> {
         #[serde(borrow)]
         inner_error: OneWrapperErrorEnumWithDeserialize<'a>,
         #[serde(borrow)]
-        code_occurence:
-            tufa_common::common::code_occurence::CodeOccurenceLifetimeWithDeserialize<'a>,
+        code_occurence: tufa_common::common::code_occurence::CodeOccurenceWithDeserialize<'a>,
     },
 }
 
@@ -39,7 +38,7 @@ impl<'a>
 {
     fn get_code_occurence_with_deserialize(
         &self,
-    ) -> &tufa_common::common::code_occurence::CodeOccurenceLifetimeWithDeserialize<'a> {
+    ) -> &tufa_common::common::code_occurence::CodeOccurenceWithDeserialize<'a> {
         match self {
             OneWrapperErrorWithDeserialize::Something {
                 inner_error: _inner_error,
@@ -81,13 +80,12 @@ pub fn one_with_deserialize<'a>() -> Result<(), Box<OneWrapperErrorWithDeseriali
         return Err(Box::new(OneWrapperErrorWithDeserialize::Something {
             inner_error:
                 crate::dev_with_deserialize::OneWrapperErrorEnumWithDeserialize::ThreeWrapper(*e),
-            code_occurence:
-                tufa_common::common::code_occurence::CodeOccurenceLifetimeWithDeserialize::new(
-                    &tufa_common::global_variables::compile_time::git_info::GIT_INFO,
-                    file!(),
-                    line!(),
-                    column!(),
-                ),
+            code_occurence: tufa_common::common::code_occurence::CodeOccurenceWithDeserialize::new(
+                &tufa_common::global_variables::compile_time::git_info::GIT_INFO,
+                file!(),
+                line!(),
+                column!(),
+            ),
         }));
     }
     Ok(())
