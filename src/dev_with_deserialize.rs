@@ -19,20 +19,16 @@ pub enum OneWrapperErrorWithDeserialize<'a> {
 
 impl<'a> std::fmt::Display for OneWrapperErrorWithDeserialize<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetimeWithDeserialize;
-        write!(
-            f,
-            "{}",
-            self.to_string_without_config_lifetime_with_deserialize()
-        )
+        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigWithDeserialize;
+        write!(f, "{}", self.to_string_without_config_with_deserialize())
     }
 }
 
 impl<'a> tufa_common::traits::error_logs_logic::source_to_string_without_config::SourceToStringWithoutConfig<'a> for OneWrapperErrorWithDeserialize<'a> {
     fn source_to_string_without_config(&self) -> String {
-        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetimeWithDeserialize;
+        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigWithDeserialize;
         match self {
-            OneWrapperErrorWithDeserialize::Something { inner_error, code_occurence: _code_occurence } => inner_error.to_string_without_config_lifetime_with_deserialize(),
+            OneWrapperErrorWithDeserialize::Something { inner_error, code_occurence: _code_occurence } => inner_error.to_string_without_config_with_deserialize(),
         }
     }
 }
@@ -61,24 +57,20 @@ pub enum OneWrapperErrorEnumWithDeserialize<'a> {
 
 impl<'a> std::fmt::Display for OneWrapperErrorEnumWithDeserialize<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetimeWithDeserialize;
-        write!(
-            f,
-            "{}",
-            self.to_string_without_config_lifetime_with_deserialize()
-        )
+        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigWithDeserialize;
+        write!(f, "{}", self.to_string_without_config_with_deserialize())
     }
 }
 
 impl<'a>
-    tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetimeWithDeserialize<
+    tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigWithDeserialize<
         'a,
     > for OneWrapperErrorEnumWithDeserialize<'a>
 {
-    fn to_string_without_config_lifetime_with_deserialize(&self) -> String {
+    fn to_string_without_config_with_deserialize(&self) -> String {
         match self {
             OneWrapperErrorEnumWithDeserialize::ThreeWrapper(i) => {
-                i.to_string_without_config_lifetime_with_deserialize()
+                i.to_string_without_config_with_deserialize()
             }
         }
     }
