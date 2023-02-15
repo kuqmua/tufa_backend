@@ -28,7 +28,7 @@ impl<'a> std::fmt::Display for OneWrapperError<'a> {
 }
 
 impl<'a, ConfigGeneric>
-    tufa_common::traits::error_logs_logic::source_to_string_with_config::SourceToStringWithConfigLifetime<
+    tufa_common::traits::error_logs_logic::source_to_string_with_config::SourceToStringWithConfig<
         'a,
         ConfigGeneric,
     > for OneWrapperError<'a>
@@ -37,7 +37,7 @@ where
         + tufa_common::traits::fields::GetTimezone
         + tufa_common::traits::get_server_address::GetServerAddress,
 {
-    fn source_to_string_with_config_lifetime(&self, config: &ConfigGeneric) -> String {
+    fn source_to_string_with_config(&self, config: &ConfigGeneric) -> String {
         use tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfigForSourceToStringWithConfig;
         match self {
             OneWrapperError::Something {
