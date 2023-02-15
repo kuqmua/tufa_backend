@@ -22,8 +22,8 @@ pub enum OneWrapperError<'a> {
 
 impl<'a> std::fmt::Display for OneWrapperError<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetime;
-        write!(f, "{}", self.to_string_without_config_lifetime())
+        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfig;
+        write!(f, "{}", self.to_string_without_config())
     }
 }
 
@@ -50,9 +50,9 @@ where
 
 impl<'a> tufa_common::traits::error_logs_logic::source_to_string_without_config::SourceToStringWithoutConfig<'a> for OneWrapperError<'a> {
     fn source_to_string_without_config(&self) -> String {
-        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetime;
+        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfig;
         match self {
-            OneWrapperError::Something { inner_error, code_occurence: _code_occurence } => inner_error.to_string_without_config_lifetime(),
+            OneWrapperError::Something { inner_error, code_occurence: _code_occurence } => inner_error.to_string_without_config(),
         }
     }
 }
@@ -77,8 +77,8 @@ pub enum OneWrapperErrorEnum<'a> {
 
 impl<'a> std::fmt::Display for OneWrapperErrorEnum<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetime;
-        write!(f, "{}", self.to_string_without_config_lifetime())
+        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfig;
+        write!(f, "{}", self.to_string_without_config())
     }
 }
 
@@ -101,14 +101,12 @@ where
     }
 }
 
-impl<'a>
-    tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetime<
-        'a,
-    > for OneWrapperErrorEnum<'a>
+impl<'a> tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfig<'a>
+    for OneWrapperErrorEnum<'a>
 {
-    fn to_string_without_config_lifetime(&self) -> String {
+    fn to_string_without_config(&self) -> String {
         match self {
-            OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_without_config_lifetime(),
+            OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_without_config(),
         }
     }
 }
