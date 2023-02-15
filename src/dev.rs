@@ -48,8 +48,8 @@ where
     }
 }
 
-impl<'a> tufa_common::traits::error_logs_logic::source_to_string_without_config::SourceToStringWithoutConfigLifetime<'a> for OneWrapperError<'a> {
-    fn source_to_string_without_config_lifetime(&self) -> String {
+impl<'a> tufa_common::traits::error_logs_logic::source_to_string_without_config::SourceToStringWithoutConfig<'a> for OneWrapperError<'a> {
+    fn source_to_string_without_config(&self) -> String {
         use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfigLifetime;
         match self {
             OneWrapperError::Something { inner_error, code_occurence: _code_occurence } => inner_error.to_string_without_config_lifetime(),
