@@ -38,21 +38,25 @@ where
         + tufa_common::traits::get_server_address::GetServerAddress,
 {
     fn source_to_string_with_config(&self, config: &ConfigGeneric) -> String {
-        use tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfigForSourceToStringWithConfig;
         match self {
             OneWrapperError::Something {
                 inner_error,
                 code_occurence: _code_occurence,
-            } => inner_error.to_string_with_config_for_source_to_string_with_config(config),
+            } => {
+                use tufa_common::traits::error_logs_logic::to_string_with_config::ToStringWithConfigForSourceToStringWithConfig;
+                inner_error.to_string_with_config_for_source_to_string_with_config(config)
+            }
         }
     }
 }
 
 impl<'a> tufa_common::traits::error_logs_logic::source_to_string_without_config::SourceToStringWithoutConfig<'a> for OneWrapperError<'a> {
     fn source_to_string_without_config(&self) -> String {
-        use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfig;
         match self {
-            OneWrapperError::Something { inner_error, code_occurence: _code_occurence } => inner_error.to_string_without_config(),
+            OneWrapperError::Something { inner_error, code_occurence: _code_occurence } => {
+                use tufa_common::traits::error_logs_logic::to_string_without_config::ToStringWithoutConfig;
+                inner_error.to_string_without_config()
+            },
         }
     }
 }
