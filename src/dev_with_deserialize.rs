@@ -53,7 +53,7 @@ impl<'a>
 #[derive(Debug, thiserror::Error, serde::Serialize, serde::Deserialize)]
 pub enum OneWrapperErrorEnumWithDeserialize<'a> {
     #[serde(borrow)]
-    ThreeWrapper(tufa_common::dev_with_deserialize::ThreeWrapperErrorWithDeserialize<'a>),
+    Three(tufa_common::dev_with_deserialize::ThreeWrapperErrorWithDeserialize<'a>),
 }
 
 impl<'a> std::fmt::Display for OneWrapperErrorEnumWithDeserialize<'a> {
@@ -70,7 +70,7 @@ impl<'a>
 {
     fn to_string_without_config_with_deserialize(&self) -> String {
         match self {
-            OneWrapperErrorEnumWithDeserialize::ThreeWrapper(i) => {
+            OneWrapperErrorEnumWithDeserialize::Three(i) => {
                 i.to_string_without_config_with_deserialize()
             }
         }
@@ -80,8 +80,7 @@ impl<'a>
 pub fn one_with_deserialize<'a>() -> Result<(), Box<OneWrapperErrorWithDeserialize<'a>>> {
     if let Err(e) = tufa_common::dev_with_deserialize::three_with_deserialize() {
         return Err(Box::new(OneWrapperErrorWithDeserialize::Something {
-            inner_error:
-                crate::dev_with_deserialize::OneWrapperErrorEnumWithDeserialize::ThreeWrapper(*e),
+            inner_error: crate::dev_with_deserialize::OneWrapperErrorEnumWithDeserialize::Three(*e),
             code_occurence: tufa_common::common::code_occurence::CodeOccurenceWithDeserialize::new(
                 &tufa_common::global_variables::compile_time::git_info::GIT_INFO,
                 file!(),

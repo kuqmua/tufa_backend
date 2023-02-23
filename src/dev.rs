@@ -80,7 +80,7 @@ pub enum OneWrapperError<'a> {
     Debug, thiserror::Error, serde::Serialize, error_occurence::ImplErrorOccurenceFromTufaCommon,
 )]
 pub enum OneWrapperErrorEnum<'a> {
-    ThreeWrapper(tufa_common::dev::ThreeWrapperError<'a>),
+    Three(tufa_common::dev::ThreeWrapperError<'a>),
 }
 
 // impl<'a> std::fmt::Display for OneWrapperErrorEnum<'a> {
@@ -102,7 +102,7 @@ pub enum OneWrapperErrorEnum<'a> {
 // {
 //     fn to_string_with_config_for_source_to_string_with_config(&self, config: &ConfigGeneric) -> String {
 //         match self {
-//             OneWrapperErrorEnum::ThreeWrapper(i) => {
+//             OneWrapperErrorEnum::Three(i) => {
 //                 i.to_string_with_config_for_source_to_string_with_config(config)
 //             }
 //         }
@@ -114,7 +114,7 @@ pub enum OneWrapperErrorEnum<'a> {
 // {
 //     fn to_string_without_config(&self) -> String {
 //         match self {
-//             OneWrapperErrorEnum::ThreeWrapper(i) => i.to_string_without_config(),
+//             OneWrapperErrorEnum::Three(i) => i.to_string_without_config(),
 //         }
 //     }
 // }
@@ -122,7 +122,7 @@ pub enum OneWrapperErrorEnum<'a> {
 pub fn one<'a>() -> Result<(), Box<OneWrapperError<'a>>> {
     if let Err(e) = tufa_common::dev::three() {
         return Err(Box::new(OneWrapperError::Something {
-            inner_error: crate::dev::OneWrapperErrorEnum::ThreeWrapper(*e),
+            inner_error: crate::dev::OneWrapperErrorEnum::Three(*e),
             code_occurence: tufa_common::code_occurence!(),
         }));
     }
