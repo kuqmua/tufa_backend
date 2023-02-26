@@ -23,7 +23,7 @@ pub fn one<'a>() -> Result<(), Box<tufa_common::repositories_types::one::OneWrap
     if let Err(e) = tufa_common::dev::three() {
         return Err(Box::new(
             tufa_common::repositories_types::one::OneWrapperError::Something {
-                inner_error: tufa_common::repositories_types::one::OneWrapperErrorEnum::Three(*e),
+                inner_error: *e,
                 code_occurence: tufa_common::code_occurence!(),
             },
         ));
@@ -36,10 +36,7 @@ pub fn one_with_deserialize<'a>(
     if let Err(e) = tufa_common::dev::three_with_deserialize() {
         return Err(Box::new(
             tufa_common::repositories_types::one::OneWrapperErrorWithDeserialize::Something {
-                inner_error:
-                    tufa_common::repositories_types::one::OneWrapperErrorEnumWithDeserialize::Three(
-                        *e,
-                    ),
+                inner_error: *e,
                 code_occurence:
                     tufa_common::common::code_occurence::CodeOccurenceWithDeserialize::new(
                         &tufa_common::global_variables::compile_time::git_info::GIT_INFO,
