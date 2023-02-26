@@ -19,10 +19,10 @@ pub fn dev_with_deserialize() {
     }
 }
 
-pub fn one<'a>() -> Result<(), Box<tufa_common::repositories_types::one::OneWrapperError<'a>>> {
+pub fn one<'a>() -> Result<(), Box<tufa_common::repositories_types::one::OneError<'a>>> {
     if let Err(e) = tufa_common::dev::three() {
         return Err(Box::new(
-            tufa_common::repositories_types::one::OneWrapperError::Something {
+            tufa_common::repositories_types::one::OneError::Something {
                 inner_error: *e,
                 code_occurence: tufa_common::code_occurence!(),
             },
@@ -32,10 +32,10 @@ pub fn one<'a>() -> Result<(), Box<tufa_common::repositories_types::one::OneWrap
 }
 
 pub fn one_with_deserialize<'a>(
-) -> Result<(), Box<tufa_common::repositories_types::one::OneWrapperErrorWithDeserialize<'a>>> {
+) -> Result<(), Box<tufa_common::repositories_types::one::OneErrorWithDeserialize<'a>>> {
     if let Err(e) = tufa_common::dev::three_with_deserialize() {
         return Err(Box::new(
-            tufa_common::repositories_types::one::OneWrapperErrorWithDeserialize::Something {
+            tufa_common::repositories_types::one::OneErrorWithDeserialize::Something {
                 inner_error: *e,
                 code_occurence:
                     tufa_common::common::code_occurence::CodeOccurenceWithDeserialize::new(
