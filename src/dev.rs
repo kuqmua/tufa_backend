@@ -1,5 +1,7 @@
 use tufa_common::traits::error_logs_logic::error_log::ErrorLog;
 
+//todo - bug - if i wanna share impl for errors - i need to put it in tufa_common, but if i put it to tufa_common, i github links for repos would be not correct
+//so i need to remove display impl for deserialize and use
 pub fn dev() {
     let _f = one();
     if let Err(e) = _f {
@@ -37,13 +39,7 @@ pub fn one_with_deserialize<'a>(
         return Err(Box::new(
             tufa_common::repositories_types::one::OneErrorWithDeserialize::Something {
                 inner_error: *e,
-                code_occurence:
-                    tufa_common::common::code_occurence::CodeOccurenceWithDeserialize::new(
-                        &tufa_common::global_variables::compile_time::git_info::GIT_INFO,
-                        file!(),
-                        line!(),
-                        column!(),
-                    ),
+                code_occurence: tufa_common::code_occurence_with_deserialize!(),
             },
         ));
     }
