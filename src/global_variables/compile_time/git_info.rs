@@ -1,2 +1,2 @@
-#[compile_time_git_info::generate_const_git_information(tufa_server, tufa_common)]
-fn this_function_will_be_removed_and_instead_pub_const_git_info_will_be_generated_on_compile_time();
+pub static GIT_INFO: tufa_common::common::git::git_info::GitInformation =
+    compile_time_git_info::compile_time_git_info!(tufa_server, tufa_common);
