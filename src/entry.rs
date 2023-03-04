@@ -27,6 +27,12 @@ struct Address {
 }
 
 pub fn entry() {
+    if let Err(e) =
+        tufa_common::repositories_types::tufa_server::telemetry::init_subcriber_error_enum::one()
+    {
+        let r = e.into_serialize_deserialize_version();
+        println!("{:#?}", r);
+    }
     match tokio::runtime::Builder::new_multi_thread()
         .worker_threads(num_cpus::get())
         .enable_all()
@@ -69,11 +75,11 @@ pub fn entry() {
             //     },
             // };
             // tracing::error!(valuable = false, user = ?user);
-            // if let true = CONFIG.is_preparation_enabled {
-            //     if runtime.block_on(prepare_server(true)).is_err() {
-            //         return;
-            //     }
-            // }
+            if let true = CONFIG.is_preparation_enabled {
+                if runtime.block_on(prepare_server(true)).is_err() {
+                    return;
+                }
+            }
             // if let Err(e) = server_wrapper() {
             //     print_colorful_message(
             //         None,
