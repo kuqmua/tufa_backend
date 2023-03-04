@@ -27,12 +27,6 @@ struct Address {
 }
 
 pub fn entry() {
-    if let Err(e) =
-        tufa_common::repositories_types::tufa_server::telemetry::init_subcriber_error_enum::one()
-    {
-        let r = e.into_serialize_deserialize_version();
-        println!("{:#?}", r);
-    }
     match tokio::runtime::Builder::new_multi_thread()
         .worker_threads(num_cpus::get())
         .enable_all()
