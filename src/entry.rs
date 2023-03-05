@@ -70,7 +70,8 @@ pub fn entry() {
             // };
             // tracing::error!(valuable = false, user = ?user);
             if let true = CONFIG.is_preparation_enabled {
-                if runtime.block_on(prepare_server(true)).is_err() {
+                if let Err(e) = runtime.block_on(prepare_server(true)) {
+                    println!("{e}");
                     return;
                 }
             }

@@ -1,10 +1,6 @@
 use crate::global_variables::runtime::config::CONFIG;
 use crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES;
 use crate::global_variables::runtime::mongo_client_options::MONGO_CLIENT_OPTIONS;
-use crate::net_check::net_check_availability::net_check_availability;
-use crate::net_check::net_check_availability::NetCheckAvailabilityWrapperError;
-use crate::postgres_integration::postgres_check_availability::postgres_check_availability;
-use crate::postgres_integration::postgres_check_availability::PostgresCheckAvailabilityOriginError;
 use futures::join;
 use impl_display_for_error::ImplDisplayForError;
 use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
@@ -13,63 +9,16 @@ use impl_get_source::ImplGetSourceFromTufaCommon;
 use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
 use init_error::InitErrorFromTufaCommon;
 use std::ops::Deref;
-use tufa_common::common::where_was::WhereWas;
 use tufa_common::server::mongo::mongo_check_availability::mongo_check_availability;
-use tufa_common::server::mongo::mongo_check_availability::MongoCheckAvailabilityWrapperError;
-use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
+use tufa_common::server::net::net_check_availability::net_check_availability;
+use tufa_common::server::postgres::postgres_check_availability::postgres_check_availability;
 use tufa_common::traits::get_postgres_url::GetPostgresUrl;
-use tufa_common::traits::get_source::GetSource;
-use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 
-#[derive(
-    Debug,
-    ImplGetSourceFromTufaCommon,
-    ImplDisplayForError,
-    InitErrorFromTufaCommon,
-    ImplErrorWithTracingFromTufaCommon,
-    ImplGetWhereWasOriginOrWrapperFromTufaCommon,
-    ImplGetGitInfoFromTufaCommon,
-)]
-pub struct CheckAvailabilityWrapperError {
-    source: CheckAvailabilityWrapperErrorEnum,
-    where_was: WhereWas,
-}
-
-#[allow(enum_variant_names)]
-#[derive(
-    Debug,
-    ImplGetSourceFromTufaCommon,
-    ImplDisplayForError,
-    ImplGetWhereWasOriginOrWrapperFromTufaCommon,
-)]
-pub enum CheckAvailabilityWrapperErrorEnum {
-    NetWrapper(Box<NetCheckAvailabilityWrapperError>),
-    PostgresWrapper(Box<PostgresCheckAvailabilityOriginError>),
-    MongoWrapper(Box<MongoCheckAvailabilityWrapperError>),
-    NetAndMongoWrapper {
-        net_source: Box<NetCheckAvailabilityWrapperError>,
-        mongo_source: Box<MongoCheckAvailabilityWrapperError>,
-    },
-    NetAndPostgresWrapper {
-        net_source: Box<NetCheckAvailabilityWrapperError>,
-        postgres_source: Box<PostgresCheckAvailabilityOriginError>,
-    },
-    MongoAndPostgresWrapper {
-        mongo_source: Box<MongoCheckAvailabilityWrapperError>,
-        postgres_source: Box<PostgresCheckAvailabilityOriginError>,
-    },
-    NetAndMongoAndPostgresWrapper {
-        net_source: Box<NetCheckAvailabilityWrapperError>,
-        mongo_source: Box<MongoCheckAvailabilityWrapperError>,
-        postgres_source: Box<PostgresCheckAvailabilityOriginError>,
-    },
-}
-
-pub async fn check_availability(
+pub async fn check_availability<'a>(
     should_trace: bool,
-) -> Result<(), Box<CheckAvailabilityWrapperError>> {
-    let net_url = &CONFIG.starting_check_link.clone();
-    let postgres_url = &CONFIG.get_postgres_url();
+) -> Result<(), Box<tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError<'a>>>{
+    let net_url = CONFIG.starting_check_link.clone();
+    let postgres_url = CONFIG.get_postgres_url();
     match join!(
         net_check_availability(net_url, false),
         postgres_check_availability(postgres_url, false),
@@ -81,130 +30,46 @@ pub async fn check_availability(
         ),
     ) {
         (Ok(_), Ok(_), Ok(_)) => Ok(()),
-        (Ok(_), Ok(_), Err(m)) => Err(Box::new(
-            CheckAvailabilityWrapperError::init_error_with_possible_trace(
-                CheckAvailabilityWrapperErrorEnum::MongoWrapper(m),
-                WhereWas {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file: String::from(file!()),
-                    line: line!(),
-                    column: column!(),
-                    git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                },
-                &CONFIG.source_place_type,
-                should_trace,
-            ),
-        )),
-        (Ok(_), Err(p), Ok(_)) => Err(Box::new(
-            CheckAvailabilityWrapperError::init_error_with_possible_trace(
-                CheckAvailabilityWrapperErrorEnum::PostgresWrapper(p),
-                WhereWas {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file: String::from(file!()),
-                    line: line!(),
-                    column: column!(),
-                    git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                },
-                &CONFIG.source_place_type,
-                should_trace,
-            ),
-        )),
-        (Ok(_), Err(p), Err(m)) => Err(Box::new(
-            CheckAvailabilityWrapperError::init_error_with_possible_trace(
-                CheckAvailabilityWrapperErrorEnum::MongoAndPostgresWrapper {
-                    mongo_source: m,
-                    postgres_source: p,
-                },
-                WhereWas {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file: String::from(file!()),
-                    line: line!(),
-                    column: column!(),
-                    git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                },
-                &CONFIG.source_place_type,
-                should_trace,
-            ),
-        )),
-        (Err(n), Ok(_), Ok(_)) => Err(Box::new(
-            CheckAvailabilityWrapperError::init_error_with_possible_trace(
-                CheckAvailabilityWrapperErrorEnum::NetWrapper(n),
-                WhereWas {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file: String::from(file!()),
-                    line: line!(),
-                    column: column!(),
-                    git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                },
-                &CONFIG.source_place_type,
-                should_trace,
-            ),
-        )),
-        (Err(n), Ok(_), Err(m)) => Err(Box::new(
-            CheckAvailabilityWrapperError::init_error_with_possible_trace(
-                CheckAvailabilityWrapperErrorEnum::NetAndMongoWrapper {
-                    net_source: n,
-                    mongo_source: m,
-                },
-                WhereWas {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file: String::from(file!()),
-                    line: line!(),
-                    column: column!(),
-                    git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                },
-                &CONFIG.source_place_type,
-                should_trace,
-            ),
-        )),
-        (Err(n), Err(p), Ok(_)) => Err(Box::new(
-            CheckAvailabilityWrapperError::init_error_with_possible_trace(
-                CheckAvailabilityWrapperErrorEnum::NetAndPostgresWrapper {
-                    net_source: n,
-                    postgres_source: p,
-                },
-                WhereWas {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file: String::from(file!()),
-                    line: line!(),
-                    column: column!(),
-                    git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                },
-                &CONFIG.source_place_type,
-                should_trace,
-            ),
-        )),
-        (Err(n), Err(p), Err(m)) => Err(Box::new(
-            CheckAvailabilityWrapperError::init_error_with_possible_trace(
-                CheckAvailabilityWrapperErrorEnum::NetAndMongoAndPostgresWrapper {
-                    net_source: n,
-                    postgres_source: p,
-                    mongo_source: m,
-                },
-                WhereWas {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file: String::from(file!()),
-                    line: line!(),
-                    column: column!(),
-                    git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                },
-                &CONFIG.source_place_type,
-                should_trace,
-            ),
-        )),
+        (Ok(_), Ok(_), Err(m)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::Mongo {
+            error: *m,
+            code_occurence: tufa_common::code_occurence!(),
+        })),
+        (Ok(_), Err(p), Ok(_)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::Postgres {
+            error: *p,
+            code_occurence: tufa_common::code_occurence!(),
+        })),
+        (Ok(_), Err(p), Err(m)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::Many {
+            inner_errors: vec![
+                tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorEnum::Postgres(*p),
+                tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorEnum::Mongo(*m),
+            ],
+            code_occurence: tufa_common::code_occurence!(),
+        })),
+        (Err(n), Ok(_), Ok(_)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::Net {
+            error: *n,
+            code_occurence: tufa_common::code_occurence!(),
+        })),
+        (Err(n), Ok(_), Err(m)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::Many {
+            inner_errors: vec![
+                tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorEnum::Net(*n),
+                tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorEnum::Mongo(*m),
+            ],
+            code_occurence: tufa_common::code_occurence!(),
+        })),
+        (Err(n), Err(p), Ok(_)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::Many {
+            inner_errors: vec![
+                tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorEnum::Net(*n),
+                tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorEnum::Postgres(*p),
+            ],
+            code_occurence: tufa_common::code_occurence!(),
+        })),
+        (Err(n), Err(p), Err(m)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::Many {
+            inner_errors: vec![
+                tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorEnum::Net(*n),
+                tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorEnum::Postgres(*p),
+                tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorEnum::Mongo(*m),
+            ],
+            code_occurence: tufa_common::code_occurence!(),
+        })),
     }
 }
