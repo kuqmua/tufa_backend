@@ -42,12 +42,10 @@ pub async fn postgres_insert_link_parts_into_providers_tables<'a>(
         if let Err(e) = result {
             return Some((
                 pk.to_string(), 
-                tufa_common::repositories_types::tufa_server::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginErrorEnum::Postgres(
-                    tufa_common::repositories_types::tufa_server::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginErrorEnumError::Postgres { 
-                        error: e, 
-                        code_occurence: tufa_common::code_occurence!()
-                    }
-                )
+                tufa_common::repositories_types::tufa_server::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginErrorEnum::Postgres { 
+                    error: e, 
+                    code_occurence: tufa_common::code_occurence!()
+                }
             ));
         }
         None
