@@ -1,7 +1,6 @@
 use crate::global_variables::runtime::config::CONFIG;
 use crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES;
 use crate::init_dbs_logic::init_mongo::init_mongo;
-use crate::init_dbs_logic::init_mongo::InitMongoWrapperError;
 use crate::init_dbs_logic::init_postgres::init_postgres;
 use crate::init_dbs_logic::init_postgres::PostgresInitWrapperError;
 use crate::providers::providers_info::get_local_providers_link_parts::get_local_providers_link_parts;
@@ -30,10 +29,10 @@ pub struct InitDbsProvidersLinkPartsWrapperError {
 }
 
 #[derive(Debug, ImplGetWhereWasOriginOrWrapperFromTufaCommon, ImplGetSourceFromTufaCommon)]
-pub enum InitDbsProvidersLinkPartsWrapperErrorEnum {
+pub enum InitDbsProvidersLinkPartsWrapperErrorEnum<'a> {
     GetLocalProvidersLinkPartsWrapper(GetLocalProvidersLinkPartsWrapperError),
     PostgresInitWrapper(PostgresInitWrapperError),
-    MongoInitWrapper(InitMongoWrapperError),
+    MongoInitWrapper(tufa_common::repositories_types::tufa_server::init_dbs_logic::init_mongo::InitMongoWrapperError<'a>),
     //todo - do something with that - add support for fields
     // MongoAndPostgresInitOrigin {
     //     mongo: InitMongoError,

@@ -16,29 +16,11 @@ use tufa_common::common::where_was::WhereWas;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::where_was_methods::WhereWasMethods;
 
-#[derive(
-    Debug,
-    InitErrorFromTufaCommon,
-    ImplGetSourceFromTufaCommon,
-    ImplGetWhereWasOriginOrWrapperFromTufaCommon,
-    ImplErrorWithTracingFromTufaCommon,
-)]
-pub struct MongoCheckCollectionsIsNotEmptyWrapperError {
-    source: HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>,
-    where_was: WhereWas,
-}
-
-#[derive(Debug, ImplGetSourceFromTufaCommon, ImplDisplayForError)]
-pub enum CollectionCountDocumentsOrIsNotEmpty {
-    CountDocumentsOrigin(Error),
-    IsNotEmptyOrigin(u64),
-}
-
-pub async fn mongo_check_collections_is_not_empty(
+pub async fn mongo_check_collections_is_not_empty<'a>(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
     db: &Database,
     should_trace: bool,
-) -> Result<(), Box<MongoCheckCollectionsIsNotEmptyWrapperError>> {
+) -> Result<(), Box<tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginError<'a>>>{
     let error_vec_count_documents =
         join_all(providers_json_local_data_hashmap.keys().map(|pk| async {
             (
@@ -53,35 +35,35 @@ pub async fn mongo_check_collections_is_not_empty(
         .filter_map(|(pk, result)| match result {
             Err(e) => Some((
                 pk,
-                CollectionCountDocumentsOrIsNotEmpty::CountDocumentsOrigin(e),
+                tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginErrorEnum::CountDocumentsOrigin(
+                    tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginErrorEnumCountDocuments::CountDocuments { 
+                        error: e, 
+                        code_occurence: tufa_common::code_occurence!(), 
+                    }
+                ),
             )),
             Ok(documents_number) => {
                 if documents_number > 0 {
                     return Some((
                         pk,
-                        CollectionCountDocumentsOrIsNotEmpty::IsNotEmptyOrigin(documents_number),
+                        tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginErrorEnum::IsNotEmptyOrigin(
+                            tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginErrorEnumIsNotEmptyOrigin::IsNotEmptyOrigin { 
+                                error: documents_number, 
+                                code_occurence: tufa_common::code_occurence!()
+                            }
+                        )
                     ));
                 }
                 None
             }
         })
-        .collect::<HashMap<ProviderKind, CollectionCountDocumentsOrIsNotEmpty>>();
+        .collect::<HashMap<ProviderKind, tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginErrorEnum>>();
     if !error_vec_count_documents.is_empty() {
         return Err(Box::new(
-            MongoCheckCollectionsIsNotEmptyWrapperError::init_error_with_possible_trace(
-                error_vec_count_documents,
-                WhereWas {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file: String::from(file!()),
-                    line: line!(),
-                    column: column!(),
-                    git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                },
-                &CONFIG.source_place_type,
-                should_trace,
-            ),
+            tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginError::Mongo {        
+                inner_errors: error_vec_count_documents, 
+                code_occurence: tufa_common::code_occurence!()
+            }
         ));
     }
     Ok(())

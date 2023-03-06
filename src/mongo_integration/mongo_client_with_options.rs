@@ -11,38 +11,16 @@ use tufa_common::common::where_was::WhereWas;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::where_was_methods::WhereWasMethods;
 
-#[derive(
-    Debug,
-    InitErrorFromTufaCommon,
-    ImplGetSourceFromTufaCommon,
-    ImplGetWhereWasOriginOrWrapperFromTufaCommon,
-    ImplErrorWithTracingFromTufaCommon,
-)]
-pub struct MongoClientWithOptionsOriginError {
-    source: Error,
-    where_was: WhereWas,
-}
-
-pub fn mongo_client_with_options(
+pub fn mongo_client_with_options<'a>(
     client_options: ClientOptions,
     should_trace: bool,
-) -> Result<Client, Box<MongoClientWithOptionsOriginError>> {
+) -> Result<Client, Box<tufa_common::repositories_types::tufa_server::mongo_integration::mongo_client_with_options::MongoClientWithOptionsOriginError<'a>>>{
     match Client::with_options(client_options) {
         Err(e) => Err(Box::new(
-            MongoClientWithOptionsOriginError::init_error_with_possible_trace(
-                e,
-                WhereWas {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file: String::from(file!()),
-                    line: line!(),
-                    column: column!(),
-                    git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                },
-                &CONFIG.source_place_type,
-                should_trace,
-            ),
+            tufa_common::repositories_types::tufa_server::mongo_integration::mongo_client_with_options::MongoClientWithOptionsOriginError {
+                error: e,
+                code_occurence: tufa_common::code_occurence!(),
+            }
         )),
         Ok(client) => Ok(client),
     }

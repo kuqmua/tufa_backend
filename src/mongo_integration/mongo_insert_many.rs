@@ -16,23 +16,11 @@ use tufa_common::common::where_was::WhereWas;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::where_was_methods::WhereWasMethods;
 
-#[derive(
-    Debug,
-    InitErrorFromTufaCommon,
-    ImplGetSourceFromTufaCommon,
-    ImplGetWhereWasOriginOrWrapperFromTufaCommon,
-    ImplErrorWithTracingFromTufaCommon,
-)]
-pub struct MongoInsertManyOriginError {
-    source: HashMap<ProviderKind, Error>,
-    where_was: WhereWas,
-}
-
-pub async fn mongo_insert_many(
+pub async fn mongo_insert_many<'a>(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
     db: Database,
     should_trace: bool,
-) -> Result<(), Box<MongoInsertManyOriginError>> {
+) -> Result<(), Box<tufa_common::repositories_types::tufa_server::mongo_integration::mongo_insert_many::MongoInsertManyOriginError<'a>>> {
     let error_vec_insert_many = join_all(
         providers_json_local_data_hashmap.iter().map(
                 |(pk, data_vec)|
@@ -43,34 +31,32 @@ pub async fn mongo_insert_many(
                         doc! { &CONFIG.mongo_providers_logs_db_collection_document_field_name_handle: data }
                     )
                     .collect();
-                    (*pk, db.collection(&pk.get_db_tag()).insert_many(docs, None).await)
+                    (pk.to_string(), db.collection(&pk.get_db_tag()).insert_many(docs, None).await)
                 }
             )
         ).await
         .into_iter()
         .filter_map(|(pk, result)| {
         if let Err(e) = result {
-            return Some((pk, e));
+            return Some((
+                pk.to_string(), 
+                tufa_common::repositories_types::tufa_server::mongo_integration::mongo_insert_many::MongoInsertManyOriginErrorEnum::Mongo(
+                    tufa_common::repositories_types::tufa_server::mongo_integration::mongo_insert_many::MongoInsertManyOriginErrorEnumError::Mongo { 
+                        error: e, 
+                        code_occurence: tufa_common::code_occurence!()  
+                    }
+                )
+            ));
         }
         None
     })
-    .collect::<HashMap<ProviderKind, Error>>();
+    .collect::<HashMap<String, Error>>();
     if !error_vec_insert_many.is_empty() {
         return Err(Box::new(
-            MongoInsertManyOriginError::init_error_with_possible_trace(
-                error_vec_insert_many,
-                WhereWas {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file: String::from(file!()),
-                    line: line!(),
-                    column: column!(),
-                    git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                },
-                &CONFIG.source_place_type,
-                should_trace,
-            ),
+            tufa_common::repositories_types::tufa_server::mongo_integration::mongo_insert_many::MongoInsertManyOriginError::Mongo { 
+                inner_errors: error_vec_insert_many, 
+                code_occurence: tufa_common::code_occurence!() 
+            },
         ));
     }
     Ok(())

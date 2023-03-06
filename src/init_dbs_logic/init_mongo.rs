@@ -1,13 +1,9 @@
 use crate::global_variables::runtime::config::CONFIG;
 use crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES;
 use crate::mongo_integration::mongo_check_collection_is_not_empty::mongo_check_collections_is_not_empty;
-use crate::mongo_integration::mongo_check_collection_is_not_empty::MongoCheckCollectionsIsNotEmptyWrapperError;
 use crate::mongo_integration::mongo_client_options_parse::mongo_client_options_parse;
-use crate::mongo_integration::mongo_client_options_parse::MongoClientOptionsParseOriginError;
 use crate::mongo_integration::mongo_client_with_options::mongo_client_with_options;
-use crate::mongo_integration::mongo_client_with_options::MongoClientWithOptionsOriginError;
 use crate::mongo_integration::mongo_insert_many::mongo_insert_many;
-use crate::mongo_integration::mongo_insert_many::MongoInsertManyOriginError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_methods::ProviderKindMethods;
 use futures::future::join_all;
@@ -23,36 +19,16 @@ use mongodb::options::ClientOptions;
 use mongodb::Client;
 use std::collections::HashMap;
 use tufa_common::common::where_was::WhereWas;
+// use tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoCheckCollectionsIsNotEmptyWrapperError;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::where_was_methods::WhereWasMethods;
 
-#[derive(
-    Debug,
-    InitErrorFromTufaCommon,
-    ImplGetSourceFromTufaCommon,
-    ImplGetWhereWasOriginOrWrapperFromTufaCommon,
-    ImplErrorWithTracingFromTufaCommon,
-    ImplGetGitInfoFromTufaCommon,
-)]
-pub struct InitMongoWrapperError {
-    source: InitMongoWrapperErrorEnum,
-    where_was: WhereWas,
-}
-
-#[derive(Debug, ImplGetSourceFromTufaCommon, ImplGetWhereWasOriginOrWrapperFromTufaCommon)]
-pub enum InitMongoWrapperErrorEnum {
-    ClientOptionsParseWrapper(MongoClientOptionsParseOriginError),
-    ClientWithOptionsWrapper(MongoClientWithOptionsOriginError),
-    CollectionCountDocumentsOrIsNotEmptyWrapper(MongoCheckCollectionsIsNotEmptyWrapperError),
-    InsertManyErrorWrapper(MongoInsertManyOriginError),
-}
-
 pub async fn init_mongo(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
     should_trace: bool,
-) -> Result<(), Box<InitMongoWrapperError>> {
+) -> Result<(), Box<tufa_common::repositories_types::tufa_server::init_dbs_logic::init_mongo::InitMongoWrapperError>>{
     todo!()
     // match mongo_client_options_parse(false).await {
     //     Err(e) => Err(Box::new(InitMongoWrapperError::init_error_with_possible_trace(
