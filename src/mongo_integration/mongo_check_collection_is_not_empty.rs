@@ -20,7 +20,7 @@ pub async fn mongo_check_collections_is_not_empty<'a>(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
     db: &Database,
     should_trace: bool,
-) -> Result<(), Box<tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginError<'a>>>{
+) -> Result<(), Box<tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoCheckCollectionIsNotEmptyError<'a>>>{
     let error_vec_count_documents =
         join_all(providers_json_local_data_hashmap.keys().map(|pk| async {
             (
@@ -35,8 +35,8 @@ pub async fn mongo_check_collections_is_not_empty<'a>(
         .filter_map(|(pk, result)| match result {
             Err(e) => Some((
                 pk.to_string(),
-                tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginErrorEnum::CountDocumentsOrigin(
-                    tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginErrorEnumCountDocuments::CountDocuments { 
+                tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoCheckCollectionIsNotEmptyErrorEnum::CountDocumentsOrigin(
+                    tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoCheckCollectionIsNotEmptyErrorEnumCountDocuments::CountDocuments { 
                         error: e, 
                         code_occurence: tufa_common::code_occurence!(), 
                     }
@@ -46,8 +46,8 @@ pub async fn mongo_check_collections_is_not_empty<'a>(
                 if documents_number > 0 {
                     return Some((
                         pk.to_string(),
-                        tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginErrorEnum::IsNotEmptyOrigin(
-                            tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginErrorEnumIsNotEmptyOrigin::IsNotEmptyOrigin { 
+                        tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoCheckCollectionIsNotEmptyErrorEnum::IsNotEmptyOrigin(
+                            tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoCheckCollectionIsNotEmptyErrorEnumIsNotEmptyOrigin::IsNotEmptyOrigin { 
                                 error: documents_number, 
                                 code_occurence: tufa_common::code_occurence!()
                             }
@@ -57,10 +57,10 @@ pub async fn mongo_check_collections_is_not_empty<'a>(
                 None
             }
         })
-        .collect::<HashMap<String, tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginErrorEnum>>();
+        .collect::<HashMap<String, tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoCheckCollectionIsNotEmptyErrorEnum>>();
     if !error_vec_count_documents.is_empty() {
         return Err(Box::new(
-            tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginError::Mongo {        
+            tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoCheckCollectionIsNotEmptyError::Mongo {        
                 inner_errors: error_vec_count_documents, 
                 code_occurence: tufa_common::code_occurence!()
             }
