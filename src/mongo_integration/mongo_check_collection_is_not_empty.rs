@@ -34,7 +34,7 @@ pub async fn mongo_check_collections_is_not_empty<'a>(
         .into_iter()
         .filter_map(|(pk, result)| match result {
             Err(e) => Some((
-                pk,
+                pk.to_string(),
                 tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginErrorEnum::CountDocumentsOrigin(
                     tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginErrorEnumCountDocuments::CountDocuments { 
                         error: e, 
@@ -45,7 +45,7 @@ pub async fn mongo_check_collections_is_not_empty<'a>(
             Ok(documents_number) => {
                 if documents_number > 0 {
                     return Some((
-                        pk,
+                        pk.to_string(),
                         tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginErrorEnum::IsNotEmptyOrigin(
                             tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginErrorEnumIsNotEmptyOrigin::IsNotEmptyOrigin { 
                                 error: documents_number, 
@@ -57,7 +57,7 @@ pub async fn mongo_check_collections_is_not_empty<'a>(
                 None
             }
         })
-        .collect::<HashMap<ProviderKind, tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginErrorEnum>>();
+        .collect::<HashMap<String, tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginErrorEnum>>();
     if !error_vec_count_documents.is_empty() {
         return Err(Box::new(
             tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoClientWithOptionsOriginError::Mongo {        

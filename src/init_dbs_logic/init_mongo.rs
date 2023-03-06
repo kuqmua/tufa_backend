@@ -25,10 +25,10 @@ use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::where_was_methods::WhereWasMethods;
 
-pub async fn init_mongo(
+pub async fn init_mongo<'a>(
     providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
     should_trace: bool,
-) -> Result<(), Box<tufa_common::repositories_types::tufa_server::init_dbs_logic::init_mongo::InitMongoWrapperError>>{
+) -> Result<(), Box<tufa_common::repositories_types::tufa_server::init_dbs_logic::init_mongo::InitMongoWrapperError<'a>>>{
     todo!()
     // match mongo_client_options_parse(false).await {
     //     Err(e) => Err(Box::new(InitMongoWrapperError::init_error_with_possible_trace(

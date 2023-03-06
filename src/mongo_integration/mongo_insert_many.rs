@@ -50,7 +50,7 @@ pub async fn mongo_insert_many<'a>(
         }
         None
     })
-    .collect::<HashMap<String, Error>>();
+    .collect::<HashMap<String, tufa_common::repositories_types::tufa_server::mongo_integration::mongo_insert_many::MongoInsertManyOriginErrorEnum>>();
     if !error_vec_insert_many.is_empty() {
         return Err(Box::new(
             tufa_common::repositories_types::tufa_server::mongo_integration::mongo_insert_many::MongoInsertManyOriginError::Mongo { 
