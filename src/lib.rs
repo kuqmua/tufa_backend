@@ -13,7 +13,7 @@ pub mod configuration;
 pub mod domain;
 pub mod email_client;
 pub mod entry;
-// mod fetch;
+mod fetch;
 pub mod global_variables;
 mod idempotency;
 // mod init_dbs_logic;
