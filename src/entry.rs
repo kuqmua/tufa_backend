@@ -1,11 +1,11 @@
 use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::hardcode::PROJECT_NAME;
 use crate::global_variables::runtime::config::CONFIG;
-use crate::preparation::prepare_server::prepare_server;
-use crate::prints::print_colorful_message::print_colorful_message;
-use crate::server_wrapper::server_wrapper;
-use crate::telemetry::get_subscriber::get_subscriber;
-use crate::telemetry::init_subscriber::init_subscriber;
+// use crate::preparation::prepare_server::prepare_server;
+// use crate::prints::print_colorful_message::print_colorful_message;
+// use crate::server_wrapper::server_wrapper;
+// use crate::telemetry::get_subscriber::get_subscriber;
+// use crate::telemetry::init_subscriber::init_subscriber;
 use tufa_common::config_mods::print_type::PrintType;
 use tufa_common::traits::fields::GetLogType;
 use tufa_common::traits::get_git_source_file_link::GetGitSourceFileLink;
@@ -33,31 +33,31 @@ pub fn entry() {
         .build()
     {
         Err(e) => {
-            print_colorful_message(
-                None,
-                tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                format!("Cannot build tokio runtime {e:#?}"),
-            );
+            // print_colorful_message(
+            //     None,
+            //     tufa_common::config_mods::print_type::PrintType::WarningHigh,
+            //     vec![format!("{}:{}:{}", file!(), line!(), column!())],
+            //     vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+            //     format!("Cannot build tokio runtime {e:#?}"),
+            // );
         }
         Ok(runtime) => {
-            if let tufa_common::config_mods::log_type::LogType::Tracing = CONFIG.log_type {
-                if let Err(e) = init_subscriber(get_subscriber(
-                    PROJECT_NAME.into(),
-                    CONFIG.tracing_type.to_lower_snake_case(),
-                    std::io::stdout,
-                )) {
-                    print_colorful_message(
-                        None,
-                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                        format!("tracing init_subscriber error: {:#?}", e),
-                    );
-                    return;
-                };
-            }
+            // if let tufa_common::config_mods::log_type::LogType::Tracing = CONFIG.log_type {
+            //     if let Err(e) = init_subscriber(get_subscriber(
+            //         PROJECT_NAME.into(),
+            //         CONFIG.tracing_type.to_lower_snake_case(),
+            //         std::io::stdout,
+            //     )) {
+            //         print_colorful_message(
+            //             None,
+            //             tufa_common::config_mods::print_type::PrintType::WarningHigh,
+            //             vec![format!("{}:{}:{}", file!(), line!(), column!())],
+            //             vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
+            //             format!("tracing init_subscriber error: {:#?}", e),
+            //         );
+            //         return;
+            //     };
+            // }
             // let user = User {
             //     name: "Arwen Undomiel".to_string(),
             //     age: 3000,
@@ -69,12 +69,12 @@ pub fn entry() {
             //     },
             // };
             // tracing::error!(valuable = false, user = ?user);
-            if let true = CONFIG.is_preparation_enabled {
-                if let Err(e) = runtime.block_on(prepare_server(true)) {
-                    println!("{e}");
-                    return;
-                }
-            }
+            // if let true = CONFIG.is_preparation_enabled {
+            //     if let Err(e) = runtime.block_on(prepare_server(true)) {
+            //         println!("{e}");
+            //         return;
+            //     }
+            // }
             // if let Err(e) = server_wrapper() {
             //     print_colorful_message(
             //         None,
