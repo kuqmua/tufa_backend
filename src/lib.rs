@@ -15,7 +15,7 @@ pub mod email_client;
 pub mod entry;
 // mod fetch;
 pub mod global_variables;
-// mod idempotency;
+mod idempotency;
 // mod init_dbs_logic;
 // pub mod issue_delivery_worker;
 // mod logs_logic;
