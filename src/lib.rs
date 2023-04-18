@@ -10,8 +10,8 @@
 // mod check_new_providers_posts;
 mod config_mods;
 // pub mod configuration;
-// pub mod domain;
-// pub mod email_client;
+pub mod domain;
+pub mod email_client;
 pub mod entry;
 // mod fetch;
 pub mod global_variables;
