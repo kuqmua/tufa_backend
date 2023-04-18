@@ -22,7 +22,7 @@ mod idempotency;
 // mod mongo_integration;
 // mod postgres_integration;
 // mod preparation;
-// mod prints;
+mod prints;
 mod providers;
 // mod routes;
 // mod server_wrapper;
