@@ -23,7 +23,7 @@ mod idempotency;
 // mod postgres_integration;
 // mod preparation;
 // mod prints;
-// mod providers;
+mod providers;
 // mod routes;
 // mod server_wrapper;
 mod session_state;
@@ -31,7 +31,7 @@ mod session_state;
 pub mod telemetry;
 // #[cfg(test)]
 // mod tests;
-// pub mod traits;
+pub mod traits;
 mod utils;
 pub mod write_error_posts_wrapper;
 
