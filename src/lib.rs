@@ -26,7 +26,7 @@ mod idempotency;
 // mod providers;
 // mod routes;
 // mod server_wrapper;
-// mod session_state;
+mod session_state;
 // pub mod startup;
 // pub mod telemetry;
 // #[cfg(test)]
