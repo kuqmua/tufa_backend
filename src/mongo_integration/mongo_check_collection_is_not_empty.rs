@@ -22,10 +22,10 @@ pub async fn mongo_check_collections_is_not_empty<'a>(
     should_trace: bool,
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoCheckCollectionIsNotEmptyError<'a>>>{
     let error_vec_count_documents =
-        join_all(providers_json_local_data_hashmap.keys().map(|pk| async {
+        join_all(providers_json_local_data_hashmap.keys().map(|pk| async move {
             (
                 *pk,
-                db.collection::<Document>(&pk.get_db_tag())
+                db.collection::<Document>(&format!("{pk}"))
                     .count_documents(None, None)
                     .await,
             )
