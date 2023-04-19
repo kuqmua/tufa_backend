@@ -7,7 +7,7 @@
 // #![allow(clippy::too_many_arguments)]
 
 mod authentication;
-// mod check_new_providers_posts;
+mod check_new_providers_posts;
 mod config_mods;
 pub mod configuration;
 pub mod domain;
