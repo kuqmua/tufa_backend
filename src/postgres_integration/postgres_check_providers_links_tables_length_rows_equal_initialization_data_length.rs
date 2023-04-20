@@ -14,51 +14,17 @@ use tufa_common::common::where_was::WhereWas;
 use tufa_common::traits::get_source::GetSource;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::where_was_methods::WhereWasMethods;
+use tufa_common::repositories_types::tufa_server::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError;
+use tufa_common::repositories_types::tufa_server::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::ProviderLinksTablesLengthRowsNotEqualInitializationDataLength;
 
-#[derive(
-    Debug,
-    ImplGetWhereWasOriginOrWrapperFromTufaCommon,
-    ImplErrorWithTracingFromTufaCommon,
-    InitErrorFromTufaCommon,
-    ImplGetSourceFromTufaCommon,
-)]
-pub struct PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError {
-    source: PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthOriginErrorEnum,
-    where_was: WhereWas,
-}
-
-#[derive(Debug, ImplGetSourceFromTufaCommon, ImplGetWhereWasOriginOrWrapperFromTufaCommon)]
-pub enum PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthOriginErrorEnum {
-    SelectCountOrigin(HashMap<ProviderKind, sqlx::Error>),
-    ProviderLinksTablesRowsLengthNotEqualOrigin(
-        HashMap<ProviderKind, ProviderLinksTablesLengthRowsNotEqualInitializationDataLength>,
-    ),
-}
-
-#[derive(Debug)]
-pub struct ProviderLinksTablesLengthRowsNotEqualInitializationDataLength {
-    pub table_rows_length: i64,
-    pub initialization_data_length: usize,
-}
-
-impl std::fmt::Display for ProviderLinksTablesLengthRowsNotEqualInitializationDataLength {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(
-            f,
-            "table_rows_length: {}, initialization_data_length: {}",
-            self.table_rows_length, self.initialization_data_length
-        )
-    }
-}
-
-pub async fn postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
+pub async fn postgres_check_providers_links_tables_length_rows_equal_initialization_data_length<'a>(
     providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
     db: &Pool<Postgres>,
     should_trace: bool,
 ) -> Result<
     (),
-    Box<PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError>,
-> {
+    Box<PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError<'a>>,
+>{
     let count_provider_links_tables_tasks_vec =
         providers_json_local_data_hashmap
             .iter()
@@ -87,7 +53,7 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
     for (pk, string_vec, result) in count_provider_links_tables_error_vec {
         match result {
             Err(e) => {
-                count_provider_links_tables_error_hashmap.insert(*pk, e);
+                count_provider_links_tables_error_hashmap.insert(pk.clone(), e);
             }
             Ok((count,)) => {
                 if count != string_vec.len() as i64 {
@@ -102,41 +68,51 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
             }
         }
     }
-    if !count_provider_links_tables_error_hashmap.is_empty() {
-        return Err(Box::new(
-            PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError::init_error_with_possible_trace(
-                PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthOriginErrorEnum::SelectCountOrigin(count_provider_links_tables_error_hashmap),
-                WhereWas {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file: String::from(file!()),
-                    line: line!(),
-                    column: column!(),
-                    git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                },
-                &CONFIG.source_place_type,
-                should_trace,
-            ),
-        ));
-    }
-    if !provider_links_tables_rows_length_not_equal_error_hashmap.is_empty() {
-        return Err(Box::new(
-            PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError::init_error_with_possible_trace(
-                PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthOriginErrorEnum::ProviderLinksTablesRowsLengthNotEqualOrigin(provider_links_tables_rows_length_not_equal_error_hashmap),
-                WhereWas {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file: String::from(file!()),
-                    line: line!(),
-                    column: column!(),
-                    git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                },
-                &CONFIG.source_place_type,
-                should_trace,
-            ),
-        ));
-    }
+    // if !count_provider_links_tables_error_hashmap.is_empty() {
+    //     return Err(Box::new(
+
+
+    //         tufa_common::repositories_types::tufa_server::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError::SelectCountOrigin {
+    //             inner_error: 
+    //             PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOrigin::Postgres {
+    //                 inner_errors: std::collections::HashMap<String, PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorSqlxUnnamed<'a>>,
+    //                 code_occurence: tufa_common::code_occurence!(),
+    //             },
+    //             code_occurence: tufa_common::code_occurence!()
+    //         }
+    //         // PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError::init_error_with_possible_trace(
+    //         //     PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthOriginErrorEnum::SelectCountOrigin(count_provider_links_tables_error_hashmap),
+    //         //     WhereWas {
+    //         //         time: std::time::SystemTime::now()
+    //         //             .duration_since(std::time::UNIX_EPOCH)
+    //         //             .expect("cannot convert time to unix_epoch"),
+    //         //         file: String::from(file!()),
+    //         //         line: line!(),
+    //         //         column: column!(),
+    //         //         git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
+    //         //     },
+    //         //     &CONFIG.source_place_type,
+    //         //     should_trace,
+    //         // ),
+    //     ));
+    // }
+    // if !provider_links_tables_rows_length_not_equal_error_hashmap.is_empty() {
+    //     return Err(Box::new(
+    //         PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError::init_error_with_possible_trace(
+    //             PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthOriginErrorEnum::ProviderLinksTablesRowsLengthNotEqualOrigin(provider_links_tables_rows_length_not_equal_error_hashmap),
+    //             WhereWas {
+    //                 time: std::time::SystemTime::now()
+    //                     .duration_since(std::time::UNIX_EPOCH)
+    //                     .expect("cannot convert time to unix_epoch"),
+    //                 file: String::from(file!()),
+    //                 line: line!(),
+    //                 column: column!(),
+    //                 git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
+    //             },
+    //             &CONFIG.source_place_type,
+    //             should_trace,
+    //         ),
+    //     ));
+    // }
     Ok(())
 }
