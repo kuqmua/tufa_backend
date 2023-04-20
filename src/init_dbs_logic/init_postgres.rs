@@ -9,7 +9,6 @@ use crate::postgres_integration::postgres_delete_all_from_providers_link_parts_t
 use crate::postgres_integration::postgres_establish_connection::postgres_establish_connection;
 use crate::postgres_integration::postgres_establish_connection::PostgresEstablishConnectionOriginError;
 use crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::postgres_insert_link_parts_into_providers_tables;
-use crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginError;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use impl_get_source::ImplGetSourceFromTufaCommon;
 use std::collections::HashMap;
@@ -22,7 +21,7 @@ use tufa_common::traits::get_source::GetSource;
 use init_error::InitErrorFromTufaCommon;
 use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
 use impl_get_git_info::ImplGetGitInfoFromTufaCommon;
-// use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length;
+use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length;
 
 #[derive(
     Debug,
@@ -37,31 +36,6 @@ pub struct PostgresInitWrapperError {
     where_was: WhereWas,
 }
 
-// impl PostgresInitWrapperError {
-//     fn kekw(&self) -> String {
-//         // use tufa_common::traits::get_git_info::GetGitInfo;
-//         self.get_log_with_additional_where_wass()
-//     }
-// }
-// pub trait GetLogWithAdditionalWhereWass<T> {
-//     fn get_log_with_additional_where_wass(&self) -> String;
-// }
-
-// impl<T> GetLogWithAdditionalWhereWass<Self> for T
-// where
-//     Self: tufa_common::traits::get_git_info::GetGitInfo,
-// {
-//     fn get_log_with_additional_where_wass(&self) -> String {
-//         String::from("kekw")
-//     }
-// }
-
-// impl tufa_common::traits::get_git_info::GetGitInfo for PostgresInitWrapperError {
-//     fn get_git_info(&self) -> &'static tufa_common::common::git::git_info::GitInformation<'static> {
-//         &crate::global_variables::compile_time::git_info::GIT_INFO
-//     }
-// }
-
 #[derive(Debug, ImplGetWhereWasOriginOrWrapperFromTufaCommon, ImplGetSourceFromTufaCommon)]
 pub enum PostgresInitWrapperErrorEnum {
     EstablishConnectionWrapper(PostgresEstablishConnectionOriginError),
@@ -72,7 +46,7 @@ pub enum PostgresInitWrapperErrorEnum {
         PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError,
     ),
     InsertLinkPartsIntoProvidersTablesWrapper(
-        PostgresInsertLinkPartsIntoProvidersTablesOriginError,
+        tufa_common::repositories_types::tufa_server::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginError,
     ),
 }
 
@@ -170,27 +144,27 @@ pub async fn init_postgres(
                     ),
                 ));
             }
-            // if let Err(e) = postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
-            //     &providers_json_local_data_hashmap,
-            //     &pool,
-            //     false,
-            // )
-            // .await {
-            //                                                                             return Err(Box::new(PostgresInitWrapperError::init_error_with_possible_trace(
-            //     PostgresInitWrapperErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e),
-            //     WhereWas {
-            //         time: std::time::SystemTime::now()
-            // .duration_since(std::time::UNIX_EPOCH)
-            // .expect("cannot convert time to unix_epoch"),
-            //         file: file!(),
-            //         line: line!(),
-            //         column: column!(),
-            //     },
-            //     &CONFIG.source_place_type,
-            //     &GIT_INFO,
-            //     should_trace,
-            // )));
-            // }
+            if let Err(e) = postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
+                &providers_json_local_data_hashmap,
+                &pool,
+                false,
+            )
+            .await {
+                                                                                        return Err(Box::new(PostgresInitWrapperError::init_error_with_possible_trace(
+                PostgresInitWrapperErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e),
+                WhereWas {
+                    time: std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .expect("cannot convert time to unix_epoch"),
+                    file: file!(),
+                    line: line!(),
+                    column: column!(),
+                },
+                &CONFIG.source_place_type,
+                &GIT_INFO,
+                should_trace,
+            )));
+            }
             if let Err(e) = postgres_insert_link_parts_into_providers_tables(
                 &providers_json_local_data_hashmap,
                 &pool,
