@@ -21,7 +21,7 @@ mod idempotency;
 mod logs_logic;
 mod mongo_integration;
 mod postgres_integration;
-// mod preparation;
+mod preparation;
 mod prints;
 mod providers;
 // mod routes;
@@ -29,8 +29,8 @@ mod providers;
 mod session_state;
 // pub mod startup;
 pub mod telemetry;
-// #[cfg(test)]
-// mod tests;
+#[cfg(test)]
+mod tests;
 pub mod traits;
 mod utils;
 pub mod write_error_posts_wrapper;

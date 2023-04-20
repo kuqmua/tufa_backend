@@ -20,7 +20,7 @@ pub async fn check_availability<'a>(
     let net_url = CONFIG.starting_check_link.clone();
     let postgres_url = CONFIG.get_postgres_url();
     match join!(
-        net_check_availability(net_url, false),
+        net_check_availability(net_url),
         postgres_check_availability(postgres_url, false),
         mongo_check_availability(
             MONGO_CLIENT_OPTIONS.deref().to_owned(), //std::time::Duration::from_millis(CONFIG.mongo_connection_timeout),
