@@ -16,7 +16,7 @@ pub mod entry;
 mod fetch;
 pub mod global_variables;
 mod idempotency;
-// mod init_dbs_logic;
+mod init_dbs_logic;
 // pub mod issue_delivery_worker;
 mod logs_logic;
 mod mongo_integration;

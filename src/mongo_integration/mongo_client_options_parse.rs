@@ -11,10 +11,10 @@ use tufa_common::traits::get_mongo_url::GetMongoUrl;
 use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
 use tufa_common::traits::where_was_methods::WhereWasMethods;
 
-pub async fn mongo_client_options_parse<'a>() -> Result<ClientOptions, Box<tufa_common::repositories_types::tufa_server::mongo_integration::mongo_client_options_parse::MongoClientOptionsParseOriginError<'a>>>{
+pub async fn mongo_client_options_parse<'a>() -> Result<ClientOptions, Box<tufa_common::repositories_types::tufa_server::mongo_integration::mongo_client_options_parse::MongoClientOptionsParseOriginErrorNamed<'a>>>{
     match ClientOptions::parse(&CONFIG.get_mongo_url()).await {
         Err(e) => Err(Box::new(
-            tufa_common::repositories_types::tufa_server::mongo_integration::mongo_client_options_parse::MongoClientOptionsParseOriginError::Mongo {
+            tufa_common::repositories_types::tufa_server::mongo_integration::mongo_client_options_parse::MongoClientOptionsParseOriginErrorNamed::Mongo {
                 error: e,
                 code_occurence: tufa_common::code_occurence!(),
             },

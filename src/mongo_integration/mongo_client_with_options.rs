@@ -14,10 +14,10 @@ use tufa_common::traits::where_was_methods::WhereWasMethods;
 pub fn mongo_client_with_options<'a>(
     client_options: ClientOptions,
     should_trace: bool,
-) -> Result<Client, Box<tufa_common::repositories_types::tufa_server::mongo_integration::mongo_client_with_options::MongoClientWithOptionsOriginError<'a>>>{
+) -> Result<Client, Box<tufa_common::repositories_types::tufa_server::mongo_integration::mongo_client_with_options::MongoClientWithOptionsOriginErrorNamed<'a>>>{
     match Client::with_options(client_options) {
         Err(e) => Err(Box::new(
-            tufa_common::repositories_types::tufa_server::mongo_integration::mongo_client_with_options::MongoClientWithOptionsOriginError::Mongo { 
+            tufa_common::repositories_types::tufa_server::mongo_integration::mongo_client_with_options::MongoClientWithOptionsOriginErrorNamed::Mongo { 
                 error: e, 
                 code_occurence: tufa_common::code_occurence!() 
             } 
