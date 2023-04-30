@@ -31,44 +31,36 @@ pub async fn check_availability<'a>(
     ) {
         (Ok(_), Ok(_), Ok(_)) => Ok(()),
         (Ok(_), Ok(_), Err(m)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::Mongo {
-            error: *m,
+            mongo: *m,
             code_occurence: tufa_common::code_occurence!(),
         })),
         (Ok(_), Err(p), Ok(_)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::Postgres {
-            error: *p,
+            postgres: *p,
             code_occurence: tufa_common::code_occurence!(),
         })),
-        (Ok(_), Err(p), Err(m)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::Many {
-            inner_errors: vec![
-                tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorEnum::Postgres(*p),
-                tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorEnum::Mongo(*m),
-            ],
+        (Ok(_), Err(p), Err(m)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::PostgresAndMongo {
+            postgres: *p,
+            mongo: *m,
             code_occurence: tufa_common::code_occurence!(),
         })),
         (Err(n), Ok(_), Ok(_)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::Net {
-            error: *n,
+            net: *n,
             code_occurence: tufa_common::code_occurence!(),
         })),
-        (Err(n), Ok(_), Err(m)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::Many {
-            inner_errors: vec![
-                tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorEnum::Net(*n),
-                tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorEnum::Mongo(*m),
-            ],
+        (Err(n), Ok(_), Err(m)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::NetAndMongo {
+            net: *n,
+            mongo: *m,
             code_occurence: tufa_common::code_occurence!(),
         })),
-        (Err(n), Err(p), Ok(_)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::Many {
-            inner_errors: vec![
-                tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorEnum::Net(*n),
-                tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorEnum::Postgres(*p),
-            ],
+        (Err(n), Err(p), Ok(_)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::NetAndPostgres {
+            net: *n,
+            postgres: *p,
             code_occurence: tufa_common::code_occurence!(),
         })),
-        (Err(n), Err(p), Err(m)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::Many {
-            inner_errors: vec![
-                tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorEnum::Net(*n),
-                tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorEnum::Postgres(*p),
-                tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorEnum::Mongo(*m),
-            ],
+        (Err(n), Err(p), Err(m)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::NetAndPostgresAndMongo {
+            net: *n,
+            postgres: *p,
+            mongo: *m,
             code_occurence: tufa_common::code_occurence!(),
         })),
     }
