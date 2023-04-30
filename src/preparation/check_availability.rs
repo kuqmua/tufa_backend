@@ -1,6 +1,6 @@
 pub async fn check_availability<'a>(
     should_trace: bool,
-) -> Result<(), Box<tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError<'a>>>{
+) -> Result<(), Box<tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorNamed<'a>>>{
     match futures::join!(
         tufa_common::server::net::net_check_availability::net_check_availability(&crate::global_variables::runtime::config::CONFIG.starting_check_link),
         tufa_common::server::postgres::postgres_check_availability::postgres_check_availability(
@@ -19,34 +19,34 @@ pub async fn check_availability<'a>(
         ),
     ) {
         (Ok(_), Ok(_), Ok(_)) => Ok(()),
-        (Ok(_), Ok(_), Err(m)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::Mongo {
+        (Ok(_), Ok(_), Err(m)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorNamed::Mongo {
             mongo: *m,
             code_occurence: tufa_common::code_occurence!(),
         })),
-        (Ok(_), Err(p), Ok(_)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::Postgres {
+        (Ok(_), Err(p), Ok(_)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorNamed::Postgres {
             postgres: *p,
             code_occurence: tufa_common::code_occurence!(),
         })),
-        (Ok(_), Err(p), Err(m)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::PostgresAndMongo {
+        (Ok(_), Err(p), Err(m)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorNamed::PostgresAndMongo {
             postgres: *p,
             mongo: *m,
             code_occurence: tufa_common::code_occurence!(),
         })),
-        (Err(n), Ok(_), Ok(_)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::Net {
+        (Err(n), Ok(_), Ok(_)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorNamed::Net {
             net: *n,
             code_occurence: tufa_common::code_occurence!(),
         })),
-        (Err(n), Ok(_), Err(m)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::NetAndMongo {
+        (Err(n), Ok(_), Err(m)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorNamed::NetAndMongo {
             net: *n,
             mongo: *m,
             code_occurence: tufa_common::code_occurence!(),
         })),
-        (Err(n), Err(p), Ok(_)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::NetAndPostgres {
+        (Err(n), Err(p), Ok(_)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorNamed::NetAndPostgres {
             net: *n,
             postgres: *p,
             code_occurence: tufa_common::code_occurence!(),
         })),
-        (Err(n), Err(p), Err(m)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityError::NetAndPostgresAndMongo {
+        (Err(n), Err(p), Err(m)) => Err(Box::new(tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorNamed::NetAndPostgresAndMongo {
             net: *n,
             postgres: *p,
             mongo: *m,

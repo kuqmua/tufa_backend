@@ -1,9 +1,9 @@
 // use crate::init_dbs_logic::init_dbs::init_dbs;
 // use crate::init_dbs_logic::init_dbs::InitDbsWrapperError;
-pub async fn prepare_server<'a>(should_trace: bool) -> Result<(), Box<tufa_common::repositories_types::tufa_server::preparation::prepare_server::PrepareServerError<'a>>> {
+pub async fn prepare_server<'a>(should_trace: bool) -> Result<(), Box<tufa_common::repositories_types::tufa_server::preparation::prepare_server::PrepareServerErrorNamed<'a>>> {
     if let Err(e) = crate::preparation::check_availability::check_availability(false).await {
         return Err(Box::new(
-            tufa_common::repositories_types::tufa_server::preparation::prepare_server::PrepareServerError::CheckAvailability { 
+            tufa_common::repositories_types::tufa_server::preparation::prepare_server::PrepareServerErrorNamed::CheckAvailability { 
                 check_availability: *e, 
                 code_occurence: tufa_common::code_occurence!(),
             }
