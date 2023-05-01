@@ -54,6 +54,12 @@ pub fn entry() {
                     e.error_log(once_cell::sync::Lazy::force(
                         &crate::global_variables::runtime::config::CONFIG,
                     ));
+                    // let e_serialize_deserialize_version = e.into_serialize_deserialize_version();
+                    // println!("{e_serialize_deserialize_version}");
+                    // let e_json = serde_json::to_string(&e_serialize_deserialize_version).unwrap();
+                    // println!("{e_json}");
+                    // let e_deserialized: tufa_common::repositories_types::tufa_server::preparation::prepare_server::PrepareServerErrorNamedWithSerializeDeserialize = serde_json::from_str(&e_json).unwrap();
+                    // println!("{e_deserialized}");
                 }
                 // if let Err(e) = crate::server_wrapper::server_wrapper() {
                 //     crate::prints::print_colorful_message::print_colorful_message(
