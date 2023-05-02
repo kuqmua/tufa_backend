@@ -11,7 +11,7 @@ pub async fn mongo_drop_empty_collection<'a>(
             }
         )),
         Ok(client_options) => {
-            match mongodb::Client::with_options(client_options) {
+            match mongodb::Client::with_options(client_options) {//todo - maybe move mongodb::Client value to global variables?
                 Err(e) => Err(Box::new(
                     tufa_common::server::mongo::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorNamed::MongoDB {
                         mongodb: e,
