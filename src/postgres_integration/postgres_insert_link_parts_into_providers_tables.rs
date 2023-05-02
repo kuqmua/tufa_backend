@@ -1,26 +1,9 @@
-use crate::global_variables::runtime::config::CONFIG;
-use crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES;
-use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use crate::traits::provider_kind_methods::ProviderKindMethods;
-use futures::future::join_all;
-use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
-use impl_get_source::ImplGetSourceFromTufaCommon;
-use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
-use init_error::InitErrorFromTufaCommon;
-use sqlx::Error;
-use sqlx::Pool;
-use sqlx::Postgres;
-use std::collections::HashMap;
-use tufa_common::common::where_was::WhereWas;
-use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
-use tufa_common::traits::where_was_methods::WhereWasMethods;
-
 pub async fn postgres_insert_link_parts_into_providers_tables<'a>(
-    providers_json_local_data_hashmap: &HashMap<ProviderKind, Vec<String>>,
-    pool: &Pool<Postgres>,
+    providers_json_local_data_hashmap: &std::collections::HashMap<crate::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
+    pool: &sqlx::Pool<sqlx::Postgres>,
     should_trace: bool,
-) -> Result<(), Box<tufa_common::repositories_types::tufa_server::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginError<'a>>>{
-    let insertion_error_hashmap = join_all(providers_json_local_data_hashmap.iter().map(
+) -> Result<(), Box<tufa_common::repositories_types::tufa_server::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginErrorNamed<'a>>>{
+    let insertion_error_hashmap = futures::future::join_all(providers_json_local_data_hashmap.iter().map(
         |(pk, string_vec)| async {
             let mut values_string = String::from("");
             for link_part in string_vec.clone() {
@@ -31,7 +14,10 @@ pub async fn postgres_insert_link_parts_into_providers_tables<'a>(
             }
             let query_string = format!(
                 "INSERT INTO {} (link_part) VALUES {values_string};",
-                pk.get_postgres_table_name()
+                {
+                    use crate::traits::provider_kind_methods::ProviderKindMethods;
+                    pk.get_postgres_table_name()
+                }
             );
             (*pk, sqlx::query(&query_string).execute(pool).await)
         },
@@ -42,20 +28,22 @@ pub async fn postgres_insert_link_parts_into_providers_tables<'a>(
         if let Err(e) = result {
             return Some((
                 pk.to_string(), 
-                tufa_common::repositories_types::tufa_server::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginErrorEnum::Postgres { 
-                    error: e, 
-                    code_occurence: tufa_common::code_occurence!()
-                }
+                tufa_common::repositories_types::tufa_server::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginErrorEnumUnnamed::PostgresInsertLinkPartsIntoProvidersTablesOriginHandle(
+                    tufa_common::repositories_types::tufa_server::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginHandleErrorNamed::Postgres { 
+                        error: e, 
+                        code_occurence: tufa_common::code_occurence!()
+                    }
+                )
             ));
         }
         None
     })
-    .collect::<HashMap<
-        String, tufa_common::repositories_types::tufa_server::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginErrorEnum
+    .collect::<std::collections::HashMap<
+        String, tufa_common::repositories_types::tufa_server::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginErrorEnumUnnamed
     >>();
     if !insertion_error_hashmap.is_empty() {
         return Err(Box::new(
-            tufa_common::repositories_types::tufa_server::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginError::Postgres { 
+            tufa_common::repositories_types::tufa_server::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginErrorNamed::Postgres { 
                 inner_errors: insertion_error_hashmap, 
                 code_occurence: tufa_common::code_occurence!() 
             }
