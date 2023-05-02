@@ -1,116 +1,49 @@
-use mongodb::bson::Document;
-use mongodb::options::ClientOptions;
-use mongodb::Client;
-use mongodb::Collection;
-use tufa_common::common::where_was::WhereWas;
-
-#[derive(Debug)]
-pub enum MongoDropEmptyCollectionErrorEnum {
-    ClientOptionsParse {
-        source: mongodb::error::Error,
-        where_was: WhereWas,
-    },
-    ClientWithOptions {
-        source: mongodb::error::Error,
-        where_was: WhereWas,
-    },
-    CountDocuments {
-        source: mongodb::error::Error,
-        where_was: WhereWas,
-    },
-    NotEmpty {
-        source: u64,
-        where_was: WhereWas,
-    },
-    DatabaseDrop {
-        source: mongodb::error::Error,
-        where_was: WhereWas,
-    },
-}
-
-pub async fn mongo_drop_empty_collection(
-    mongo_url: &str,
-    db_name: &str,
-    db_collection_name: &str,
-) -> Result<(), Box<MongoDropEmptyCollectionErrorEnum>> {
-    match ClientOptions::parse(mongo_url).await {
+pub async fn mongo_drop_empty_collection<'a>(
+    mongo_url: &'a str,
+    db_name: &'a str,
+    db_collection_name: &'a str,
+) -> Result<(), Box<tufa_common::server::mongo::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorNamed<'a>>> {
+    match mongodb::options::ClientOptions::parse(mongo_url).await {
         Err(e) => Err(Box::new(
-            MongoDropEmptyCollectionErrorEnum::ClientOptionsParse {
-                source: e,
-                where_was: WhereWas {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file: String::from(file!()),
-                    line: line!(),
-                    column: column!(),
-                    git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                },
-            },
+            tufa_common::server::mongo::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorNamed::MongoDB {
+                mongodb: e,
+                code_occurence: tufa_common::code_occurence!(),
+            }
         )),
         Ok(client_options) => {
-            match Client::with_options(client_options) {
+            match mongodb::Client::with_options(client_options) {
                 Err(e) => Err(Box::new(
-                    MongoDropEmptyCollectionErrorEnum::ClientWithOptions {
-                        source: e,
-                        where_was: WhereWas {
-                            time: std::time::SystemTime::now()
-                                .duration_since(std::time::UNIX_EPOCH)
-                                .expect("cannot convert time to unix_epoch"),
-                            file: String::from(file!()),
-                            line: line!(),
-                            column: column!(),
-                            git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                        },
-                    },
+                    tufa_common::server::mongo::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorNamed::MongoDB {
+                        mongodb: e,
+                        code_occurence: tufa_common::code_occurence!(),
+                    }
                 )),
                 Ok(client) => {
-                    let collection: Collection<Document> =
+                    let collection: mongodb::Collection<mongodb::bson::Document> =
                         client.database(db_name).collection(db_collection_name);
                     match collection.count_documents(None, None).await {
                     Err(e) => Err(Box::new(
-                        MongoDropEmptyCollectionErrorEnum::CountDocuments {
-                            source: e,
-            where_was: WhereWas {
-                time: std::time::SystemTime::now()
-                    .duration_since(std::time::UNIX_EPOCH)
-                    .expect("cannot convert time to unix_epoch"),
-                file: String::from(file!()),
-                line: line!(),
-                column: column!(),
-                git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-            },
-                        },
+                        tufa_common::server::mongo::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorNamed::MongoDB {
+                            mongodb: e,
+                            code_occurence: tufa_common::code_occurence!(),
+                        }
                     )),
                     Ok(documents_number) => {
                         if documents_number > 0 {
-                            Err(Box::new(MongoDropEmptyCollectionErrorEnum::NotEmpty {
-                                source: documents_number,
-                                where_was:                 WhereWas {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file: String::from(file!()),
-                    line: line!(),
-                    column: column!(),
-                    git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                },
-                            }))
+                            Err(Box::new(
+                                tufa_common::server::mongo::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorNamed::CollectionIsNotEmpty {
+                                    collection_name: db_collection_name,
+                                    collection_len: documents_number,
+                                    code_occurence: tufa_common::code_occurence!(),
+                                }
+                            ))
                         } else {
                             if let Err(e) = collection.drop(None).await {
                                 return Err(Box::new(
-                                    MongoDropEmptyCollectionErrorEnum::DatabaseDrop {
-                                        source: e,
-                                        where_was:                 WhereWas {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file: String::from(file!()),
-                    line: line!(),
-                    column: column!(),
-                    git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                },
-                                    },
+                                    tufa_common::server::mongo::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorNamed::MongoDB {
+                                        mongodb: e,
+                                        code_occurence: tufa_common::code_occurence!(),
+                                    }
                                 ));
                             }
                             Ok(())
