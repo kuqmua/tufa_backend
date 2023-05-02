@@ -28,8 +28,9 @@ pub async fn mongo_drop_empty_db<'a>(
                     Ok(collections_names_list) => {
                         if !collections_names_list.is_empty() {
                             return Err(Box::new(
-                                tufa_common::server::mongo::mongo_drop_empty_db::MongoDropEmptyDbErrorNamed::CollectionNamesListIsEmpty {
+                                tufa_common::server::mongo::mongo_drop_empty_db::MongoDropEmptyDbErrorNamed::CollectionNamesListIsNotEmpty {
                                     database: db_name,
+                                    list_collection_names_len: collections_names_list.len(),
                                     code_occurence: tufa_common::code_occurence!(),
                                 }
                             ));
