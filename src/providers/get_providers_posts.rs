@@ -53,9 +53,9 @@ use tufa_common::common::where_was::WhereWas;
 //TODO: WRITE CONVERSION FUNCTION INTO COMMON ERROR ENUM AND MOVE IT INTO write_error_posts_wrapper
 
 #[derive(Debug)]
-pub enum GetProviderPostsErrorEnum {
+pub enum GetProviderPostsErrorEnum<'a> {
     GetLocalProvidersLinkParts {
-        source: GetProvidersLinkPartsErrorEnum,
+        source: GetProvidersLinkPartsErrorEnum<'a>,
         where_was: WhereWas,
     },
     CheckProvidersLinkPartsEmpty {
@@ -68,7 +68,7 @@ pub enum GetProviderPostsErrorEnum {
     },
 }
 
-pub async fn get_providers_posts() -> Result<(), Box<GetProviderPostsErrorEnum>> {
+pub async fn get_providers_posts<'a>() -> Result<(), Box<GetProviderPostsErrorEnum<'a>>> {
     match get_providers_link_parts(&CONFIG.providers_link_parts_source).await {
         Err(e) => Err(Box::new(
             GetProviderPostsErrorEnum::GetLocalProvidersLinkParts {
