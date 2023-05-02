@@ -1,7 +1,6 @@
 pub async fn mongo_check_collections_is_not_empty<'a>(
     providers_json_local_data_hashmap: std::collections::HashMap<crate::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
     db: &mongodb::Database,
-    // should_trace: bool,
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::MongoCheckCollectionIsNotEmptyErrorNamed<'a>>>{
     let error_vec_count_documents =
         futures::future::join_all(providers_json_local_data_hashmap.keys().map(|pk| async move {
