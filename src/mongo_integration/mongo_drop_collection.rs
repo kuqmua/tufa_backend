@@ -1,72 +1,32 @@
-use mongodb::bson::Document;
-use mongodb::options::ClientOptions;
-use mongodb::Client;
-use mongodb::Collection;
-use tufa_common::common::where_was::WhereWas;
-
-#[derive(Debug)]
-pub enum MongoDropCollectionErrorEnum {
-    ClientOptionsParse {
-        source: mongodb::error::Error,
-        where_was: WhereWas,
-    },
-    ClientWithOptions {
-        source: mongodb::error::Error,
-        where_was: WhereWas,
-    },
-    DatabaseDrop {
-        source: mongodb::error::Error,
-        where_was: WhereWas,
-    },
-}
-
-pub async fn mongo_drop_collection(
-    mongo_url: &str,
-    db_name: &str,
-    db_collection_name: &str,
-) -> Result<(), Box<MongoDropCollectionErrorEnum>> {
-    match ClientOptions::parse(mongo_url).await {
-        Err(e) => Err(Box::new(MongoDropCollectionErrorEnum::ClientOptionsParse {
-            source: e,
-            where_was: WhereWas {
-                time: std::time::SystemTime::now()
-                    .duration_since(std::time::UNIX_EPOCH)
-                    .expect("cannot convert time to unix_epoch"),
-                file: String::from(file!()),
-                line: line!(),
-                column: column!(),
-                git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-            },
-        })),
-        Ok(client_options) => match Client::with_options(client_options) {
-            Err(e) => Err(Box::new(MongoDropCollectionErrorEnum::ClientWithOptions {
-                source: e,
-                where_was: WhereWas {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file: String::from(file!()),
-                    line: line!(),
-                    column: column!(),
-                    git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                },
-            })),
+pub async fn mongo_drop_collection<'a>(
+    mongo_url: &'a str,
+    db_name: &'a str,
+    db_collection_name: &'a str,
+) -> Result<(), Box<tufa_common::server::mongo::mongo_drop_collection::MongoDropCollectionErrorNamed<'a>>> {
+    match mongodb::options::ClientOptions::parse(mongo_url).await {
+        Err(e) => Err(Box::new(
+            tufa_common::server::mongo::mongo_drop_collection::MongoDropCollectionErrorNamed::MongoDB {
+                mongodb: e,
+                code_occurence: tufa_common::code_occurence!(),
+            }
+        )),
+        Ok(client_options) => match mongodb::Client::with_options(client_options) {
+            Err(e) => Err(Box::new(
+                tufa_common::server::mongo::mongo_drop_collection::MongoDropCollectionErrorNamed::MongoDB {
+                    mongodb: e,
+                    code_occurence: tufa_common::code_occurence!(),
+                }
+            )),
             Ok(client) => {
-                let collection: Collection<Document> =
+                let collection: mongodb::Collection<mongodb::bson::Document> =
                     client.database(db_name).collection(db_collection_name);
                 if let Err(e) = collection.drop(None).await {
-                    return Err(Box::new(MongoDropCollectionErrorEnum::DatabaseDrop {
-                        source: e,
-                        where_was: WhereWas {
-                            time: std::time::SystemTime::now()
-                                .duration_since(std::time::UNIX_EPOCH)
-                                .expect("cannot convert time to unix_epoch"),
-                            file: String::from(file!()),
-                            line: line!(),
-                            column: column!(),
-                            git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                        },
-                    }));
+                    return Err(Box::new(
+                        tufa_common::server::mongo::mongo_drop_collection::MongoDropCollectionErrorNamed::MongoDB {
+                            mongodb: e,
+                            code_occurence: tufa_common::code_occurence!(),
+                        }
+                    ));
                 }
                 Ok(())
             }
