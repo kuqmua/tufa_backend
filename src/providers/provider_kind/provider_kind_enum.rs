@@ -1,9 +1,3 @@
-use enum_extension::EnumExtension;
-use mongodb::bson::doc;
-use provider_kind_from_config::ProviderKindFromConfig;
-use strum_macros::Display;
-use strum_macros::EnumIter;
-
 #[derive(Debug)]
 pub struct RemoveDirError {
     pub error: std::io::Error,
@@ -28,9 +22,9 @@ impl From<std::io::Error> for CleanLogsDirError {
 }
 
 #[derive(
-    ProviderKindFromConfig,
-    EnumExtension,
-    EnumIter,
+    provider_kind_from_config::ProviderKindFromConfig,
+    enum_extension::EnumExtension,
+    strum_macros::EnumIter,
     Clone,
     Debug,
     serde_derive::Serialize,
@@ -39,7 +33,7 @@ impl From<std::io::Error> for CleanLogsDirError {
     Eq,
     Hash,
     Copy,
-    Display,
+    strum_macros::Display,
 )]
 #[strum(serialize_all = "snake_case")]
 pub enum ProviderKind {
