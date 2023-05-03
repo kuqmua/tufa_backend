@@ -1,4 +1,4 @@
-use crate::domain::SubscriberEmail;
+use tufa_common::repositories_types::tufa_server::domain::SubscriberEmail;
 use crate::email_client::EmailClient;
 use secrecy::ExposeSecret;
 use secrecy::Secret;

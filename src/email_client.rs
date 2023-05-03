@@ -1,4 +1,4 @@
-use crate::domain::SubscriberEmail;
+use tufa_common::repositories_types::tufa_server::domain::SubscriberEmail;
 use reqwest::Client;
 use secrecy::ExposeSecret;
 use secrecy::Secret;
