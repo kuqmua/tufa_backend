@@ -1,6 +1,4 @@
-use tokio::task::JoinHandle;
-
-pub fn spawn_blocking_with_tracing<F, R>(f: F) -> JoinHandle<R>
+pub fn spawn_blocking_with_tracing<F, R>(f: F) -> tokio::task::JoinHandle<R>
 where
     F: FnOnce() -> R + Send + 'static,
     R: Send + 'static,
