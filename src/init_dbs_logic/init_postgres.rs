@@ -1,78 +1,41 @@
-use crate::global_variables::runtime::config::CONFIG;
-use crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES;
-use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::postgres_check_providers_link_parts_tables_are_empty;
-use crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyWrapperError;
-use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::postgres_create_providers_tables_if_not_exists;
-use crate::postgres_integration::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsOriginError;
-use crate::postgres_integration::postgres_delete_all_from_providers_link_parts_tables::postgres_delete_all_from_providers_link_parts_tables;
-use crate::postgres_integration::postgres_delete_all_from_providers_link_parts_tables::PostgresDeleteAllFromProvidersTablesOriginError;
-use crate::postgres_integration::postgres_establish_connection::postgres_establish_connection;
-use crate::postgres_integration::postgres_establish_connection::PostgresEstablishConnectionOriginError;
-use crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::postgres_insert_link_parts_into_providers_tables;
-use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use impl_get_source::ImplGetSourceFromTufaCommon;
-use std::collections::HashMap;
-use impl_get_where_was_origin_or_wrapper::ImplGetWhereWasOriginOrWrapperFromTufaCommon;
-use tufa_common::traits::init_error_with_possible_trace::InitErrorWithPossibleTrace;
-use tufa_common::common::where_was::WhereWas;
-use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
-use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError;
-use tufa_common::traits::get_source::GetSource;
-use init_error::InitErrorFromTufaCommon;
-use tufa_common::traits::get_log_with_additional_where_was::GetLogWithAdditionalWhereWas;
-use impl_get_git_info::ImplGetGitInfoFromTufaCommon;
-use crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length;
-
-#[derive(
-    Debug,
-    InitErrorFromTufaCommon,
-    ImplGetSourceFromTufaCommon,
-    ImplGetWhereWasOriginOrWrapperFromTufaCommon,
-    ImplErrorWithTracingFromTufaCommon,
-    // ImplGetGitInfoFromTufaCommon,
-)]
-pub struct PostgresInitWrapperError {
-    source: PostgresInitWrapperErrorEnum,
-    where_was: WhereWas,
-}
-
-#[derive(Debug, ImplGetWhereWasOriginOrWrapperFromTufaCommon, ImplGetSourceFromTufaCommon)]
-pub enum PostgresInitWrapperErrorEnum {
-    EstablishConnectionWrapper(PostgresEstablishConnectionOriginError),
-    CreateTableQueriesWrapper(PostgresCreateProvidersDbsOriginError),
-    CheckProviderLinksTablesAreEmptyWrapper(PostgresCheckProvidersLinkPartsTablesEmptyWrapperError),
-    DeleteAllFromProvidersTablesWrapper(PostgresDeleteAllFromProvidersTablesOriginError),
-    CheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapper(
-        PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperError,
-    ),
-    InsertLinkPartsIntoProvidersTablesWrapper(
-        tufa_common::repositories_types::tufa_server::postgres_integration::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginError,
-    ),
-}
-
-pub async fn init_postgres(
-    providers_json_local_data_hashmap: HashMap<ProviderKind, Vec<String>>,
-    should_trace: bool,
-) -> Result<(), Box<PostgresInitWrapperError>> {
-    match postgres_establish_connection(&providers_json_local_data_hashmap, should_trace).await {
+pub async fn init_postgres<'a>(
+    providers_json_local_data_hashmap: std::collections::HashMap<crate::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
+) -> Result<(), Box<tufa_common::repositories_types::tufa_server::init_dbs_logic::init_postgres::PostgresInitErrorNamed<'a>>> {
+    match crate::postgres_integration::postgres_establish_connection::postgres_establish_connection(providers_json_local_data_hashmap.len() as u32).await {
         Err(e) => Err(Box::new(
-            PostgresInitWrapperError::init_error_with_possible_trace(
-                PostgresInitWrapperErrorEnum::EstablishConnectionWrapper(*e),
-                WhereWas {
-                    time: std::time::SystemTime::now()
-                        .duration_since(std::time::UNIX_EPOCH)
-                        .expect("cannot convert time to unix_epoch"),
-                    file: String::from(file!()),
-                    line: line!(),
-                    column: column!(),
-                    git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                },
-                &CONFIG.source_place_type,
-                should_trace,
-            ),
+            tufa_common::repositories_types::tufa_server::init_dbs_logic::init_postgres::PostgresInitErrorNamed::EstablishConnection { 
+                establish_connection: *e, 
+                code_occurence: tufa_common::code_occurence!()
+            }
         )),
         Ok(pool) => {
-            if let Err(e) = postgres_create_providers_tables_if_not_exists(
+            if let Err(e) = crate::postgres_integration::postgres_create_providers_tables_if_not_exists::postgres_create_providers_tables_if_not_exists(
+                &providers_json_local_data_hashmap,
+                &pool,
+            )
+            .await
+            {
+                return Err(Box::new(
+                    tufa_common::repositories_types::tufa_server::init_dbs_logic::init_postgres::PostgresInitErrorNamed::CreateTableQueries { 
+                        create_table_queries: *e,
+                        code_occurence: tufa_common::code_occurence!() 
+                    }
+                ));
+            }
+            if let Err(e) = crate::postgres_integration::postgres_check_providers_link_parts_tables_are_empty::postgres_check_providers_link_parts_tables_are_empty(
+                &providers_json_local_data_hashmap,
+                &pool,
+            )
+            .await
+            {
+                return Err(Box::new(
+                    tufa_common::repositories_types::tufa_server::init_dbs_logic::init_postgres::PostgresInitErrorNamed::CheckProviderLinksTablesAreEmpty { 
+                        check_provider_links_tables_are_empty: *e, 
+                        code_occurence: tufa_common::code_occurence!()  
+                    }
+                ));
+            }
+            if let Err(e) = crate::postgres_integration::postgres_delete_all_from_providers_link_parts_tables::postgres_delete_all_from_providers_link_parts_tables(
                 &providers_json_local_data_hashmap,
                 &pool,
                 false,
@@ -80,92 +43,26 @@ pub async fn init_postgres(
             .await
             {
                 return Err(Box::new(
-                    PostgresInitWrapperError::init_error_with_possible_trace(
-                        PostgresInitWrapperErrorEnum::CreateTableQueriesWrapper(*e),
-                        WhereWas {
-                            time: std::time::SystemTime::now()
-                                .duration_since(std::time::UNIX_EPOCH)
-                                .expect("cannot convert time to unix_epoch"),
-                            file: String::from(file!()),
-                            line: line!(),
-                            column: column!(),
-                            git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                        },
-                        &CONFIG.source_place_type,
-                        should_trace,
-                    ),
+                    tufa_common::repositories_types::tufa_server::init_dbs_logic::init_postgres::PostgresInitErrorNamed::DeleteAllFromProvidersTables { 
+                        delete_all_from_providers_tables: *e, 
+                        code_occurence: tufa_common::code_occurence!()   
+                    }
                 ));
             }
-            if let Err(e) = postgres_check_providers_link_parts_tables_are_empty(
-                &providers_json_local_data_hashmap,
-                &pool,
-                false,
-            )
-            .await
-            {
-                return Err(Box::new(
-                    PostgresInitWrapperError::init_error_with_possible_trace(
-                        PostgresInitWrapperErrorEnum::CheckProviderLinksTablesAreEmptyWrapper(*e),
-                        WhereWas {
-                            time: std::time::SystemTime::now()
-                                .duration_since(std::time::UNIX_EPOCH)
-                                .expect("cannot convert time to unix_epoch"),
-                            file: String::from(file!()),
-                            line: line!(),
-                            column: column!(),
-                            git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                        },
-                        &CONFIG.source_place_type,
-                        should_trace,
-                    ),
-                ));
-            }
-            if let Err(e) = postgres_delete_all_from_providers_link_parts_tables(
-                &providers_json_local_data_hashmap,
-                &pool,
-                false,
-            )
-            .await
-            {
-                return Err(Box::new(
-                    PostgresInitWrapperError::init_error_with_possible_trace(
-                        PostgresInitWrapperErrorEnum::DeleteAllFromProvidersTablesWrapper(*e),
-                        WhereWas {
-                            time: std::time::SystemTime::now()
-                                .duration_since(std::time::UNIX_EPOCH)
-                                .expect("cannot convert time to unix_epoch"),
-                            file: String::from(file!()),
-                            line: line!(),
-                            column: column!(),
-                            git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                        },
-                        &CONFIG.source_place_type,
-                        should_trace,
-                    ),
-                ));
-            }
-            if let Err(e) = postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
+            if let Err(e) = crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
                 &providers_json_local_data_hashmap,
                 &pool,
                 false,
             )
             .await {
-                                                                                        return Err(Box::new(PostgresInitWrapperError::init_error_with_possible_trace(
-                PostgresInitWrapperErrorEnum::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength(e),
-                WhereWas {
-                    time: std::time::SystemTime::now()
-            .duration_since(std::time::UNIX_EPOCH)
-            .expect("cannot convert time to unix_epoch"),
-                    file: file!(),
-                    line: line!(),
-                    column: column!(),
-                },
-                &CONFIG.source_place_type,
-                &GIT_INFO,
-                should_trace,
-            )));
+                return Err(Box::new(
+                    tufa_common::repositories_types::tufa_server::init_dbs_logic::init_postgres::PostgresInitErrorNamed::CheckProvidersLinksTablesLengthRowsEqualInitializationDataLength {          
+                        check_providers_links_tables_length_rows_equal_initialization_data_length: *e, 
+                        code_occurence: tufa_common::code_occurence!()   
+                    }
+            ));
             }
-            if let Err(e) = postgres_insert_link_parts_into_providers_tables(
+            if let Err(e) = crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::postgres_insert_link_parts_into_providers_tables(
                 &providers_json_local_data_hashmap,
                 &pool,
                 false,
@@ -173,20 +70,10 @@ pub async fn init_postgres(
             .await
             {
                 return Err(Box::new(
-                    PostgresInitWrapperError::init_error_with_possible_trace(
-                        PostgresInitWrapperErrorEnum::InsertLinkPartsIntoProvidersTablesWrapper(*e),
-                        WhereWas {
-                            time: std::time::SystemTime::now()
-                                .duration_since(std::time::UNIX_EPOCH)
-                                .expect("cannot convert time to unix_epoch"),
-                            file: String::from(file!()),
-                            line: line!(),
-                            column: column!(),
-                            git_info: crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES.clone(),
-                        },
-                        &CONFIG.source_place_type,
-                        should_trace,
-                    ),
+                    tufa_common::repositories_types::tufa_server::init_dbs_logic::init_postgres::PostgresInitErrorNamed::InsertLinkPartsIntoProvidersTables { 
+                        insert_link_parts_into_providers_tables: *e, 
+                        code_occurence: tufa_common::code_occurence!()    
+                    }
                 ));
             }
             Ok(())

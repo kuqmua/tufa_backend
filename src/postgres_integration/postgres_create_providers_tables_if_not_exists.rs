@@ -1,7 +1,6 @@
 pub async fn postgres_create_providers_tables_if_not_exists<'a>(
     providers_json_local_data_hashmap: &std::collections::HashMap<crate::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
     db: &sqlx::Pool<sqlx::Postgres>,
-    should_trace: bool,
 ) -> Result<(), Box<tufa_common::server::postgres::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsErrorNamed<'a>>> {
     let table_creation_error_hashmap = futures::future::join_all(
         providers_json_local_data_hashmap.keys().map(|pk| async {
