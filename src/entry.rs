@@ -5,18 +5,7 @@ pub fn entry() {
         .enable_all()
         .build()
     {
-        Err(e) => {
-            crate::prints::print_colorful_message::print_colorful_message(
-                None,
-                tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                vec![{
-                    use tufa_common::traits::get_git_source_file_link::GetGitSourceFileLink;
-                    crate::global_variables::compile_time::git_info::GIT_INFO.get_git_source_file_link(file!(), line!())
-                }],
-                format!("Cannot build tokio runtime {e:#?}"),
-            );
-        }
+        Err(e) => {}
         Ok(runtime) => {
             if let (
                 tufa_common::config_mods::log_type::LogType::Tracing, 
@@ -30,16 +19,6 @@ pub fn entry() {
                     std::io::stdout,
                 ))
             ) {
-                crate::prints::print_colorful_message::print_colorful_message(
-                    None,
-                    tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                    vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                    vec![{
-                        use tufa_common::traits::get_git_source_file_link::GetGitSourceFileLink;
-                        crate::global_variables::compile_time::git_info::GIT_INFO.get_git_source_file_link(file!(), line!())
-                    }],
-                    format!("tracing init_subscriber error: {:#?}", e),
-                );
                 return;
             }
             else {
@@ -62,16 +41,6 @@ pub fn entry() {
                     // println!("{e_deserialized}");
                 }
                 // if let Err(e) = crate::server_wrapper::server_wrapper() {
-                //     crate::prints::print_colorful_message::print_colorful_message(
-                //         None,
-                //         tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                //         vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                //         vec![{
-                //             use tufa_common::traits::get_git_source_file_link::GetGitSourceFileLink;
-                //             crate::global_variables::compile_time::git_info::GIT_INFO.get_git_source_file_link(file!(), line!())
-                //         }],
-                //         format!("Cannot run actix-web HttpServer, error: {:#?}", e),
-                //     );
                 // }
             }
         }

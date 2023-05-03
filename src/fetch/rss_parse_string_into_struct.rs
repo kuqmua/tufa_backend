@@ -7,7 +7,6 @@ use tufa_common::repositories_types::tufa_server::fetch::info_structures::struct
 use tufa_common::repositories_types::tufa_server::fetch::info_structures::structs_for_parsing::medrxiv_struct_for_parsing::MedrxivStructForParsing;
 use tufa_common::repositories_types::tufa_server::fetch::info_structures::structs_for_parsing::reddit_struct_for_parsing::RedditStructForParsing;
 use tufa_common::repositories_types::tufa_server::fetch::info_structures::structs_for_parsing::twitter_struct_for_parsing::TwitterStructForParsing;
-use crate::fetch::parse_github_html::parse_github_html;
 use crate::fetch::rss_metainfo_fetch_structures::NoItemsError;
 use crate::global_variables::compile_time::git_info::GIT_INFO;
 use crate::global_variables::hardcode::BIORXIV_FILTER_HANDLE_TO_REMOVE_1;
@@ -28,7 +27,6 @@ use crate::global_variables::hardcode::TWITTER_FILTER_HANDLE_TO_REMOVE_3;
 use crate::global_variables::hardcode::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_1;
 use crate::global_variables::hardcode::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_2;
 use crate::global_variables::hardcode::TWITTER_FILTER_HANDLE_TO_REPLACE_REMOVED_3;
-use crate::prints::print_colorful_message::print_colorful_message;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 use crate::traits::provider_kind_methods::ProviderKindMethods;
 use regex::Regex;
@@ -61,32 +59,12 @@ pub fn rss_parse_string_into_struct(
                                         _ => {
                                             let warning_message: String =
                                                 format!("no </channel> in response link: {value}");
-                                            print_colorful_message(
-                                                Some(&pk),
-                                                tufa_common::config_mods::print_type::PrintType::WarningLow,
-                                                vec![format!(
-                                                    "{}{}{}",
-                                                    file!(),
-                                                    line!(),
-                                                    column!()
-                                                )],
-                                                vec![GIT_INFO
-                                                    .get_git_source_file_link(file!(), line!())],
-                                                warning_message,
-                                            );
                                         }
                                     }
                                 }
                                 _ => {
                                     let warning_message: String =
                                         format!("no <channel> in response link: {value}");
-                                    print_colorful_message(
-                                        Some(&pk),
-                                        tufa_common::config_mods::print_type::PrintType::WarningLow,
-                                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                                        warning_message,
-                                    );
                                 }
                             }
                             #[allow(trivial_regex)]
@@ -209,7 +187,6 @@ pub fn rss_parse_string_into_struct(
                                                     None,
                                                     None,
                                                     None,
-                                                    None,
                                                     //github specific
 
                                                     //habr specific
@@ -285,13 +262,6 @@ pub fn rss_parse_string_into_struct(
                                     }
                                 }
                                 Err(e) => {
-                                    print_colorful_message(
-                                        Some(&pk),
-                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                                        format!("Rss conversion from str error: {e}"),
-                                    );
                                     Err(NoItemsError::ConversionFromStrError(
                                         fetch_result_string,
                                         e.to_string(),
@@ -335,7 +305,6 @@ pub fn rss_parse_string_into_struct(
                                                     None,
                                                     None,
                                                     None,
-                                                    None,
                                                     //github specific
 
                                                     //habr specific
@@ -411,13 +380,6 @@ pub fn rss_parse_string_into_struct(
                                     }
                                 }
                                 Err(e) => {
-                                    print_colorful_message(
-                                        Some(&pk),
-                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                                        format!("Rss conversion from str error: {e}"),
-                                    );
                                     Err(NoItemsError::ConversionFromStrError(
                                         fetch_result_string,
                                         e.to_string(),
@@ -439,9 +401,6 @@ pub fn rss_parse_string_into_struct(
                                         if count < rss_struct.entries.len() {
                                             // if count == 0 {
                                             //for debugging
-                                            let github_info_from_html = parse_github_html(
-                                                rss_struct.entries[count].content.clone(),
-                                            );
                                             // }
 
                                             rss_page_struct.items.push(
@@ -466,7 +425,6 @@ pub fn rss_parse_string_into_struct(
                                                     rss_struct.entries[count].updated.clone(),
                                                     rss_struct.entries[count].media.clone(),
                                                     rss_struct.entries[count].author.uri.clone(),
-                                                    Some(github_info_from_html),
                                                     //github specific
 
                                                     //habr specific
@@ -542,13 +500,6 @@ pub fn rss_parse_string_into_struct(
                                     }
                                 }
                                 Err(e) => {
-                                    print_colorful_message(
-                                        Some(&pk),
-                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                                        format!("Rss conversion from str error: {e}"),
-                                    );
                                     Err(NoItemsError::ConversionFromStrError(
                                         fetch_result_string,
                                         e.to_string(),
@@ -585,7 +536,6 @@ pub fn rss_parse_string_into_struct(
                                                     //biorxiv specific
 
                                                     //github specific
-                                                    None,
                                                     None,
                                                     None,
                                                     None,
@@ -666,13 +616,6 @@ pub fn rss_parse_string_into_struct(
                                     }
                                 }
                                 Err(e) => {
-                                    print_colorful_message(
-                                        Some(&pk),
-                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                                        format!("Rss conversion from str error: {e}"),
-                                    );
                                     Err(NoItemsError::ConversionFromStrError(
                                         fetch_result_string,
                                         e.to_string(),
@@ -709,7 +652,6 @@ pub fn rss_parse_string_into_struct(
                                                     //biorxiv specific
 
                                                     //github specific
-                                                    None,
                                                     None,
                                                     None,
                                                     None,
@@ -792,13 +734,6 @@ pub fn rss_parse_string_into_struct(
                                     }
                                 }
                                 Err(e) => {
-                                    print_colorful_message(
-                                        Some(&pk),
-                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                                        format!("Rss conversion from str error: {e}"),
-                                    );
                                     Err(NoItemsError::ConversionFromStrError(
                                         fetch_result_string,
                                         e.to_string(),
@@ -838,7 +773,6 @@ pub fn rss_parse_string_into_struct(
                                                     //biorxiv specific
 
                                                     //github specific
-                                                    None,
                                                     None,
                                                     None,
                                                     None,
@@ -919,13 +853,6 @@ pub fn rss_parse_string_into_struct(
                                     }
                                 }
                                 Err(e) => {
-                                    print_colorful_message(
-                                        Some(&pk),
-                                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                                        format!("Rss conversion from str error: {e}"),
-                                    );
                                     Err(NoItemsError::ConversionFromStrError(
                                         fetch_result_string,
                                         e.to_string(),
@@ -937,13 +864,6 @@ pub fn rss_parse_string_into_struct(
                 }
                 None => {
                     let warning_message = format!("cannot find {what_should_find_in_fetch_result_string} for {pk:#?} in fetch_result_string");
-                    print_colorful_message(
-                        Some(&pk),
-                        tufa_common::config_mods::print_type::PrintType::WarningLow,
-                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                        warning_message,
-                    );
                     Err(NoItemsError::NoTag(
                         what_should_find_in_fetch_result_string.to_string(),
                     ))
@@ -980,7 +900,6 @@ pub fn rss_parse_string_into_struct(
                                     //biorxiv specific
 
                                     //github specific
-                                    None,
                                     None,
                                     None,
                                     None,
@@ -1064,13 +983,6 @@ pub fn rss_parse_string_into_struct(
                     }
                 }
                 Err(e) => {
-                    print_colorful_message(
-                        Some(&pk),
-                        tufa_common::config_mods::print_type::PrintType::WarningHigh,
-                        vec![format!("{}:{}:{}", file!(), line!(), column!())],
-                        vec![GIT_INFO.get_git_source_file_link(file!(), line!())],
-                        format!("Rss conversion from str error: {e}"),
-                    );
                     Err(NoItemsError::ConversionFromStrError(
                         fetch_result_string,
                         e.to_string(),

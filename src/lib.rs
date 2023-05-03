@@ -19,7 +19,6 @@ mod init_dbs_logic;
 mod mongo_integration;
 mod postgres_integration;
 mod preparation;
-mod prints;
 mod providers;
 // mod routes;
 // mod server_wrapper;

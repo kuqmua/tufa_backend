@@ -144,15 +144,7 @@ pub async fn get_providers_posts<'a>() -> Result<(), Box<GetProviderPostsErrorEn
             // //                 });
             // //                 match wrong_cases_thread.join() {
             // //                     Ok(_) => {}
-            // //                     Err(e) => {
-            // //                         print_colorful_message(
-            // //                             None,
-            // //                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
-            // //                             file!().to_string(),
-            // //                             line!().to_string(),
-            // //                             format!("wrong_cases_thread.join() error: {e:#?}"),
-            // //                         );
-            // //                     }
+            // //                     Err(e) => {}
             // //                 }
             // //             }
             // //             Err(e) => {}

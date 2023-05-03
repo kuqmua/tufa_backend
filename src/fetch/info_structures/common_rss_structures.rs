@@ -1,4 +1,3 @@
-use crate::fetch::parse_github_html::GithubPostInfoVec;
 use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
 #[derive(Debug, Clone, serde_derive::Serialize, serde_derive::Deserialize, Default)] // PartialEq,//Default,
 pub struct CommonRssPostStruct {
@@ -33,7 +32,6 @@ pub struct CommonRssPost {
     pub github_updated: Option<String>,
     pub github_media: Option<String>,
     pub github_author_uri: Option<String>,
-    pub github_info_from_html: Option<GithubInfoFromHtml>,
     //github specific
 
     //habr specific
@@ -127,7 +125,6 @@ impl CommonRssPost {
         github_updated: Option<String>,
         github_media: Option<String>,
         github_author_uri: Option<String>,
-        github_info_from_html: Option<GithubInfoFromHtml>,
         //github specific
 
         //habr specific
@@ -219,7 +216,6 @@ impl CommonRssPost {
             github_updated,
             github_media,
             github_author_uri,
-            github_info_from_html,
             //github specific
 
             //habr specific
@@ -304,7 +300,6 @@ pub struct GithubInfoFromHtml {
     pub of: Option<String>,
     pub bot_tag: Option<String>,
     pub who_follow: Option<String>,
-    pub vec_of_something: GithubPostInfoVec,
 }
 
 impl GithubInfoFromHtml {
@@ -323,7 +318,6 @@ impl GithubInfoFromHtml {
         of: Option<String>,
         bot_tag: Option<String>,
         who_follow: Option<String>,
-        vec_of_something: GithubPostInfoVec,
     ) -> Self {
         GithubInfoFromHtml {
             avatar_link,
@@ -340,7 +334,6 @@ impl GithubInfoFromHtml {
             of,
             bot_tag,
             who_follow,
-            vec_of_something,
         }
     }
 }

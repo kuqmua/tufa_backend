@@ -34,15 +34,7 @@
 //                             locked_not_ready_processed_posts.push(unfiltered_post);
 //                         }
 //                     }
-//                     Err(e) => {
-//                         print_colorful_message(
-//                                 None,
-//                                 tufa_common::config_mods::print_type::PrintType::WarningHigh,
-//                                 file!().to_string(),
-//                                 line!().to_string(),
-//                                 format!("not_ready_processed_posts_handle.lock() error: {e:#?}"),
-//                             );
-//                     }
+//                     Err(e) => {}
 //                 }
 //             });
 //             threads_vector.push(thread);
@@ -52,26 +44,12 @@
 //                 Ok(_) => threads_vec_checker.push(true),
 //                 Err(e) => {
 //                     threads_vec_checker.push(false);
-//                     print_colorful_message(
-//                         None,
-//                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
-//                         file!().to_string(),
-//                         line!().to_string(),
-//                         format!("thread.join() error: {e:#?}"),
-//                     );
 //                 }
 //             }
 //         }
 //         let is_all_elelements_false =
 //             &threads_vec_checker.iter().all(|&item| !item);
 //         if *is_all_elelements_false {
-//             print_colorful_message(
-//                             None,
-//                             tufa_common::config_mods::print_type::PrintType::WarningHigh,
-//                             file!().to_string(),
-//                             line!().to_string(),
-//                             "is_all_elelements_false for threads_vec_checker in twitter_available_providers_links".to_string(),
-//                         );
 //             return (None, None);
 //         } else {
 //             match not_ready_processed_posts.lock() {
@@ -80,13 +58,6 @@
 //                         not_ready_processed_posts_locked.to_vec();
 //                 }
 //                 Err(e) => {
-//                     print_colorful_message(
-//                         None,
-//                         tufa_common::config_mods::print_type::PrintType::WarningHigh,
-//                         file!().to_string(),
-//                         line!().to_string(),
-//                         format!("not_ready_processed_posts.lock() error: {e:#?}"),
-//                     );
 //                     return (None, None);
 //                 }
 //             }
@@ -94,12 +65,5 @@
 //     }
 //     None => {
 //         unfiltered_posts_vec_after_fetch_and_parse = Vec::new();
-//         print_colorful_message(
-//             Some(&provider_kind),
-//             tufa_common::config_mods::print_type::PrintType::WarningHigh,
-//             file!().to_string(),
-//             line!().to_string(),
-//             "option_twitter_providers_names is None for Twitter".to_string(),
-//         );
 //     }
 // }

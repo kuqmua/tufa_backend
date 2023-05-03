@@ -67,8 +67,6 @@ or match some none
 
 * todo: add medium
 
-* handle all todos in parse_github_html
-
 * pull and run postgres docker container
 ```
 sudo docker run -p 5432:5432/tcp --name postgres-tufa-wsl2 -v ~/db-volumes/postgresql-volumes/tufa-dev-volume -e POSTGRES_PASSWORD=postgres -d postgres:latest
@@ -88,7 +86,6 @@ rss_parse_string_into_struct
 rss_fetch_and_parse_provider_data
 rss_divide_to_equal_for_each_provider
 rss_check_available_providers
-parse_github_html and inner
 get_providers_link_parts_from_mongo
 generate_twitter_hashmap_links
 
@@ -102,11 +99,6 @@ and maybe rewrite it as struct with methods
 * Resource::PostgreSql => { 
 
 * rename this check_new_posts_threads_parts
-
-* file: src/fetch/parse_github_html.rs:1226
-different children.len(): 3
-file: src/fetch/parse_github_html.rs:1553
-different children.len(): 3
 
 * 5 => {
                 println!("todo 5 elements github parsing")
