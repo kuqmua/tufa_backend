@@ -26,7 +26,7 @@ pub async fn reject_anonymous_users(
             crate::session_state::TypedSession::from_request(http_request, payload)
         }.await
     }?;
-    match session.get_user_id().map_err(crate::utils::status_codes::e500)? {
+    match session.get_user_id().map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)? {
         Some(user_id) => {
             {
                 use actix_web::HttpMessage;
@@ -35,7 +35,7 @@ pub async fn reject_anonymous_users(
             next.call(req).await
         }
         None => {
-            let response = crate::utils::status_codes::see_other("/login");
+            let response = tufa_common::repositories_types::tufa_server::utils::status_codes::see_other("/login");
             let e = anyhow::anyhow!("The user has not logged in");
             Err(actix_web::error::InternalError::from_response(e, response).into())
         }

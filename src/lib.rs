@@ -28,6 +28,5 @@ pub mod telemetry;
 #[cfg(test)]
 mod tests;
 pub mod traits;
-mod utils;
 
 pub mod dev;
