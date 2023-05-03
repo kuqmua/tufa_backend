@@ -47,7 +47,7 @@ pub async fn validate_credentials(
     }
     {   
         use anyhow::Context;
-        crate::telemetry::spawn_blocking_with_tracing::spawn_blocking_with_tracing(move || {
+        tufa_common::repositories_types::tufa_server::telemetry::spawn_blocking_with_tracing::spawn_blocking_with_tracing(move || {
             verify_password_hash(expected_password_hash, credentials.password)
         })
         .await
@@ -100,7 +100,7 @@ pub async fn change_password(
 ) -> Result<(), anyhow::Error> {
     let password_hash = {
         use anyhow::Context;
-        crate::telemetry::spawn_blocking_with_tracing::spawn_blocking_with_tracing(move || compute_password_hash(password))
+        tufa_common::repositories_types::tufa_server::telemetry::spawn_blocking_with_tracing::spawn_blocking_with_tracing(move || compute_password_hash(password))
         .await?
         .context("Failed to hash password")
     }?;

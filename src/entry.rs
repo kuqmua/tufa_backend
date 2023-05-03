@@ -12,8 +12,8 @@ pub fn entry() {
                 Err(e)
             ) = (
                 crate::global_variables::runtime::config::CONFIG.log_type,
-                crate::telemetry::init_subscriber::init_subscriber(
-                    crate::telemetry::get_subscriber::get_subscriber(
+                tufa_common::repositories_types::tufa_server::telemetry::init_subscriber::init_subscriber(
+                    tufa_common::repositories_types::tufa_server::telemetry::get_subscriber::get_subscriber(
                     crate::global_variables::hardcode::PROJECT_NAME.into(),
                     crate::global_variables::runtime::config::CONFIG.tracing_type.to_lower_snake_case(),
                     std::io::stdout,
