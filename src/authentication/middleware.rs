@@ -1,17 +1,5 @@
-use crate::session_state::TypedSession;
-use crate::utils::status_codes::e500;
-use crate::utils::status_codes::see_other;
-use actix_web::body::MessageBody;
-use actix_web::dev::{ServiceRequest, ServiceResponse};
-use actix_web::error::InternalError;
-use actix_web::FromRequest;
-use actix_web::HttpMessage;
-use actix_web_lab::middleware::Next;
-use std::ops::Deref;
-use uuid::Uuid;
-
 #[derive(Copy, Clone, Debug)]
-pub struct UserId(Uuid);
+pub struct UserId(uuid::Uuid);
 
 impl std::fmt::Display for UserId {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -19,8 +7,8 @@ impl std::fmt::Display for UserId {
     }
 }
 
-impl Deref for UserId {
-    type Target = Uuid;
+impl std::ops::Deref for UserId {
+    type Target = uuid::Uuid;
 
     fn deref(&self) -> &Self::Target {
         &self.0
@@ -28,22 +16,28 @@ impl Deref for UserId {
 }
 
 pub async fn reject_anonymous_users(
-    mut req: ServiceRequest,
-    next: Next<impl MessageBody>,
-) -> Result<ServiceResponse<impl MessageBody>, actix_web::Error> {
+    mut req: actix_web::dev::ServiceRequest,
+    next: actix_web_lab::middleware::Next<impl actix_web::body::MessageBody>,
+) -> Result<actix_web::dev::ServiceResponse<impl actix_web::body::MessageBody>, actix_web::Error> {
     let session = {
         let (http_request, payload) = req.parts_mut();
-        TypedSession::from_request(http_request, payload).await
+        {
+            use actix_web::FromRequest;
+            crate::session_state::TypedSession::from_request(http_request, payload)
+        }.await
     }?;
-    match session.get_user_id().map_err(e500)? {
+    match session.get_user_id().map_err(crate::utils::status_codes::e500)? {
         Some(user_id) => {
-            req.extensions_mut().insert(UserId(user_id));
+            {
+                use actix_web::HttpMessage;
+                req.extensions_mut()
+            }.insert(UserId(user_id));
             next.call(req).await
         }
         None => {
-            let response = see_other("/login");
+            let response = crate::utils::status_codes::see_other("/login");
             let e = anyhow::anyhow!("The user has not logged in");
-            Err(InternalError::from_response(e, response).into())
+            Err(actix_web::error::InternalError::from_response(e, response).into())
         }
     }
 }
