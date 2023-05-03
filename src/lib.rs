@@ -16,7 +16,6 @@ mod fetch;
 pub mod global_variables;
 mod init_dbs_logic;
 // pub mod issue_delivery_worker;
-mod logs_logic;
 mod mongo_integration;
 mod postgres_integration;
 mod preparation;
@@ -31,6 +30,5 @@ pub mod telemetry;
 mod tests;
 pub mod traits;
 mod utils;
-pub mod write_error_posts_wrapper;
 
 pub mod dev;
