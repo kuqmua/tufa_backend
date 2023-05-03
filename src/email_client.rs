@@ -67,7 +67,7 @@ struct SendEmailRequest<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::domain::SubscriberEmail;
+    use tufa_common::repositories_types::tufa_server::domain::SubscriberEmail;
     use crate::email_client::EmailClient;
     use claim::{assert_err, assert_ok};
     use fake::faker::internet::en::SafeEmail;
