@@ -1,7 +1,7 @@
 pub async fn init_postgres<'a>(
     providers_json_local_data_hashmap: std::collections::HashMap<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::init_dbs_logic::init_postgres::PostgresInitErrorNamed<'a>>> {
-    match crate::postgres_integration::postgres_establish_connection::postgres_establish_connection(providers_json_local_data_hashmap.len() as u32).await {
+    match tufa_common::repositories_types::tufa_server::postgres_integration::postgres_establish_connection::postgres_establish_connection(providers_json_local_data_hashmap.len() as u32).await {
         Err(e) => Err(Box::new(
             tufa_common::repositories_types::tufa_server::init_dbs_logic::init_postgres::PostgresInitErrorNamed::EstablishConnection { 
                 establish_connection: *e, 
