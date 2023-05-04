@@ -6,7 +6,7 @@
 // )]
 // #![allow(clippy::too_many_arguments)]
 
-mod authentication;
+// mod authentication;
 mod check_new_providers_posts;
 mod config_mods;
 pub mod configuration;
@@ -22,7 +22,7 @@ mod preparation;
 mod providers;
 // mod routes;
 // mod server_wrapper;
-mod session_state;
+// mod session_state;
 // pub mod startup;
 #[cfg(test)]
 mod tests;
