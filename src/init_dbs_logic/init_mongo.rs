@@ -17,7 +17,7 @@ pub async fn init_mongo<'a>(
             )),
             Ok(client) => {
                 let db = client.database(&crate::global_variables::runtime::config::CONFIG.mongo_providers_link_parts_db_name);
-                if let Err(e) = crate::mongo_integration::mongo_check_collection_is_not_empty::mongo_check_collections_is_not_empty(
+                if let Err(e) = tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_collection_is_not_empty::mongo_check_collections_is_not_empty(
                     providers_json_local_data_hashmap.clone(),
                     &db,
                 )
