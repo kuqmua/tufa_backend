@@ -1,6 +1,5 @@
 use tufa_common::repositories_types::tufa_server::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
 use tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::FetchAndParseProviderDataErrorEnum;
-
 use tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKindFromConfig;
 use reqwest::StatusCode;
 use tufa_common::common::where_was::WhereWas;

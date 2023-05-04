@@ -26,6 +26,5 @@ mod session_state;
 // pub mod startup;
 #[cfg(test)]
 mod tests;
-pub mod traits;
 
 pub mod dev;
