@@ -1,5 +1,5 @@
 pub async fn mongo_get_providers_link_parts<'a>(
-) -> Result<std::collections::HashMap<crate::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>, tufa_common::server::mongo::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed<'a>> {
+) -> Result<std::collections::HashMap<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>, tufa_common::server::mongo::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed<'a>> {
     match mongodb::options::ClientOptions::parse({
         use tufa_common::traits::get_mongo_url::GetMongoUrl;
         crate::global_variables::runtime::config::CONFIG.get_mongo_url()
@@ -28,8 +28,8 @@ pub async fn mongo_get_providers_link_parts<'a>(
                     ),
                     Ok(vec_collection_names) => {
                         let no_collection_error_hashmap = {
-                            use crate::traits::provider_kind_methods::ProviderKindMethods;
-                            crate::providers::provider_kind::provider_kind_enum::ProviderKind::get_enabled_providers_vec()
+                            use tufa_common::repositories_types::tufa_server::traits::provider_kind_methods::ProviderKindMethods;
+                            tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind::get_enabled_providers_vec()
                             .into_iter()
                             .filter_map(|pk| {
                                 let collection_name = pk.get_mongo_log_collection_name();
@@ -50,21 +50,21 @@ pub async fn mongo_get_providers_link_parts<'a>(
                         }
                         let result_get_documents_hashmap =
                                 futures::future::join_all({
-                                    use crate::traits::provider_kind_methods::ProviderKindMethods;
-                                    crate::providers::provider_kind::provider_kind_enum::ProviderKind::get_enabled_providers_vec().iter().map(|pk| async {
+                                    use tufa_common::repositories_types::tufa_server::traits::provider_kind_methods::ProviderKindMethods;
+                                    tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind::get_enabled_providers_vec().iter().map(|pk| async {
                                         (
                                             *pk,
                                             crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector(
                                                 db.collection::<mongodb::bson::Document>(&pk.get_mongo_log_collection_name()),
                                                 &crate::global_variables::runtime::config::CONFIG.mongo_providers_logs_db_collection_document_field_name_handle,
-                                                crate::providers::provider_kind::provider_kind_enum::ProviderKind::get_mongo_provider_link_parts_aggregation(pk),
+                                                tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind::get_mongo_provider_link_parts_aggregation(pk),
                                             )
                                             .await,
                                         )
                                     })
                                 })
                             .await;
-                        let mut success_hashmap: std::collections::HashMap<crate::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>> =
+                        let mut success_hashmap: std::collections::HashMap<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>> =
                             std::collections::HashMap::with_capacity(result_get_documents_hashmap.len());
                         let mut error_hashmap: std::collections::HashMap<
                             String,

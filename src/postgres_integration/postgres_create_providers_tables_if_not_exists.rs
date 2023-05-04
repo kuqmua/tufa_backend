@@ -1,5 +1,5 @@
 pub async fn postgres_create_providers_tables_if_not_exists<'a>(
-    providers_json_local_data_hashmap: &std::collections::HashMap<crate::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
+    providers_json_local_data_hashmap: &std::collections::HashMap<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
     db: &sqlx::Pool<sqlx::Postgres>,
 ) -> Result<(), Box<tufa_common::server::postgres::postgres_create_providers_tables_if_not_exists::PostgresCreateProvidersDbsErrorNamed<'a>>> {
     let table_creation_error_hashmap = futures::future::join_all(
@@ -7,7 +7,7 @@ pub async fn postgres_create_providers_tables_if_not_exists<'a>(
             let query_string = format!(
                 "CREATE TABLE IF NOT EXISTS {} (id integer GENERATED ALWAYS AS IDENTITY NOT NULL, link_part text, PRIMARY KEY (id));",
                 {
-                    use crate::traits::provider_kind_methods::ProviderKindMethods;
+                    use tufa_common::repositories_types::tufa_server::traits::provider_kind_methods::ProviderKindMethods;
                     pk.get_postgres_table_name()
                 }
             );

@@ -1,5 +1,5 @@
 pub async fn init_mongo<'a>(
-    providers_json_local_data_hashmap: std::collections::HashMap<crate::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
+    providers_json_local_data_hashmap: std::collections::HashMap<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::init_dbs_logic::init_mongo::InitMongoErrorNamed<'a>>>{
     match crate::mongo_integration::mongo_client_options_parse::mongo_client_options_parse().await {
         Err(e) => Err(Box::new(

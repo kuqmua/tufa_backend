@@ -1,4 +1,3 @@
-use super::provider_kind::provider_kind_enum::ProviderKind;
 use std::collections::HashMap;
 use tufa_common::common::where_was::WhereWas;
 
@@ -8,14 +7,14 @@ pub enum CheckProvidersLinkPartsEmptyError {
         where_was: WhereWas,
     },
     Partially {
-        source: Vec<ProviderKind>,
+        source: Vec<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind>,
         where_was: WhereWas,
     },
 }
 
 pub fn check_providers_link_parts_on_empty(
-    providers_link_parts: HashMap<ProviderKind, Vec<String>>,
-) -> Result<HashMap<ProviderKind, Vec<String>>, Box<CheckProvidersLinkPartsEmptyError>> {
+    providers_link_parts: HashMap<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
+) -> Result<HashMap<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>, Box<CheckProvidersLinkPartsEmptyError>> {
     if providers_link_parts.is_empty() {
         return Err(Box::new(CheckProvidersLinkPartsEmptyError::Full {
             where_was: WhereWas {

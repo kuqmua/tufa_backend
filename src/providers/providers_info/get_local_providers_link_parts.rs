@@ -1,8 +1,8 @@
 use crate::global_variables::runtime::config::CONFIG;
 use crate::global_variables::runtime::git_info_without_lifetimes::GIT_INFO_WITHOUT_LIFETIMES;
-use crate::providers::provider_kind::functions::get_link_parts_from_local_json_file::GetLinkPartsFromLocalJsonFileWrapperError;
-use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use crate::traits::provider_kind_methods::ProviderKindMethods;
+use tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::GetLinkPartsFromLocalJsonFileWrapperError;
+
+use tufa_common::repositories_types::tufa_server::traits::provider_kind_methods::ProviderKindMethods;
 use futures::future::join_all;
 use impl_error_with_tracing::ImplErrorWithTracingFromTufaCommon;
 use impl_get_source::ImplGetSourceFromTufaCommon;
@@ -24,7 +24,7 @@ use valuable::Valuable;
     ImplErrorWithTracingFromTufaCommon,
 )]
 pub struct GetLocalProvidersLinkPartsWrapperError {
-    pub source: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileWrapperError>,
+    pub source: HashMap<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, GetLinkPartsFromLocalJsonFileWrapperError>,
     pub where_was: WhereWas,
 }
 
@@ -35,21 +35,21 @@ pub struct TracingVec {
 
 pub async fn get_local_providers_link_parts(
     should_trace: bool,
-) -> Result<HashMap<ProviderKind, Vec<String>>, Box<GetLocalProvidersLinkPartsWrapperError>> {
+) -> Result<HashMap<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>, Box<GetLocalProvidersLinkPartsWrapperError>> {
     let result_vec = join_all(
-        ProviderKind::get_enabled_providers_vec() //maybe its not exactly correct
+        tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind::get_enabled_providers_vec() //maybe its not exactly correct
             .into_iter()
             .map(|pk| async move {
                 (
                     pk,
-                    ProviderKind::get_link_parts_from_local_json_file(pk, false).await,
+                    tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind::get_link_parts_from_local_json_file(pk, false).await,
                 )
             }),
     )
     .await;
-    let mut errors_hashmap: HashMap<ProviderKind, GetLinkPartsFromLocalJsonFileWrapperError> =
+    let mut errors_hashmap: HashMap<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, GetLinkPartsFromLocalJsonFileWrapperError> =
         HashMap::new();
-    let mut success_hashmap: HashMap<ProviderKind, Vec<String>> =
+    let mut success_hashmap: HashMap<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>> =
         HashMap::with_capacity(result_vec.len());
     for (pk, result) in result_vec {
         match result {

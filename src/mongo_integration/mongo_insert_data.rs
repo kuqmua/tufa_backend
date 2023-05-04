@@ -1,6 +1,6 @@
 pub async fn mongo_insert_data<'a>(
     db_name_handle: &'a str,
-    vec_of_link_parts_hashmap: std::collections::HashMap<crate::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,//todo impl Display instead of ProviderKind
+    vec_of_link_parts_hashmap: std::collections::HashMap<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,//todo impl Display instead of ProviderKind
 ) -> Result<(), Box<tufa_common::server::mongo::mongo_insert_data::MongoInsertDataErrorNamed<'a>>> {
     let error_hashmap = futures::future::join_all(vec_of_link_parts_hashmap.into_iter().map(
         |(pk, vec_of_link_parts)| async move {

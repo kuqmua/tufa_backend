@@ -1,6 +1,6 @@
 use crate::mongo_integration::mongo_get_providers_link_parts::mongo_get_providers_link_parts;
 // use crate::mongo_integration::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed;
-use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
+
 use crate::providers::providers_info::get_local_providers_link_parts::get_local_providers_link_parts;
 use crate::providers::providers_info::get_local_providers_link_parts::GetLocalProvidersLinkPartsWrapperError;
 use std::collections::HashMap;
@@ -27,7 +27,7 @@ pub enum GetProvidersLinkPartsErrorEnum<'a> {
 
 pub async fn get_providers_link_parts<'a>(
     resource: &Resource,
-) -> Result<HashMap<ProviderKind, Vec<String>>, Box<GetProvidersLinkPartsErrorEnum<'a>>> {
+) -> Result<HashMap<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>, Box<GetProvidersLinkPartsErrorEnum<'a>>> {
     todo!()
     // match resource {
     //     Resource::Local => match get_local_providers_link_parts(false).await {

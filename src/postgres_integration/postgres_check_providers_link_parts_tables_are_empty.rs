@@ -1,5 +1,5 @@
 pub async fn postgres_check_providers_link_parts_tables_are_empty<'a>(
-    providers_json_local_data_hashmap: &std::collections::HashMap<crate::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
+    providers_json_local_data_hashmap: &std::collections::HashMap<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
     db: &sqlx::Pool<sqlx::Postgres>,
 ) -> Result<(), Box<tufa_common::server::postgres::postgres_check_providers_link_parts_tables_are_empty::PostgresCheckProvidersLinkPartsTablesEmptyErrorNamed<'a>>> {
     let count_provider_links_tables_tasks_vec =
@@ -7,13 +7,13 @@ pub async fn postgres_check_providers_link_parts_tables_are_empty<'a>(
             let query_string = format!(
                 "SELECT count(*) AS exact_count FROM {};",
                 {
-                    use crate::traits::provider_kind_methods::ProviderKindMethods;
+                    use tufa_common::repositories_types::tufa_server::traits::provider_kind_methods::ProviderKindMethods;
                     pk.get_postgres_table_name()
                 }
             );
             (*pk, sqlx::query_as(&query_string).fetch_one(db).await)
         });
-    let count_provider_links_tables_error_vec: Vec<(crate::providers::provider_kind::provider_kind_enum::ProviderKind, Result<(i64,), sqlx::Error>)> =
+    let count_provider_links_tables_error_vec: Vec<(tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Result<(i64,), sqlx::Error>)> =
         futures::future::join_all(count_provider_links_tables_tasks_vec).await;
     let mut count_provider_links_tables_error_hashmap: std::collections::HashMap<std::string::String, sqlx::Error> =
         std::collections::HashMap::with_capacity(count_provider_links_tables_error_vec.len());

@@ -1,7 +1,6 @@
 use super::check_providers_link_parts_on_empty::CheckProvidersLinkPartsEmptyError;
 use super::provider_kind::functions::rss_part::RssPartErrorEnum;
-use super::provider_kind::provider_kind_enum::ProviderKind;
-use super::providers_info::get_providers_link_parts::GetProvidersLinkPartsErrorEnum;
+use crate::providers::providers_info::get_providers_link_parts::GetProvidersLinkPartsErrorEnum;
 use crate::check_new_providers_posts::check_new_providers_posts;
 use crate::global_variables::runtime::config::CONFIG;
 use crate::providers::check_providers_link_parts_on_empty::check_providers_link_parts_on_empty;
@@ -36,11 +35,11 @@ use tufa_common::common::where_was::WhereWas;
 //     NoItems {
 //         link: String,
 //         no_items_error: NoItemsError,
-//         provider_kind: ProviderKind,
+//         provider_kind: tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind,
 //     },
 //     RssFetchAndParseProviderDataError {
 //         link: String,
-//         provider_kind: ProviderKind,
+//         provider_kind: tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind,
 //         error: RssFetchLinkError,
 //     }, //rewrite this error coz it must not be string. dont know to to clone error between threads
 // }
@@ -63,7 +62,7 @@ pub enum GetProviderPostsErrorEnum<'a> {
         where_was: WhereWas,
     },
     GetNewProvidersPosts {
-        source: HashMap<ProviderKind, RssPartErrorEnum>,
+        source: HashMap<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, RssPartErrorEnum>,
         where_was: WhereWas,
     },
 }

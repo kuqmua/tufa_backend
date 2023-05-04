@@ -1,6 +1,6 @@
 
 pub async fn mongo_insert_many<'a>(
-    providers_json_local_data_hashmap: std::collections::HashMap<crate::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
+    providers_json_local_data_hashmap: std::collections::HashMap<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
     db: mongodb::Database,
     should_trace: bool,
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::mongo_integration::mongo_insert_many::MongoInsertManyErrorNamed<'a>>> {
@@ -12,7 +12,7 @@ pub async fn mongo_insert_many<'a>(
                         pk.to_string(), 
                         db
                         .collection(&{
-                            use crate::traits::provider_kind_methods::ProviderKindMethods;
+                            use tufa_common::repositories_types::tufa_server::traits::provider_kind_methods::ProviderKindMethods;
                             pk.get_db_tag()
                         })
                         .insert_many(

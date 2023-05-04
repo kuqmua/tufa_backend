@@ -5,7 +5,7 @@ use tufa_common::repositories_types::tufa_server::postgres_integration::postgres
 use tufa_common::repositories_types::tufa_server::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorNamed;
 
 pub async fn postgres_check_providers_links_tables_length_rows_equal_initialization_data_length<'a>(
-    providers_json_local_data_hashmap: &std::collections::HashMap<crate::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
+    providers_json_local_data_hashmap: &std::collections::HashMap<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
     db: &sqlx::Pool<sqlx::Postgres>,
     should_trace: bool,
 ) -> Result<
@@ -19,7 +19,7 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
                 let query_string = format!(
                     "SELECT count(*) AS exact_count FROM {};",
                     {
-                        use crate::traits::provider_kind_methods::ProviderKindMethods;
+                        use tufa_common::repositories_types::tufa_server::traits::provider_kind_methods::ProviderKindMethods;
                         pk.get_postgres_table_name()
                     }
                 );
@@ -30,7 +30,7 @@ pub async fn postgres_check_providers_links_tables_length_rows_equal_initializat
                 )
             });
     let count_provider_links_tables_error_vec: Vec<(
-        &crate::providers::provider_kind::provider_kind_enum::ProviderKind,
+        &tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind,
         &Vec<String>,
         Result<(i64,), sqlx::Error>,
     )> = futures::future::join_all(count_provider_links_tables_tasks_vec).await;

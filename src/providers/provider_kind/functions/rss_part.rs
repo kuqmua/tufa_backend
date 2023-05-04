@@ -1,7 +1,7 @@
-use crate::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-use crate::providers::provider_kind::functions::fetch_and_parse_provider_data::FetchAndParseProviderDataErrorEnum;
-use crate::providers::provider_kind::provider_kind_enum::ProviderKind;
-use crate::providers::provider_kind::provider_kind_enum::ProviderKindFromConfig;
+use tufa_common::repositories_types::tufa_server::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
+use tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::FetchAndParseProviderDataErrorEnum;
+
+use tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKindFromConfig;
 use reqwest::StatusCode;
 use tufa_common::common::where_was::WhereWas;
 
@@ -22,7 +22,7 @@ pub enum RssPartErrorEnum {
 }
 
 pub async fn rss_part(
-    pk: ProviderKind,
+    pk: tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind,
     vec_of_provider_links: Vec<String>,
 ) -> Result<Vec<CommonRssPostStruct>, Box<RssPartErrorEnum>> {
     match reqwest::get(pk.check_link()).await {
@@ -54,7 +54,7 @@ pub async fn rss_part(
                     },
                 }));
             }
-            match ProviderKind::fetch_and_parse_provider_data(pk, vec_of_provider_links).await {
+            match tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind::fetch_and_parse_provider_data(pk, vec_of_provider_links).await {
                 Err(e) => Err(Box::new(RssPartErrorEnum::FetchAndParseProviderData {
                     source: *e,
                     where_was: WhereWas {
