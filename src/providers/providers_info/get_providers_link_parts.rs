@@ -1,4 +1,4 @@
-use crate::mongo_integration::mongo_get_providers_link_parts::mongo_get_providers_link_parts;
+use tufa_common::repositories_types::tufa_server::mongo_integration::mongo_get_providers_link_parts::mongo_get_providers_link_parts;
 // use crate::mongo_integration::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed;
 
 use crate::providers::providers_info::get_local_providers_link_parts::get_local_providers_link_parts;
