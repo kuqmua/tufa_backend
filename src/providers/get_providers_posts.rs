@@ -1,10 +1,10 @@
 use super::check_providers_link_parts_on_empty::CheckProvidersLinkPartsEmptyError;
 use tufa_common::repositories_types::tufa_server::providers::provider_kind::functions::rss_part::RssPartErrorEnum;
-use crate::providers::providers_info::get_providers_link_parts::GetProvidersLinkPartsErrorEnum;
+use tufa_common::repositories_types::tufa_server::providers::providers_info::get_providers_link_parts::GetProvidersLinkPartsErrorEnum;
 use crate::check_new_providers_posts::check_new_providers_posts;
 use crate::global_variables::runtime::config::CONFIG;
 use crate::providers::check_providers_link_parts_on_empty::check_providers_link_parts_on_empty;
-use crate::providers::providers_info::get_providers_link_parts::get_providers_link_parts;
+use tufa_common::repositories_types::tufa_server::providers::providers_info::get_providers_link_parts::get_providers_link_parts;
 use std::collections::HashMap;
 use tufa_common::common::where_was::WhereWas;
 // use crate::write_error_posts_wrapper::write_error_posts_wrapper;
