@@ -54,7 +54,7 @@ pub async fn mongo_get_providers_link_parts<'a>(
                                     tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind::get_enabled_providers_vec().iter().map(|pk| async {
                                         (
                                             *pk,
-                                            crate::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector(
+                                            tufa_common::repositories_types::tufa_server::mongo_integration::mongo_get_documents_as_string_vector::mongo_get_documents_as_string_vector(
                                                 db.collection::<mongodb::bson::Document>(&pk.get_mongo_log_collection_name()),
                                                 &crate::global_variables::runtime::config::CONFIG.mongo_providers_logs_db_collection_document_field_name_handle,
                                                 tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind::get_mongo_provider_link_parts_aggregation(pk),
