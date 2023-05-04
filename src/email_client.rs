@@ -1,23 +1,18 @@
-use tufa_common::repositories_types::tufa_server::domain::SubscriberEmail;
-use reqwest::Client;
-use secrecy::ExposeSecret;
-use secrecy::Secret;
-
 pub struct EmailClient {
-    http_client: Client,
+    http_client: reqwest::Client,
     base_url: String,
-    sender: SubscriberEmail,
-    authorization_token: Secret<String>,
+    sender: tufa_common::repositories_types::tufa_server::domain::SubscriberEmail,
+    authorization_token: secrecy::Secret<String>,
 }
 
 impl EmailClient {
     pub fn new(
         base_url: String,
-        sender: SubscriberEmail,
-        authorization_token: Secret<String>,
+        sender: tufa_common::repositories_types::tufa_server::domain::SubscriberEmail,
+        authorization_token: secrecy::Secret<String>,
         timeout: std::time::Duration,
     ) -> Self {
-        let http_client = Client::builder().timeout(timeout).build().unwrap();
+        let http_client = reqwest::Client::builder().timeout(timeout).build().unwrap();
         Self {
             http_client,
             base_url,
@@ -28,7 +23,7 @@ impl EmailClient {
 
     pub async fn send_email(
         &self,
-        recipient: &SubscriberEmail,
+        recipient: &tufa_common::repositories_types::tufa_server::domain::SubscriberEmail,
         subject: &str,
         html_content: &str,
         text_content: &str,
@@ -45,7 +40,10 @@ impl EmailClient {
             .post(&url)
             .header(
                 "X-Postmark-Server-Token",
-                self.authorization_token.expose_secret(),
+                {
+                    use secrecy::ExposeSecret;
+                    self.authorization_token.expose_secret()
+                },
             )
             .json(&request_body)
             .send()
@@ -99,14 +97,14 @@ mod tests {
     fn content() -> String {
         Paragraph(1..10).fake()
     }
-    fn email() -> SubscriberEmail {
-        SubscriberEmail::parse(SafeEmail().fake()).unwrap()
+    fn email() -> tufa_common::repositories_types::tufa_server::domain::SubscriberEmail {
+        tufa_common::repositories_types::tufa_server::domain::SubscriberEmail::parse(SafeEmail().fake()).unwrap()
     }
     fn email_client(base_url: String) -> EmailClient {
         EmailClient::new(
             base_url,
             email(),
-            Secret::new(Faker.fake()),
+            secrecy::Secret::new(Faker.fake()),
             std::time::Duration::from_millis(200),
         )
     }
