@@ -62,7 +62,7 @@ pub async fn init_postgres<'a>(
                     }
             ));
             }
-            if let Err(e) = crate::postgres_integration::postgres_insert_link_parts_into_providers_tables::postgres_insert_link_parts_into_providers_tables(
+            if let Err(e) = tufa_common::repositories_types::tufa_server::postgres_integration::postgres_insert_link_parts_into_providers_tables::postgres_insert_link_parts_into_providers_tables(
                 &providers_json_local_data_hashmap,
                 &pool,
                 false,
