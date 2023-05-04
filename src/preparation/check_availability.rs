@@ -10,7 +10,7 @@ pub async fn check_availability<'a>(
             }, 
             crate::global_variables::runtime::config::CONFIG.postgres_connection_timeout
         ),
-        tufa_common::server::mongo::mongo_check_availability::mongo_check_availability(
+        tufa_common::repositories_types::tufa_server::mongo_integration::mongo_check_availability::mongo_check_availability(
             {
                 use std::ops::Deref;
                 crate::global_variables::runtime::mongo_client_options::MONGO_CLIENT_OPTIONS.deref().to_owned() //todo timeout std::time::Duration::from_millis(CONFIG.mongo_connection_timeout),
