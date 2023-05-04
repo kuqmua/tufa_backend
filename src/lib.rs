@@ -15,7 +15,6 @@ pub mod entry;
 pub mod global_variables;
 mod init_dbs_logic;
 // pub mod issue_delivery_worker;
-mod mongo_integration;
 mod postgres_integration;
 mod preparation;
 mod providers;
