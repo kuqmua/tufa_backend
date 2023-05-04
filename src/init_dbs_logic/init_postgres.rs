@@ -49,7 +49,7 @@ pub async fn init_postgres<'a>(
                     }
                 ));
             }
-            if let Err(e) = crate::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
+            if let Err(e) = tufa_common::repositories_types::tufa_server::postgres_integration::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length::postgres_check_providers_links_tables_length_rows_equal_initialization_data_length(
                 &providers_json_local_data_hashmap,
                 &pool,
                 false,
