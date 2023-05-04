@@ -6,8 +6,6 @@
 // )]
 // #![allow(clippy::too_many_arguments)]
 
-// mod authentication;
-mod check_new_providers_posts;
 mod config_mods;
 pub mod configuration;
 pub mod email_client;
@@ -16,7 +14,6 @@ pub mod global_variables;
 mod init_dbs_logic;
 // pub mod issue_delivery_worker;
 mod preparation;
-mod providers;
 // mod routes;
 // mod server_wrapper;
 // mod session_state;
