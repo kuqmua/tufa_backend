@@ -60,12 +60,6 @@ pub async fn get_providers_link_parts<'a>(
     //         })),
     //         Ok(success_hashmap) => Ok(success_hashmap),
     //     },
-    //     // Resource::PostgreSql => match postgres_get_providers_link_parts().await {
-    //     //     Err(e) => Err(GetProvidersLinkPartsError {
-    //     // source: Box::new(GetProvidersLinkPartsError::PostgreSql(e))
-    //     // }),
-    //     //     Ok(success_hashmap) => Ok(success_hashmap),
-    //     // },
     //     Resource::PostgreSql => todo!(),
     // }
 }
