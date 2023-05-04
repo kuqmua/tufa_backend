@@ -8,7 +8,7 @@ pub async fn init_mongo<'a>(
                 code_occurence: tufa_common::code_occurence!()
             }
         )),
-        Ok(client_options) => match crate::mongo_integration::mongo_client_with_options::mongo_client_with_options(client_options) {
+        Ok(client_options) => match tufa_common::repositories_types::tufa_server::mongo_integration::mongo_client_with_options::mongo_client_with_options(client_options) {
             Err(e) => Err(Box::new(
                 tufa_common::repositories_types::tufa_server::init_dbs_logic::init_mongo::InitMongoErrorNamed::ClientWithOptions {
                     client_with_options: *e,
