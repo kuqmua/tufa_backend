@@ -16,7 +16,7 @@ pub enum GetProvidersLinkPartsErrorEnum<'a> {
         where_was: WhereWas,
     },
     Mongodb {
-        source: tufa_common::server::mongo::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed<'a>,
+        source: tufa_common::repositories_types::tufa_server::mongo_integration::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed<'a>,
         where_was: WhereWas,
     },
     PostgreSql {

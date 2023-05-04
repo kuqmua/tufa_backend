@@ -1,18 +1,18 @@
 pub async fn mongo_get_providers_link_parts<'a>(
-) -> Result<std::collections::HashMap<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>, tufa_common::server::mongo::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed<'a>> {
+) -> Result<std::collections::HashMap<tufa_common::repositories_types::tufa_server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>, tufa_common::repositories_types::tufa_server::mongo_integration::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed<'a>> {
     match mongodb::options::ClientOptions::parse({
         use tufa_common::traits::get_mongo_url::GetMongoUrl;
         crate::global_variables::runtime::config::CONFIG.get_mongo_url()
     }).await {
         Err(e) => Err(
-            tufa_common::server::mongo::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed::MongoDB {
+            tufa_common::repositories_types::tufa_server::mongo_integration::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed::MongoDB {
                 mongodb: e,
                 code_occurence: tufa_common::code_occurence!(),
             }
         ),
         Ok(client_options) => match mongodb::Client::with_options(client_options) {
             Err(e) => Err(
-                tufa_common::server::mongo::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed::MongoDB {
+                tufa_common::repositories_types::tufa_server::mongo_integration::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed::MongoDB {
                     mongodb: e,
                     code_occurence: tufa_common::code_occurence!(),
                 }
@@ -21,7 +21,7 @@ pub async fn mongo_get_providers_link_parts<'a>(
                 let db = client.database(&crate::global_variables::runtime::config::CONFIG.mongo_providers_link_parts_db_name);
                 match db.list_collection_names(None).await {
                     Err(e) => Err(
-                        tufa_common::server::mongo::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed::MongoDB {
+                        tufa_common::repositories_types::tufa_server::mongo_integration::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed::MongoDB {
                             mongodb: e,
                             code_occurence: tufa_common::code_occurence!(),
                         }
@@ -42,7 +42,7 @@ pub async fn mongo_get_providers_link_parts<'a>(
                         };
                         if !no_collection_error_hashmap.is_empty() {
                             return Err(
-                                tufa_common::server::mongo::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed::NoSuchCollections {
+                                tufa_common::repositories_types::tufa_server::mongo_integration::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed::NoSuchCollections {
                                     no_such_collections: no_collection_error_hashmap,
                                     code_occurence: tufa_common::code_occurence!(),
                                 }
@@ -68,14 +68,14 @@ pub async fn mongo_get_providers_link_parts<'a>(
                             std::collections::HashMap::with_capacity(result_get_documents_hashmap.len());
                         let mut error_hashmap: std::collections::HashMap<
                             String,
-                            tufa_common::server::mongo::mongo_get_providers_link_parts::MongoGetDocumentsAsStringVectorErrorUnnamed,
+                            tufa_common::repositories_types::tufa_server::mongo_integration::mongo_get_providers_link_parts::MongoGetDocumentsAsStringVectorErrorUnnamed,
                         > = std::collections::HashMap::new();
                         for (pk, result) in result_get_documents_hashmap.into_iter() {
                             match result {
                                 Err(e) => {
                                     error_hashmap.insert(
                                         pk.to_string(), 
-                                        tufa_common::server::mongo::mongo_get_providers_link_parts::MongoGetDocumentsAsStringVectorErrorUnnamed::MongoGetDocumentsAsStringVector(*e)
+                                        tufa_common::repositories_types::tufa_server::mongo_integration::mongo_get_providers_link_parts::MongoGetDocumentsAsStringVectorErrorUnnamed::MongoGetDocumentsAsStringVector(*e)
                                     );
                                 }
                                 Ok(vec) => {
@@ -85,7 +85,7 @@ pub async fn mongo_get_providers_link_parts<'a>(
                         }
                         if !error_hashmap.is_empty() {
                             return Err(
-                                tufa_common::server::mongo::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed::GetDocuments {
+                                tufa_common::repositories_types::tufa_server::mongo_integration::mongo_get_providers_link_parts::MongoGetProvidersLinkPartsErrorNamed::GetDocuments {
                                     get_documents: error_hashmap,
                                     code_occurence: tufa_common::code_occurence!(),
                                 }
