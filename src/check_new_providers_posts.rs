@@ -1,6 +1,6 @@
 use tufa_common::repositories_types::tufa_server::fetch::info_structures::common_rss_structures::CommonRssPostStruct;
-use crate::providers::provider_kind::functions::rss_part::rss_part;
-use crate::providers::provider_kind::functions::rss_part::RssPartErrorEnum;
+use tufa_common::repositories_types::tufa_server::providers::provider_kind::functions::rss_part::rss_part;
+use tufa_common::repositories_types::tufa_server::providers::provider_kind::functions::rss_part::RssPartErrorEnum;
 use tufa_common::repositories_types::tufa_server::traits::provider_kind_methods::ProviderKindMethods;
 use futures::future::join_all;
 use std::collections::HashMap;

@@ -1,5 +1,5 @@
 use super::check_providers_link_parts_on_empty::CheckProvidersLinkPartsEmptyError;
-use super::provider_kind::functions::rss_part::RssPartErrorEnum;
+use tufa_common::repositories_types::tufa_server::providers::provider_kind::functions::rss_part::RssPartErrorEnum;
 use crate::providers::providers_info::get_providers_link_parts::GetProvidersLinkPartsErrorEnum;
 use crate::check_new_providers_posts::check_new_providers_posts;
 use crate::global_variables::runtime::config::CONFIG;
