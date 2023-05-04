@@ -12,7 +12,6 @@ mod config_mods;
 pub mod configuration;
 pub mod email_client;
 pub mod entry;
-mod fetch;
 pub mod global_variables;
 mod init_dbs_logic;
 // pub mod issue_delivery_worker;
