@@ -3,7 +3,11 @@ pub async fn prepare_server<'a>() -> Result<(), Box<tufa_common::repositories_ty
         {
             use std::ops::Deref;
             crate::global_variables::runtime::mongo_client_options::MONGO_CLIENT_OPTIONS.deref().to_owned()
-        }
+        },
+        {
+            use std::ops::Deref;
+            crate::global_variables::runtime::config::CONFIG.deref()
+        },
     ).await {
         return Err(Box::new(
             tufa_common::repositories_types::tufa_server::preparation::prepare_server::PrepareServerErrorNamed::CheckAvailability { 
