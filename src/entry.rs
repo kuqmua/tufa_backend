@@ -5,7 +5,9 @@ pub fn entry() {
         .enable_all()
         .build()
     {
-        Err(e) => {}
+        Err(e) => {
+            panic!("tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build() failed, error: {e:#?}")
+        }
         Ok(runtime) => {
             if let (
                 tufa_common::config_mods::log_type::LogType::Tracing, 
@@ -19,7 +21,7 @@ pub fn entry() {
                     std::io::stdout,
                 ))
             ) {
-                return;
+                panic!("tufa_common::repositories_types::tufa_server::telemetry::init_subscriber::init_subscriber failed, error: {e:#?}")
             }
             else {
                 if let (
