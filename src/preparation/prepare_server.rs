@@ -1,5 +1,5 @@
 pub async fn prepare_server<'a>() -> Result<(), Box<tufa_common::repositories_types::tufa_server::preparation::prepare_server::PrepareServerErrorNamed<'a>>> {
-    if let Err(e) = crate::preparation::check_availability::check_availability().await {
+    if let Err(e) = tufa_common::repositories_types::tufa_server::preparation::check_availability::check_availability().await {
         return Err(Box::new(
             tufa_common::repositories_types::tufa_server::preparation::prepare_server::PrepareServerErrorNamed::CheckAvailability { 
                 check_availability: *e, 
