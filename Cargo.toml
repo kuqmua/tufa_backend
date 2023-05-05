@@ -77,14 +77,12 @@ valuable = {version = "0.1.0", features = ["default", "std", "alloc", "derive", 
 tufa_common = {path = "../tufa_common"}# local dev test without commits version
 #prod
 # enum_extension = {git = "https://github.com/kuqmua/enum_extension"}
-# error_display = {git = "https://github.com/kuqmua/error_display"}
 # gen_enum = {git = "https://github.com/kuqmua/gen_enum"}
 # gen_enum_without_values = {git = "https://github.com/kuqmua/gen_enum_without_values"}
 # provider_kind_from_config = {path = "https://github.com/kuqmua/provider_kind_from_config"}
 #dev
 compile_time_git_info = {path = "../proc_macros/compile_time_git_info"}
 enum_extension = {path = "../proc_macros/enum_extension"}
-error_display = {path = "../proc_macros/error_display"}
 error_occurence = {path = "../proc_macros/error_occurence"}
 gen_enum = {path = "../proc_macros/gen_enum"}
 gen_enum_without_values = {path = "../proc_macros/gen_enum_without_values"}
