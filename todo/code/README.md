@@ -308,4 +308,3 @@ https://www.lpalmieri.com/posts/session-based-authentication-in-rust/
 * write match should trace inside init or new function of error initialization
 * env var json tracing on/off
 * different formatting for env var json tracing on/off
-* get_where_was must return WhereWas, not a string. For a must must be a different method
