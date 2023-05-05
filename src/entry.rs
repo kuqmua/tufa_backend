@@ -27,7 +27,7 @@ pub fn entry() {
                     Err(e)
                 ) = (
                     crate::global_variables::runtime::config::CONFIG.is_preparation_enabled,
-                    runtime.block_on(crate::preparation::prepare_server::prepare_server(true))
+                    runtime.block_on(crate::preparation::prepare_server::prepare_server())
                 ) {
                     use tufa_common::traits::error_logs_logic::error_log::ErrorLog;
                     e.error_log(once_cell::sync::Lazy::force(

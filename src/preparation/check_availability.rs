@@ -1,6 +1,4 @@
-pub async fn check_availability<'a>(
-    should_trace: bool,
-) -> Result<(), Box<tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorNamed<'a>>>{
+pub async fn check_availability<'a>() -> Result<(), Box<tufa_common::repositories_types::tufa_server::preparation::check_availability::CheckAvailabilityErrorNamed<'a>>>{
     match futures::join!(
         tufa_common::server::net::net_check_availability::net_check_availability(&crate::global_variables::runtime::config::CONFIG.starting_check_link),
         tufa_common::repositories_types::tufa_server::postgres_integration::postgres_check_availability::postgres_check_availability(
