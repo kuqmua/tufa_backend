@@ -11,7 +11,6 @@ pub mod configuration;
 pub mod email_client;
 pub mod entry;
 pub mod global_variables;
-mod init_dbs_logic;
 // pub mod issue_delivery_worker;
 mod preparation;
 // mod routes;
