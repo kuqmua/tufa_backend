@@ -6,7 +6,6 @@
 // )]
 // #![allow(clippy::too_many_arguments)]
 
-mod config_mods;
 pub mod configuration;
 pub mod email_client;
 pub mod entry;
