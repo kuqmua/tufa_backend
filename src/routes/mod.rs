@@ -1,4 +1,4 @@
-// mod admin;
+mod admin;
 // pub mod get_providers_posts_route;
 // mod health_check;
 // pub mod home;

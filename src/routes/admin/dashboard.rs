@@ -1,26 +1,16 @@
-use crate::session_state::TypedSession;
-use crate::utils::status_codes::e500;
-use actix_web::http::header::ContentType;
-use actix_web::http::header::LOCATION;
-use actix_web::web;
-use actix_web::HttpResponse;
-use anyhow::Context;
-use sqlx::PgPool;
-use uuid::Uuid;
-
 pub async fn admin_dashboard(
-    session: TypedSession,
-    pool: web::Data<PgPool>,
-) -> Result<HttpResponse, actix_web::Error> {
-    let username = if let Some(user_id) = session.get_user_id().map_err(e500)? {
-        get_username(user_id, &pool).await.map_err(e500)?
+    session: tufa_common::repositories_types::tufa_server::session_state::TypedSession,
+    pool: actix_web::web::Data<sqlx::PgPool>,
+) -> Result<actix_web::HttpResponse, actix_web::Error> {
+    let username = if let Some(user_id) = session.get_user_id().map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)? {
+        get_username(user_id, &pool).await.map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?
     } else {
-        return Ok(HttpResponse::SeeOther()
-            .insert_header((LOCATION, "/login"))
+        return Ok(actix_web::HttpResponse::SeeOther()
+            .insert_header((actix_web::http::header::LOCATION, "/login"))
             .finish());
     };
-    Ok(HttpResponse::Ok()
-        .content_type(ContentType::html())
+    Ok(actix_web::HttpResponse::Ok()
+        .content_type(actix_web::http::header::ContentType::html())
         .body(format!(
             r#"<!DOCTYPE html>
 <html lang="en">
@@ -45,17 +35,20 @@ pub async fn admin_dashboard(
 }
 
 #[tracing::instrument(name = "Get username", skip(pool))]
-pub async fn get_username(user_id: Uuid, pool: &PgPool) -> Result<String, anyhow::Error> {
-    let row = sqlx::query!(
-        r#"
-        SELECT username
-        FROM users
-        WHERE user_id = $1
-        "#,
-        user_id,
-    )
-    .fetch_one(pool)
-    .await
-    .context("Failed to perform a query to retrieve a username.")?;
+pub async fn get_username(user_id: uuid::Uuid, pool: &sqlx::PgPool) -> Result<String, anyhow::Error> {
+    let row = {
+        use anyhow::Context;
+        sqlx::query!(
+            r#"
+            SELECT username
+            FROM users
+            WHERE user_id = $1
+            "#,
+            user_id,
+        )
+        .fetch_one(pool)
+        .await
+        .context("Failed to perform a query to retrieve a username.")?
+    };
     Ok(row.username)
 }
