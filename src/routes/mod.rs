@@ -13,4 +13,4 @@
 // pub use subscriptions_confirm::*;
 pub mod git;
 pub mod json_example;
-// pub mod json_example_post;
+pub mod json_example_post;
