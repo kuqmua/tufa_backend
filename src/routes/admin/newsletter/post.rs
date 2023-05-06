@@ -1,21 +1,3 @@
-use crate::authentication::UserId;
-use crate::idempotency::save_response;
-use crate::idempotency::try_processing;
-use crate::idempotency::IdempotencyKey;
-use crate::idempotency::NextAction;
-use crate::utils::status_codes::e400;
-use crate::utils::status_codes::e500;
-use crate::utils::status_codes::see_other;
-use actix_web::web;
-use actix_web::web::ReqData;
-use actix_web::HttpResponse;
-use actix_web_flash_messages::FlashMessage;
-use anyhow::Context;
-use sqlx::PgPool;
-use sqlx::Postgres;
-use sqlx::Transaction;
-use uuid::Uuid;
-
 #[derive(serde::Deserialize)]
 pub struct FormData {
     title: String,
@@ -30,10 +12,10 @@ pub struct FormData {
     fields(user_id=%*user_id)
 )]
 pub async fn publish_newsletter(
-    form: web::Form<FormData>,
-    user_id: ReqData<UserId>,
-    pool: web::Data<PgPool>,
-) -> Result<HttpResponse, actix_web::Error> {
+    form: actix_web::web::Form<FormData>,
+    user_id: actix_web::web::ReqData<tufa_common::repositories_types::tufa_server::authentication::UserId>,
+    pool: actix_web::web::Data<sqlx::PgPool>,
+) -> Result<actix_web::HttpResponse, actix_web::Error> {
     let user_id = user_id.into_inner();
     let FormData {
         title,
@@ -41,35 +23,41 @@ pub async fn publish_newsletter(
         html_content,
         idempotency_key,
     } = form.0;
-    let idempotency_key: IdempotencyKey = idempotency_key.try_into().map_err(e400)?;
-    let mut transaction = match try_processing(&pool, &idempotency_key, *user_id)
+    let idempotency_key: tufa_common::repositories_types::tufa_server::idempotency::IdempotencyKey = idempotency_key.try_into().map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e400)?;
+    let mut transaction = match tufa_common::repositories_types::tufa_server::idempotency::try_processing(&pool, &idempotency_key, *user_id)
         .await
-        .map_err(e500)?
+        .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?
     {
-        NextAction::StartProcessing(t) => t,
-        NextAction::ReturnSavedResponse(saved_response) => {
+        tufa_common::repositories_types::tufa_server::idempotency::NextAction::StartProcessing(t) => t,
+        tufa_common::repositories_types::tufa_server::idempotency::NextAction::ReturnSavedResponse(saved_response) => {
             success_message().send();
             return Ok(saved_response);
         }
     };
-    let issue_id = insert_newsletter_issue(&mut transaction, &title, &text_content, &html_content)
+    let issue_id = {
+        use anyhow::Context;
+        insert_newsletter_issue(&mut transaction, &title, &text_content, &html_content)
         .await
         .context("Failed to store newsletter issue details")
-        .map_err(e500)?;
-    enqueue_delivery_tasks(&mut transaction, issue_id)
+        .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?
+    };
+    {
+        use anyhow::Context;
+        enqueue_delivery_tasks(&mut transaction, issue_id)
         .await
         .context("Failed to enqueue delivery tasks")
-        .map_err(e500)?;
-    let response = see_other("/admin/newsletters");
-    let response = save_response(transaction, &idempotency_key, *user_id, response)
+        .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?
+    };
+    let response = tufa_common::repositories_types::tufa_server::utils::status_codes::see_other("/admin/newsletters");
+    let response = tufa_common::repositories_types::tufa_server::idempotency::save_response(transaction, &idempotency_key, *user_id, response)
         .await
-        .map_err(e500)?;
+        .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?;
     success_message().send();
     Ok(response)
 }
 
-fn success_message() -> FlashMessage {
-    FlashMessage::info(
+fn success_message() -> actix_web_flash_messages::FlashMessage {
+    actix_web_flash_messages::FlashMessage::info(
         "The newsletter issue has been accepted - \
         emails will go out shortly.",
     )
@@ -77,12 +65,12 @@ fn success_message() -> FlashMessage {
 
 #[tracing::instrument(skip_all)]
 async fn insert_newsletter_issue(
-    transaction: &mut Transaction<'_, Postgres>,
+    transaction: &mut sqlx::Transaction<'_, sqlx::Postgres>,
     title: &str,
     text_content: &str,
     html_content: &str,
-) -> Result<Uuid, sqlx::Error> {
-    let newsletter_issue_id = Uuid::new_v4();
+) -> Result<uuid::Uuid, sqlx::Error> {
+    let newsletter_issue_id = uuid::Uuid::new_v4();
     sqlx::query!(
         r#"
         INSERT INTO newsletter_issues (
@@ -106,8 +94,8 @@ async fn insert_newsletter_issue(
 
 #[tracing::instrument(skip_all)]
 async fn enqueue_delivery_tasks(
-    transaction: &mut Transaction<'_, Postgres>,
-    newsletter_issue_id: Uuid,
+    transaction: &mut sqlx::Transaction<'_, sqlx::Postgres>,
+    newsletter_issue_id: uuid::Uuid,
 ) -> Result<(), sqlx::Error> {
     sqlx::query!(
         r#"
