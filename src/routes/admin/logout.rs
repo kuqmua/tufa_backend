@@ -1,15 +1,9 @@
-use crate::session_state::TypedSession;
-use crate::utils::status_codes::e500;
-use crate::utils::status_codes::see_other;
-use actix_web::HttpResponse;
-use actix_web_flash_messages::FlashMessage;
-
-pub async fn log_out(session: TypedSession) -> Result<HttpResponse, actix_web::Error> {
-    if session.get_user_id().map_err(e500)?.is_none() {
-        Ok(see_other("/login"))
+pub async fn log_out(session: tufa_common::repositories_types::tufa_server::session_state::TypedSession) -> Result<actix_web::HttpResponse, actix_web::Error> {
+    if session.get_user_id().map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?.is_none() {
+        Ok(tufa_common::repositories_types::tufa_server::utils::status_codes::see_other("/login"))
     } else {
         session.log_out();
-        FlashMessage::info("You have successfully logged out.").send();
-        Ok(see_other("/login"))
+        actix_web_flash_messages::FlashMessage::info("You have successfully logged out.").send();
+        Ok(tufa_common::repositories_types::tufa_server::utils::status_codes::see_other("/login"))
     }
 }
