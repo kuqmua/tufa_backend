@@ -1,5 +1,5 @@
 #[actix_web::main] // or #[tokio::main]
-pub async fn server_wrapper() -> Result<(), Box<crate::startup::ApplicationBuildErrorEnum>> {
+pub async fn server_wrapper() -> Result<(), Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorEnum>> {
     let configuration = tufa_common::repositories_types::tufa_server::configuration::Settings {
         database: tufa_common::repositories_types::tufa_server::configuration::DatabaseSettings {
             host: crate::global_variables::runtime::config::CONFIG.postgres_ip.clone(),
@@ -23,7 +23,7 @@ pub async fn server_wrapper() -> Result<(), Box<crate::startup::ApplicationBuild
         },
         redis_uri: secrecy::Secret::new(tufa_common::server::redis::get_redis_url::get_redis_url(&crate::global_variables::runtime::config::CONFIG.redis_ip, crate::global_variables::runtime::config::CONFIG.redis_port)),
     };
-    let application = match crate::startup::Application::build(configuration.clone()).await {
+    let application = match tufa_common::repositories_types::tufa_server::startup::Application::build(configuration.clone()).await {
         Ok(app) => app,
         Err(e) => return Err(e),
     };
