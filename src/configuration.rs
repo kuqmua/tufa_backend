@@ -1,39 +1,32 @@
-use tufa_common::repositories_types::tufa_server::domain::SubscriberEmail;
-use tufa_common::repositories_types::tufa_server::email_client::EmailClient;
-use secrecy::ExposeSecret;
-use secrecy::Secret;
 use serde_aux::field_attributes::deserialize_number_from_string;
-use sqlx::postgres::PgConnectOptions;
-use sqlx::postgres::PgSslMode;
-use sqlx::ConnectOptions;
 
 #[derive(serde::Deserialize, Clone, Debug)]
 pub struct Settings {
     pub database: DatabaseSettings,
     pub application: ApplicationSettings,
     pub email_client: EmailClientSettings,
-    pub redis_uri: Secret<String>,
+    pub redis_uri: secrecy::Secret<String>,
 }
 
 #[derive(serde::Deserialize, Clone, Debug)]
 pub struct EmailClientSettings {
     pub base_url: String,
     pub sender_email: String,
-    pub authorization_token: Secret<String>,
+    pub authorization_token: secrecy::Secret<String>,
     pub timeout_milliseconds: u64,
 }
 
 impl EmailClientSettings {
-    pub fn sender(&self) -> Result<SubscriberEmail, String> {
-        SubscriberEmail::parse(self.sender_email.clone())
+    pub fn sender(&self) -> Result<tufa_common::repositories_types::tufa_server::domain::SubscriberEmail, String> {
+        tufa_common::repositories_types::tufa_server::domain::SubscriberEmail::parse(self.sender_email.clone())
     }
     pub fn timeout(&self) -> std::time::Duration {
         std::time::Duration::from_millis(self.timeout_milliseconds)
     }
-    pub fn client(self) -> EmailClient {
+    pub fn client(self) -> tufa_common::repositories_types::tufa_server::email_client::EmailClient {
         let sender_email = self.sender().expect("Invalid sender email address.");
         let timeout = self.timeout();
-        EmailClient::new(
+        tufa_common::repositories_types::tufa_server::email_client::EmailClient::new(
             self.base_url,
             sender_email,
             self.authorization_token,
@@ -48,13 +41,13 @@ pub struct ApplicationSettings {
     pub port: u16,
     pub host: String,
     pub base_url: String,
-    pub hmac_secret: Secret<String>,
+    pub hmac_secret: secrecy::Secret<String>,
 }
 
 #[derive(serde::Deserialize, Clone, Debug)]
 pub struct DatabaseSettings {
     pub username: String,
-    pub password: Secret<String>,
+    pub password: secrecy::Secret<String>,
     #[serde(deserialize_with = "deserialize_number_from_string")]
     pub port: u16,
     pub host: String,
@@ -63,21 +56,27 @@ pub struct DatabaseSettings {
 }
 
 impl DatabaseSettings {
-    pub fn with_db(&self) -> PgConnectOptions {
+    pub fn with_db(&self) -> sqlx::postgres::PgConnectOptions {
         let mut options = self.without_db().database(&self.database_name);
-        options.log_statements(tracing::log::LevelFilter::Trace);
+        {
+            use sqlx::ConnectOptions;
+            options.log_statements(tracing::log::LevelFilter::Trace)
+        };
         options
     }
-    pub fn without_db(&self) -> PgConnectOptions {
+    pub fn without_db(&self) -> sqlx::postgres::PgConnectOptions {
         let ssl_mode = if self.require_ssl {
-            PgSslMode::Require
+            sqlx::postgres::PgSslMode::Require
         } else {
-            PgSslMode::Prefer
+            sqlx::postgres::PgSslMode::Prefer
         };
-        PgConnectOptions::new()
+        sqlx::postgres::PgConnectOptions::new()
             .host(&self.host)
             .username(&self.username)
-            .password(self.password.expose_secret())
+            .password({
+                use secrecy::ExposeSecret;
+                self.password.expose_secret()
+            })
             .port(self.port)
             .ssl_mode(ssl_mode)
     }
