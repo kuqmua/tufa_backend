@@ -13,8 +13,7 @@ pub mod global_variables;
 pub mod issue_delivery_worker;
 mod preparation;
 mod routes;
-// mod server_wrapper;
-// mod session_state;
+mod server_wrapper;
 pub mod startup;
 #[cfg(test)]
 mod tests;
