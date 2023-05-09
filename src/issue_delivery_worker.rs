@@ -1,4 +1,4 @@
-pub async fn run_worker_until_stopped(configuration: crate::configuration::Settings) -> Result<(), anyhow::Error> {
+pub async fn run_worker_until_stopped(configuration: tufa_common::repositories_types::tufa_server::configuration::Settings) -> Result<(), anyhow::Error> {
     let connection_pool = crate::startup::get_connection_pool(&configuration.database);
     let email_client = configuration.email_client.client();
     worker_loop(connection_pool, email_client).await

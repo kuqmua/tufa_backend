@@ -1,7 +1,7 @@
 #[actix_web::main] // or #[tokio::main]
 pub async fn server_wrapper() -> Result<(), Box<crate::startup::ApplicationBuildErrorEnum>> {
-    let configuration = crate::configuration::Settings {
-        database: crate::configuration::DatabaseSettings {
+    let configuration = tufa_common::repositories_types::tufa_server::configuration::Settings {
+        database: tufa_common::repositories_types::tufa_server::configuration::DatabaseSettings {
             host: crate::global_variables::runtime::config::CONFIG.postgres_ip.clone(),
             port: crate::global_variables::runtime::config::CONFIG.postgres_port,
             username: crate::global_variables::runtime::config::CONFIG.postgres_login.clone(),
@@ -9,13 +9,13 @@ pub async fn server_wrapper() -> Result<(), Box<crate::startup::ApplicationBuild
             database_name: crate::global_variables::runtime::config::CONFIG.postgres_db.clone(),
             require_ssl: crate::global_variables::runtime::config::CONFIG.require_ssl,
         },
-        application: crate::configuration::ApplicationSettings {
+        application: tufa_common::repositories_types::tufa_server::configuration::ApplicationSettings {
             port: crate::global_variables::runtime::config::CONFIG.server_port,
             host: crate::global_variables::runtime::config::CONFIG.server_ip.clone(),
             base_url: crate::global_variables::runtime::config::CONFIG.base_url.clone(),
             hmac_secret: secrecy::Secret::new(crate::global_variables::runtime::config::CONFIG.hmac_secret.clone()),
         },
-        email_client: crate::configuration::EmailClientSettings {
+        email_client: tufa_common::repositories_types::tufa_server::configuration::EmailClientSettings {
             base_url: crate::global_variables::runtime::config::CONFIG.base_url.clone(),
             sender_email: "test@gmail.com".to_string(),
             authorization_token: secrecy::Secret::new("my-secret-token".to_string()),

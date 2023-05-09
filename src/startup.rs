@@ -17,7 +17,7 @@ pub enum ApplicationBuildErrorEnum {
 }
 
 impl Application {
-    pub async fn build(configuration: crate::configuration::Settings) -> Result<Self, Box<ApplicationBuildErrorEnum>> {
+    pub async fn build(configuration: tufa_common::repositories_types::tufa_server::configuration::Settings) -> Result<Self, Box<ApplicationBuildErrorEnum>> {
         let connection_pool = get_connection_pool(&configuration.database);
         let listener = match std::net::TcpListener::bind(&format!(
             "{}:{}",
@@ -66,7 +66,7 @@ impl Application {
     }
 }
 
-pub fn get_connection_pool(configuration: &crate::configuration::DatabaseSettings) -> sqlx::PgPool {
+pub fn get_connection_pool(configuration: &tufa_common::repositories_types::tufa_server::configuration::DatabaseSettings) -> sqlx::PgPool {
     sqlx::postgres::PgPoolOptions::new()
         .connect_timeout(std::time::Duration::from_secs(2))
         .connect_lazy_with(configuration.with_db())
