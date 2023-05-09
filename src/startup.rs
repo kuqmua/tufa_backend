@@ -1,46 +1,6 @@
-use tufa_common::repositories_types::tufa_server::authentication::reject_anonymous_users;
-use crate::configuration::DatabaseSettings;
-use crate::configuration::Settings;
-use tufa_common::repositories_types::tufa_server::email_client::EmailClient;
-use crate::routes::admin_dashboard;
-use crate::routes::change_password;
-use crate::routes::change_password_form;
-use crate::routes::confirm;
-use crate::routes::get_providers_posts_route::get_providers_posts_route;
-use crate::routes::git::git_info_html::git_info_html;
-use crate::routes::git::git_info_json::git_info_json;
-use crate::routes::health_check;
-use crate::routes::home::home;
-use crate::routes::json_example::json_example;
-use crate::routes::json_example_post::json_example_post;
-use crate::routes::log_out;
-use crate::routes::login::login;
-use crate::routes::login::login_form;
-use crate::routes::publish_newsletter;
-use crate::routes::publish_newsletter_form;
-use crate::routes::subscribe;
-use actix_cors::Cors;
-use actix_session::storage::RedisSessionStore;
-use actix_session::SessionMiddleware;
-use actix_web::cookie::Key;
-use actix_web::dev::Server;
-use actix_web::web;
-use actix_web::web::Data;
-use actix_web::App;
-use actix_web::HttpServer;
-use actix_web_flash_messages::storage::CookieMessageStore;
-use actix_web_flash_messages::FlashMessagesFramework;
-use actix_web_lab::middleware::from_fn;
-use secrecy::ExposeSecret;
-use secrecy::Secret;
-use sqlx::postgres::PgPoolOptions;
-use sqlx::PgPool;
-use std::net::TcpListener;
-use tracing_actix_web::TracingLogger;
-
 pub struct Application {
     port: u16,
-    server: Server,
+    server: actix_web::dev::Server,
 }
 
 #[derive(Debug)]
@@ -57,9 +17,9 @@ pub enum ApplicationBuildErrorEnum {
 }
 
 impl Application {
-    pub async fn build(configuration: Settings) -> Result<Self, Box<ApplicationBuildErrorEnum>> {
+    pub async fn build(configuration: crate::configuration::Settings) -> Result<Self, Box<ApplicationBuildErrorEnum>> {
         let connection_pool = get_connection_pool(&configuration.database);
-        let listener = match TcpListener::bind(&format!(
+        let listener = match std::net::TcpListener::bind(&format!(
             "{}:{}",
             configuration.application.host, configuration.application.port
         )) {
@@ -106,8 +66,8 @@ impl Application {
     }
 }
 
-pub fn get_connection_pool(configuration: &DatabaseSettings) -> PgPool {
-    PgPoolOptions::new()
+pub fn get_connection_pool(configuration: &crate::configuration::DatabaseSettings) -> sqlx::PgPool {
+    sqlx::postgres::PgPoolOptions::new()
         .connect_timeout(std::time::Duration::from_secs(2))
         .connect_lazy_with(configuration.with_db())
 }
@@ -121,20 +81,26 @@ pub enum ApplicationRunErrorEnum {
 }
 
 async fn run(
-    listener: TcpListener,
-    db_pool: PgPool,
-    email_client: EmailClient,
+    listener: std::net::TcpListener,
+    db_pool: sqlx::PgPool,
+    email_client: tufa_common::repositories_types::tufa_server::email_client::EmailClient,
     base_url: String,
-    hmac_secret: Secret<String>,
-    redis_uri: Secret<String>,
-) -> Result<Server, Box<ApplicationRunErrorEnum>> {
-    let db_pool = Data::new(db_pool);
-    let email_client = Data::new(email_client);
-    let base_url = Data::new(ApplicationBaseUrl(base_url));
-    let secret_key = Key::from(hmac_secret.expose_secret().as_bytes());
-    let message_store = CookieMessageStore::builder(secret_key.clone()).build();
-    let message_framework = FlashMessagesFramework::builder(message_store).build();
-    let redis_store = match RedisSessionStore::new(redis_uri.expose_secret()).await {
+    hmac_secret: secrecy::Secret<String>,
+    redis_uri: secrecy::Secret<String>,
+) -> Result<actix_web::dev::Server, Box<ApplicationRunErrorEnum>> {
+    let db_pool = actix_web::web::Data::new(db_pool);
+    let email_client = actix_web::web::Data::new(email_client);
+    let base_url = actix_web::web::Data::new(ApplicationBaseUrl(base_url));
+    let secret_key = actix_web::cookie::Key::from({
+        use secrecy::ExposeSecret;
+        hmac_secret.expose_secret()
+    }.as_bytes());
+    let message_store = actix_web_flash_messages::storage::CookieMessageStore::builder(secret_key.clone()).build();
+    let message_framework = actix_web_flash_messages::FlashMessagesFramework::builder(message_store).build();
+    let redis_store = match actix_session::storage::RedisSessionStore::new({
+        use secrecy::ExposeSecret;
+        redis_uri.expose_secret()
+    }).await {
         Ok(redis_session_store) => redis_session_store,
         Err(e) => {
             return Err(Box::new(ApplicationRunErrorEnum::NewRedisSessionStore {
@@ -142,16 +108,16 @@ async fn run(
             }))
         }
     };
-    let server = match HttpServer::new(move || {
-        App::new()
+    let server = match actix_web::HttpServer::new(move || {
+        actix_web::App::new()
             .wrap(message_framework.clone())
-            .wrap(SessionMiddleware::new(
+            .wrap(actix_session::SessionMiddleware::new(
                 redis_store.clone(),
                 secret_key.clone(),
             ))
-            .wrap(TracingLogger::default())
+            .wrap(tracing_actix_web::TracingLogger::default())
             .wrap(
-                Cors::default()
+                actix_cors::Cors::default()
                     .supports_credentials()
                     .allowed_origin("http://127.0.0.1:8080")
                     .allow_any_method()
@@ -159,44 +125,44 @@ async fn run(
                     .expose_any_header()
                     .max_age(3600),
             ) //todo concrete host \ domain
-            .route("/", web::get().to(home))
+            .route("/", actix_web::web::get().to(crate::routes::home::home))
             .service(
-                web::scope("/admin")
-                    .wrap(from_fn(reject_anonymous_users))
-                    .route("/dashboard", web::get().to(admin_dashboard))
-                    .route("/newsletters", web::get().to(publish_newsletter_form))
-                    .route("/newsletters", web::post().to(publish_newsletter))
-                    .route("/password", web::get().to(change_password_form))
-                    .route("/password", web::post().to(change_password))
-                    .route("/logout", web::post().to(log_out)),
+                actix_web::web::scope("/admin")
+                    .wrap(actix_web_lab::middleware::from_fn(tufa_common::repositories_types::tufa_server::authentication::reject_anonymous_users))
+                    .route("/dashboard", actix_web::web::get().to(crate::routes::admin_dashboard))
+                    // .route("/newsletters", web::get().to(crate::routes::publish_newsletter_form))
+                    .route("/newsletters", actix_web::web::post().to(crate::routes::publish_newsletter))
+                    .route("/password", actix_web::web::get().to(crate::routes::change_password_form))
+                    .route("/password", actix_web::web::post().to(crate::routes::change_password))
+                    .route("/logout", actix_web::web::post().to(crate::routes::log_out)),
             )
-            .route("/login", web::get().to(login_form))
-            .route("/login", web::post().to(login))
-            .route("/health_check", web::get().to(health_check))
+            .route("/login", actix_web::web::get().to(crate::routes::login::login_form))
+            .route("/login", actix_web::web::post().to(crate::routes::login::login))
+            .route("/health_check", actix_web::web::get().to(crate::routes::health_check))
             .service(
-                web::scope("/api")
+                actix_web::web::scope("/api")
                 .service(
-                    web::scope("/html")//or maybe .md ?
-                    .route("/git_info", web::get().to(git_info_html))
+                    actix_web::web::scope("/html")//or maybe .md ?
+                    .route("/git_info", actix_web::web::get().to(crate::routes::git::git_info_html::git_info_html))
                 )
                 .service(
-                    web::scope("/json")
-                    .route("/git_info", web::get().to(git_info_json))
-                    .route("/json_example", web::get().to(json_example))
-                    .route("/json_example_post", web::post().to(json_example_post))
+                    actix_web::web::scope("/json")
+                    .route("/git_info", actix_web::web::get().to(crate::routes::git::git_info_json::git_info_json))
+                    .route("/json_example", actix_web::web::get().to(crate::routes::json_example::json_example))
+                    .route("/json_example_post", actix_web::web::post().to(crate::routes::json_example_post::json_example_post))
                 )
             )
-            .route("/subscriptions", web::post().to(subscribe))
-            .route("/subscriptions/confirm", web::get().to(confirm))
-            .route("/newsletters", web::post().to(publish_newsletter))
+            .route("/subscriptions", actix_web::web::post().to(crate::routes::subscribe))
+            .route("/subscriptions/confirm", actix_web::web::get().to(crate::routes::confirm))
+            .route("/newsletters", actix_web::web::post().to(crate::routes::publish_newsletter))
             .route(
                 "/get_providers_posts",
-                web::post().to(get_providers_posts_route),
+                actix_web::web::post().to(crate::routes::get_providers_posts_route::get_providers_posts_route),
             )
             .app_data(db_pool.clone())
             .app_data(email_client.clone())
             .app_data(base_url.clone())
-            .app_data(Data::new(HmacSecret(hmac_secret.clone())))
+            .app_data(actix_web::web::Data::new(HmacSecret(hmac_secret.clone())))
     })
     .listen(listener)
     {
@@ -212,4 +178,4 @@ async fn run(
 }
 
 #[derive(Clone)]
-pub struct HmacSecret(pub Secret<String>);
+pub struct HmacSecret(pub secrecy::Secret<String>);
