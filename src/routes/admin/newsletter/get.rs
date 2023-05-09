@@ -1,11 +1,9 @@
-use actix_web_flash_messages::IncomingFlashMessages;
-use std::fmt::Write;
-
 pub async fn publish_newsletter_form(
-    flash_messages: IncomingFlashMessages,
+    flash_messages: actix_web_flash_messages::IncomingFlashMessages,
 ) -> Result<actix_web::HttpResponse, actix_web::Error> {
     let mut msg_html = String::new();
     for m in flash_messages.iter() {
+        use std::fmt::Write;
         writeln!(msg_html, "<p><i>{}</i></p>", m.content()).unwrap();
     }
     let idempotency_key = uuid::Uuid::new_v4();
