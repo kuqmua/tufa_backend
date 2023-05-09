@@ -1,24 +1,17 @@
-use crate::session_state::TypedSession;
-use crate::utils::status_codes::e500;
-use crate::utils::status_codes::see_other;
-use actix_web::http::header::ContentType;
-use actix_web::HttpResponse;
-use actix_web_flash_messages::IncomingFlashMessages;
-use std::fmt::Write;
-
 pub async fn change_password_form(
-    session: TypedSession,
-    flash_messages: IncomingFlashMessages,
-) -> Result<HttpResponse, actix_web::Error> {
-    if session.get_user_id().map_err(e500)?.is_none() {
-        return Ok(see_other("/login"));
+    session: tufa_common::repositories_types::tufa_server::session_state::TypedSession,
+    flash_messages: actix_web_flash_messages::IncomingFlashMessages,
+) -> Result<actix_web::HttpResponse, actix_web::Error> {
+    if session.get_user_id().map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?.is_none() {
+        return Ok(tufa_common::repositories_types::tufa_server::utils::status_codes::see_other("/login"));
     };
     let mut msg_html = String::new();
     for m in flash_messages.iter() {
+        use std::fmt::Write;
         writeln!(msg_html, "<p><i>{}</i></p>", m.content()).unwrap();
     }
-    Ok(HttpResponse::Ok()
-        .content_type(ContentType::html())
+    Ok(actix_web::HttpResponse::Ok()
+        .content_type(actix_web::http::header::ContentType::html())
         .body(format!(
             r#"<!DOCTYPE html>
 <html lang="en">
