@@ -7,7 +7,6 @@
 // #![allow(clippy::too_many_arguments)]
 
 pub mod configuration;
-pub mod email_client;
 pub mod entry;
 pub mod global_variables;
 pub mod issue_delivery_worker;

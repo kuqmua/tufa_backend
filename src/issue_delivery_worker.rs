@@ -4,7 +4,7 @@ pub async fn run_worker_until_stopped(configuration: crate::configuration::Setti
     worker_loop(connection_pool, email_client).await
 }
 
-async fn worker_loop(pool: sqlx::PgPool, email_client: crate::email_client::EmailClient) -> Result<(), anyhow::Error> {
+async fn worker_loop(pool: sqlx::PgPool, email_client: tufa_common::repositories_types::tufa_server::email_client::EmailClient) -> Result<(), anyhow::Error> {
     loop {
         match try_execute_task(&pool, &email_client).await {
             Ok(ExecutionOutcome::EmptyQueue) => {
@@ -33,7 +33,7 @@ pub enum ExecutionOutcome {
 )]
 pub async fn try_execute_task(
     pool: &sqlx::PgPool,
-    email_client: &crate::email_client::EmailClient,
+    email_client: &tufa_common::repositories_types::tufa_server::email_client::EmailClient,
 ) -> Result<ExecutionOutcome, anyhow::Error> {
     let task = dequeue_task(pool).await?;
     match task {

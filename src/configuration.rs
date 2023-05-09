@@ -1,5 +1,5 @@
 use tufa_common::repositories_types::tufa_server::domain::SubscriberEmail;
-use crate::email_client::EmailClient;
+use tufa_common::repositories_types::tufa_server::email_client::EmailClient;
 use secrecy::ExposeSecret;
 use secrecy::Secret;
 use serde_aux::field_attributes::deserialize_number_from_string;

@@ -47,7 +47,7 @@ impl actix_web::ResponseError for SubscribeError {
 pub async fn subscribe(
     form: actix_web::web::Form<FormData>,
     pool: actix_web::web::Data<sqlx::PgPool>,
-    email_client: actix_web::web::Data<crate::email_client::EmailClient>,
+    email_client: actix_web::web::Data<tufa_common::repositories_types::tufa_server::email_client::EmailClient>,
     base_url: actix_web::web::Data<crate::startup::ApplicationBaseUrl>,
 ) -> Result<actix_web::HttpResponse, SubscribeError> {
     let new_subscriber = form.0.try_into().map_err(SubscribeError::ValidationError)?;
@@ -108,7 +108,7 @@ fn generate_subscription_token() -> String {
     skip(email_client, new_subscriber, base_url, subscription_token)
 )]
 pub async fn send_confirmation_email(
-    email_client: &crate::email_client::EmailClient,
+    email_client: &tufa_common::repositories_types::tufa_server::email_client::EmailClient,
     new_subscriber: tufa_common::repositories_types::tufa_server::domain::NewSubscriber,
     base_url: &str,
     subscription_token: &str,

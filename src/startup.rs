@@ -1,7 +1,7 @@
 use tufa_common::repositories_types::tufa_server::authentication::reject_anonymous_users;
 use crate::configuration::DatabaseSettings;
 use crate::configuration::Settings;
-use crate::email_client::EmailClient;
+use tufa_common::repositories_types::tufa_server::email_client::EmailClient;
 use crate::routes::admin_dashboard;
 use crate::routes::change_password;
 use crate::routes::change_password_form;
