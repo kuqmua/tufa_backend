@@ -1,35 +1,14 @@
-use crate::domain::NewSubscriber;
-use crate::domain::SubscriberEmail;
-use crate::domain::SubscriberName;
-use crate::email_client::EmailClient;
-use crate::startup::ApplicationBaseUrl;
-use actix_web::http::StatusCode;
-use actix_web::web;
-use actix_web::HttpResponse;
-use actix_web::ResponseError;
-use anyhow::Context;
-use chrono::Utc;
-use rand::distributions::Alphanumeric;
-use rand::thread_rng;
-use rand::Rng;
-use sqlx::PgPool;
-use sqlx::Postgres;
-use sqlx::Transaction;
-use std::convert::TryFrom;
-use std::convert::TryInto;
-use uuid::Uuid;
-
 #[derive(serde::Deserialize)]
 pub struct FormData {
     email: String,
     name: String,
 }
 
-impl TryFrom<FormData> for NewSubscriber {
+impl std::convert::TryFrom<FormData> for tufa_common::repositories_types::tufa_server::domain::NewSubscriber {
     type Error = String;
     fn try_from(value: FormData) -> Result<Self, Self::Error> {
-        let name = SubscriberName::parse(value.name)?;
-        let email = SubscriberEmail::parse(value.email)?;
+        let name = tufa_common::repositories_types::tufa_server::domain::SubscriberName::parse(value.name)?;
+        let email = tufa_common::repositories_types::tufa_server::domain::SubscriberEmail::parse(value.email)?;
         Ok(Self { email, name })
     }
 }
@@ -48,11 +27,11 @@ impl std::fmt::Debug for SubscribeError {
     }
 }
 
-impl ResponseError for SubscribeError {
-    fn status_code(&self) -> StatusCode {
+impl actix_web::ResponseError for SubscribeError {
+    fn status_code(&self) -> actix_web::http::StatusCode {
         match self {
-            SubscribeError::ValidationError(_) => StatusCode::BAD_REQUEST,
-            SubscribeError::UnexpectedError(_) => StatusCode::INTERNAL_SERVER_ERROR,
+            SubscribeError::ValidationError(_) => actix_web::http::StatusCode::BAD_REQUEST,
+            SubscribeError::UnexpectedError(_) => actix_web::http::StatusCode::INTERNAL_SERVER_ERROR,
         }
     }
 }
@@ -66,41 +45,59 @@ impl ResponseError for SubscribeError {
     )
 )]
 pub async fn subscribe(
-    form: web::Form<FormData>,
-    pool: web::Data<PgPool>,
-    email_client: web::Data<EmailClient>,
-    base_url: web::Data<ApplicationBaseUrl>,
-) -> Result<HttpResponse, SubscribeError> {
+    form: actix_web::web::Form<FormData>,
+    pool: actix_web::web::Data<sqlx::PgPool>,
+    email_client: actix_web::web::Data<crate::email_client::EmailClient>,
+    base_url: actix_web::web::Data<crate::startup::ApplicationBaseUrl>,
+) -> Result<actix_web::HttpResponse, SubscribeError> {
     let new_subscriber = form.0.try_into().map_err(SubscribeError::ValidationError)?;
-    let mut transaction = pool
+    let mut transaction = {
+        use anyhow::Context;
+        pool
         .begin()
         .await
-        .context("Failed to acquire a Postgres connection from the pool")?;
-    let subscriber_id = insert_subscriber(&mut transaction, &new_subscriber)
+        .context("Failed to acquire a Postgres connection from the pool")?
+    };
+    let subscriber_id = {
+        use anyhow::Context;
+        insert_subscriber(&mut transaction, &new_subscriber)
         .await
-        .context("Failed to insert new subscriber in the database.")?;
+        .context("Failed to insert new subscriber in the database.")?
+    };
     let subscription_token = generate_subscription_token();
-    store_token(&mut transaction, subscriber_id, &subscription_token)
+    {
+        use anyhow::Context;
+        store_token(&mut transaction, subscriber_id, &subscription_token)
         .await
-        .context("Failed to store the confirmation token for a new subscriber.")?;
-    transaction
+        .context("Failed to store the confirmation token for a new subscriber.")?
+    };
+    {
+        use anyhow::Context;
+        transaction
         .commit()
         .await
-        .context("Failed to commit SQL transaction to store a new subscriber.")?;
-    send_confirmation_email(
-        &email_client,
-        new_subscriber,
-        &base_url.0,
-        &subscription_token,
-    )
-    .await
-    .context("Failed to send a confirmation email.")?;
-    Ok(HttpResponse::Ok().finish())
+        .context("Failed to commit SQL transaction to store a new subscriber.")?
+    };
+    {
+        use anyhow::Context;
+        send_confirmation_email(
+            &email_client,
+            new_subscriber,
+            &base_url.0,
+            &subscription_token,
+        )
+        .await
+        .context("Failed to send a confirmation email.")?
+    };
+    Ok(actix_web::HttpResponse::Ok().finish())
 }
 
 fn generate_subscription_token() -> String {
-    let mut rng = thread_rng();
-    std::iter::repeat_with(|| rng.sample(Alphanumeric))
+    let mut rng = rand::thread_rng();
+    std::iter::repeat_with(|| {
+        use rand::Rng;
+        rng.sample(rand::distributions::Alphanumeric)
+    })
         .map(char::from)
         .take(25)
         .collect()
@@ -111,8 +108,8 @@ fn generate_subscription_token() -> String {
     skip(email_client, new_subscriber, base_url, subscription_token)
 )]
 pub async fn send_confirmation_email(
-    email_client: &EmailClient,
-    new_subscriber: NewSubscriber,
+    email_client: &crate::email_client::EmailClient,
+    new_subscriber: tufa_common::repositories_types::tufa_server::domain::NewSubscriber,
     base_url: &str,
     subscription_token: &str,
 ) -> Result<(), reqwest::Error> {
@@ -138,10 +135,10 @@ pub async fn send_confirmation_email(
     skip(new_subscriber, transaction)
 )]
 pub async fn insert_subscriber(
-    transaction: &mut Transaction<'_, Postgres>,
-    new_subscriber: &NewSubscriber,
-) -> Result<Uuid, sqlx::Error> {
-    let subscriber_id = Uuid::new_v4();
+    transaction: &mut sqlx::Transaction<'_, sqlx::Postgres>,
+    new_subscriber: &tufa_common::repositories_types::tufa_server::domain::NewSubscriber,
+) -> Result<uuid::Uuid, sqlx::Error> {
+    let subscriber_id = uuid::Uuid::new_v4();
     sqlx::query!(
         r#"
     INSERT INTO subscriptions (id, email, name, subscribed_at, status)
@@ -150,7 +147,7 @@ pub async fn insert_subscriber(
         subscriber_id,
         new_subscriber.email.as_ref(),
         new_subscriber.name.as_ref(),
-        Utc::now()
+        chrono::Utc::now()
     )
     .execute(transaction)
     .await?;
@@ -162,8 +159,8 @@ pub async fn insert_subscriber(
     skip(subscription_token, transaction)
 )]
 pub async fn store_token(
-    transaction: &mut Transaction<'_, Postgres>,
-    subscriber_id: Uuid,
+    transaction: &mut sqlx::Transaction<'_, sqlx::Postgres>,
+    subscriber_id: uuid::Uuid,
     subscription_token: &str,
 ) -> Result<(), StoreTokenError> {
     sqlx::query!(

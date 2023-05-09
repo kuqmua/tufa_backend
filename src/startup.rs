@@ -1,4 +1,4 @@
-use crate::authentication::reject_anonymous_users;
+use tufa_common::repositories_types::tufa_server::authentication::reject_anonymous_users;
 use crate::configuration::DatabaseSettings;
 use crate::configuration::Settings;
 use crate::email_client::EmailClient;

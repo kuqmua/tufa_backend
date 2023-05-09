@@ -1,6 +1,4 @@
-use actix_web::HttpResponse;
-
-pub async fn health_check() -> HttpResponse {
+pub async fn health_check() -> actix_web::HttpResponse {
     println!("health_check");
-    HttpResponse::Ok().finish()
+    actix_web::HttpResponse::Ok().finish()
 }

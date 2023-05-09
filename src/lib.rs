@@ -15,7 +15,7 @@ mod preparation;
 mod routes;
 // mod server_wrapper;
 // mod session_state;
-// pub mod startup;
+pub mod startup;
 #[cfg(test)]
 mod tests;
 

@@ -1,15 +1,11 @@
-use actix_web::http::header::ContentType;
-use actix_web::HttpResponse;
-use actix_web_flash_messages::IncomingFlashMessages;
-use std::fmt::Write;
-
-pub async fn login_form(flash_messages: IncomingFlashMessages) -> HttpResponse {
+pub async fn login_form(flash_messages: actix_web_flash_messages::IncomingFlashMessages) -> actix_web::HttpResponse {
     let mut error_html = String::new();
     for m in flash_messages.iter() {
+        use std::fmt::Write;
         writeln!(error_html, "<p><i>{}</i></p>", m.content()).unwrap();
     }
-    HttpResponse::Ok()
-        .content_type(ContentType::html())
+    actix_web::HttpResponse::Ok()
+        .content_type(actix_web::http::header::ContentType::html())
         .body(format!(
             r#"<!DOCTYPE html>
 <html lang="en">
