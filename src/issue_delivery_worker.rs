@@ -1,29 +1,17 @@
-use crate::configuration::Settings;
-use crate::domain::SubscriberEmail;
-use crate::email_client::EmailClient;
-use crate::startup::get_connection_pool;
-use sqlx::PgPool;
-use sqlx::Postgres;
-use sqlx::Transaction;
-use std::time::Duration;
-use tracing::field::display;
-use tracing::Span;
-use uuid::Uuid;
-
-pub async fn run_worker_until_stopped(configuration: Settings) -> Result<(), anyhow::Error> {
-    let connection_pool = get_connection_pool(&configuration.database);
+pub async fn run_worker_until_stopped(configuration: crate::configuration::Settings) -> Result<(), anyhow::Error> {
+    let connection_pool = crate::startup::get_connection_pool(&configuration.database);
     let email_client = configuration.email_client.client();
     worker_loop(connection_pool, email_client).await
 }
 
-async fn worker_loop(pool: PgPool, email_client: EmailClient) -> Result<(), anyhow::Error> {
+async fn worker_loop(pool: sqlx::PgPool, email_client: crate::email_client::EmailClient) -> Result<(), anyhow::Error> {
     loop {
         match try_execute_task(&pool, &email_client).await {
             Ok(ExecutionOutcome::EmptyQueue) => {
-                tokio::time::sleep(Duration::from_secs(10)).await;
+                tokio::time::sleep(std::time::Duration::from_secs(10)).await;
             }
             Err(_) => {
-                tokio::time::sleep(Duration::from_secs(1)).await;
+                tokio::time::sleep(std::time::Duration::from_secs(1)).await;
             }
             Ok(ExecutionOutcome::TaskCompleted) => {}
         }
@@ -44,18 +32,18 @@ pub enum ExecutionOutcome {
     err
 )]
 pub async fn try_execute_task(
-    pool: &PgPool,
-    email_client: &EmailClient,
+    pool: &sqlx::PgPool,
+    email_client: &crate::email_client::EmailClient,
 ) -> Result<ExecutionOutcome, anyhow::Error> {
     let task = dequeue_task(pool).await?;
     match task {
         None => Ok(ExecutionOutcome::EmptyQueue),
         Some(task) => {
             let (transaction, issue_id, email) = task;
-            Span::current()
-                .record("newsletter_issue_id", &display(issue_id))
-                .record("subscriber_email", &display(&email));
-            match SubscriberEmail::parse(email.clone()) {
+            tracing::Span::current()
+                .record("newsletter_issue_id", &tracing::field::display(issue_id))
+                .record("subscriber_email", &tracing::field::display(&email));
+            match tufa_common::repositories_types::tufa_server::domain::SubscriberEmail::parse(email.clone()) {
                 Ok(email) => {
                     let issue = get_issue(pool, issue_id).await?;
                     if let Err(e) = email_client
@@ -90,12 +78,12 @@ pub async fn try_execute_task(
     }
 }
 
-type PgTransaction = Transaction<'static, Postgres>;
+type PgTransaction = sqlx::Transaction<'static, sqlx::Postgres>;
 
 #[tracing::instrument(skip_all)]
 async fn dequeue_task(
-    pool: &PgPool,
-) -> Result<Option<(PgTransaction, Uuid, String)>, anyhow::Error> {
+    pool: &sqlx::PgPool,
+) -> Result<Option<(PgTransaction, uuid::Uuid, String)>, anyhow::Error> {
     let mut transaction = pool.begin().await?;
     let r = sqlx::query!(
         r#"
@@ -122,7 +110,7 @@ async fn dequeue_task(
 #[tracing::instrument(skip_all)]
 async fn delete_task(
     mut transaction: PgTransaction,
-    issue_id: Uuid,
+    issue_id: uuid::Uuid,
     email: &str,
 ) -> Result<(), anyhow::Error> {
     sqlx::query!(
@@ -148,7 +136,7 @@ struct NewsletterIssue {
 }
 
 #[tracing::instrument(skip_all)]
-async fn get_issue(pool: &PgPool, issue_id: Uuid) -> Result<NewsletterIssue, anyhow::Error> {
+async fn get_issue(pool: &sqlx::PgPool, issue_id: uuid::Uuid) -> Result<NewsletterIssue, anyhow::Error> {
     let issue = sqlx::query_as!(
         NewsletterIssue,
         r#"
