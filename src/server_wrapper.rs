@@ -1,30 +1,42 @@
 #[actix_web::main] // or #[tokio::main]
-pub async fn server_wrapper() -> Result<(), Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorEnum>> {
+pub async fn server_wrapper(
+    config: &(
+        impl tufa_common::traits::fields::GetPostgresIp
+        + tufa_common::traits::fields::GetPostgresPort
+        + tufa_common::traits::fields::GetPostgresLogin
+        + tufa_common::traits::fields::GetPostgresPassword
+        + tufa_common::traits::fields::GetPostgresDb
+        + tufa_common::traits::fields::GetRequireSsl
+        + tufa_common::traits::fields::GetServerPort
+        + tufa_common::traits::fields::GetServerIp
+        + tufa_common::traits::fields::GetBaseUrl
+        + tufa_common::traits::fields::GetHmacSecret
+        + tufa_common::traits::fields::GetRedisIp
+        + tufa_common::traits::fields::GetRedisPort
+    )
+) -> Result<(), Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorEnum>> {
     let configuration = tufa_common::repositories_types::tufa_server::configuration::Settings {
         database: tufa_common::repositories_types::tufa_server::configuration::DatabaseSettings {
-            host: crate::global_variables::runtime::config::CONFIG.postgres_ip.clone(),
-            port: crate::global_variables::runtime::config::CONFIG.postgres_port,
-            username: crate::global_variables::runtime::config::CONFIG.postgres_login.clone(),
-            password: secrecy::Secret::new(crate::global_variables::runtime::config::CONFIG.postgres_password.clone()),
-            database_name: crate::global_variables::runtime::config::CONFIG.postgres_db.clone(),
-            require_ssl: crate::global_variables::runtime::config::CONFIG.require_ssl,
+            host: config.get_postgres_ip().clone(),
+            port: *config.get_postgres_port(),
+            username: config.get_postgres_login().clone(),
+            password: secrecy::Secret::new(config.get_postgres_password().clone()),
+            database_name: config.get_postgres_db().clone(),
+            require_ssl: *config.get_require_ssl(),
         },
         application: tufa_common::repositories_types::tufa_server::configuration::ApplicationSettings {
-            port: crate::global_variables::runtime::config::CONFIG.server_port,
-            host: crate::global_variables::runtime::config::CONFIG.server_ip.clone(),
-            base_url: crate::global_variables::runtime::config::CONFIG.base_url.clone(),
-            hmac_secret: secrecy::Secret::new(crate::global_variables::runtime::config::CONFIG.hmac_secret.clone()),
+            port: *config.get_server_port(),
+            host: config.get_server_ip().clone(),
+            base_url: config.get_base_url().clone(),
+            hmac_secret: secrecy::Secret::new(config.get_hmac_secret().clone()),
         },
         email_client: tufa_common::repositories_types::tufa_server::configuration::EmailClientSettings {
-            base_url: crate::global_variables::runtime::config::CONFIG.base_url.clone(),
+            base_url: config.get_base_url().clone(),
             sender_email: "test@gmail.com".to_string(),
             authorization_token: secrecy::Secret::new("my-secret-token".to_string()),
             timeout_milliseconds: 10000,
         },
-        redis_uri: secrecy::Secret::new(tufa_common::server::redis::get_redis_url::get_redis_url(&{
-            use std::ops::Deref;
-            crate::global_variables::runtime::config::CONFIG.deref()
-        })),
+        redis_uri: secrecy::Secret::new(tufa_common::server::redis::get_redis_url::get_redis_url(config)),
     };
     let application = match tufa_common::repositories_types::tufa_server::startup::Application::build(configuration.clone()).await {
         Ok(app) => app,
