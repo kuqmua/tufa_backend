@@ -21,7 +21,10 @@ pub async fn server_wrapper() -> Result<(), Box<tufa_common::repositories_types:
             authorization_token: secrecy::Secret::new("my-secret-token".to_string()),
             timeout_milliseconds: 10000,
         },
-        redis_uri: secrecy::Secret::new(tufa_common::server::redis::get_redis_url::get_redis_url(&crate::global_variables::runtime::config::CONFIG.redis_ip, crate::global_variables::runtime::config::CONFIG.redis_port)),
+        redis_uri: secrecy::Secret::new(tufa_common::server::redis::get_redis_url::get_redis_url(&{
+            use std::ops::Deref;
+            crate::global_variables::runtime::config::CONFIG.deref()
+        })),
     };
     let application = match tufa_common::repositories_types::tufa_server::startup::Application::build(configuration.clone()).await {
         Ok(app) => app,
