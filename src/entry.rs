@@ -16,7 +16,6 @@ pub fn entry<SelfGeneric>(
         + tufa_common::traits::fields::GetRedisIp
         + tufa_common::traits::fields::GetRedisPort
 
-        + tufa_common::traits::get_color::ErrorColorBold
         + tufa_common::traits::fields::GetServerPort
         + tufa_common::traits::fields::GetSourcePlaceType
         + tufa_common::traits::fields::GetTimezone
