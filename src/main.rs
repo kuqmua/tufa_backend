@@ -20,4 +20,5 @@ fn main() {
         &crate::global_variables::runtime::config::CONFIG,
     ));
     tufa_common::dev::dev();
+    crate::dev::dev();
 }

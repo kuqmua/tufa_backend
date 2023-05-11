@@ -48,7 +48,7 @@ pub fn entry<SelfGeneric>(
                 config.get_log_type(),
                 tufa_common::repositories_types::tufa_server::telemetry::init_subscriber::init_subscriber(
                     tufa_common::repositories_types::tufa_server::telemetry::get_subscriber::get_subscriber(
-                    crate::global_variables::hardcode::PROJECT_NAME.into(),
+                    env!("CARGO_PKG_VERSION"),
                     config.get_tracing_type().to_lower_snake_case(),
                     std::io::stdout,
                 ))
