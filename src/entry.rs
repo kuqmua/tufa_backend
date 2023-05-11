@@ -1,9 +1,3 @@
-pub fn entry_config_handle() {
-    entry(&once_cell::sync::Lazy::force(
-        &crate::global_variables::runtime::config::CONFIG,
-    ));
-}
-
 pub fn entry<SelfGeneric>(
     config: &(
         impl tufa_common::traits::fields::GetLogType
@@ -78,7 +72,7 @@ pub fn entry<SelfGeneric>(
                     // let e_deserialized: tufa_common::repositories_types::tufa_server::preparation::prepare_server::PrepareServerErrorNamedWithSerializeDeserialize = serde_json::from_str(&e_json).unwrap();
                     // println!("{e_deserialized}");
                 }
-                // if let Err(e) = crate::server_wrapper::server_wrapper(&crate::global_variables::runtime::config::CONFIG) {
+                // if let Err(e) = crate::server_wrapper::server_wrapper(config) {
                 // }
             }
         }
