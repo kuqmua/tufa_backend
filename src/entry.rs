@@ -1,7 +1,6 @@
 pub fn entry<SelfGeneric>(
     config: &(
-        impl tufa_common::traits::fields::GetLogType
-        + tufa_common::traits::fields::GetTracingType
+        impl tufa_common::traits::fields::GetTracingType
         + tufa_common::traits::fields::GetIsPreparationEnabled
 
         + tufa_common::traits::fields::GetPostgresIp
@@ -41,18 +40,13 @@ pub fn entry<SelfGeneric>(
             panic!("tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build() failed, error: {e:#?}")
         }
         Ok(runtime) => {
-            if let (
-                tufa_common::config_mods::log_type::LogType::Tracing, 
-                Err(e)
-            ) = (
-                config.get_log_type(),
-                tufa_common::repositories_types::tufa_server::telemetry::init_subscriber::init_subscriber(
-                    tufa_common::repositories_types::tufa_server::telemetry::get_subscriber::get_subscriber(
-                    env!("CARGO_PKG_VERSION"),
-                    config.get_tracing_type().to_lower_snake_case(),
-                    std::io::stdout,
-                ))
-            ) {
+            if let Err(e) = tufa_common::repositories_types::tufa_server::telemetry::init_subscriber::init_subscriber(
+                tufa_common::repositories_types::tufa_server::telemetry::get_subscriber::get_subscriber(
+                env!("CARGO_PKG_VERSION"),
+                config.get_tracing_type().to_lower_snake_case(),
+                std::io::stdout,
+            ))
+            {
                 panic!("tufa_common::repositories_types::tufa_server::telemetry::init_subscriber::init_subscriber failed, error: {e:#?}")
             }
             else {
