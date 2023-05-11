@@ -107,19 +107,6 @@ github parsing
 
 * add provider_kind into inner related to providers functions as input parameter
 
-* pub enum PrintType {
-    Error,
-    WarningHigh,
-    WarningLow,
-    Success,
-    PartialSuccess,
-    TimeMeasurement,
-    CleaningWarningLogsDirectory,
-}
-add Info
-add ThreadError
-and other specific errors
-
 * twitter fetch Syntax: 2:97 Element atom:link prefix is unbound
 
 * ProviderKind::Medrxiv => {
