@@ -1,13 +1,13 @@
 pub async fn prepare_server<'a, SelfGeneric>(
     config: &'a (
-        impl tufa_common::traits::fields::GetStartingCheckLink
+        impl tufa_common::traits::config_fields::GetStartingCheckLink
         + tufa_common::traits::get_postgres_url::GetPostgresUrl<SelfGeneric>
-        + tufa_common::traits::fields::GetPostgresConnectionTimeout
-        + tufa_common::traits::fields::GetMongoProvidersLogsDbName
+        + tufa_common::traits::config_fields::GetPostgresConnectionTimeout
+        + tufa_common::traits::config_fields::GetMongoProvidersLogsDbName
 
-        + tufa_common::traits::fields::GetIsDbsInitializationEnabled
-        + tufa_common::traits::fields::GetIsMongoInitializationEnabled
-        + tufa_common::traits::fields::GetIsPostgresInitializationEnabled
+        + tufa_common::traits::config_fields::GetIsDbsInitializationEnabled
+        + tufa_common::traits::config_fields::GetIsMongoInitializationEnabled
+        + tufa_common::traits::config_fields::GetIsPostgresInitializationEnabled
     )
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::preparation::prepare_server::PrepareServerErrorNamed<'a>>> {
     if let Err(e) = tufa_common::repositories_types::tufa_server::preparation::check_availability::check_availability(

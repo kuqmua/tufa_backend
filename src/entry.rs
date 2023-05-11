@@ -1,33 +1,33 @@
 pub fn entry<SelfGeneric>(
     config: &(
-        impl tufa_common::traits::fields::GetTracingType
-        + tufa_common::traits::fields::GetIsPreparationEnabled
+        impl tufa_common::traits::config_fields::GetTracingType
+        + tufa_common::traits::config_fields::GetIsPreparationEnabled
 
-        + tufa_common::traits::fields::GetPostgresIp
-        + tufa_common::traits::fields::GetPostgresPort
-        + tufa_common::traits::fields::GetPostgresLogin
-        + tufa_common::traits::fields::GetPostgresPassword
-        + tufa_common::traits::fields::GetPostgresDb
-        + tufa_common::traits::fields::GetRequireSsl
-        + tufa_common::traits::fields::GetServerPort
-        + tufa_common::traits::fields::GetServerIp
-        + tufa_common::traits::fields::GetBaseUrl
-        + tufa_common::traits::fields::GetHmacSecret
-        + tufa_common::traits::fields::GetRedisIp
-        + tufa_common::traits::fields::GetRedisPort
+        + tufa_common::traits::config_fields::GetPostgresIp
+        + tufa_common::traits::config_fields::GetPostgresPort
+        + tufa_common::traits::config_fields::GetPostgresLogin
+        + tufa_common::traits::config_fields::GetPostgresPassword
+        + tufa_common::traits::config_fields::GetPostgresDb
+        + tufa_common::traits::config_fields::GetRequireSsl
+        + tufa_common::traits::config_fields::GetServerPort
+        + tufa_common::traits::config_fields::GetServerIp
+        + tufa_common::traits::config_fields::GetBaseUrl
+        + tufa_common::traits::config_fields::GetHmacSecret
+        + tufa_common::traits::config_fields::GetRedisIp
+        + tufa_common::traits::config_fields::GetRedisPort
 
-        + tufa_common::traits::fields::GetServerPort
-        + tufa_common::traits::fields::GetSourcePlaceType
-        + tufa_common::traits::fields::GetTimezone
+        + tufa_common::traits::config_fields::GetServerPort
+        + tufa_common::traits::config_fields::GetSourcePlaceType
+        + tufa_common::traits::config_fields::GetTimezone
 
-        + tufa_common::traits::fields::GetStartingCheckLink
+        + tufa_common::traits::config_fields::GetStartingCheckLink
         + tufa_common::traits::get_postgres_url::GetPostgresUrl<SelfGeneric>
-        + tufa_common::traits::fields::GetPostgresConnectionTimeout
-        + tufa_common::traits::fields::GetMongoProvidersLogsDbName
+        + tufa_common::traits::config_fields::GetPostgresConnectionTimeout
+        + tufa_common::traits::config_fields::GetMongoProvidersLogsDbName
 
-        + tufa_common::traits::fields::GetIsDbsInitializationEnabled
-        + tufa_common::traits::fields::GetIsMongoInitializationEnabled
-        + tufa_common::traits::fields::GetIsPostgresInitializationEnabled
+        + tufa_common::traits::config_fields::GetIsDbsInitializationEnabled
+        + tufa_common::traits::config_fields::GetIsMongoInitializationEnabled
+        + tufa_common::traits::config_fields::GetIsPostgresInitializationEnabled
     )
 ) {
     match tokio::runtime::Builder::new_multi_thread()

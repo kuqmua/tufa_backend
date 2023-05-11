@@ -1,18 +1,18 @@
 #[actix_web::main] // or #[tokio::main]
 pub async fn server_wrapper(
     config: &(
-        impl tufa_common::traits::fields::GetPostgresIp
-        + tufa_common::traits::fields::GetPostgresPort
-        + tufa_common::traits::fields::GetPostgresLogin
-        + tufa_common::traits::fields::GetPostgresPassword
-        + tufa_common::traits::fields::GetPostgresDb
-        + tufa_common::traits::fields::GetRequireSsl
-        + tufa_common::traits::fields::GetServerPort
-        + tufa_common::traits::fields::GetServerIp
-        + tufa_common::traits::fields::GetBaseUrl
-        + tufa_common::traits::fields::GetHmacSecret
-        + tufa_common::traits::fields::GetRedisIp
-        + tufa_common::traits::fields::GetRedisPort
+        impl tufa_common::traits::config_fields::GetPostgresIp
+        + tufa_common::traits::config_fields::GetPostgresPort
+        + tufa_common::traits::config_fields::GetPostgresLogin
+        + tufa_common::traits::config_fields::GetPostgresPassword
+        + tufa_common::traits::config_fields::GetPostgresDb
+        + tufa_common::traits::config_fields::GetRequireSsl
+        + tufa_common::traits::config_fields::GetServerPort
+        + tufa_common::traits::config_fields::GetServerIp
+        + tufa_common::traits::config_fields::GetBaseUrl
+        + tufa_common::traits::config_fields::GetHmacSecret
+        + tufa_common::traits::config_fields::GetRedisIp
+        + tufa_common::traits::config_fields::GetRedisPort
     )
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorEnum>> {
     let configuration = tufa_common::repositories_types::tufa_server::configuration::Settings {
