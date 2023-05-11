@@ -4,7 +4,7 @@ pub static MONGO_CLIENT_OPTIONS: once_cell::sync::Lazy<mongodb::options::ClientO
         futures::executor::block_on(
             mongodb::options::ClientOptions::parse(
                 {
-                    use tufa_common::traits::get_mongo_url::GetMongoUrl;
+                    use tufa_common::traits::config_fields::GetMongoUrl;
                     crate::global_variables::runtime::config::CONFIG.get_mongo_url()
                 }
             )
