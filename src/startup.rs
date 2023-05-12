@@ -138,7 +138,7 @@ async fn run(
                     .route("/json_example_post", actix_web::web::post().to(tufa_common::repositories_types::tufa_server::routes::json_example_post::json_example_post))
                 )
             )
-            .route("/subscriptions", actix_web::web::post().to(tufa_common::repositories_types::tufa_server::routes::subscribe))
+            .route("/subscriptions", actix_web::web::post().to(crate::routes::subscribe))
             .route("/subscriptions/confirm", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::confirm))
             .route("/newsletters", actix_web::web::post().to(crate::routes::publish_newsletter))
             .route(
