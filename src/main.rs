@@ -13,7 +13,10 @@ mod server_wrapper;
 #[cfg(test)]
 mod tests;
 
+//query! containing mods
 pub mod issue_delivery_worker;
+pub mod routes;
+pub mod startup;
 
 pub mod dev;
 

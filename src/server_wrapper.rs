@@ -14,7 +14,7 @@ pub async fn server_wrapper(
         + tufa_common::traits::config_fields::GetRedisIp
         + tufa_common::traits::config_fields::GetRedisPort
     )
-) -> Result<(), Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorEnum>> {
+) -> Result<(), Box<crate::startup::ApplicationBuildErrorEnum>> {
     let configuration = tufa_common::repositories_types::tufa_server::configuration::Settings {
         database: tufa_common::repositories_types::tufa_server::configuration::DatabaseSettings {
             host: config.get_postgres_ip().clone(),
@@ -38,7 +38,7 @@ pub async fn server_wrapper(
         },
         redis_uri: secrecy::Secret::new(tufa_common::server::redis::get_redis_url::get_redis_url(config)),
     };
-    let application = match tufa_common::repositories_types::tufa_server::startup::Application::build(configuration.clone()).await {
+    let application = match crate::startup::Application::build(configuration.clone()).await {
         Ok(app) => app,
         Err(e) => return Err(e),
     };
