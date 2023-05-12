@@ -76,7 +76,7 @@ async fn run<'a>(
 ) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationRunErrorNamed<'a>>> {
     let db_pool = actix_web::web::Data::new(db_pool);
     let email_client = actix_web::web::Data::new(email_client);
-    let base_url = actix_web::web::Data::new(tufa_common::repositories_types::tufa_server::startup::ApplicationBaseUrl(base_url));
+    let base_url = actix_web::web::Data::new(base_url);
     let secret_key = actix_web::cookie::Key::from({
         use secrecy::ExposeSecret;
         hmac_secret.expose_secret()

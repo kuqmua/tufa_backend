@@ -2,7 +2,7 @@ pub async fn subscribe<'a>(
     form: actix_web::web::Form<tufa_common::repositories_types::tufa_server::routes::FormData>,
     pool: actix_web::web::Data<sqlx::PgPool>,
     email_client: actix_web::web::Data<tufa_common::repositories_types::tufa_server::email_client::EmailClient>,
-    base_url: actix_web::web::Data<tufa_common::repositories_types::tufa_server::startup::ApplicationBaseUrl>,
+    base_url: actix_web::web::Data<std::string::String>,
 ) -> Result<actix_web::HttpResponse, tufa_common::repositories_types::tufa_server::routes::SubscribeErrorNamed<'a>> {
     let new_subscriber: tufa_common::repositories_types::tufa_server::domain::NewSubscriber = match form.0.try_into() {
         Err(e) => {
@@ -53,7 +53,7 @@ pub async fn subscribe<'a>(
     if let Err(e) = tufa_common::repositories_types::tufa_server::routes::send_confirmation_email(
         &email_client,
         new_subscriber,
-        &base_url.0,
+        &base_url,
         &subscription_token,
     ).await {
         return Err(tufa_common::repositories_types::tufa_server::routes::subscriptions::SubscribeErrorNamed::SendConfirmationEmail {
