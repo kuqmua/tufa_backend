@@ -4,7 +4,7 @@ pub struct Application {
 }
 
 #[derive(Debug)]
-pub enum ApplicationBuildErrorEnum {
+pub enum ApplicationBuildErrorEnum<'a> {
     TcpListenerBind {
         source: std::io::Error,
     },
@@ -12,7 +12,7 @@ pub enum ApplicationBuildErrorEnum {
         source: std::io::Error,
     },
     ApplicationRun {
-        source: Box<tufa_common::repositories_types::tufa_server::startup::ApplicationRunErrorEnum>,
+        source: tufa_common::repositories_types::tufa_server::startup::ApplicationRunErrorNamed<'a>,
     },
 }
 
@@ -52,7 +52,7 @@ impl Application {
             Ok(server) => server,
             Err(e) => {
                 return Err(Box::new(ApplicationBuildErrorEnum::ApplicationRun {
-                    source: e,
+                    source: *e,
                 }))
             }
         };
@@ -66,14 +66,14 @@ impl Application {
     }
 }
 
-async fn run(
+async fn run<'a>(
     listener: std::net::TcpListener,
     db_pool: sqlx::PgPool,
     email_client: tufa_common::repositories_types::tufa_server::email_client::EmailClient,
     base_url: String,
     hmac_secret: secrecy::Secret<String>,
     redis_uri: secrecy::Secret<String>,
-) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationRunErrorEnum>> {
+) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationRunErrorNamed<'a>>> {
     let db_pool = actix_web::web::Data::new(db_pool);
     let email_client = actix_web::web::Data::new(email_client);
     let base_url = actix_web::web::Data::new(tufa_common::repositories_types::tufa_server::startup::ApplicationBaseUrl(base_url));
@@ -89,8 +89,9 @@ async fn run(
     }).await {
         Ok(redis_session_store) => redis_session_store,
         Err(e) => {
-            return Err(Box::new(tufa_common::repositories_types::tufa_server::startup::ApplicationRunErrorEnum::NewRedisSessionStore {
-                source: e.to_string(),
+            return Err(Box::new(tufa_common::repositories_types::tufa_server::startup::ApplicationRunErrorNamed::NewRedisSessionStore {
+                new_redis_session_store: e.to_string(),
+                code_occurence: tufa_common::code_occurence!(),
             }))
         }
     };
@@ -154,8 +155,9 @@ async fn run(
     {
         Ok(server) => server,
         Err(e) => {
-            return Err(Box::new(tufa_common::repositories_types::tufa_server::startup::ApplicationRunErrorEnum::HttpServerListen {
-                source: e,
+            return Err(Box::new(tufa_common::repositories_types::tufa_server::startup::ApplicationRunErrorNamed::HttpServerListen {
+                http_server_listen: e,
+                code_occurence: tufa_common::code_occurence!(),
             }))
         }
     }

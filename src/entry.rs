@@ -65,8 +65,11 @@ pub fn entry<SelfGeneric>(
                     // let e_deserialized: tufa_common::repositories_types::tufa_server::preparation::prepare_server::PrepareServerErrorNamedWithSerializeDeserialize = serde_json::from_str(&e_json).unwrap();
                     // println!("{e_deserialized}");
                 }
-                // if let Err(e) = crate::server_wrapper::server_wrapper(config) {
-                // }
+                if let Err(e) = crate::server_wrapper::server_wrapper(config) {
+                    eprintln!("server stopped");
+                    // use tufa_common::traits::error_logs_logic::error_log::ErrorLog;
+                    // e.error_log(config);
+                }
             }
         }
     }
