@@ -17,6 +17,7 @@ mod tests;
 pub mod issue_delivery_worker;
 pub mod routes;
 pub mod startup;
+pub mod idempotency;
 
 pub mod dev;
 
