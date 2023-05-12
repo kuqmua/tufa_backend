@@ -13,6 +13,8 @@ mod server_wrapper;
 #[cfg(test)]
 mod tests;
 
+pub mod issue_delivery_worker;
+
 pub mod dev;
 
 fn main() {
