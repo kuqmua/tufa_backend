@@ -123,7 +123,7 @@ async fn run(
                     .route("/logout", actix_web::web::post().to(tufa_common::repositories_types::tufa_server::routes::log_out)),
             )
             .route("/login", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::login::login_form))
-            .route("/login", actix_web::web::post().to(tufa_common::repositories_types::tufa_server::routes::login::login))
+            .route("/login", actix_web::web::post().to(crate::routes::login::login))
             .route("/health_check", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::health_check))
             .service(
                 actix_web::web::scope("/api")

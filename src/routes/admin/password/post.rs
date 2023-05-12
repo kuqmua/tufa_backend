@@ -25,7 +25,7 @@ pub async fn change_password(
         username,
         password: form.0.current_password,
     };
-    if let Err(e) = tufa_common::repositories_types::tufa_server::authentication::password::validate_credentials(credentials, &pool).await {
+    if let Err(e) = crate::authentication::validate_credentials(credentials, &pool).await {
         //todo - add to body deserialized version?
         return match &e {
             tufa_common::repositories_types::tufa_server::authentication::password::ValidateCredentialsErrorNamed::GetStoredCredentials { 
@@ -66,7 +66,7 @@ pub async fn change_password(
             }
         };
     }
-    tufa_common::repositories_types::tufa_server::authentication::change_password(*user_id, form.0.new_password, &pool)
+    crate::authentication::change_password(*user_id, form.0.new_password, &pool)
         .await
         .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?;
     actix_web_flash_messages::FlashMessage::error("Your password has been changed.").send();

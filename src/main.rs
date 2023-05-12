@@ -14,6 +14,7 @@ mod server_wrapper;
 mod tests;
 
 //query! containing mods
+pub mod authentication;
 pub mod issue_delivery_worker;
 pub mod routes;
 pub mod startup;
