@@ -149,7 +149,7 @@ async fn run<'a>(
             .app_data(db_pool.clone())
             .app_data(email_client.clone())
             .app_data(base_url.clone())
-            .app_data(actix_web::web::Data::new(HmacSecret(hmac_secret.clone())))
+            .app_data(actix_web::web::Data::new((hmac_secret.clone())))
     })
     .listen(listener)
     {
@@ -164,6 +164,3 @@ async fn run<'a>(
     .run();
     Ok(server)
 }
-
-#[derive(Clone)]
-pub struct HmacSecret(pub secrecy::Secret<String>);
