@@ -139,7 +139,7 @@ async fn run(
                 )
             )
             .route("/subscriptions", actix_web::web::post().to(crate::routes::subscribe))
-            .route("/subscriptions/confirm", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::confirm))
+            .route("/subscriptions/confirm", actix_web::web::get().to(crate::routes::confirm))
             .route("/newsletters", actix_web::web::post().to(crate::routes::publish_newsletter))
             .route(
                 "/get_providers_posts",
