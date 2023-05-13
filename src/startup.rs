@@ -53,8 +53,14 @@ impl Application {
     pub fn port(&self) -> u16 {
         self.port
     }
-    pub async fn run_until_stopped(self) -> Result<(), std::io::Error> {
-        self.server.await
+    pub async fn run_until_stopped<'a>(self) -> Result<(), tufa_common::repositories_types::tufa_server::startup::RunUntilStoppedErrorNamed<'a>> {
+        match self.server.await {
+            Err(e) => Err(tufa_common::repositories_types::tufa_server::startup::RunUntilStoppedErrorNamed::RunUntilStopped {
+                run_until_stopped: e,
+                code_occurence: tufa_common::code_occurence!(),
+            }),
+            Ok(_) => Ok(()),
+        }
     }
 }
 
