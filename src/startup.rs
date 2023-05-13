@@ -4,11 +4,11 @@ pub struct Application {
 }
 
 impl Application {
-    pub async fn build<'a>(configuration: tufa_common::repositories_types::tufa_server::configuration::Settings<'a>) -> Result<Self, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed>> {
+    pub async fn build<'a>(configuration: tufa_common::repositories_types::tufa_server::configuration::Settings) -> Result<Self, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed<'a>>> {
         let connection_pool = tufa_common::repositories_types::tufa_server::startup::get_connection_pool(&configuration.database);
         let listener = match std::net::TcpListener::bind(&format!(
-            "{}:{}",
-            configuration.application.host, configuration.application.port
+            "localhost:{}",
+            configuration.application.port
         )) {
             Ok(listener) => listener,
             Err(e) => {

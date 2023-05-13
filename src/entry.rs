@@ -10,7 +10,6 @@ pub fn entry<SelfGeneric>(
         + tufa_common::traits::config_fields::GetPostgresDb
         + tufa_common::traits::config_fields::GetRequireSsl
         + tufa_common::traits::config_fields::GetServerPort
-        + tufa_common::traits::config_fields::GetServerIp
         + tufa_common::traits::config_fields::GetBaseUrl
         + tufa_common::traits::config_fields::GetHmacSecret
         + tufa_common::traits::config_fields::GetRedisIp

@@ -7,7 +7,6 @@ pub async fn server_wrapper<'a>(
         + tufa_common::traits::config_fields::GetPostgresDb
         + tufa_common::traits::config_fields::GetRequireSsl
         + tufa_common::traits::config_fields::GetServerPort
-        + tufa_common::traits::config_fields::GetServerIp
         + tufa_common::traits::config_fields::GetBaseUrl
         + tufa_common::traits::config_fields::GetHmacSecret
         + tufa_common::traits::config_fields::GetRedisIp
@@ -25,7 +24,6 @@ pub async fn server_wrapper<'a>(
         },
         application: tufa_common::repositories_types::tufa_server::configuration::ApplicationSettings {
             port: *config.get_server_port(),
-            host: config.get_server_ip(),
             base_url: config.get_base_url().clone(),
             hmac_secret: secrecy::Secret::new(config.get_hmac_secret().clone()),
         },
