@@ -34,7 +34,6 @@ impl Application {
             listener,
             connection_pool,
             configuration.email_client.client(),
-            configuration.application.base_url,
             configuration.application.hmac_secret,
             configuration.redis_uri,
         )
@@ -68,13 +67,11 @@ async fn run<'a>(
     listener: std::net::TcpListener,
     db_pool: sqlx::PgPool,
     email_client: tufa_common::repositories_types::tufa_server::email_client::EmailClient,
-    base_url: String,
     hmac_secret: secrecy::Secret<String>,
     redis_uri: secrecy::Secret<String>,
 ) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationRunErrorNamed<'a>>> {
     let data_db_pool = actix_web::web::Data::new(db_pool);
     let email_client = actix_web::web::Data::new(email_client);
-    let base_url = actix_web::web::Data::new(base_url);
     let secret_key = actix_web::cookie::Key::from({
         use secrecy::ExposeSecret;
         hmac_secret.expose_secret()
@@ -146,7 +143,7 @@ async fn run<'a>(
             )
             .app_data(data_db_pool.clone())
             .app_data(email_client.clone())
-            .app_data(base_url.clone())
+            .app_data( actix_web::web::Data::new("localhost"))
             .app_data(actix_web::web::Data::new(hmac_secret.clone()))
     })
     .listen(listener)
