@@ -72,7 +72,7 @@ async fn run<'a>(
     hmac_secret: secrecy::Secret<String>,
     redis_uri: secrecy::Secret<String>,
 ) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationRunErrorNamed<'a>>> {
-    let db_pool = actix_web::web::Data::new(db_pool);
+    let data_db_pool = actix_web::web::Data::new(db_pool);
     let email_client = actix_web::web::Data::new(email_client);
     let base_url = actix_web::web::Data::new(base_url);
     let secret_key = actix_web::cookie::Key::from({
@@ -144,7 +144,7 @@ async fn run<'a>(
                 "/get_providers_posts",
                 actix_web::web::post().to(tufa_common::repositories_types::tufa_server::routes::get_providers_posts_route::get_providers_posts_route),
             )
-            .app_data(db_pool.clone())
+            .app_data(data_db_pool.clone())
             .app_data(email_client.clone())
             .app_data(base_url.clone())
             .app_data(actix_web::web::Data::new(hmac_secret.clone()))

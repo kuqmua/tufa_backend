@@ -1,4 +1,4 @@
-#[actix_web::main] // or #[tokio::main]
+// or #[tokio::main]
 pub async fn server_wrapper<'a>(
     config: &'a (
         impl tufa_common::traits::config_fields::GetPostgresIp
@@ -39,18 +39,33 @@ pub async fn server_wrapper<'a>(
         redis_uri: secrecy::Secret::new(tufa_common::server::redis::get_redis_url::get_redis_url(config)),
     };
     let application = match crate::startup::Application::build(configuration.clone()).await {
-        Ok(app) => app,
         Err(e) => return Err(Box::new(tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::ApplicationBuild {
             application_build: *e,
             code_occurence: tufa_common::code_occurence!(),
         })),
+        Ok(app) => app,
     };
     let application_task = tokio::spawn(application.run_until_stopped()).await;
     //remove this coz too much spam
-    // match application_task {
-    //     Ok(_) => println!("ok"),
-    //     Err(_) => println!("err"),
-    // }
+    match application_task {
+        Err(e) => {
+            return Err(Box::new(
+                tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::TokioSpawn {
+                    tokio_spawn: e,
+                    code_occurence: tufa_common::code_occurence!(),
+                },
+            ));
+        },
+        Ok(result) => match result {
+            Err(e) => {
+                return Err(Box::new(tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::RunUntilStopped {
+                    run_until_stopped: e,
+                    code_occurence: tufa_common::code_occurence!(),
+                }));
+            },
+            Ok(_) => (),
+        },
+    }
     // let worker_task = tokio::spawn(crate::issue_delivery_worker::run_worker_until_stopped(configuration));
     // tokio::select! {
     //     o = application_task => report_exit("API", o),
