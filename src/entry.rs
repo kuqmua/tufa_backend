@@ -23,10 +23,6 @@ pub fn entry<SelfGeneric>(
         + tufa_common::traits::get_postgres_url::GetPostgresUrl<SelfGeneric>
         + tufa_common::traits::config_fields::GetPostgresConnectionTimeout
         + tufa_common::traits::config_fields::GetMongoProvidersLogsDbName
-
-        + tufa_common::traits::config_fields::GetIsDbsInitializationEnabled
-        + tufa_common::traits::config_fields::GetIsMongoInitializationEnabled
-        + tufa_common::traits::config_fields::GetIsPostgresInitializationEnabled
     )
 ) {
     match tokio::runtime::Builder::new_multi_thread()
