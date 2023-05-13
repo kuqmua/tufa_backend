@@ -3,21 +3,8 @@ pub struct Application {
     server: actix_web::dev::Server,
 }
 
-#[derive(Debug)]
-pub enum ApplicationBuildErrorEnum<'a> {
-    TcpListenerBind {
-        source: std::io::Error,
-    },
-    TcpListenerLocalAddress {
-        source: std::io::Error,
-    },
-    ApplicationRun {
-        source: tufa_common::repositories_types::tufa_server::startup::ApplicationRunErrorNamed<'a>,
-    },
-}
-
 impl Application {
-    pub async fn build<'a>(configuration: tufa_common::repositories_types::tufa_server::configuration::Settings<'a>) -> Result<Self, Box<ApplicationBuildErrorEnum>> {
+    pub async fn build<'a>(configuration: tufa_common::repositories_types::tufa_server::configuration::Settings<'a>) -> Result<Self, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed>> {
         let connection_pool = tufa_common::repositories_types::tufa_server::startup::get_connection_pool(&configuration.database);
         let listener = match std::net::TcpListener::bind(&format!(
             "{}:{}",
@@ -25,8 +12,9 @@ impl Application {
         )) {
             Ok(listener) => listener,
             Err(e) => {
-                return Err(Box::new(ApplicationBuildErrorEnum::TcpListenerBind {
-                    source: e,
+                return Err(Box::new(tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed::TcpListenerBind {
+                    tcp_listener_bind: e,
+                    code_occurence: tufa_common::code_occurence!(),
                 }))
             }
         };
@@ -34,7 +22,10 @@ impl Application {
             Ok(address) => address,
             Err(e) => {
                 return Err(Box::new(
-                    ApplicationBuildErrorEnum::TcpListenerLocalAddress { source: e },
+                    tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed::TcpListenerLocalAddress { 
+                        tcp_listener_local_address: e,
+                        code_occurence: tufa_common::code_occurence!(),
+                    },
                 ))
             }
         }
@@ -51,8 +42,9 @@ impl Application {
         {
             Ok(server) => server,
             Err(e) => {
-                return Err(Box::new(ApplicationBuildErrorEnum::ApplicationRun {
-                    source: *e,
+                return Err(Box::new(tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed::ApplicationRun {
+                    application_run: *e,
+                    code_occurence: tufa_common::code_occurence!(),
                 }))
             }
         };
@@ -149,7 +141,7 @@ async fn run<'a>(
             .app_data(db_pool.clone())
             .app_data(email_client.clone())
             .app_data(base_url.clone())
-            .app_data(actix_web::web::Data::new((hmac_secret.clone())))
+            .app_data(actix_web::web::Data::new(hmac_secret.clone()))
     })
     .listen(listener)
     {
