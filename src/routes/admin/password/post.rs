@@ -30,36 +30,36 @@ pub async fn change_password(
         return match &e {
             tufa_common::repositories_types::tufa_server::authentication::password::ValidateCredentialsErrorNamed::GetStoredCredentials { 
                 get_stored_credentials, 
-                code_occurence 
+                code_occurence: _code_occurence 
             } => match get_stored_credentials {
                 tufa_common::repositories_types::tufa_server::authentication::password::GetStoredCredentialsErrorNamed::FetchOptional { 
-                    fetch_optional, 
-                    code_occurence 
+                    fetch_optional: _fetch_optional, 
+                    code_occurence: _code_occurence 
                 } => Err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500(e)),
             },
             tufa_common::repositories_types::tufa_server::authentication::password::ValidateCredentialsErrorNamed::SpawnBlockingWithTracing { 
-                spawn_blocking_with_tracing, 
-                code_occurence 
+                spawn_blocking_with_tracing: _spawn_blocking_with_tracing, 
+                code_occurence: _code_occurence 
             } => Err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500(e)),
             tufa_common::repositories_types::tufa_server::authentication::password::ValidateCredentialsErrorNamed::VerifyPasswordHash { 
                 spawn_blocking_with_tracing, 
-                code_occurence 
+                code_occurence: _code_occurence 
             } => match spawn_blocking_with_tracing {
                 tufa_common::repositories_types::tufa_server::authentication::password::VerifyPasswordHashErrorNamed::ExposeSecret { 
-                    expose_secret, 
-                    code_occurence 
+                    expose_secret: _expose_secret, 
+                    code_occurence: _code_occurence 
                 } => Err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500(e)),
                 tufa_common::repositories_types::tufa_server::authentication::password::VerifyPasswordHashErrorNamed::InvalidPassword { 
-                    invalid_password, 
-                    code_occurence 
+                    invalid_password: _invalid_password, 
+                    code_occurence: _code_occurence 
                 } => {
                     actix_web_flash_messages::FlashMessage::error("The current password is incorrect.").send();
                     Ok(tufa_common::repositories_types::tufa_server::utils::status_codes::see_other("/admin/password"))
                 },
             },
             tufa_common::repositories_types::tufa_server::authentication::password::ValidateCredentialsErrorNamed::UnknownUsername { 
-                message, 
-                code_occurence 
+                message: _message, 
+                code_occurence: _code_occurence 
             } => {
                 actix_web_flash_messages::FlashMessage::error("The current password is incorrect.").send();
                 Ok(tufa_common::repositories_types::tufa_server::utils::status_codes::see_other("/admin/password"))
