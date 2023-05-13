@@ -1,4 +1,3 @@
-// or #[tokio::main]
 pub async fn server_wrapper<'a>(
     config: &'a (
         impl tufa_common::traits::config_fields::GetPostgresIp
