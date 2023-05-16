@@ -19,20 +19,6 @@ pub async fn prepare_server<'a, SelfGeneric>(
             }
         ));
     }
-    //todo: add params dependency function to config after new to check. like if is_mongo_initialization_enabled is true but is_dbs_initialization_enabled is false so is_mongo_initialization_enabled is also false
-    if 
-    // !config.get_is_dbs_initialization_enabled()
-    false
-    || 
-    (
-        // !config.get_is_mongo_initialization_enabled()
-        false
-        && 
-        // !config.get_is_postgres_initialization_enabled()
-        false
-    )
-    {
-        return Ok(());
-    }
+    println!("service prepared!");
     Ok(())
 }
