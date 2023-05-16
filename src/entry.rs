@@ -1,7 +1,6 @@
 pub fn entry<SelfGeneric>(
     config: &(
         impl tufa_common::traits::config_fields::GetTracingType
-        + tufa_common::traits::config_fields::GetIsPreparationEnabled
 
         + tufa_common::traits::config_fields::GetPostgresIp
         + tufa_common::traits::config_fields::GetPostgresPort
