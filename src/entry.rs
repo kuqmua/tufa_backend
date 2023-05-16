@@ -44,13 +44,8 @@ pub fn entry<SelfGeneric>(
                 panic!("tufa_common::repositories_types::tufa_server::telemetry::init_subscriber::init_subscriber failed, error: {e:#?}")
             }
             else {
-                if let (
-                    true, 
-                    Err(e)
-                ) = (
-                    config.get_is_preparation_enabled(),
-                    runtime.block_on(crate::preparation::prepare_server::prepare_server(config))
-                ) {
+                //preparation logic must be enabled by default. service must check on existing database tables.
+                if let Err(e) = runtime.block_on(crate::preparation::prepare_server::prepare_server(config)) {
                     use tufa_common::traits::error_logs_logic::error_log::ErrorLog;
                     e.error_log(config);
                     // let e_serialize_deserialize_version = e.into_serialize_deserialize_version();
