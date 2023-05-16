@@ -203,9 +203,6 @@ except maybe loops or early return cases
 
 * move providers link parts (specific urls) to project constants
 
-* remove unhandled_success_handled_success_are_there_items_initialized_posts_dir - like fileds from config
-rename it 
-
 * if error size > then ok return type then allocate error on heap, otherwise actual return type would be more then needed
 maybe write some tests or linter or lib or rustanalyzer flag to check it
 
