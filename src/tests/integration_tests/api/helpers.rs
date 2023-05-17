@@ -1,46 +1,27 @@
-use crate::configuration::get_configuration;
-use crate::configuration::PostgresDatabaseSettings;
-use crate::email_client::EmailClient;
-use crate::issue_delivery_worker::try_execute_task;
-use crate::issue_delivery_worker::ExecutionOutcome;
-use crate::startup::get_connection_pool;
-use crate::startup::Application;
-use crate::telemetry::get_subscriber::get_subscriber;
-use crate::telemetry::init_subscriber::init_subscriber;
-use argon2::password_hash::SaltString;
-use argon2::Algorithm;
-use argon2::Argon2;
-use argon2::Params;
-use argon2::PasswordHasher;
-use argon2::Version;
-use once_cell::sync::Lazy;
-use sqlx::Connection;
-use sqlx::Executor;
-use sqlx::PgConnection;
-use sqlx::PgPool;
-use uuid::Uuid;
-use wiremock::MockServer;
+// use argon2::PasswordHasher;
+// use sqlx::Connection;
+// use sqlx::Executor;
 
-static TRACING: Lazy<()> = Lazy::new(|| {
+static TRACING: once_cell::sync::Lazy<()> = once_cell::sync::Lazy::new(|| {
     let default_filter_level = "info".to_string();
     let subscriber_name = "test".to_string();
     if std::env::var("TEST_LOG").is_ok() {
-        let subscriber = get_subscriber(subscriber_name, default_filter_level, std::io::stdout);
-        init_subscriber(subscriber).expect("cannot init tracing subscriber std::io::stdout");
+        let subscriber = tufa_common::repositories_types::tufa_server::telemetry::get_subscriber::get_subscriber(subscriber_name, default_filter_level, std::io::stdout);
+        tufa_common::repositories_types::tufa_server::telemetry::init_subscriber::init_subscriber(subscriber).expect("cannot init tracing subscriber std::io::stdout");
     } else {
-        let subscriber = get_subscriber(subscriber_name, default_filter_level, std::io::sink);
-        init_subscriber(subscriber).expect("cannot init tracing subscriber std::io::sink");
+        let subscriber = tufa_common::repositories_types::tufa_server::telemetry::get_subscriber::get_subscriber(subscriber_name, default_filter_level, std::io::sink);
+        tufa_common::repositories_types::tufa_server::telemetry::init_subscriber::init_subscriber(subscriber).expect("cannot init tracing subscriber std::io::sink");
     };
 });
 
 pub struct TestApp {
     pub address: String,
     pub port: u16,
-    pub db_pool: PgPool,
-    pub email_server: MockServer,
+    pub db_pool: sqlx::PgPool,
+    pub email_server: wiremock::MockServer,
     pub test_user: TestUser,
     pub api_client: reqwest::Client,
-    pub email_client: EmailClient,
+    pub email_client: crate::email_client::EmailClient,
 }
 
 pub struct ConfirmationLinks {
@@ -51,10 +32,10 @@ pub struct ConfirmationLinks {
 impl TestApp {
     pub async fn dispatch_all_pending_emails(&self) {
         loop {
-            if let ExecutionOutcome::EmptyQueue =
-                try_execute_task(&self.db_pool, &self.email_client)
+            if let crate::issue_delivery_worker::ExecutionOutcome::EmptyQueue =
+                crate::issue_delivery_worker::try_execute_task(&self.db_pool, &self.email_client)
                     .await
-                    .expect("try_execute_task failed")
+                    .expect("crate::issue_delivery_worker::try_execute_task failed")
             {
                 break;
             }
@@ -193,17 +174,17 @@ impl TestApp {
 }
 
 pub async fn spawn_app() -> TestApp {
-    Lazy::force(&TRACING);
-    let email_server = MockServer::start().await;
+    once_cell::sync::Lazy::force(&TRACING);
+    let email_server = wiremock::MockServer::start().await;
     let configuration = {
-        let mut c = get_configuration().expect("Failed to read configuration.");
-        c.database.database_name = Uuid::new_v4().to_string();
+        let mut c = crate::configuration::get_configuration().expect("Failed to read configuration.");
+        c.database.database_name = uuid::Uuid::new_v4().to_string();
         c.application.port = 0;
         c.email_client.base_url = email_server.uri();
         c
     };
     configure_database(&configuration.database).await;
-    let application = Application::build(configuration.clone())
+    let application = crate::startup::Application::build(configuration.clone())
         .await
         .expect("Failed to build application.");
     let application_port = application.port();
@@ -216,7 +197,7 @@ pub async fn spawn_app() -> TestApp {
     let test_app = TestApp {
         address: format!("http://localhost:{}", application_port),
         port: application_port,
-        db_pool: get_connection_pool(&configuration.database),
+        db_pool: crate::startup::get_connection_pool(&configuration.database),
         email_server,
         test_user: TestUser::generate(),
         api_client: client,
@@ -226,15 +207,15 @@ pub async fn spawn_app() -> TestApp {
     test_app
 }
 
-async fn configure_database(config: &PostgresDatabaseSettings) -> PgPool {
-    let mut connection = PgConnection::connect_with(&config.without_db())
+async fn configure_database(config: &crate::configuration::PostgresDatabaseSettings) -> sqlx::PgPool {
+    let mut connection = sqlx::PgConnection::connect_with(&config.without_db())
         .await
         .expect("Failed to connect to Postgres");
     connection
         .execute(&*format!(r#"CREATE DATABASE "{}";"#, config.database_name))
         .await
         .expect("Failed to create database.");
-    let connection_pool = PgPool::connect_with(config.with_db())
+    let connection_pool = sqlx::PgPool::connect_with(config.with_db())
         .await
         .expect("Failed to connect to Postgres.");
     sqlx::migrate!("./migrations")
@@ -245,7 +226,7 @@ async fn configure_database(config: &PostgresDatabaseSettings) -> PgPool {
 }
 
 pub struct TestUser {
-    user_id: Uuid,
+    user_id: uuid::Uuid,
     pub username: String,
     pub password: String,
 }
@@ -253,9 +234,9 @@ pub struct TestUser {
 impl TestUser {
     pub fn generate() -> Self {
         Self {
-            user_id: Uuid::new_v4(),
-            username: Uuid::new_v4().to_string(),
-            password: Uuid::new_v4().to_string(),
+            user_id: uuid::Uuid::new_v4(),
+            username: uuid::Uuid::new_v4().to_string(),
+            password: uuid::Uuid::new_v4().to_string(),
         }
     }
     pub async fn login(&self, app: &TestApp) {
@@ -265,17 +246,17 @@ impl TestUser {
         }))
         .await;
     }
-    async fn store(&self, pool: &PgPool) {
-        let salt = SaltString::generate(&mut rand::thread_rng());
-        let password_hash = Argon2::new(
-            Algorithm::Argon2id,
-            Version::V0x13,
+    async fn store(&self, pool: &sqlx::PgPool) {
+        let salt = argon2::password_hash::SaltString::generate(&mut rand::thread_rng());
+        let password_hash = argon2::Argon2::new(
+            argon2::Algorithm::Argon2id,
+            argon2::Version::V0x13,
             //todo- move it into config
-            Params::new(15000, 2, 1, None)
-                .expect("inside store Params::new(15000, 2, 1, None) failed"),
+            argon2::Params::new(15000, 2, 1, None)
+                .expect("inside store argon2::Params::new(15000, 2, 1, None) failed"),
         )
         .hash_password(self.password.as_bytes(), &salt)
-        .expect("inside store Argon2::new().hash_password() failed")
+        .expect("inside store argon2::Argon2::new().hash_password() failed")
         .to_string();
         sqlx::query!(
             "INSERT INTO users (user_id, username, password_hash)
