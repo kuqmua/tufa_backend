@@ -19,6 +19,7 @@ pub async fn prepare_server<'a, SelfGeneric>(
             }
         ));
     }
+    //todo - check all postgres tables\requests to postgres. like if no some table - panic
     println!("service prepared!");
     Ok(())
 }

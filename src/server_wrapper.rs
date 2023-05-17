@@ -14,7 +14,7 @@ pub async fn server_wrapper<'a>(
     )
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed<'a>>> {
     let configuration = tufa_common::repositories_types::tufa_server::configuration::Settings {
-        database: tufa_common::repositories_types::tufa_server::configuration::DatabaseSettings {
+        database: tufa_common::repositories_types::tufa_server::configuration::PostgresDatabaseSettings {
             host: config.get_postgres_ip().clone(),
             port: *config.get_postgres_port().port(),
             username: config.get_postgres_login().clone(),
@@ -62,7 +62,7 @@ pub async fn server_wrapper<'a>(
             Ok(_) => (),
         },
     }
-    // let worker_task = tokio::spawn(crate::issue_delivery_worker::run_worker_until_stopped(configuration));
+    let worker_task = tokio::spawn(crate::issue_delivery_worker::run_worker_until_stopped(configuration));
     // tokio::select! {
     //     o = application_task => report_exit("API", o),
     //     o = worker_task => report_exit("Background worker", o),

@@ -1,5 +1,5 @@
 use crate::configuration::get_configuration;
-use crate::configuration::DatabaseSettings;
+use crate::configuration::PostgresDatabaseSettings;
 use crate::email_client::EmailClient;
 use crate::issue_delivery_worker::try_execute_task;
 use crate::issue_delivery_worker::ExecutionOutcome;
@@ -226,7 +226,7 @@ pub async fn spawn_app() -> TestApp {
     test_app
 }
 
-async fn configure_database(config: &DatabaseSettings) -> PgPool {
+async fn configure_database(config: &PostgresDatabaseSettings) -> PgPool {
     let mut connection = PgConnection::connect_with(&config.without_db())
         .await
         .expect("Failed to connect to Postgres");
