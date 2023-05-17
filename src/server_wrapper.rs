@@ -16,14 +16,14 @@ pub async fn server_wrapper<'a>(
     let configuration = tufa_common::repositories_types::tufa_server::configuration::Settings {
         database: tufa_common::repositories_types::tufa_server::configuration::DatabaseSettings {
             host: config.get_postgres_ip().clone(),
-            port: *config.get_postgres_port(),
+            port: *config.get_postgres_port().port(),
             username: config.get_postgres_login().clone(),
             password: secrecy::Secret::new(config.get_postgres_password().clone()),
             database_name: config.get_postgres_db().clone(),
             require_ssl: *config.get_require_ssl(),
         },
         application: tufa_common::repositories_types::tufa_server::configuration::ApplicationSettings {
-            port: *config.get_server_port(),
+            port: *config.get_server_port().port(),
             hmac_secret: secrecy::Secret::new(config.get_hmac_secret().clone()),
         },
         email_client: tufa_common::repositories_types::tufa_server::configuration::EmailClientSettings {
