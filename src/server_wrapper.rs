@@ -15,12 +15,12 @@ pub async fn server_wrapper<'a>(
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed<'a>>> {
     let configuration = tufa_common::repositories_types::tufa_server::configuration::Settings {
         database: {
-            use tufa_common::traits::get_postgres_database_settings::GePostgresDatabaseSettings;
+            use tufa_common::traits::get_postgres_database_settings::GetPostgresDatabaseSettings;
             config.get_postgres_database_settings()
         },
-        application: tufa_common::repositories_types::tufa_server::configuration::ApplicationSettings {
-            port: *config.get_server_port().port(),
-            hmac_secret: secrecy::Secret::new(config.get_hmac_secret().clone()),
+        application: {
+            use tufa_common::traits::get_application_settings::GetApplicationSettings;
+            config.get_application_settings()
         },
         email_client: tufa_common::repositories_types::tufa_server::configuration::EmailClientSettings {
             base_url: config.get_base_url().clone(),
