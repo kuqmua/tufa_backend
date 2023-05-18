@@ -17,7 +17,10 @@ pub async fn server_wrapper<'a>(
     )
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed<'a>>> {
     let settings = config.get_settings();
-    let application = match crate::startup::Application::build(settings.clone()).await {
+    let application = match crate::startup::Application::build(
+        settings.clone(),
+        config
+    ).await {
         Err(e) => return Err(Box::new(tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::ApplicationBuild {
             application_build: *e,
             code_occurence: tufa_common::code_occurence!(),
