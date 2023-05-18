@@ -177,7 +177,7 @@ pub async fn spawn_app() -> TestApp {
     once_cell::sync::Lazy::force(&TRACING);
     let email_server = wiremock::MockServer::start().await;
     let configuration = {
-        let mut c = crate::configuration::get_configuration().expect("Failed to read configuration.");
+        let mut c = crate::configuration::get_settings().expect("Failed to read configuration.");
         c.database.database_name = uuid::Uuid::new_v4().to_string();
         c.application.port = 0;
         c.email_client.base_url = email_server.uri();

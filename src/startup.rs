@@ -4,11 +4,11 @@ pub struct Application {
 }
 
 impl Application {
-    pub async fn build<'a>(configuration: tufa_common::repositories_types::tufa_server::configuration::Settings) -> Result<Self, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed<'a>>> {
-        let connection_pool = tufa_common::repositories_types::tufa_server::startup::get_connection_pool(&configuration.database);
+    pub async fn build<'a>(settings: tufa_common::repositories_types::tufa_server::settings::Settings) -> Result<Self, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed<'a>>> {
+        let connection_pool = tufa_common::repositories_types::tufa_server::startup::get_connection_pool(&settings.database);
         let listener = match std::net::TcpListener::bind(&format!(
             "localhost:{}",
-            configuration.application.port
+            settings.application.port
         )) {
             Ok(listener) => listener,
             Err(e) => {
@@ -33,9 +33,9 @@ impl Application {
         let server = match run(
             listener,
             connection_pool,
-            configuration.email_client.client(),
-            configuration.application.hmac_secret,
-            configuration.redis_uri,
+            settings.email_client.client(),
+            settings.application.hmac_secret,
+            settings.redis_uri,
         )
         .await
         {

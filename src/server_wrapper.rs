@@ -18,13 +18,13 @@ pub async fn server_wrapper<'a>(
         + tufa_common::traits::get_email_client_settings::GetEmailClientSettings
     )
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed<'a>>> {
-    let configuration = tufa_common::repositories_types::tufa_server::configuration::Settings {
+    let settings = tufa_common::repositories_types::tufa_server::settings::Settings {
         database: config.get_postgres_database_settings(),
         application: config.get_application_settings(),
         email_client: config.get_email_client_settings(),
         redis_uri: secrecy::Secret::new(tufa_common::server::redis::get_redis_url::get_redis_url(config)),
     };
-    let application = match crate::startup::Application::build(configuration.clone()).await {
+    let application = match crate::startup::Application::build(settings.clone()).await {
         Err(e) => return Err(Box::new(tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::ApplicationBuild {
             application_build: *e,
             code_occurence: tufa_common::code_occurence!(),
@@ -52,7 +52,7 @@ pub async fn server_wrapper<'a>(
             Ok(_) => (),
         },
     }
-    let worker_task = tokio::spawn(crate::issue_delivery_worker::run_worker_until_stopped(configuration));
+    let worker_task = tokio::spawn(crate::issue_delivery_worker::run_worker_until_stopped(settings));
     // tokio::select! {
     //     o = application_task => report_exit("API", o),
     //     o = worker_task => report_exit("Background worker", o),
