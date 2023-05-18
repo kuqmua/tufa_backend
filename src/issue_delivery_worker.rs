@@ -1,7 +1,6 @@
 pub async fn run_worker_until_stopped(
     config: &'static (
         impl tufa_common::traits::get_email_client::GetEmailClient
-        + tufa_common::traits::get_postgres_connect_options_with_db::GetPostgresConnectOptionsWithDb
         + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
         + tufa_common::traits::config_fields::GetSourcePlaceType
         + tufa_common::traits::config_fields::GetTimezone
@@ -11,11 +10,7 @@ pub async fn run_worker_until_stopped(
 ) {// -> Result<(), Error>
     async move {
         loop {
-            
-            match try_execute_task(
-                &config.get_postgres_connection_pool(), 
-                &config.get_email_client()
-            ).await {
+            match try_execute_task(config).await {
                 Ok(tufa_common::repositories_types::tufa_server::issue_delivery_worker::ExecutionOutcome::EmptyQueue) => {
                     println!("Queue is full, please retry later");
                     tokio::time::sleep(std::time::Duration::from_secs(10)).await;
@@ -32,9 +27,13 @@ pub async fn run_worker_until_stopped(
 }
 
 pub async fn try_execute_task<'a>(
-    pool: &sqlx::PgPool,
-    email_client: &tufa_common::repositories_types::tufa_server::email_client::EmailClient,
+    config: &'static (
+        impl tufa_common::traits::get_email_client::GetEmailClient
+        + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
+    )
 ) -> Result<tufa_common::repositories_types::tufa_server::issue_delivery_worker::ExecutionOutcome, tufa_common::repositories_types::tufa_server::issue_delivery_worker::TryExecuteTaskErrorNamed<'a>> {
+    let pool = &config.get_postgres_connection_pool();
+    let email_client = &config.get_email_client();
     let task = match dequeue_task(pool).await {
         Err(e) => {
             return Err(tufa_common::repositories_types::tufa_server::issue_delivery_worker::TryExecuteTaskErrorNamed::DequeueTask {
