@@ -7,29 +7,23 @@ pub async fn run_worker_until_stopped(
         + std::marker::Sync
     )
 ) {// -> Result<(), Error>
-    worker_loop(
-        config.get_postgres_connection_pool(),
-        config.get_email_client()
-    ).await
-}
-
-async fn worker_loop(
-    pool: sqlx::PgPool, 
-    email_client: tufa_common::repositories_types::tufa_server::email_client::EmailClient
-) {//-> Result<(), Error>
-    loop {
-        match try_execute_task(&pool, &email_client).await {
-            Ok(tufa_common::repositories_types::tufa_server::issue_delivery_worker::ExecutionOutcome::EmptyQueue) => {
-                tokio::time::sleep(std::time::Duration::from_secs(10)).await;
+    async move {
+        loop {
+            match try_execute_task(
+                &config.get_postgres_connection_pool(), 
+                &config.get_email_client()
+            ).await {
+                Ok(tufa_common::repositories_types::tufa_server::issue_delivery_worker::ExecutionOutcome::EmptyQueue) => {
+                    tokio::time::sleep(std::time::Duration::from_secs(10)).await;
+                }
+                Ok(tufa_common::repositories_types::tufa_server::issue_delivery_worker::ExecutionOutcome::TaskCompleted) => {}
+                Err(e) => {
+                    println!("{e:#?}");//todo
+                    tokio::time::sleep(std::time::Duration::from_secs(1)).await;
+                }
             }
-            Ok(tufa_common::repositories_types::tufa_server::issue_delivery_worker::ExecutionOutcome::TaskCompleted) => {}
-            Err(e) => {
-                println!("{e:#?}");//todo
-                tokio::time::sleep(std::time::Duration::from_secs(1)).await;
-            }
-           
         }
-    }
+    }.await;
 }
 
 pub async fn try_execute_task<'a>(
