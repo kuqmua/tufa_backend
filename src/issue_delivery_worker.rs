@@ -40,7 +40,7 @@ pub async fn try_execute_task<'a>(
             tracing::Span::current()
                 .record("newsletter_issue_id", &tracing::field::display(issue_id))
                 .record("subscriber_email", &tracing::field::display(&email));
-            match tufa_common::repositories_types::tufa_server::domain::SubscriberEmail::parse(email.clone()) {
+            match tufa_common::repositories_types::tufa_server::domain::SubscriberEmail::try_from(email.clone()) {
                 Ok(email) => {
                     let issue = match get_issue(pool, issue_id).await {
                         Err(e) => {
