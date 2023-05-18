@@ -15,10 +15,7 @@ impl Application {
             + std::marker::Sync
         )
     ) -> Result<Self, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed<'a>>> {
-        let connection_pool = tufa_common::repositories_types::tufa_server::startup::get_connection_pool(
-            &settings.database,
-            config
-        );
+        let connection_pool = tufa_common::repositories_types::tufa_server::startup::get_connection_pool(config);
         let listener = match std::net::TcpListener::bind(&format!(
             "localhost:{}",
             *config.get_server_port().port()

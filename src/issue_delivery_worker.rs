@@ -7,10 +7,7 @@ pub async fn run_worker_until_stopped(
         + std::marker::Sync
     )
 ) {// -> Result<(), Error>
-    let connection_pool = tufa_common::repositories_types::tufa_server::startup::get_connection_pool(
-        &settings.database,
-        config
-    );
+    let connection_pool = tufa_common::repositories_types::tufa_server::startup::get_connection_pool(config);
     let email_client = config.get_email_client();
     worker_loop(connection_pool, email_client).await
 }

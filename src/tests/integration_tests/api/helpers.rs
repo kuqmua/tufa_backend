@@ -202,10 +202,7 @@ pub async fn spawn_app() -> TestApp {
     let config = once_cell::sync::Lazy::force(
         &crate::global_variables::runtime::config::CONFIG,
     );
-    configure_database(
-        &configuration.database,
-        config
-    ).await;
+    configure_database(config).await;
     let application = crate::startup::Application::build(
         configuration.clone(), 
         config
@@ -233,10 +230,10 @@ pub async fn spawn_app() -> TestApp {
 }
 
 async fn configure_database(
-    postgres_database_settings: &crate::configuration::PostgresDatabaseSettings,
     config: &'static (
         impl tufa_common::traits::get_postgres_connect_options_with_db::GetPostgresConnectOptionsWithDb
         + tufa_common::traits::get_postgres_connect_options_without_db::GetPostgresConnectOptionsWithoutDb
+        + tufa_common::traits::config_fields::GetPostgresDb
     )
 ) -> sqlx::PgPool {
     let mut connection = sqlx::PgConnection::connect_with(
@@ -245,7 +242,7 @@ async fn configure_database(
         .await
         .expect("Failed to connect to Postgres");
     connection
-        .execute(&*format!(r#"CREATE DATABASE "{}";"#, postgres_database_settings.database_name))
+        .execute(&*format!(r#"CREATE DATABASE "{}";"#, config.get_postgres_db()))
         .await
         .expect("Failed to create database.");
     let connection_pool = sqlx::PgPool::connect_with(
