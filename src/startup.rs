@@ -10,11 +10,15 @@ impl Application {
             impl tufa_common::traits::config_fields::GetServerPort
             + tufa_common::traits::config_fields::GetHmacSecret
             + tufa_common::traits::get_email_client::GetEmailClient
+            + tufa_common::traits::get_postgres_connect_options_with_db::GetPostgresConnectOptionsWithDb
             + std::marker::Send 
             + std::marker::Sync
         )
     ) -> Result<Self, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed<'a>>> {
-        let connection_pool = tufa_common::repositories_types::tufa_server::startup::get_connection_pool(&settings.database);
+        let connection_pool = tufa_common::repositories_types::tufa_server::startup::get_connection_pool(
+            &settings.database,
+            config
+        );
         let listener = match std::net::TcpListener::bind(&format!(
             "localhost:{}",
             *config.get_server_port().port()

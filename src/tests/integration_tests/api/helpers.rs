@@ -199,8 +199,17 @@ pub async fn spawn_app() -> TestApp {
         c.email_client.base_url = email_server.uri();
         c
     };
-    configure_database(&configuration.database).await;
-    let application = crate::startup::Application::build(configuration.clone(), )//todo add config here
+    let config = once_cell::sync::Lazy::force(
+        &crate::global_variables::runtime::config::CONFIG,
+    );
+    configure_database(
+        &configuration.database,
+        config
+    ).await;
+    let application = crate::startup::Application::build(
+        configuration.clone(), 
+        config
+    )
         .await
         .expect("Failed to build application.");
     let application_port = application.port();
@@ -223,15 +232,25 @@ pub async fn spawn_app() -> TestApp {
     test_app
 }
 
-async fn configure_database(postgres_database_settings: &crate::configuration::PostgresDatabaseSettings) -> sqlx::PgPool {
-    let mut connection = sqlx::PgConnection::connect_with(&postgres_database_settings.without_db())
+async fn configure_database(
+    postgres_database_settings: &crate::configuration::PostgresDatabaseSettings,
+    config: &'static (
+        impl tufa_common::traits::get_postgres_connect_options_with_db::GetPostgresConnectOptionsWithDb
+        + tufa_common::traits::get_postgres_connect_options_without_db::GetPostgresConnectOptionsWithoutDb
+    )
+) -> sqlx::PgPool {
+    let mut connection = sqlx::PgConnection::connect_with(
+        config.get_postgres_connect_options_without_db()
+    )
         .await
         .expect("Failed to connect to Postgres");
     connection
         .execute(&*format!(r#"CREATE DATABASE "{}";"#, postgres_database_settings.database_name))
         .await
         .expect("Failed to create database.");
-    let connection_pool = sqlx::PgPool::connect_with(postgres_database_settings.with_db())
+    let connection_pool = sqlx::PgPool::connect_with(
+        config.get_postgres_connect_options_with_db()
+    )
         .await
         .expect("Failed to connect to Postgres.");
     sqlx::migrate!("./migrations")
