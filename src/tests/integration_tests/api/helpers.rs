@@ -223,15 +223,15 @@ pub async fn spawn_app() -> TestApp {
     test_app
 }
 
-async fn configure_database(config: &crate::configuration::PostgresDatabaseSettings) -> sqlx::PgPool {
-    let mut connection = sqlx::PgConnection::connect_with(&config.without_db())
+async fn configure_database(postgres_database_settings: &crate::configuration::PostgresDatabaseSettings) -> sqlx::PgPool {
+    let mut connection = sqlx::PgConnection::connect_with(&postgres_database_settings.without_db())
         .await
         .expect("Failed to connect to Postgres");
     connection
-        .execute(&*format!(r#"CREATE DATABASE "{}";"#, config.database_name))
+        .execute(&*format!(r#"CREATE DATABASE "{}";"#, postgres_database_settings.database_name))
         .await
         .expect("Failed to create database.");
-    let connection_pool = sqlx::PgPool::connect_with(config.with_db())
+    let connection_pool = sqlx::PgPool::connect_with(postgres_database_settings.with_db())
         .await
         .expect("Failed to connect to Postgres.");
     sqlx::migrate!("./migrations")
