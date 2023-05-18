@@ -5,7 +5,6 @@ pub struct Application {
 
 impl Application {
     pub async fn build<'a>(
-        settings: tufa_common::repositories_types::tufa_server::settings::Settings,
         config: &'static (
             impl tufa_common::traits::config_fields::GetServerPort
             + tufa_common::traits::config_fields::GetHmacSecret

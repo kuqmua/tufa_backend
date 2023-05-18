@@ -173,6 +173,7 @@ impl TestApp {
     }
 }
 
+//todo - settings\configuration was removed. use Config traits instead
 // pub fn get_settings() -> Result<Settings, config::ConfigError> {
 //     let mut settings = config::Config::default();
 //     let base_path = std::env::current_dir().expect("Failed to determine the current directory");
@@ -192,9 +193,9 @@ impl TestApp {
 pub async fn spawn_app() -> TestApp {
     once_cell::sync::Lazy::force(&TRACING);
     let email_server = wiremock::MockServer::start().await;
+    //todo - settings\configuration was removed. use Config traits instead
     let configuration = {
         // let mut c = get_settings().expect("Failed to read configuration.");
-        //todo - settings removed. use Config traits instead
         c.database.database_name = uuid::Uuid::new_v4().to_string();
         c.application.port = 0;
         c.email_client.base_url = email_server.uri();
@@ -205,7 +206,6 @@ pub async fn spawn_app() -> TestApp {
     );
     configure_database(config).await;
     let application = crate::startup::Application::build(
-        configuration.clone(), 
         config
     )
         .await
