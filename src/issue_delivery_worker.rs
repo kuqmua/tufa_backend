@@ -3,22 +3,27 @@ pub async fn run_worker_until_stopped(
         impl tufa_common::traits::get_email_client::GetEmailClient
         + tufa_common::traits::get_postgres_connect_options_with_db::GetPostgresConnectOptionsWithDb
         + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
+        + tufa_common::traits::config_fields::GetSourcePlaceType
+        + tufa_common::traits::config_fields::GetTimezone
         + std::marker::Send 
         + std::marker::Sync
     )
 ) {// -> Result<(), Error>
     async move {
         loop {
+            
             match try_execute_task(
                 &config.get_postgres_connection_pool(), 
                 &config.get_email_client()
             ).await {
                 Ok(tufa_common::repositories_types::tufa_server::issue_delivery_worker::ExecutionOutcome::EmptyQueue) => {
+                    println!("Queue is full, please retry later");
                     tokio::time::sleep(std::time::Duration::from_secs(10)).await;
                 }
                 Ok(tufa_common::repositories_types::tufa_server::issue_delivery_worker::ExecutionOutcome::TaskCompleted) => {}
                 Err(e) => {
-                    println!("{e:#?}");//todo
+                    use tufa_common::traits::error_logs_logic::error_log::ErrorLog;
+                    e.error_log(config);
                     tokio::time::sleep(std::time::Duration::from_secs(1)).await;
                 }
             }

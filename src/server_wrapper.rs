@@ -17,6 +17,9 @@ pub async fn server_wrapper<'a>(
 
         + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
 
+        + tufa_common::traits::config_fields::GetSourcePlaceType
+        + tufa_common::traits::config_fields::GetTimezone
+
         + std::marker::Send 
         + std::marker::Sync
     )

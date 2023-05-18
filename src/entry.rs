@@ -8,7 +8,6 @@ pub fn entry<SelfGeneric>(
         + tufa_common::traits::config_fields::GetPostgresPassword
         + tufa_common::traits::config_fields::GetPostgresDb
         + tufa_common::traits::config_fields::GetRequireSsl
-        + tufa_common::traits::config_fields::GetServerPort
         + tufa_common::traits::config_fields::GetBaseUrl
         + tufa_common::traits::config_fields::GetHmacSecret
         + tufa_common::traits::config_fields::GetRedisIp
@@ -25,6 +24,9 @@ pub fn entry<SelfGeneric>(
         + tufa_common::traits::get_email_client::GetEmailClient
 
         + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
+
+        + tufa_common::traits::config_fields::GetSourcePlaceType
+        + tufa_common::traits::config_fields::GetTimezone
 
         + std::marker::Send 
         + std::marker::Sync
