@@ -11,6 +11,7 @@ impl Application {
             + tufa_common::traits::config_fields::GetHmacSecret
             + tufa_common::traits::get_email_client::GetEmailClient
             + tufa_common::traits::get_postgres_connect_options_with_db::GetPostgresConnectOptionsWithDb
+            + tufa_common::traits::get_redis_url::GetRedisUrl
             + std::marker::Send 
             + std::marker::Sync
         )
@@ -45,7 +46,7 @@ impl Application {
             connection_pool,
             config.get_email_client(),
             secrecy::Secret::new(config.get_hmac_secret().clone()),
-            settings.redis_uri,
+            secrecy::Secret::new(config.get_redis_url())//todo make it return secret. and config fields too
         )
         .await
         {

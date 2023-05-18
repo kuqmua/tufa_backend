@@ -173,27 +173,28 @@ impl TestApp {
     }
 }
 
-pub fn get_settings() -> Result<Settings, config::ConfigError> {
-    let mut settings = config::Config::default();
-    let base_path = std::env::current_dir().expect("Failed to determine the current directory");
-    let configuration_directory = base_path.join("configuration");
-    settings.merge(config::File::from(configuration_directory.join("base")).required(true))?;
-    let environment: Environment = std::env::var("APP_ENVIRONMENT")
-        .unwrap_or_else(|_| "local".into())
-        .try_into()
-        .expect("Failed to parse APP_ENVIRONMENT.");
-    settings.merge(
-        config::File::from(configuration_directory.join(environment.as_str())).required(true),
-    )?;
-    settings.merge(config::Environment::with_prefix("app").separator("__"))?;
-    settings.try_into()
-}
+// pub fn get_settings() -> Result<Settings, config::ConfigError> {
+//     let mut settings = config::Config::default();
+//     let base_path = std::env::current_dir().expect("Failed to determine the current directory");
+//     let configuration_directory = base_path.join("configuration");
+//     settings.merge(config::File::from(configuration_directory.join("base")).required(true))?;
+//     let environment: Environment = std::env::var("APP_ENVIRONMENT")
+//         .unwrap_or_else(|_| "local".into())
+//         .try_into()
+//         .expect("Failed to parse APP_ENVIRONMENT.");
+//     settings.merge(
+//         config::File::from(configuration_directory.join(environment.as_str())).required(true),
+//     )?;
+//     settings.merge(config::Environment::with_prefix("app").separator("__"))?;
+//     settings.try_into()
+// }
 
 pub async fn spawn_app() -> TestApp {
     once_cell::sync::Lazy::force(&TRACING);
     let email_server = wiremock::MockServer::start().await;
     let configuration = {
-        let mut c = get_settings().expect("Failed to read configuration.");
+        // let mut c = get_settings().expect("Failed to read configuration.");
+        //todo - settings removed. use Config traits instead
         c.database.database_name = uuid::Uuid::new_v4().to_string();
         c.application.port = 0;
         c.email_client.base_url = email_server.uri();
