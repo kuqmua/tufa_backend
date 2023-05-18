@@ -9,6 +9,7 @@ impl Application {
         config: &'static (
             impl tufa_common::traits::config_fields::GetServerPort
             + tufa_common::traits::config_fields::GetHmacSecret
+            + tufa_common::traits::get_email_client::GetEmailClient
             + std::marker::Send 
             + std::marker::Sync
         )
@@ -41,7 +42,7 @@ impl Application {
         let server = match run(
             listener,
             connection_pool,
-            settings.email_client.client(),
+            config.get_email_client(),
             secrecy::Secret::new(config.get_hmac_secret().clone()),
             settings.redis_uri,
         )

@@ -23,7 +23,6 @@ pub fn entry<SelfGeneric>(
         + tufa_common::traits::config_fields::GetPostgresConnectionTimeout
 
         + tufa_common::traits::get_postgres_database_settings::GetPostgresDatabaseSettings
-        + tufa_common::traits::get_email_client_settings::GetEmailClientSettings
         + tufa_common::traits::get_email_client::GetEmailClient
 
         + std::marker::Send 

@@ -54,7 +54,6 @@ pub async fn server_wrapper<'a>(
     }
     let worker_task = tokio::spawn(crate::issue_delivery_worker::run_worker_until_stopped(
         settings,
-        // config.get_email_client()
         config
     ));
     // tokio::select! {
