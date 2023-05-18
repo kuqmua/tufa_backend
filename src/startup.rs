@@ -6,9 +6,11 @@ pub struct Application {
 impl Application {
     pub async fn build<'a>(
         settings: tufa_common::repositories_types::tufa_server::settings::Settings,
-        config: &'a (
+        config: &'static (
             impl tufa_common::traits::config_fields::GetServerPort
             + tufa_common::traits::config_fields::GetHmacSecret
+            + std::marker::Send 
+            + std::marker::Sync
         )
     ) -> Result<Self, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed<'a>>> {
         let connection_pool = tufa_common::repositories_types::tufa_server::startup::get_connection_pool(&settings.database);
