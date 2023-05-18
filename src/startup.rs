@@ -1,9 +1,3 @@
-pub struct Application {
-    port: u16,
-    server: actix_web::dev::Server,
-}
-
-impl Application {
     pub async fn build<'a>(
         config: &'static (
             impl tufa_common::traits::config_fields::GetServerPort
@@ -14,7 +8,7 @@ impl Application {
             + std::marker::Send 
             + std::marker::Sync
         )
-    ) -> Result<Self, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed<'a>>> {
+    ) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed<'a>>> {//todo - rename this error
         let connection_pool = tufa_common::repositories_types::tufa_server::startup::get_connection_pool(config);
         let listener = match std::net::TcpListener::bind(&format!(
             "localhost:{}",
@@ -55,13 +49,10 @@ impl Application {
                 }))
             }
         };
-        Ok(Self { port, server })
+        Ok(server)
     }
-    pub fn port(&self) -> u16 {
-        self.port
-    }
-    pub async fn run_until_stopped<'a>(self) -> Result<(), tufa_common::repositories_types::tufa_server::startup::RunUntilStoppedErrorNamed<'a>> {
-        match self.server.await {
+    pub async fn run_until_stopped<'a>(server: actix_web::dev::Server) -> Result<(), tufa_common::repositories_types::tufa_server::startup::RunUntilStoppedErrorNamed<'a>> {
+        match server.await {
             Err(e) => Err(tufa_common::repositories_types::tufa_server::startup::RunUntilStoppedErrorNamed::RunUntilStopped {
                 run_until_stopped: e,
                 code_occurence: tufa_common::code_occurence!(),
@@ -69,7 +60,6 @@ impl Application {
             Ok(_) => Ok(()),
         }
     }
-}
 
 async fn run<'a>(
     listener: std::net::TcpListener,

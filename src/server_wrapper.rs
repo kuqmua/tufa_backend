@@ -19,7 +19,7 @@ pub async fn server_wrapper<'a>(
         + std::marker::Sync
     )
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed<'a>>> {
-    let application = match crate::startup::Application::build(
+    let actix_web_dev_server = match crate::startup::build(
         config
     ).await {
         Err(e) => return Err(Box::new(tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::ApplicationBuild {
@@ -28,7 +28,7 @@ pub async fn server_wrapper<'a>(
         })),
         Ok(app) => app,
     };
-    let application_task = tokio::spawn(application.run_until_stopped()).await;
+    let application_task = tokio::spawn(crate::startup::run_until_stopped(actix_web_dev_server)).await;
     //remove this coz too much spam
     match application_task {
         Err(e) => {
