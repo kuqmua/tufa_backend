@@ -2,17 +2,21 @@ pub async fn run_worker_until_stopped(
     config: &'static (
         impl tufa_common::traits::get_email_client::GetEmailClient
         + tufa_common::traits::get_postgres_connect_options_with_db::GetPostgresConnectOptionsWithDb
+        + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
         + std::marker::Send 
         + std::marker::Sync
     )
 ) {// -> Result<(), Error>
     worker_loop(
-        tufa_common::repositories_types::tufa_server::startup::get_connection_pool(config),
+        config.get_postgres_connection_pool(),
         config.get_email_client()
     ).await
 }
 
-async fn worker_loop(pool: sqlx::PgPool, email_client: tufa_common::repositories_types::tufa_server::email_client::EmailClient) {//-> Result<(), Error>
+async fn worker_loop(
+    pool: sqlx::PgPool, 
+    email_client: tufa_common::repositories_types::tufa_server::email_client::EmailClient
+) {//-> Result<(), Error>
     loop {
         match try_execute_task(&pool, &email_client).await {
             Ok(tufa_common::repositories_types::tufa_server::issue_delivery_worker::ExecutionOutcome::EmptyQueue) => {

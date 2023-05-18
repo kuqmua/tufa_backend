@@ -24,6 +24,8 @@ pub fn entry<SelfGeneric>(
 
         + tufa_common::traits::get_email_client::GetEmailClient
 
+        + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
+
         + std::marker::Send 
         + std::marker::Sync
     )

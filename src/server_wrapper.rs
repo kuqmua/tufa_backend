@@ -15,45 +15,60 @@ pub async fn server_wrapper<'a>(
         + tufa_common::traits::config_fields::GetPostgresConnectionTimeout
         + tufa_common::traits::get_email_client::GetEmailClient
 
+        + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
+
         + std::marker::Send 
         + std::marker::Sync
     )
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed<'a>>> {
-    let actix_web_dev_server = match crate::startup::build(
-        config
-    ).await {
+    let actix_web_dev_server = match crate::startup::build(config).await {
         Err(e) => return Err(Box::new(tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::ApplicationBuild {
             application_build: *e,
             code_occurence: tufa_common::code_occurence!(),
         })),
         Ok(app) => app,
     };
-    let application_task = tokio::spawn(crate::startup::run_until_stopped(actix_web_dev_server)).await;
+    // let application_task = tokio::spawn(async move {
+    //     match actix_web_dev_server.await {
+    //         Err(e) => Err(tufa_common::repositories_types::tufa_server::startup::RunUntilStoppedErrorNamed::RunUntilStopped {
+    //             run_until_stopped: e,
+    //             code_occurence: tufa_common::code_occurence!(),
+    //         }),
+    //         Ok(_) => Ok(()),
+    //     }
+    // });//
     //remove this coz too much spam
-    match application_task {
-        Err(e) => {
-            return Err(Box::new(
-                tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::TokioSpawn {
-                    tokio_spawn: e,
-                    code_occurence: tufa_common::code_occurence!(),
-                },
-            ));
-        },
-        Ok(result) => match result {
-            Err(e) => {
-                return Err(Box::new(tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::RunUntilStopped {
-                    run_until_stopped: e,
-                    code_occurence: tufa_common::code_occurence!(),
-                }));
-            },
-            Ok(_) => (),
-        },
-    }
+    // match application_task {
+    //     Err(e) => {
+    //         return Err(Box::new(
+    //             tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::TokioSpawn {
+    //                 tokio_spawn: e,
+    //                 code_occurence: tufa_common::code_occurence!(),
+    //             },
+    //         ));
+    //     },
+    //     Ok(result) => match result {
+    //         Err(e) => {
+    //             return Err(Box::new(tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::RunUntilStopped {
+    //                 run_until_stopped: e,
+    //                 code_occurence: tufa_common::code_occurence!(),
+    //             }));
+    //         },
+    //         Ok(_) => (),
+    //     },
+    // }
     let worker_task = tokio::spawn(crate::issue_delivery_worker::run_worker_until_stopped(config));
-    // tokio::select! {
-    //     o = application_task => report_exit("API", o),
-    //     o = worker_task => report_exit("Background worker", o),
-    // };
+    tokio::select! {
+        // task = application_task => match task {
+        //     Ok(Ok(())) => println!("API task failed to await"),//tracing::info!("API has exited")
+        //     Ok(Err(e)) => println!("1"),
+        //     Err(e) => println!("API task failed to await"),//tracing::error!("API task failed to await")
+        // },//report_exit("API", o)
+        task = worker_task => match task {
+            Ok(_) => println!("2"),
+            Err(_) => println!("3"),
+        },//report_exit_worker("Background worker", o)
+    };
     Ok(())
 }
 

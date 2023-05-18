@@ -1,3 +1,4 @@
+//todo - make it async trait after async trait stabilization
     pub async fn build<'a>(
         config: &'static (
             impl tufa_common::traits::config_fields::GetServerPort
@@ -5,11 +6,12 @@
             + tufa_common::traits::get_email_client::GetEmailClient
             + tufa_common::traits::get_postgres_connect_options_with_db::GetPostgresConnectOptionsWithDb
             + tufa_common::traits::get_redis_url::GetRedisUrl
+            + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
             + std::marker::Send 
             + std::marker::Sync
         )
     ) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed<'a>>> {//todo - rename this error
-        let connection_pool = tufa_common::repositories_types::tufa_server::startup::get_connection_pool(config);
+        let connection_pool = config.get_postgres_connection_pool();
         let listener = match std::net::TcpListener::bind(&format!(
             "localhost:{}",
             *config.get_server_port().port()
@@ -50,15 +52,6 @@
             }
         };
         Ok(server)
-    }
-    pub async fn run_until_stopped<'a>(server: actix_web::dev::Server) -> Result<(), tufa_common::repositories_types::tufa_server::startup::RunUntilStoppedErrorNamed<'a>> {
-        match server.await {
-            Err(e) => Err(tufa_common::repositories_types::tufa_server::startup::RunUntilStoppedErrorNamed::RunUntilStopped {
-                run_until_stopped: e,
-                code_occurence: tufa_common::code_occurence!(),
-            }),
-            Ok(_) => Ok(()),
-        }
     }
 
 async fn run<'a>(
