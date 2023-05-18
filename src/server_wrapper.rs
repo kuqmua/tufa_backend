@@ -52,10 +52,7 @@ pub async fn server_wrapper<'a>(
             Ok(_) => (),
         },
     }
-    let worker_task = tokio::spawn(crate::issue_delivery_worker::run_worker_until_stopped(
-        settings,
-        config
-    ));
+    let worker_task = tokio::spawn(crate::issue_delivery_worker::run_worker_until_stopped(config));
     // tokio::select! {
     //     o = application_task => report_exit("API", o),
     //     o = worker_task => report_exit("Background worker", o),
