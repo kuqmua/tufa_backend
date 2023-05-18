@@ -24,6 +24,7 @@ pub fn entry<SelfGeneric>(
 
         + tufa_common::traits::get_postgres_database_settings::GetPostgresDatabaseSettings
         + tufa_common::traits::get_email_client_settings::GetEmailClientSettings
+        + tufa_common::traits::get_email_client::GetEmailClient
     )
 ) {
     match tokio::runtime::Builder::new_multi_thread()
