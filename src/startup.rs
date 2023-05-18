@@ -44,8 +44,8 @@ impl Application {
             listener,
             connection_pool,
             config.get_email_client(),
-            secrecy::Secret::new(config.get_hmac_secret().clone()),
-            secrecy::Secret::new(config.get_redis_url())//todo make it return secret. and config fields too
+            config.get_hmac_secret().clone(),
+            config.get_redis_url()
         )
         .await
         {
