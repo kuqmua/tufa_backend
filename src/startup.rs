@@ -43,9 +43,7 @@ impl Application {
         let server = match run(
             listener,
             connection_pool,
-            config.get_email_client(),
-            config.get_hmac_secret().clone(),
-            config.get_redis_url()
+            config
         )
         .await
         {
@@ -76,21 +74,25 @@ impl Application {
 async fn run<'a>(
     listener: std::net::TcpListener,
     db_pool: sqlx::PgPool,
-    email_client: tufa_common::repositories_types::tufa_server::email_client::EmailClient,
-    hmac_secret: secrecy::Secret<String>,
-    redis_uri: secrecy::Secret<String>,
+    config: &'static (
+        impl tufa_common::traits::get_email_client::GetEmailClient
+        + tufa_common::traits::config_fields::GetHmacSecret
+        + tufa_common::traits::get_redis_url::GetRedisUrl
+        + std::marker::Send 
+        + std::marker::Sync
+    )
 ) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationRunErrorNamed<'a>>> {
     let data_db_pool = actix_web::web::Data::new(db_pool);
-    let email_client = actix_web::web::Data::new(email_client);
+    let email_client = actix_web::web::Data::new(config.get_email_client());
     let secret_key = actix_web::cookie::Key::from({
         use secrecy::ExposeSecret;
-        hmac_secret.expose_secret()
+        config.get_hmac_secret().expose_secret()
     }.as_bytes());
     let message_store = actix_web_flash_messages::storage::CookieMessageStore::builder(secret_key.clone()).build();
     let message_framework = actix_web_flash_messages::FlashMessagesFramework::builder(message_store).build();
     let redis_store = match actix_session::storage::RedisSessionStore::new({
         use secrecy::ExposeSecret;
-        redis_uri.expose_secret()
+        config.get_redis_url().expose_secret()
     }).await {
         Ok(redis_session_store) => redis_session_store,
         Err(e) => {
@@ -154,7 +156,7 @@ async fn run<'a>(
             .app_data(data_db_pool.clone())
             .app_data(email_client.clone())
             .app_data( actix_web::web::Data::new("localhost"))
-            .app_data(actix_web::web::Data::new(hmac_secret.clone()))
+            .app_data(actix_web::web::Data::new(config.get_hmac_secret().clone()))
     })
     .listen(listener)
     {
