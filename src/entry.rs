@@ -21,6 +21,10 @@ pub fn entry<SelfGeneric>(
         + tufa_common::traits::config_fields::GetStartingCheckLink
         + tufa_common::traits::get_postgres_url::GetPostgresUrl<SelfGeneric>
         + tufa_common::traits::config_fields::GetPostgresConnectionTimeout
+
+        + tufa_common::traits::get_postgres_database_settings::GetPostgresDatabaseSettings
+        + tufa_common::traits::get_application_settings::GetApplicationSettings
+        + tufa_common::traits::get_email_client_settings::GetEmailClientSettings
     )
 ) {
     match tokio::runtime::Builder::new_multi_thread()

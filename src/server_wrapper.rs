@@ -11,23 +11,17 @@ pub async fn server_wrapper<'a>(
         + tufa_common::traits::config_fields::GetHmacSecret
         + tufa_common::traits::config_fields::GetRedisIp
         + tufa_common::traits::config_fields::GetRedisPort
+
+        + tufa_common::traits::config_fields::GetPostgresConnectionTimeout
+        + tufa_common::traits::get_postgres_database_settings::GetPostgresDatabaseSettings
+        + tufa_common::traits::get_application_settings::GetApplicationSettings
+        + tufa_common::traits::get_email_client_settings::GetEmailClientSettings
     )
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed<'a>>> {
     let configuration = tufa_common::repositories_types::tufa_server::configuration::Settings {
-        database: {
-            use tufa_common::traits::get_postgres_database_settings::GetPostgresDatabaseSettings;
-            config.get_postgres_database_settings()
-        },
-        application: {
-            use tufa_common::traits::get_application_settings::GetApplicationSettings;
-            config.get_application_settings()
-        },
-        email_client: tufa_common::repositories_types::tufa_server::configuration::EmailClientSettings {
-            base_url: config.get_base_url().clone(),
-            sender_email: "test@gmail.com".to_string(),
-            authorization_token: secrecy::Secret::new("my-secret-token".to_string()),
-            timeout_milliseconds: 10000,
-        },
+        database: config.get_postgres_database_settings(),
+        application: config.get_application_settings(),
+        email_client: config.get_email_client_settings(),
         redis_uri: secrecy::Secret::new(tufa_common::server::redis::get_redis_url::get_redis_url(config)),
     };
     let application = match crate::startup::Application::build(configuration.clone()).await {
