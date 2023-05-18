@@ -13,17 +13,10 @@ pub async fn server_wrapper<'a>(
         + tufa_common::traits::config_fields::GetRedisPort
 
         + tufa_common::traits::config_fields::GetPostgresConnectionTimeout
-        + tufa_common::traits::get_postgres_database_settings::GetPostgresDatabaseSettings
-        + tufa_common::traits::get_application_settings::GetApplicationSettings
-        + tufa_common::traits::get_email_client_settings::GetEmailClientSettings
+        + tufa_common::traits::get_settings::GetSettings
     )
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed<'a>>> {
-    let settings = tufa_common::repositories_types::tufa_server::settings::Settings {
-        database: config.get_postgres_database_settings(),
-        application: config.get_application_settings(),
-        email_client: config.get_email_client_settings(),
-        redis_uri: secrecy::Secret::new(tufa_common::server::redis::get_redis_url::get_redis_url(config)),
-    };
+    let settings = config.get_settings();
     let application = match crate::startup::Application::build(settings.clone()).await {
         Err(e) => return Err(Box::new(tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::ApplicationBuild {
             application_build: *e,
