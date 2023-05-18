@@ -1,5 +1,5 @@
 pub fn entry<SelfGeneric>(
-    config: &(
+    config: &'static (
         impl tufa_common::traits::config_fields::GetTracingType
 
         + tufa_common::traits::config_fields::GetPostgresIp
@@ -25,6 +25,9 @@ pub fn entry<SelfGeneric>(
         + tufa_common::traits::get_postgres_database_settings::GetPostgresDatabaseSettings
         + tufa_common::traits::get_email_client_settings::GetEmailClientSettings
         + tufa_common::traits::get_email_client::GetEmailClient
+
+        + std::marker::Send 
+        + std::marker::Sync
     )
 ) {
     match tokio::runtime::Builder::new_multi_thread()

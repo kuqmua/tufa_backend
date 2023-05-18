@@ -1,5 +1,5 @@
 pub async fn server_wrapper<'a>(
-    config: &'a (
+    config: &'static (
         impl tufa_common::traits::config_fields::GetPostgresIp
         + tufa_common::traits::config_fields::GetPostgresPort
         + tufa_common::traits::config_fields::GetPostgresLogin
@@ -15,6 +15,9 @@ pub async fn server_wrapper<'a>(
         + tufa_common::traits::config_fields::GetPostgresConnectionTimeout
         + tufa_common::traits::get_settings::GetSettings
         + tufa_common::traits::get_email_client::GetEmailClient
+
+        + std::marker::Send 
+        + std::marker::Sync
     )
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed<'a>>> {
     let settings = config.get_settings();
@@ -51,7 +54,8 @@ pub async fn server_wrapper<'a>(
     }
     let worker_task = tokio::spawn(crate::issue_delivery_worker::run_worker_until_stopped(
         settings,
-        config.get_email_client()
+        // config.get_email_client()
+        config
     ));
     // tokio::select! {
     //     o = application_task => report_exit("API", o),
