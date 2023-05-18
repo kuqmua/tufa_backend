@@ -1,8 +1,10 @@
 pub async fn prepare_server<'a, SelfGeneric>(
-    config: &'a (
+    config: &'static (
         impl tufa_common::traits::config_fields::GetStartingCheckLink
         + tufa_common::traits::get_postgres_url::GetPostgresUrl<SelfGeneric>
         + tufa_common::traits::config_fields::GetPostgresConnectionTimeout
+        + std::marker::Send 
+        + std::marker::Sync
     )
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::preparation::prepare_server::PrepareServerErrorNamed<'a>>> {
     if let Err(e) = tufa_common::repositories_types::tufa_server::preparation::check_availability::check_availability(
