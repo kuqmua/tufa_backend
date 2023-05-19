@@ -20,6 +20,7 @@ pub async fn server_wrapper<'a>(
         + tufa_common::traits::config_fields::GetSourcePlaceType
         + tufa_common::traits::config_fields::GetTimezone
         + tufa_common::traits::get_server_address::GetServerAddress
+        + tufa_common::traits::try_create_tcp_listener::TryCreateTcpListener<'a>
 
         + std::marker::Send 
         + std::marker::Sync
@@ -34,13 +35,13 @@ pub async fn server_wrapper<'a>(
     };
     let application_task = tokio::spawn(async move {
         match actix_web_dev_server.await {
-            Err(e) => Err(tufa_common::repositories_types::tufa_server::startup::RunUntilStoppedErrorNamed::RunUntilStopped {
+            Err(e) => Err(tufa_common::repositories_types::tufa_server::server_wrapper::RunUntilStoppedErrorNamed::RunUntilStopped {
                 run_until_stopped: e,
                 code_occurence: tufa_common::code_occurence!(),
             }),
             Ok(_) => Ok(()),
         }
-    });//
+    });
     // let worker_task = tokio::spawn(crate::issue_delivery_worker::run_worker_until_stopped(config));
     tokio::select! {
         task = application_task => match task {

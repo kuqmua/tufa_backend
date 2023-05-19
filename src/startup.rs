@@ -1,69 +1,28 @@
 //todo - make it async trait after async trait stabilization
-    pub async fn build<'a>(
-        config: &'static (
-            impl tufa_common::traits::config_fields::GetServerPort
-            + tufa_common::traits::config_fields::GetHmacSecret
-            + tufa_common::traits::get_email_client::GetEmailClient
-            + tufa_common::traits::get_postgres_connect_options_with_db::GetPostgresConnectOptionsWithDb
-            + tufa_common::traits::get_redis_url::GetRedisUrl
-            + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
-            + tufa_common::traits::get_server_address::GetServerAddress
-            + std::marker::Send 
-            + std::marker::Sync
-        )
-    ) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed<'a>>> {//todo - rename this error
-        let connection_pool = config.get_postgres_connection_pool();
-        let listener = match std::net::TcpListener::bind(&config.get_server_address()) {
-            Ok(listener) => listener,
-            Err(e) => {
-                return Err(Box::new(tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed::TcpListenerBind {
-                    tcp_listener_bind: e,
-                    code_occurence: tufa_common::code_occurence!(),
-                }))
-            }
-        };
-        let port = match listener.local_addr() {
-            Ok(address) => address,
-            Err(e) => {
-                return Err(Box::new(
-                    tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed::TcpListenerLocalAddress { 
-                        tcp_listener_local_address: e,
-                        code_occurence: tufa_common::code_occurence!(),
-                    },
-                ))
-            }
-        }
-        .port();
-        let server = match run(
-            listener,
-            connection_pool,
-            config
-        )
-        .await
-        {
-            Ok(server) => server,
-            Err(e) => {
-                return Err(Box::new(tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed::ApplicationRun {
-                    application_run: *e,
-                    code_occurence: tufa_common::code_occurence!(),
-                }))
-            }
-        };
-        Ok(server)
-    }
-
-async fn run<'a>(
-    listener: std::net::TcpListener,
-    db_pool: sqlx::PgPool,
+pub async fn build<'a>(
     config: &'static (
-        impl tufa_common::traits::get_email_client::GetEmailClient
+        impl tufa_common::traits::config_fields::GetServerPort
         + tufa_common::traits::config_fields::GetHmacSecret
+        + tufa_common::traits::get_email_client::GetEmailClient
+        + tufa_common::traits::get_postgres_connect_options_with_db::GetPostgresConnectOptionsWithDb
         + tufa_common::traits::get_redis_url::GetRedisUrl
+        + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
+        + tufa_common::traits::get_server_address::GetServerAddress
+        + tufa_common::traits::try_create_tcp_listener::TryCreateTcpListener<'a>
         + std::marker::Send 
         + std::marker::Sync
     )
-) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationRunErrorNamed<'a>>> {
-    let data_db_pool = actix_web::web::Data::new(db_pool);
+) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed<'a>>> {//todo - rename this error
+    let listener = match config.try_create_tcp_listener() {
+        Ok(listener) => listener,
+        Err(e) => {
+            return Err(Box::new(tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed::TcpListenerBind {
+                tcp_listener_bind: *e,
+                code_occurence: tufa_common::code_occurence!(),
+            }))
+        },
+    };
+    let data_db_pool = actix_web::web::Data::new(config.get_postgres_connection_pool());
     let email_client = actix_web::web::Data::new(config.get_email_client());
     let secret_key = actix_web::cookie::Key::from({
         use secrecy::ExposeSecret;
@@ -77,7 +36,7 @@ async fn run<'a>(
     }).await {
         Ok(redis_session_store) => redis_session_store,
         Err(e) => {
-            return Err(Box::new(tufa_common::repositories_types::tufa_server::startup::ApplicationRunErrorNamed::NewRedisSessionStore {
+            return Err(Box::new(tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed::NewRedisSessionStore {
                 new_redis_session_store: e.to_string(),
                 code_occurence: tufa_common::code_occurence!(),
             }))
@@ -143,7 +102,7 @@ async fn run<'a>(
     {
         Ok(server) => server,
         Err(e) => {
-            return Err(Box::new(tufa_common::repositories_types::tufa_server::startup::ApplicationRunErrorNamed::HttpServerListen {
+            return Err(Box::new(tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed::HttpServerListen {
                 http_server_listen: e,
                 code_occurence: tufa_common::code_occurence!(),
             }))

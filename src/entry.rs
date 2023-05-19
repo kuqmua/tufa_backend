@@ -1,4 +1,4 @@
-pub fn entry<SelfGeneric>(
+pub fn entry<'a, SelfGeneric>(
     config: &'static (
         impl tufa_common::traits::config_fields::GetTracingType
 
@@ -28,6 +28,7 @@ pub fn entry<SelfGeneric>(
         + tufa_common::traits::config_fields::GetSourcePlaceType
         + tufa_common::traits::config_fields::GetTimezone
         + tufa_common::traits::get_server_address::GetServerAddress
+        + tufa_common::traits::try_create_tcp_listener::TryCreateTcpListener<'a>
 
         + std::marker::Send 
         + std::marker::Sync
