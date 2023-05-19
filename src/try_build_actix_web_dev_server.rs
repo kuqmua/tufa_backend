@@ -55,7 +55,8 @@ pub async fn try_build_actix_web_dev_server<'a>(
             .wrap(
                 actix_cors::Cors::default()
                     .supports_credentials()
-                    .allowed_origin(&config.get_access_control_allow_origin())//"http://127.0.0.1:8080"
+                    // .allowed_origin(&config.get_access_control_allow_origin())
+                    .allow_any_origin()
                     .allow_any_method()
                     .allow_any_header()
                     .expose_any_header()
@@ -97,7 +98,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
             )
             .app_data(actix_web::web::Data::new(postgres_connection_pool.clone()))
             .app_data(actix_web::web::Data::new(config.get_email_client()))
-            .app_data( actix_web::web::Data::new("localhost"))
+            // .app_data( actix_web::web::Data::new("localhost"))
             .app_data(actix_web::web::Data::new(config.get_hmac_secret()))
     })
     .listen(tcp_listener)
