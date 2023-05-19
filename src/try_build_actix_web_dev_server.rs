@@ -1,5 +1,5 @@
 //todo - make it async trait after async trait stabilization
-pub async fn build<'a>(
+pub async fn try_build_actix_web_dev_server<'a>(
     config: &'static (
         impl tufa_common::traits::config_fields::GetServerPort
         + tufa_common::traits::config_fields::GetHmacSecret

@@ -205,7 +205,7 @@ pub async fn spawn_app() -> TestApp {
         &crate::global_variables::runtime::config::CONFIG,
     );
     configure_database(config).await;
-    let application = crate::startup::Application::build(
+    let application = crate::try_build_actix_web_dev_server::Application::build(//try_build_actix_web_dev_server
         config
     )
         .await
@@ -220,7 +220,7 @@ pub async fn spawn_app() -> TestApp {
     let test_app = TestApp {
         address: format!("http://localhost:{}", application_port),
         port: application_port,
-        db_pool: crate::startup::get_connection_pool(&configuration.database),
+        db_pool: crate::try_build_actix_web_dev_server::get_connection_pool(&configuration.database),
         email_server,
         test_user: TestUser::generate(),
         api_client: client,

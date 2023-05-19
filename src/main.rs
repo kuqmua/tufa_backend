@@ -17,7 +17,7 @@ mod tests;
 pub mod authentication;
 pub mod issue_delivery_worker;
 pub mod routes;
-pub mod startup;
+pub mod try_build_actix_web_dev_server;
 pub mod idempotency;
 
 pub mod dev;
