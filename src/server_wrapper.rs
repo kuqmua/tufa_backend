@@ -11,14 +11,12 @@ pub async fn server_wrapper<'a>(
         + tufa_common::traits::config_fields::GetHmacSecret
         + tufa_common::traits::config_fields::GetRedisIp
         + tufa_common::traits::config_fields::GetRedisPort
-
         + tufa_common::traits::config_fields::GetPostgresConnectionTimeout
-        + tufa_common::traits::get_email_client::GetEmailClient
-
-        + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
-
         + tufa_common::traits::config_fields::GetSourcePlaceType
         + tufa_common::traits::config_fields::GetTimezone
+        + tufa_common::traits::config_fields::GetAccessControlMaxAge
+        + tufa_common::traits::get_email_client::GetEmailClient
+        + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
         + tufa_common::traits::get_server_address::GetServerAddress
         + tufa_common::traits::try_create_tcp_listener::TryCreateTcpListener<'a>
 
