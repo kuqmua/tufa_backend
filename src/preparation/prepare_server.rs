@@ -8,10 +8,6 @@ pub async fn prepare_server<'a, SelfGeneric>(
     )
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::preparation::prepare_server::PrepareServerErrorNamed<'a>>> {
     if let Err(e) = tufa_common::repositories_types::tufa_server::preparation::check_availability::check_availability(
-        // {
-        //     use std::ops::Deref;
-        //     crate::global_variables::runtime::mongo_client_options::MONGO_CLIENT_OPTIONS.deref().to_owned()
-        // },
         config,
     ).await {
         return Err(Box::new(
