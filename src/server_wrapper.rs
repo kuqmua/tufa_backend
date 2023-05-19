@@ -15,6 +15,7 @@ pub async fn server_wrapper<'a>(
         + tufa_common::traits::config_fields::GetSourcePlaceType
         + tufa_common::traits::config_fields::GetTimezone
         + tufa_common::traits::config_fields::GetAccessControlMaxAge
+        + tufa_common::traits::config_fields::GetAccessControlAllowOrigin
         + tufa_common::traits::get_email_client::GetEmailClient
         + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
         + tufa_common::traits::get_server_address::GetServerAddress

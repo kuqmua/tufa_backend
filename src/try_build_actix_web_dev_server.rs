@@ -4,6 +4,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
         impl tufa_common::traits::config_fields::GetServerPort
         + tufa_common::traits::config_fields::GetHmacSecret
         + tufa_common::traits::config_fields::GetAccessControlMaxAge
+        + tufa_common::traits::config_fields::GetAccessControlAllowOrigin
         + tufa_common::traits::get_email_client::GetEmailClient
         + tufa_common::traits::get_postgres_connect_options_with_db::GetPostgresConnectOptionsWithDb
         + tufa_common::traits::get_redis_url::GetRedisUrl
@@ -54,7 +55,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
             .wrap(
                 actix_cors::Cors::default()
                     .supports_credentials()
-                    .allowed_origin("http://127.0.0.1:8080")
+                    .allowed_origin(&config.get_access_control_allow_origin())//"http://127.0.0.1:8080"
                     .allow_any_method()
                     .allow_any_header()
                     .expose_any_header()

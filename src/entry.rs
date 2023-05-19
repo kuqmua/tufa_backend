@@ -11,7 +11,6 @@ pub fn entry<'a, SelfGeneric>(
         + tufa_common::traits::config_fields::GetHmacSecret
         + tufa_common::traits::config_fields::GetRedisIp
         + tufa_common::traits::config_fields::GetRedisPort
-        + tufa_common::traits::config_fields::GetAccessControlMaxAge
         + tufa_common::traits::config_fields::GetServerPort
         + tufa_common::traits::config_fields::GetSourcePlaceType
         + tufa_common::traits::config_fields::GetTimezone
@@ -19,6 +18,8 @@ pub fn entry<'a, SelfGeneric>(
         + tufa_common::traits::config_fields::GetPostgresConnectionTimeout
         + tufa_common::traits::config_fields::GetSourcePlaceType
         + tufa_common::traits::config_fields::GetTimezone
+        + tufa_common::traits::config_fields::GetAccessControlMaxAge
+        + tufa_common::traits::config_fields::GetAccessControlAllowOrigin
         + tufa_common::traits::get_postgres_url::GetPostgresUrl<SelfGeneric>
         + tufa_common::traits::get_email_client::GetEmailClient
         + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
