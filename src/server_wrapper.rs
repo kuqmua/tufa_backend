@@ -34,7 +34,10 @@ pub async fn server_wrapper<'a>(
         Ok(app) => app,
     };
     let application_task = tokio::spawn(async move {
-        match actix_web_dev_server.await {
+        match 
+            actix_web_dev_server
+            .await 
+        {
             Err(e) => Err(tufa_common::repositories_types::tufa_server::server_wrapper::RunUntilStoppedErrorNamed::RunUntilStopped {
                 run_until_stopped: e,
                 code_occurence: tufa_common::code_occurence!(),

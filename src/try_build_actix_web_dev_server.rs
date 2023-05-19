@@ -12,11 +12,11 @@ pub async fn try_build_actix_web_dev_server<'a>(
         + std::marker::Send 
         + std::marker::Sync
     )
-) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed<'a>>> {//todo - rename this error
+) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::TryBuildActixWebDevServer<'a>>> {//todo - rename this error
     let listener = match config.try_create_tcp_listener() {
         Ok(listener) => listener,
         Err(e) => {
-            return Err(Box::new(tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed::TcpListenerBind {
+            return Err(Box::new(tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::TryBuildActixWebDevServer::TcpListenerBind {
                 tcp_listener_bind: *e,
                 code_occurence: tufa_common::code_occurence!(),
             }))
@@ -36,7 +36,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
     }).await {
         Ok(redis_session_store) => redis_session_store,
         Err(e) => {
-            return Err(Box::new(tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed::NewRedisSessionStore {
+            return Err(Box::new(tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::TryBuildActixWebDevServer::NewRedisSessionStore {
                 new_redis_session_store: e.to_string(),
                 code_occurence: tufa_common::code_occurence!(),
             }))
@@ -102,7 +102,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
     {
         Ok(server) => server,
         Err(e) => {
-            return Err(Box::new(tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed::HttpServerListen {
+            return Err(Box::new(tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::TryBuildActixWebDevServer::HttpServerListen {
                 http_server_listen: e,
                 code_occurence: tufa_common::code_occurence!(),
             }))
