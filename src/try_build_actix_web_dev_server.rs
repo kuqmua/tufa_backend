@@ -10,10 +10,10 @@ pub async fn try_build_actix_web_dev_server<'a>(
         + tufa_common::traits::get_redis_url::GetRedisUrl
         + tufa_common::traits::get_server_address::GetServerAddress
         + tufa_common::traits::try_create_tcp_listener::TryCreateTcpListener<'a>
+        + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
         + std::marker::Send 
         + std::marker::Sync
-    ),
-    postgres_connection_pool: sqlx::PgPool
+    )
 ) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::TryBuildActixWebDevServer<'a>>> {
     let tcp_listener = match config.try_create_tcp_listener() {
         Ok(tcp_listener) => tcp_listener,
@@ -96,7 +96,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 "/get_providers_posts",
                 actix_web::web::post().to(tufa_common::repositories_types::tufa_server::routes::get_providers_posts_route::get_providers_posts_route),
             )
-            .app_data(actix_web::web::Data::new(postgres_connection_pool.clone()))
+            .app_data(actix_web::web::Data::new(config.get_postgres_connection_pool()))
             .app_data(actix_web::web::Data::new(config.get_email_client()))
             // .app_data( actix_web::web::Data::new("localhost"))
             .app_data(actix_web::web::Data::new(config.get_hmac_secret()))
