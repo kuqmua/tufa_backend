@@ -26,7 +26,11 @@ pub async fn server_wrapper<'a>(
         + std::marker::Sync
     )
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed<'a>>> {
-    let actix_web_dev_server = match crate::try_build_actix_web_dev_server::try_build_actix_web_dev_server(config).await {
+    let postgres_connection_pool = config.get_postgres_connection_pool();
+    let actix_web_dev_server = match crate::try_build_actix_web_dev_server::try_build_actix_web_dev_server(
+        config,
+        postgres_connection_pool
+    ).await {
         Err(e) => return Err(Box::new(tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::ApplicationBuild {
             application_build: *e,
             code_occurence: tufa_common::code_occurence!(),
@@ -45,7 +49,10 @@ pub async fn server_wrapper<'a>(
             Ok(_) => Ok(()),
         }
     });
-    // let worker_task = tokio::spawn(crate::issue_delivery_worker::run_worker_until_stopped(config));
+    // let worker_task = tokio::spawn(crate::issue_delivery_worker::run_worker_until_stopped(
+    //    config,
+    //    postgres_connection_pool//todo - maybe need to share PgPool between application_task and worker task
+    // ));
     tokio::select! {
         task = application_task => match task {
             Ok(Ok(())) => (),
