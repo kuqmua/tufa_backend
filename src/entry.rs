@@ -27,6 +27,7 @@ pub fn entry<SelfGeneric>(
 
         + tufa_common::traits::config_fields::GetSourcePlaceType
         + tufa_common::traits::config_fields::GetTimezone
+        + tufa_common::traits::get_server_address::GetServerAddress
 
         + std::marker::Send 
         + std::marker::Sync

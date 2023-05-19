@@ -7,15 +7,13 @@
             + tufa_common::traits::get_postgres_connect_options_with_db::GetPostgresConnectOptionsWithDb
             + tufa_common::traits::get_redis_url::GetRedisUrl
             + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
+            + tufa_common::traits::get_server_address::GetServerAddress
             + std::marker::Send 
             + std::marker::Sync
         )
     ) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed<'a>>> {//todo - rename this error
         let connection_pool = config.get_postgres_connection_pool();
-        let listener = match std::net::TcpListener::bind(&format!(
-            "localhost:{}",
-            *config.get_server_port().port()
-        )) {
+        let listener = match std::net::TcpListener::bind(&config.get_server_address()) {
             Ok(listener) => listener,
             Err(e) => {
                 return Err(Box::new(tufa_common::repositories_types::tufa_server::startup::ApplicationBuildErrorNamed::TcpListenerBind {
