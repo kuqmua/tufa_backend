@@ -18,7 +18,21 @@ pub async fn server_wrapper<'a>(
         + std::marker::Sync
     )
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed<'a>>> {
-    let actix_web_dev_server = match crate::try_build_actix_web_dev_server::try_build_actix_web_dev_server(config).await {
+    let tcp_listener = match config.try_create_tcp_listener() {
+        Ok(tcp_listener) => tcp_listener,
+        Err(e) => {
+            return Err(Box::new(
+                tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::TcpListenerBind {
+                    tcp_listener_bind: *e,
+                    code_occurence: tufa_common::code_occurence!(),
+                }
+            ))
+        },
+    };
+    let actix_web_dev_server = match crate::try_build_actix_web_dev_server::try_build_actix_web_dev_server(
+        tcp_listener,
+        config
+    ).await {
         Err(e) => return Err(Box::new(tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::ApplicationBuild {
             application_build: *e,
             code_occurence: tufa_common::code_occurence!(),

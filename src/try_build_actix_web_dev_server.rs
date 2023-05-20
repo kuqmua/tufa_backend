@@ -1,5 +1,6 @@
 //todo - make it async trait after async trait stabilization
 pub async fn try_build_actix_web_dev_server<'a>(
+    tcp_listener: std::net::TcpListener,
     config: &'static (
         impl tufa_common::traits::config_fields::GetServerPort
         + tufa_common::traits::config_fields::GetHmacSecret
@@ -15,17 +16,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
         + std::marker::Sync
     )
 ) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::TryBuildActixWebDevServer<'a>>> {
-    let tcp_listener = match config.try_create_tcp_listener() {
-        Ok(tcp_listener) => tcp_listener,
-        Err(e) => {
-            return Err(Box::new(tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::TryBuildActixWebDevServer::TcpListenerBind {
-                tcp_listener_bind: *e,
-                code_occurence: tufa_common::code_occurence!(),
-            }))
-        },
-    };
-    let postgres_pool = futures::executor::block_on(config.try_get_postgres_pool()).expect("wrong");
-    let app = move || {
+    let server = match actix_web::HttpServer::new(move || {
         let secret_key = actix_web::cookie::Key::from({
             use secrecy::ExposeSecret;
             config.get_hmac_secret().expose_secret()
@@ -86,13 +77,12 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 "/get_providers_posts",
                 actix_web::web::post().to(tufa_common::repositories_types::tufa_server::routes::get_providers_posts_route::get_providers_posts_route),
             )
-            .app_data(actix_web::web::Data::new(postgres_pool.clone()))//if use it without .clone() - will be runtime error if you try to reach route
+            .app_data(actix_web::web::Data::new(config.get_postgres_pool().clone()))//if use it without .clone() - will be runtime error if you try to reach route
             .app_data(actix_web::web::Data::new(config.get_email_client()))
             // .app_data( actix_web::web::Data::new("localhost"))
             .app_data(actix_web::web::Data::new(config.get_hmac_secret()))
         
-    };
-    let server = match actix_web::HttpServer::new(app)
+    })
     .listen(tcp_listener)
     {
         Ok(server) => server,
