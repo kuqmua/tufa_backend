@@ -5,12 +5,11 @@ pub async fn try_build_actix_web_dev_server<'a>(
         + tufa_common::traits::config_fields::GetHmacSecret
         + tufa_common::traits::config_fields::GetAccessControlMaxAge
         + tufa_common::traits::config_fields::GetAccessControlAllowOrigin
+        + tufa_common::traits::config_fields::GetPostgresPool
         + tufa_common::traits::get_email_client::GetEmailClient
-        + tufa_common::traits::get_postgres_connect_options_with_db::GetPostgresConnectOptionsWithDb
         + tufa_common::traits::get_redis_url::GetRedisUrl
         + tufa_common::traits::get_server_address::GetServerAddress
         + tufa_common::traits::try_create_tcp_listener::TryCreateTcpListener<'a>
-        + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
         + std::marker::Send 
         + std::marker::Sync
     )
@@ -36,6 +35,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
             }))
         }
     };
+    let pool = config.get_postgres_pool();//if use it without .clone() - will be runtime error if you try to reach route
     let server = match actix_web::HttpServer::new(move || {
         let secret_key = actix_web::cookie::Key::from({
             use secrecy::ExposeSecret;
@@ -75,6 +75,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
             )
             .route("/login", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::login::login_form))
             .route("/login", actix_web::web::post().to(crate::routes::login::login))
+            .route("/tests", actix_web::web::get().to(crate::routes::tests))
             .route("/health_check", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::health_check))
             .service(
                 actix_web::web::scope("/api")
@@ -96,7 +97,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 "/get_providers_posts",
                 actix_web::web::post().to(tufa_common::repositories_types::tufa_server::routes::get_providers_posts_route::get_providers_posts_route),
             )
-            .app_data(actix_web::web::Data::new(config.get_postgres_connection_pool()))
+            .app_data(actix_web::web::Data::new(pool.clone()))
             .app_data(actix_web::web::Data::new(config.get_email_client()))
             // .app_data( actix_web::web::Data::new("localhost"))
             .app_data(actix_web::web::Data::new(config.get_hmac_secret()))

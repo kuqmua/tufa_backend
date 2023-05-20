@@ -1,12 +1,6 @@
 pub fn entry<'a>(
     config: &'static (
         impl tufa_common::traits::config_fields::GetTracingType
-        + tufa_common::traits::config_fields::GetPostgresIp
-        + tufa_common::traits::config_fields::GetPostgresPort
-        + tufa_common::traits::config_fields::GetPostgresLogin
-        + tufa_common::traits::config_fields::GetPostgresPassword
-        + tufa_common::traits::config_fields::GetPostgresDb
-        + tufa_common::traits::config_fields::GetRequireSsl
         + tufa_common::traits::config_fields::GetBaseUrl
         + tufa_common::traits::config_fields::GetHmacSecret
         + tufa_common::traits::config_fields::GetRedisIp
@@ -20,8 +14,8 @@ pub fn entry<'a>(
         + tufa_common::traits::config_fields::GetTimezone
         + tufa_common::traits::config_fields::GetAccessControlMaxAge
         + tufa_common::traits::config_fields::GetAccessControlAllowOrigin
+        + tufa_common::traits::config_fields::GetPostgresPool
         + tufa_common::traits::get_email_client::GetEmailClient
-        + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
         + tufa_common::traits::get_server_address::GetServerAddress
         + tufa_common::traits::try_create_tcp_listener::TryCreateTcpListener<'a>
 
