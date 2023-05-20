@@ -1,5 +1,3 @@
-use tufa_common::server::redis::redis_try_get_session_storage;
-
 //todo - make it async trait after async trait stabilization
 pub async fn try_build_actix_web_dev_server<'a>(
     tcp_listener: std::net::TcpListener,
