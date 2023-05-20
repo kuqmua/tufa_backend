@@ -29,8 +29,20 @@ pub async fn server_wrapper<'a>(
             ))
         },
     };
+    let postgres_pool = match config.try_get_postgres_pool().await {
+        Ok(postgres_pool) => postgres_pool,
+        Err(e) => {
+            return Err(Box::new(
+                tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::TryGetPostgresPool {
+                    try_get_postgres_pool: e,
+                    code_occurence: tufa_common::code_occurence!(),
+                }
+            ))
+        },
+    };
     let actix_web_dev_server = match crate::try_build_actix_web_dev_server::try_build_actix_web_dev_server(
         tcp_listener,
+        postgres_pool,
         config
     ).await {
         Err(e) => return Err(Box::new(tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::ApplicationBuild {

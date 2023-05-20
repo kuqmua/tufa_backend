@@ -1,6 +1,7 @@
 //todo - make it async trait after async trait stabilization
 pub async fn try_build_actix_web_dev_server<'a>(
     tcp_listener: std::net::TcpListener,
+    postgres_pool: sqlx::Pool<sqlx::Postgres>,
     config: &'static (
         impl tufa_common::traits::config_fields::GetServerPort
         + tufa_common::traits::config_fields::GetHmacSecret
@@ -77,10 +78,11 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 "/get_providers_posts",
                 actix_web::web::post().to(tufa_common::repositories_types::tufa_server::routes::get_providers_posts_route::get_providers_posts_route),
             )
-            .app_data(actix_web::web::Data::new(config.get_postgres_pool().clone()))//if use it without .clone() - will be runtime error if you try to reach route
+            .app_data(actix_web::web::Data::new(postgres_pool.clone()))//if use it without .clone() - will be runtime error if you try to reach route
             .app_data(actix_web::web::Data::new(config.get_email_client()))
             // .app_data( actix_web::web::Data::new("localhost"))
             .app_data(actix_web::web::Data::new(config.get_hmac_secret()))
+            .app_data(actix_web::web::Data::new(config.clone()))
         
     })
     .listen(tcp_listener)
