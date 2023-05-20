@@ -7,7 +7,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
         + tufa_common::traits::config_fields::GetHmacSecret
         + tufa_common::traits::config_fields::GetAccessControlMaxAge
         + tufa_common::traits::config_fields::GetAccessControlAllowOrigin
-        + tufa_common::traits::config_fields::GetPostgresPool
         + tufa_common::traits::config_fields::GetRedisSessionStorage
         + tufa_common::traits::try_get_postgres_pool::TryGetPostgresPool
         + tufa_common::traits::get_email_client::GetEmailClient

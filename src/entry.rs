@@ -12,7 +12,6 @@ pub fn entry<'a>(
         + tufa_common::traits::config_fields::GetTimezone
         + tufa_common::traits::config_fields::GetAccessControlMaxAge
         + tufa_common::traits::config_fields::GetAccessControlAllowOrigin
-        + tufa_common::traits::config_fields::GetPostgresPool
         + tufa_common::traits::try_get_postgres_pool::TryGetPostgresPool
         + tufa_common::traits::get_email_client::GetEmailClient
         + tufa_common::traits::get_server_address::GetServerAddress
