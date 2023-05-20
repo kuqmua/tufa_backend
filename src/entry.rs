@@ -9,7 +9,6 @@ pub fn entry<'a>(
         + tufa_common::traits::config_fields::GetSourcePlaceType
         + tufa_common::traits::config_fields::GetTimezone
         + tufa_common::traits::config_fields::GetStartingCheckLink
-        + tufa_common::traits::config_fields::GetPostgresConnectionTimeout
         + tufa_common::traits::config_fields::GetSourcePlaceType
         + tufa_common::traits::config_fields::GetTimezone
         + tufa_common::traits::config_fields::GetAccessControlMaxAge

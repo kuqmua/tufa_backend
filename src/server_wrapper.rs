@@ -5,7 +5,6 @@ pub async fn server_wrapper<'a>(
         + tufa_common::traits::config_fields::GetHmacSecret
         + tufa_common::traits::config_fields::GetRedisIp
         + tufa_common::traits::config_fields::GetRedisPort
-        + tufa_common::traits::config_fields::GetPostgresConnectionTimeout
         + tufa_common::traits::config_fields::GetSourcePlaceType
         + tufa_common::traits::config_fields::GetTimezone
         + tufa_common::traits::config_fields::GetAccessControlMaxAge
