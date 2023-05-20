@@ -3,7 +3,6 @@ pub async fn server_wrapper<'a>(
         impl tufa_common::traits::config_fields::GetServerPort
         + tufa_common::traits::config_fields::GetBaseUrl
         + tufa_common::traits::config_fields::GetHmacSecret
-        + tufa_common::traits::config_fields::GetRedisSessionStorage
         + tufa_common::traits::config_fields::GetSourcePlaceType
         + tufa_common::traits::config_fields::GetTimezone
         + tufa_common::traits::config_fields::GetAccessControlMaxAge
@@ -12,6 +11,7 @@ pub async fn server_wrapper<'a>(
         + tufa_common::traits::get_email_client::GetEmailClient
         + tufa_common::traits::get_server_address::GetServerAddress
         + tufa_common::traits::try_create_tcp_listener::TryCreateTcpListener<'a>
+        + tufa_common::traits::try_get_redis_session_storage::TryGetRedisSessionStorage
 
         + std::marker::Send 
         + std::marker::Sync
@@ -39,9 +39,21 @@ pub async fn server_wrapper<'a>(
             ))
         },
     };
+    let redis_session_storage = match config.try_get_redis_session_storage().await {
+        Ok(redis_session_storage) => redis_session_storage,
+        Err(e) => {
+            return Err(Box::new(
+                tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::TryGetRedisSessionStorage {
+                    try_get_redis_session_storage: e,
+                    code_occurence: tufa_common::code_occurence!(),
+                }
+            ))
+        },
+    };
     let actix_web_dev_server = match crate::try_build_actix_web_dev_server::try_build_actix_web_dev_server(
         tcp_listener,
         postgres_pool,
+        redis_session_storage,
         config
     ).await {
         Err(e) => return Err(Box::new(tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::ApplicationBuild {

@@ -1,13 +1,16 @@
+use tufa_common::server::redis::redis_try_get_session_storage;
+
 //todo - make it async trait after async trait stabilization
 pub async fn try_build_actix_web_dev_server<'a>(
     tcp_listener: std::net::TcpListener,
     postgres_pool: sqlx::Pool<sqlx::Postgres>,
+    redis_session_storage: actix_session::storage::RedisSessionStore,
     config: &'static (
         impl tufa_common::traits::config_fields::GetServerPort
         + tufa_common::traits::config_fields::GetHmacSecret
         + tufa_common::traits::config_fields::GetAccessControlMaxAge
         + tufa_common::traits::config_fields::GetAccessControlAllowOrigin
-        + tufa_common::traits::config_fields::GetRedisSessionStorage
+        // + tufa_common::traits::config_fields::GetRedisSessionStorage
         + tufa_common::traits::try_get_postgres_pool::TryGetPostgresPool
         + tufa_common::traits::get_email_client::GetEmailClient
         + tufa_common::traits::get_server_address::GetServerAddress
@@ -28,7 +31,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 .build()
             )
             .wrap(actix_session::SessionMiddleware::new(
-                config.get_redis_session_storage().clone(),
+                redis_session_storage.clone(),
                 secret_key,
             ))
             .wrap(tracing_actix_web::TracingLogger::default())

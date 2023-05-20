@@ -3,7 +3,7 @@ pub fn entry<'a>(
         impl tufa_common::traits::config_fields::GetTracingType
         + tufa_common::traits::config_fields::GetBaseUrl
         + tufa_common::traits::config_fields::GetHmacSecret
-        + tufa_common::traits::config_fields::GetRedisSessionStorage
+        + tufa_common::traits::config_fields::GetRedisUrl
         + tufa_common::traits::config_fields::GetServerPort
         + tufa_common::traits::config_fields::GetSourcePlaceType
         + tufa_common::traits::config_fields::GetTimezone
@@ -16,6 +16,7 @@ pub fn entry<'a>(
         + tufa_common::traits::get_email_client::GetEmailClient
         + tufa_common::traits::get_server_address::GetServerAddress
         + tufa_common::traits::try_create_tcp_listener::TryCreateTcpListener<'a>
+        + tufa_common::traits::try_get_redis_session_storage::TryGetRedisSessionStorage
 
         + std::marker::Send 
         + std::marker::Sync
