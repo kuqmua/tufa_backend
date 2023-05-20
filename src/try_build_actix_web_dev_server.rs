@@ -7,7 +7,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
         + tufa_common::traits::config_fields::GetAccessControlAllowOrigin
         + tufa_common::traits::config_fields::GetPostgresPool
         + tufa_common::traits::get_email_client::GetEmailClient
-        + tufa_common::traits::get_redis_url::GetRedisUrl
+        + tufa_common::traits::config_fields::GetRedisSessionStorage
         + tufa_common::traits::get_server_address::GetServerAddress
         + tufa_common::traits::try_create_tcp_listener::TryCreateTcpListener<'a>
         + std::marker::Send 
@@ -23,18 +23,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
             }))
         },
     };
-    let redis_session_store = match actix_session::storage::RedisSessionStore::new({
-        use secrecy::ExposeSecret;
-        config.get_redis_url().expose_secret()
-    }).await {
-        Ok(redis_session_store) => redis_session_store,
-        Err(e) => {
-            return Err(Box::new(tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::TryBuildActixWebDevServer::NewRedisSessionStore {
-                new_redis_session_store: e.to_string(),
-                code_occurence: tufa_common::code_occurence!(),
-            }))
-        }
-    };
     let server = match actix_web::HttpServer::new(move || {
         let secret_key = actix_web::cookie::Key::from({
             use secrecy::ExposeSecret;
@@ -47,7 +35,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 .build()
             )
             .wrap(actix_session::SessionMiddleware::new(
-                redis_session_store.clone(),
+                config.get_redis_session_storage().clone(),
                 secret_key,
             ))
             .wrap(tracing_actix_web::TracingLogger::default())

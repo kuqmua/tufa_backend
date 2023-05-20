@@ -3,8 +3,7 @@ pub async fn server_wrapper<'a>(
         impl tufa_common::traits::config_fields::GetServerPort
         + tufa_common::traits::config_fields::GetBaseUrl
         + tufa_common::traits::config_fields::GetHmacSecret
-        + tufa_common::traits::config_fields::GetRedisIp
-        + tufa_common::traits::config_fields::GetRedisPort
+        + tufa_common::traits::config_fields::GetRedisSessionStorage
         + tufa_common::traits::config_fields::GetSourcePlaceType
         + tufa_common::traits::config_fields::GetTimezone
         + tufa_common::traits::config_fields::GetAccessControlMaxAge
