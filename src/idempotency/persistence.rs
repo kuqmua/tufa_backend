@@ -1,9 +1,9 @@
-use tufa_common::repositories_types::tufa_server::idempotency::persistence::HeaderPairRecord;
 pub async fn get_saved_response<'a>(
     pool: &sqlx::PgPool,
     idempotency_key: &tufa_common::repositories_types::tufa_server::idempotency::IdempotencyKey,
     user_id: uuid::Uuid,
 ) -> Result<Option<actix_web::HttpResponse>, tufa_common::repositories_types::tufa_server::idempotency::persistence::GetSavedResponseErrorNamed<'a>> {
+    use tufa_common::repositories_types::tufa_server::idempotency::persistence::HeaderPairRecord;
     //todo - sqlx::query! is a macro to check db on compile time. DATABASE_URL must be set in env variables. its not for lib. change it later
     let saved_response = match sqlx::query!(
         r#"

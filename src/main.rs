@@ -8,7 +8,6 @@
 
 pub mod entry;
 pub mod global_variables;
-mod preparation;
 mod server_wrapper;
 #[cfg(test)]
 mod tests;

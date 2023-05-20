@@ -50,7 +50,7 @@ pub fn entry<'a, SelfGeneric>(
             }
             else {
                 //preparation logic must be enabled by default. service must check on existing database tables.
-                if let Err(e) = runtime.block_on(crate::preparation::prepare_server::prepare_server(config)) {
+                if let Err(e) = runtime.block_on(tufa_common::server::net::net_check_availability::net_check_availability(config.get_starting_check_link())) {
                     use tufa_common::traits::error_logs_logic::error_log::ErrorLog;
                     e.error_log(config);
                     // let e_serialize_deserialize_version = e.into_serialize_deserialize_version();
