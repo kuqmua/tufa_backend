@@ -2,8 +2,8 @@
 //     config: &'static (
 //         impl tufa_common::traits::get_email_client::GetEmailClient
 //         + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
-//         + tufa_common::traits::config_fields::GetSourcePlaceType
-//         + tufa_common::traits::config_fields::GetTimezone
+//         + tufa_common::common::config::config_fields::GetSourcePlaceType
+//         + tufa_common::common::config::config_fields::GetTimezone
 //         + std::marker::Send 
 //         + std::marker::Sync
 //     )

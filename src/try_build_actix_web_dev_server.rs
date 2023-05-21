@@ -8,7 +8,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
     let server = match actix_web::HttpServer::new(move || {
         let secret_key = actix_web::cookie::Key::from({
             use secrecy::ExposeSecret;
-            use tufa_common::traits::config_fields::GetHmacSecret;
+            use tufa_common::common::config::config_fields::GetHmacSecret;
             config.get_hmac_secret().expose_secret()
         }.as_bytes());
             actix_web::App::new()
@@ -31,7 +31,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
                     .allow_any_header()
                     .expose_any_header()
                     .max_age({
-                        use tufa_common::traits::config_fields::GetAccessControlMaxAge;
+                        use tufa_common::common::config::config_fields::GetAccessControlMaxAge;
                         *config.get_access_control_max_age()
                     }),
             ) //todo concrete host \ domain
@@ -76,7 +76,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 config.get_email_client()
             }))
             .app_data(actix_web::web::Data::new({
-                use tufa_common::traits::config_fields::GetHmacSecret;
+                use tufa_common::common::config::config_fields::GetHmacSecret;
                 config.get_hmac_secret().clone()
             }))
             .app_data(actix_web::web::Data::new(config))

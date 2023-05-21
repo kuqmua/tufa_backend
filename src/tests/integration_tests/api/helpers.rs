@@ -234,7 +234,7 @@ async fn configure_database(
     config: &'static (
         impl tufa_common::traits::get_postgres_connect_options_with_db::GetPostgresConnectOptionsWithDb
         + tufa_common::traits::get_postgres_connect_options_without_db::GetPostgresConnectOptionsWithoutDb
-        + tufa_common::traits::config_fields::GetPostgresDb
+        + tufa_common::common::config::config_fields::GetPostgresDb
     )
 ) -> sqlx::PgPool {
     let mut connection = sqlx::PgConnection::connect_with(
