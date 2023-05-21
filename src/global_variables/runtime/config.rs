@@ -4,3 +4,5 @@ pub static CONFIG:  once_cell::sync::Lazy<tufa_common::repositories_types::tufa_
         .unwrap_or_else(|e| panic!("failed to ConfigUnchecked::new(), reason: {e:#?}"))
     ).unwrap_or_else(|e| panic!("failed to Config try_from ConfigUnchecked, reason: {e}"))
 });
+
+//Arc<RwLock<Store>>
