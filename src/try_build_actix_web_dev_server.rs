@@ -59,8 +59,8 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 .service(
                     actix_web::web::scope("/json")
                     .route("/git_info", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::git::git_info_json::git_info_json))
-                    .route("/json_example", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::json_example::json_example))
-                    .route("/json_example_post", actix_web::web::post().to(tufa_common::repositories_types::tufa_server::routes::json_example_post::json_example_post))
+                    // .route("/json_example", actix_web::web::get().to(crate::routes::tests::json_example))
+                    // .route("/json_example_post", actix_web::web::post().to(crate::routes::tests::json_example_post))
                 )
             )
             .route("/subscriptions", actix_web::web::post().to(crate::routes::subscribe))

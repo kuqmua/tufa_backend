@@ -4,6 +4,26 @@ struct Domain {
   name: String
 }
 
+// #[derive(Debug, serde_derive::Serialize, serde_derive::Deserialize)]
+// pub struct JsonExample {
+//     pub first: std::string::String,
+//     pub second: std::string::String,
+// }
+
+
+// pub async fn json_example_post(json: actix_web::web::Json<JsonExample>) -> impl actix_web::Responder {
+//     println!("json example {:#?}", json);
+//     actix_web::HttpResponse::Ok().finish()
+// }
+
+// pub async fn json_example() -> impl actix_web::Responder {
+//     println!("json example");
+//     actix_web::web::Json(JsonExample {
+//         first: "first_value_json_example".to_string(),
+//         second: "second_value_json_example".to_string(),
+//     })
+// }
+
 pub async fn tests(pool: actix_web::web::Data<sqlx::PgPool>, config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>) -> actix_web::HttpResponse {
     println!("tests");
     println!("{}", {
