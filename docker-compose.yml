@@ -8,8 +8,8 @@ services:
       POSTGRES_USER: postgreslocalusername
       POSTGRES_PASSWORD: postgreslocalpassword
       POSTGRES_DB: newsletter
-    env_file:
-      - ./dbs.env
+    # env_file:
+    #   - ./dbs.env
     volumes:
       - ./volumes/postgresql_volume:/data/db
       # maybe instead of local folder create tufa_server folder for only this service like /var/lib/docker/volumes/tufa_server/postgresql_volume:/data/db
@@ -22,8 +22,8 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: mongolocalusername
       ME_CONFIG_MONGODB_ADMINPASSWORD: mongolocalpassword
-    env_file:
-      - ./dbs.env
+    # env_file:
+    #   - ./dbs.env
     ports:
       - 27017:27017
     volumes:
