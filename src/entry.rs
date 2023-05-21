@@ -1,26 +1,5 @@
 pub fn entry<'a>(
-    config: &'static (
-        impl tufa_common::traits::config_fields::GetTracingType
-        + tufa_common::traits::config_fields::GetBaseUrl
-        + tufa_common::traits::config_fields::GetHmacSecret
-        + tufa_common::traits::config_fields::GetRedisUrl
-        + tufa_common::traits::config_fields::GetServerPort
-        + tufa_common::traits::config_fields::GetSourcePlaceType
-        + tufa_common::traits::config_fields::GetTimezone
-        + tufa_common::traits::config_fields::GetStartingCheckLink
-        + tufa_common::traits::config_fields::GetSourcePlaceType
-        + tufa_common::traits::config_fields::GetTimezone
-        + tufa_common::traits::config_fields::GetAccessControlMaxAge
-        + tufa_common::traits::config_fields::GetAccessControlAllowOrigin
-        + tufa_common::traits::try_get_postgres_pool::TryGetPostgresPool
-        + tufa_common::traits::get_email_client::GetEmailClient
-        + tufa_common::traits::get_server_address::GetServerAddress
-        + tufa_common::traits::try_create_tcp_listener::TryCreateTcpListener<'a>
-        + tufa_common::traits::try_get_redis_session_storage::TryGetRedisSessionStorage
-
-        + std::marker::Send 
-        + std::marker::Sync
-    )
+    config: &'static tufa_common::repositories_types::tufa_server::config::config_struct::Config
 ) {
     match tokio::runtime::Builder::new_multi_thread()
         .worker_threads(num_cpus::get())
@@ -42,9 +21,9 @@ pub fn entry<'a>(
             }
             else {
                 //preparation logic must be enabled by default. service must check on existing database tables.
-                if let Err(e) = runtime.block_on(tufa_common::server::net::net_check_availability::net_check_availability(config.get_starting_check_link())) {
+                if let Err(e) = runtime.block_on(tufa_common::server::net::net_check_availability::net_check_availability(config)) {
                     use tufa_common::traits::error_logs_logic::error_log::ErrorLog;
-                    e.error_log(config);
+                    e.error_log(&config);
                     // let e_serialize_deserialize_version = e.into_serialize_deserialize_version();
                     // println!("{e_serialize_deserialize_version}");
                     // let e_json = serde_json::to_string(&e_serialize_deserialize_version).unwrap();
@@ -52,10 +31,10 @@ pub fn entry<'a>(
                     // let e_deserialized: tufa_common::repositories_types::tufa_server::preparation::prepare_server::PrepareServerErrorNamedWithSerializeDeserialize = serde_json::from_str(&e_json).unwrap();
                     // println!("{e_deserialized}");
                 }
-                if let Err(e) = runtime.block_on(crate::server_wrapper::server_wrapper(config)) {
+                if let Err(e) = runtime.block_on(crate::server_wrapper::server_wrapper(&config)) {
                     eprintln!("server stopped");
                     use tufa_common::traits::error_logs_logic::error_log::ErrorLog;
-                    e.error_log(config);
+                    e.error_log(&config);
                 }
             }
         }

@@ -3,22 +3,12 @@ pub async fn try_build_actix_web_dev_server<'a>(
     tcp_listener: std::net::TcpListener,
     postgres_pool: sqlx::Pool<sqlx::Postgres>,
     redis_session_storage: actix_session::storage::RedisSessionStore,
-    config: &'static (
-        impl tufa_common::traits::config_fields::GetServerPort
-        + tufa_common::traits::config_fields::GetHmacSecret
-        + tufa_common::traits::config_fields::GetAccessControlMaxAge
-        + tufa_common::traits::config_fields::GetAccessControlAllowOrigin
-        + tufa_common::traits::try_get_postgres_pool::TryGetPostgresPool
-        + tufa_common::traits::get_email_client::GetEmailClient
-        + tufa_common::traits::get_server_address::GetServerAddress
-        + tufa_common::traits::try_create_tcp_listener::TryCreateTcpListener<'a>
-        + std::marker::Send 
-        + std::marker::Sync
-    )
+    config: &'static tufa_common::repositories_types::tufa_server::config::config_struct::Config
 ) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::TryBuildActixWebDevServer<'a>>> {
     let server = match actix_web::HttpServer::new(move || {
         let secret_key = actix_web::cookie::Key::from({
             use secrecy::ExposeSecret;
+            use tufa_common::traits::config_fields::GetHmacSecret;
             config.get_hmac_secret().expose_secret()
         }.as_bytes());
             actix_web::App::new()
@@ -40,7 +30,10 @@ pub async fn try_build_actix_web_dev_server<'a>(
                     .allow_any_method()
                     .allow_any_header()
                     .expose_any_header()
-                    .max_age(*config.get_access_control_max_age()),
+                    .max_age({
+                        use tufa_common::traits::config_fields::GetAccessControlMaxAge;
+                        *config.get_access_control_max_age()
+                    }),
             ) //todo concrete host \ domain
             .route("/", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::home::home))
             .service(
@@ -78,10 +71,15 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 actix_web::web::post().to(tufa_common::repositories_types::tufa_server::routes::get_providers_posts_route::get_providers_posts_route),
             )
             .app_data(actix_web::web::Data::new(postgres_pool.clone()))//if use it without .clone() - will be runtime error if you try to reach route
-            .app_data(actix_web::web::Data::new(config.get_email_client()))
-            // .app_data( actix_web::web::Data::new("localhost"))
-            .app_data(actix_web::web::Data::new(config.get_hmac_secret()))
-            .app_data(actix_web::web::Data::new(config.clone()))
+            .app_data(actix_web::web::Data::new({
+                use tufa_common::traits::get_email_client::GetEmailClient;
+                config.get_email_client()
+            }))
+            .app_data(actix_web::web::Data::new({
+                use tufa_common::traits::config_fields::GetHmacSecret;
+                config.get_hmac_secret().clone()
+            }))
+            .app_data(actix_web::web::Data::new(config))
         
     })
     .listen(tcp_listener)

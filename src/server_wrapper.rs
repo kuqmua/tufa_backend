@@ -1,23 +1,10 @@
 pub async fn server_wrapper<'a>(
-    config: &'static (
-        impl tufa_common::traits::config_fields::GetServerPort
-        + tufa_common::traits::config_fields::GetBaseUrl
-        + tufa_common::traits::config_fields::GetHmacSecret
-        + tufa_common::traits::config_fields::GetSourcePlaceType
-        + tufa_common::traits::config_fields::GetTimezone
-        + tufa_common::traits::config_fields::GetAccessControlMaxAge
-        + tufa_common::traits::config_fields::GetAccessControlAllowOrigin
-        + tufa_common::traits::try_get_postgres_pool::TryGetPostgresPool
-        + tufa_common::traits::get_email_client::GetEmailClient
-        + tufa_common::traits::get_server_address::GetServerAddress
-        + tufa_common::traits::try_create_tcp_listener::TryCreateTcpListener<'a>
-        + tufa_common::traits::try_get_redis_session_storage::TryGetRedisSessionStorage
-
-        + std::marker::Send 
-        + std::marker::Sync
-    )
+    config: &'static tufa_common::repositories_types::tufa_server::config::config_struct::Config
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed<'a>>> {
-    let tcp_listener = match config.try_create_tcp_listener() {
+    let tcp_listener = match {
+        use tufa_common::traits::try_create_tcp_listener::TryCreateTcpListener;
+        config.try_create_tcp_listener()
+    } {
         Ok(tcp_listener) => tcp_listener,
         Err(e) => {
             return Err(Box::new(
@@ -28,7 +15,10 @@ pub async fn server_wrapper<'a>(
             ))
         },
     };
-    let postgres_pool = match config.try_get_postgres_pool().await {
+    let postgres_pool = match {
+        use tufa_common::traits::try_get_postgres_pool::TryGetPostgresPool;
+        config.try_get_postgres_pool().await
+    } {
         Ok(postgres_pool) => postgres_pool,
         Err(e) => {
             return Err(Box::new(
@@ -39,7 +29,10 @@ pub async fn server_wrapper<'a>(
             ))
         },
     };
-    let redis_session_storage = match config.try_get_redis_session_storage().await {
+    let redis_session_storage = match {
+        use tufa_common::traits::try_get_redis_session_storage::TryGetRedisSessionStorage;
+        config.try_get_redis_session_storage().await
+    } {
         Ok(redis_session_storage) => redis_session_storage,
         Err(e) => {
             return Err(Box::new(

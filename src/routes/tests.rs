@@ -4,8 +4,12 @@ struct Domain {
   name: String
 }
 
-pub async fn tests(pool: actix_web::web::Data<sqlx::PgPool>) -> actix_web::HttpResponse {
+pub async fn tests(pool: actix_web::web::Data<sqlx::PgPool>, config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>) -> actix_web::HttpResponse {
     println!("tests");
+    println!("{}", {
+        use tufa_common::traits::config_fields::GetMongoUrl;
+        config.get_mongo_url()
+    });
     //step1
     match sqlx::query_as!(
         Domain,
