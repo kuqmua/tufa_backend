@@ -22,7 +22,7 @@ pub fn entry<'a>(
             else {
                 //preparation logic must be enabled by default. service must check on existing database tables.
                 if let Err(e) = runtime.block_on(tufa_common::server::net::net_check_availability::net_check_availability(config)) {
-                    use tufa_common::traits::error_logs_logic::error_log::ErrorLog;
+                    use tufa_common::common::error_logs_logic::error_log::ErrorLog;
                     e.error_log(&config);
                     // let e_serialize_deserialize_version = e.into_serialize_deserialize_version();
                     // println!("{e_serialize_deserialize_version}");
@@ -33,7 +33,7 @@ pub fn entry<'a>(
                 }
                 if let Err(e) = runtime.block_on(crate::server_wrapper::server_wrapper(&config)) {
                     eprintln!("server stopped");
-                    use tufa_common::traits::error_logs_logic::error_log::ErrorLog;
+                    use tufa_common::common::error_logs_logic::error_log::ErrorLog;
                     e.error_log(&config);
                 }
             }

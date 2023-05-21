@@ -17,7 +17,7 @@
 //                 }
 //                 Ok(tufa_common::repositories_types::tufa_server::issue_delivery_worker::ExecutionOutcome::TaskCompleted) => {}
 //                 Err(e) => {
-//                     use tufa_common::traits::error_logs_logic::error_log::ErrorLog;
+//                     use tufa_common::common::error_logs_logic::error_log::ErrorLog;
 //                     e.error_log(config);
 //                     tokio::time::sleep(std::time::Duration::from_secs(1)).await;
 //                 }
