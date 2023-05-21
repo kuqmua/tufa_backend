@@ -2,7 +2,7 @@ pub async fn server_wrapper<'a>(
     config: &'static tufa_common::repositories_types::tufa_server::config::config_struct::Config
 ) -> Result<(), Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed<'a>>> {
     let tcp_listener = match {
-        use tufa_common::traits::try_create_tcp_listener::TryCreateTcpListener;
+        use tufa_common::common::config::try_create_tcp_listener::TryCreateTcpListener;
         config.try_create_tcp_listener()
     } {
         Ok(tcp_listener) => tcp_listener,
@@ -16,7 +16,7 @@ pub async fn server_wrapper<'a>(
         },
     };
     let postgres_pool = match {
-        use tufa_common::traits::try_get_postgres_pool::TryGetPostgresPool;
+        use tufa_common::common::config::try_get_postgres_pool::TryGetPostgresPool;
         config.try_get_postgres_pool().await
     } {
         Ok(postgres_pool) => postgres_pool,
@@ -30,7 +30,7 @@ pub async fn server_wrapper<'a>(
         },
     };
     let redis_session_storage = match {
-        use tufa_common::traits::try_get_redis_session_storage::TryGetRedisSessionStorage;
+        use tufa_common::common::config::try_get_redis_session_storage::TryGetRedisSessionStorage;
         config.try_get_redis_session_storage().await
     } {
         Ok(redis_session_storage) => redis_session_storage,

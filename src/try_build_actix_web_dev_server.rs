@@ -72,7 +72,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
             )
             .app_data(actix_web::web::Data::new(postgres_pool.clone()))//if use it without .clone() - will be runtime error if you try to reach route
             .app_data(actix_web::web::Data::new({
-                use tufa_common::traits::get_email_client::GetEmailClient;
+                use tufa_common::common::config::get_email_client::GetEmailClient;
                 config.get_email_client()
             }))
             .app_data(actix_web::web::Data::new({
