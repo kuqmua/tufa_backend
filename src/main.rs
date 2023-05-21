@@ -25,6 +25,4 @@ fn main() {
     crate::entry::entry(once_cell::sync::Lazy::force(
         &crate::global_variables::runtime::config::CONFIG,
     ));
-    tufa_common::dev::dev();
-    crate::dev::dev();
 }

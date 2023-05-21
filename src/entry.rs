@@ -10,6 +10,8 @@ pub fn entry<'a>(
             panic!("tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build() failed, error: {e:#?}")
         }
         Ok(runtime) => {
+            tufa_common::dev::dev();
+            crate::dev::dev();
             if let Err(e) = tufa_common::repositories_types::tufa_server::telemetry::init_subscriber::init_subscriber(
                 tufa_common::repositories_types::tufa_server::telemetry::get_subscriber::get_subscriber(
                 env!("CARGO_PKG_VERSION"),
