@@ -1,15 +1,3 @@
-#[derive(Debug, serde_derive::Serialize, serde_derive::Deserialize)]
-enum Tests {
-    Ok(Vec<Cats>),
-    Err(std::string::String)
-}
-
-#[derive(Debug, serde_derive::Serialize, serde_derive::Deserialize)]
-struct Cats {
-  id: i64,
-  name: String
-}
-
 // pub async fn json_example_post(json: actix_web::web::Json<Cats>) -> impl actix_web::Responder {
 //     println!("json example {:#?}", json);
 //     actix_web::HttpResponse::Ok().finish()
@@ -23,8 +11,8 @@ pub async fn cats(pool: actix_web::web::Data<sqlx::PgPool>, config: actix_web::w
         config.get_mongo_url().expose_secret()
     });
     //step1
-    let vec_cats = match sqlx::query_as!(
-        Cats,
+    let vec_cats_result = match sqlx::query_as!(
+        tufa_common::repositories_types::tufa_server::routes::cats::Cats,
         "SELECT * FROM cats WHERE name = $1",
         "black"
     )
@@ -32,16 +20,16 @@ pub async fn cats(pool: actix_web::web::Data<sqlx::PgPool>, config: actix_web::w
    .await {
         Ok(vec_cats) => {
             println!("{vec_cats:#?}");
-            Tests::Ok(vec_cats)
+            tufa_common::repositories_types::tufa_server::routes::cats::CatsResult::Ok(vec_cats)
         },
         Err(e) => {
             eprintln!("Unable to query cats table, error: {e:#?}");
-            Tests::Err(std::string::String::from("Unable to query cats table, error: {e:#?}"))
+            tufa_common::repositories_types::tufa_server::routes::cats::CatsResult::Err(std::string::String::from("Unable to query cats table, error: {e:#?}"))
         },
     };
     //step2
     match sqlx::query_as!(
-        Cats,
+        tufa_common::repositories_types::tufa_server::routes::cats::Cats,
         "INSERT INTO cats(name) VALUES ($1) RETURNING *",
         "white"
     )
@@ -56,7 +44,7 @@ pub async fn cats(pool: actix_web::web::Data<sqlx::PgPool>, config: actix_web::w
     }
     //step3
     match sqlx::query_as!(
-        Cats,
+        tufa_common::repositories_types::tufa_server::routes::cats::Cats,
         "UPDATE cats SET name = $1 WHERE id = $2 returning *",
         "black",
         1i64
@@ -71,10 +59,6 @@ pub async fn cats(pool: actix_web::web::Data<sqlx::PgPool>, config: actix_web::w
         },
     }
     actix_web::HttpResponse::Ok()
-    .json(
-        actix_web::web::Json(
-            vec_cats
-        )
-    )
+    .json(actix_web::web::Json(vec_cats_result))
     // .finish()
 }
