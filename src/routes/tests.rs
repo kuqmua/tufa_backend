@@ -8,7 +8,8 @@ pub async fn tests(pool: actix_web::web::Data<sqlx::PgPool>, config: actix_web::
     println!("tests");
     println!("{}", {
         use tufa_common::traits::config_fields::GetMongoUrl;
-        config.get_mongo_url()
+        use secrecy::ExposeSecret;
+        config.get_mongo_url().expose_secret()
     });
     //step1
     match sqlx::query_as!(
