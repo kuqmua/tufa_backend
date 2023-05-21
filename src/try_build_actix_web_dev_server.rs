@@ -48,7 +48,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
             )
             .route("/login", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::login::login_form))
             .route("/login", actix_web::web::post().to(crate::routes::login::login))
-            .route("/tests", actix_web::web::get().to(crate::routes::tests))
             .route("/health_check", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::health_check))
             .service(
                 actix_web::web::scope("/api")
@@ -59,8 +58,8 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 .service(
                     actix_web::web::scope("/json")
                     .route("/git_info", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::git::git_info_json::git_info_json))
-                    // .route("/json_example", actix_web::web::get().to(crate::routes::tests::json_example))
                     // .route("/json_example_post", actix_web::web::post().to(crate::routes::tests::json_example_post))
+                    .route("/tests", actix_web::web::get().to(crate::routes::tests))
                 )
             )
             .route("/subscriptions", actix_web::web::post().to(crate::routes::subscribe))
