@@ -33,10 +33,19 @@ pub async fn select_cats(
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
             error.error_log(**config);
             let error_with_serialize_deserialize = error.into_serialize_deserialize_version();
+            let error_wrapper = tufa_common::repositories_types::tufa_server::routes::cats::get::PostgresSelectCatsError {
+                error: error_with_serialize_deserialize,
+                port: {
+                    use tufa_common::common::config::config_fields::GetServerPort;
+                    config.get_server_port().clone()
+                },
+                pid: std::process::id(),
+            };
+            println!("{error_wrapper}");
             actix_web::HttpResponse::InternalServerError()
             .json(
                 actix_web::web::Json(
-                    tufa_common::repositories_types::tufa_server::routes::cats::get::GetResponse::Err(error_with_serialize_deserialize)
+                    tufa_common::repositories_types::tufa_server::routes::cats::get::GetResponse::Err(error_wrapper)
                 )
             )
         },
