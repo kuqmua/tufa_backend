@@ -23,6 +23,7 @@ pub fn entry<'a>(
             }
             else {
                 //preparation logic must be enabled by default. service must check on existing database tables.
+                println!("checking net availability...");
                 if let Err(e) = runtime.block_on(tufa_common::server::net::net_check_availability::net_check_availability(config)) {
                     use tufa_common::common::error_logs_logic::error_log::ErrorLog;
                     e.error_log(&config);
