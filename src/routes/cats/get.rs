@@ -1,4 +1,4 @@
-pub async fn get(
+pub async fn select_cats(
     pool: actix_web::web::Data<sqlx::PgPool>, 
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
 ) -> actix_web::HttpResponse {//or impl actix_web::Responder
