@@ -218,7 +218,10 @@ pub async fn spawn_app() -> TestApp {
         .build()
         .expect("inside spawn_app Client::builder().redirect().cookie_store().build() failed");
     let test_app = TestApp {
-        address: format!("http://localhost:{}", application_port),
+        address: {
+            use tufa_common::common::config::get_server_address::GetServerAddress;
+            config.get_server_address()
+        },
         port: application_port,
         db_pool: crate::try_build_actix_web_dev_server::get_connection_pool(&configuration.database),
         email_server,

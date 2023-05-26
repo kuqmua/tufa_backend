@@ -15,6 +15,7 @@ pub async fn server_wrapper<'a>(
             ))
         },
     };
+    println!("trying to create postgres pool...");
     let postgres_pool = match {
         use tufa_common::common::config::try_get_postgres_pool::TryGetPostgresPool;
         config.try_get_postgres_pool().await
@@ -29,6 +30,7 @@ pub async fn server_wrapper<'a>(
             ))
         },
     };
+    println!("trying to create redis session storage...");
     let redis_session_storage = match {
         use tufa_common::common::config::try_get_redis_session_storage::TryGetRedisSessionStorage;
         config.try_get_redis_session_storage().await
@@ -43,6 +45,7 @@ pub async fn server_wrapper<'a>(
             ))
         },
     };
+    println!("trying to build actix web dev server...");
     let actix_web_dev_server = match crate::try_build_actix_web_dev_server::try_build_actix_web_dev_server(
         tcp_listener,
         postgres_pool,
@@ -55,6 +58,7 @@ pub async fn server_wrapper<'a>(
         })),
         Ok(app) => app,
     };
+    println!("server running!");
     let application_task = tokio::spawn(async move {
         match 
             actix_web_dev_server
