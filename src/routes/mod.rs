@@ -7,5 +7,4 @@ pub use subscriptions_confirm::*;
 pub mod login;
 pub use login::*;
 
-mod cats;
-pub use cats::*;
+pub mod cats;
