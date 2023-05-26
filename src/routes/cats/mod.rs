@@ -1,2 +1,4 @@
-mod get_cats;
-pub use get_cats::*;
+mod get;
+pub use get::*;
+mod post;
+pub use post::*;

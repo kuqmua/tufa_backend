@@ -61,8 +61,8 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 )
                 .service(
                 actix_web::web::resource("/cats")
-                    .route(actix_web::web::get().to(crate::routes::cats::get_cats))
-                    .route(actix_web::web::post().to(crate::routes::cats::json_example_post))
+                    .route(actix_web::web::get().to(crate::routes::cats::get))
+                    .route(actix_web::web::post().to(crate::routes::cats::post))
                 )
             )
             .route("/subscriptions", actix_web::web::post().to(crate::routes::subscribe))
