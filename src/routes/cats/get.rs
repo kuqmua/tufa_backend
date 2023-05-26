@@ -2,7 +2,6 @@ pub async fn get(
     pool: actix_web::web::Data<sqlx::PgPool>, 
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
 ) -> actix_web::HttpResponse {//or impl actix_web::Responder
-    println!("cats");
     // println!("{}", {
     //     use tufa_common::common::config::config_fields::GetMongoUrl;
     //     use secrecy::ExposeSecret;
@@ -17,20 +16,27 @@ pub async fn get(
    .fetch_all(&**pool)
    .await {
         Ok(vec_cats) => {
-            tracing::info!("selected casts:\n{vec_cats:#?}");
+            // tracing::info!("selected casts:\n{vec_cats:#?}");
+            println!("selected casts:\n{vec_cats:#?}");
             actix_web::HttpResponse::Ok()
             .json(actix_web::web::Json(
                 tufa_common::repositories_types::tufa_server::routes::cats::get::GetResponse::Ok(vec_cats)
             ))
         },
         Err(e) => {
-            tracing::error!("Unable to query cats table, error: {e:?}");
+            //todo port and pid ?
+            // tracing::error!("Unable to query cats table, error: {e:?}");
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::get::PostgresSelectCatsErrorNamed::SelectCats {
+                select_cats: e,
+                code_occurence: tufa_common::code_occurence!(),
+            };
+            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+            error.error_log(**config);
+            let error_with_serialize_deserialize = error.into_serialize_deserialize_version();
             actix_web::HttpResponse::InternalServerError()
             .json(
                 actix_web::web::Json(
-                    tufa_common::repositories_types::tufa_server::routes::cats::get::GetResponse::Err(
-                        std::string::String::from("Unable to query cats table, error: {e:#?}")
-                    )
+                    tufa_common::repositories_types::tufa_server::routes::cats::get::GetResponse::Err(error_with_serialize_deserialize)
                 )
             )
         },
