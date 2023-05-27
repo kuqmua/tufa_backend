@@ -3,7 +3,6 @@ pub async fn get_all(
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
 ) -> actix_web::HttpResponse {//or impl actix_web::Responder
     println!("get all cats");
-//     //step1
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::cats::Cat,
         "SELECT * FROM cats LIMIT $1",
@@ -114,8 +113,6 @@ pub async fn select_cats(
             ))
         },
         Err(e) => {
-            //todo port and pid ?
-            
             // tracing::error!("Unable to query cats table, error: {e:?}");
             let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresSelectCatsErrorNamed::SelectCats {
                 select_cats: e,
@@ -123,20 +120,10 @@ pub async fn select_cats(
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
             error.error_log(**config);
-            let error_with_serialize_deserialize = error.into_serialize_deserialize_version();
-            let error_wrapper = tufa_common::repositories_types::tufa_server::routes::cats::PostgresSelectCatsError {
-                error: error_with_serialize_deserialize,
-                port: {
-                    use tufa_common::common::config::config_fields::GetServerPort;
-                    config.get_server_port().clone()
-                },
-                pid: std::process::id(),
-            };
-            println!("{error_wrapper}");
             actix_web::HttpResponse::InternalServerError()
             .json(
                 actix_web::web::Json(
-                    tufa_common::repositories_types::tufa_server::routes::cats::GetResponse::Err(error_wrapper)
+                    tufa_common::repositories_types::tufa_server::routes::cats::GetResponse::Err(error.into_serialize_deserialize_version())
                 )
             )
         },
