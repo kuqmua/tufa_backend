@@ -117,9 +117,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
                     actix_web::web::scope("/cats")
                     .route("/", actix_web::web::get().to(crate::routes::cats::get_all))
                     // .route(actix_web::web::post().to(crate::routes::cats::post))
-                    .service(
-                        crate::routes::cats::select_cats
-                    )
+                    .service(crate::routes::cats::select_cats)
                 )
             )
             .route("/subscriptions", actix_web::web::post().to(crate::routes::subscribe))

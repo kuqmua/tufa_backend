@@ -1,5 +1,5 @@
 -- Add migration script here
-create table cats (
-  id bigserial primary key,
-  name varchar(255) unique not null
+CREATE TABLE cats (
+  id BIGSERIAL PRIMARY KEY,
+  name VARCHAR (255) UNIQUE NOT NULL
 );
