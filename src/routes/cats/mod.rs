@@ -2,7 +2,7 @@
 //or
 // http://127.0.0.1:8080/api/cats/ - None
 #[actix_web::get("/")]
-pub async fn get_all(
+pub async fn get_all(//todo rename to get(vec) and add adiitional parameters
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::SelectAllQueryParameters>,
     pool: actix_web::web::Data<sqlx::PgPool>, 
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
