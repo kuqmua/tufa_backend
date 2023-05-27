@@ -1,26 +1,21 @@
 #[derive(serde::Deserialize)]
 pub struct CatFilter {
-    id: i64,
+    // id: i64,
     name: String,
+    color: String,
 }
 
-#[derive(Debug, serde_derive::Deserialize)]
-pub struct Cat {
-  pub id: i64,
-  pub name: String
-}
-
-#[actix_web::get("/{id}/{name}")]
+#[actix_web::get("?name={name}/color={color}")]//#[actix_web::get("/{id}/{name}")]
 pub async fn select_cats(
-    info: actix_web::web::Path<CatFilter>,
+    route_path_info: actix_web::web::Path<CatFilter>,
     pool: actix_web::web::Data<sqlx::PgPool>, 
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
     //todo - request metainfo
 ) -> actix_web::HttpResponse {//or impl actix_web::Responder
     //add check for 
     println!(
-        "Welcome {}, user_id {}!",
-        info.id, info.name
+        "Welcome id: {}, name {}, color {}!",
+        route_path_info.id, route_path_info.name, route_path_info.color
     );
     println!("{}", {
         use tufa_common::common::config::config_fields::GetServerPort;
@@ -39,8 +34,8 @@ pub async fn select_cats(
             //step2
             match sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::cats::Cat,
-                "INSERT INTO cats(name) VALUES ($1) RETURNING *",
-                "white"
+                "INSERT INTO cats(name, color) VALUES ($1, $2) RETURNING *",
+                "meowman", "white"
             )
             .fetch_all(&**pool)
             .await {
@@ -77,6 +72,7 @@ pub async fn select_cats(
         },
         Err(e) => {
             //todo port and pid ?
+            
             // tracing::error!("Unable to query cats table, error: {e:?}");
             let error = tufa_common::repositories_types::tufa_server::routes::cats::get::PostgresSelectCatsErrorNamed::SelectCats {
                 select_cats: e,
