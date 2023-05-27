@@ -1,7 +1,20 @@
+#[derive(serde::Deserialize)]
+pub struct Info {
+    user_id: u32,
+    friend: String,
+}
+
+#[actix_web::get("/{user_id}/{friend}")]
 pub async fn select_cats(
+    info: actix_web::web::Path<Info>,
     pool: actix_web::web::Data<sqlx::PgPool>, 
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
+    //todo - request metainfo
 ) -> actix_web::HttpResponse {//or impl actix_web::Responder
+    println!(
+        "Welcome {}, user_id {}!",
+        info.friend, info.user_id
+    );
     // println!("{}", {
     //     use tufa_common::common::config::config_fields::GetMongoUrl;
     //     use secrecy::ExposeSecret;
@@ -17,7 +30,7 @@ pub async fn select_cats(
    .await {
         Ok(vec_cats) => {
             // tracing::info!("selected casts:\n{vec_cats:#?}");
-            println!("selected casts:\n{vec_cats:#?}");
+            println!("selected cats:\n{vec_cats:#?}");
             actix_web::HttpResponse::Ok()
             .json(actix_web::web::Json(
                 tufa_common::repositories_types::tufa_server::routes::cats::get::GetResponse::Ok(vec_cats)
