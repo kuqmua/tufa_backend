@@ -8,10 +8,14 @@ pub async fn get_all(
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
 ) -> actix_web::HttpResponse {//or impl actix_web::Responder
     println!("get all cats, limit {:?}", query_parameters.limit);
+    let limit = match &query_parameters.limit {
+        Some(limit) => limit,
+        None => &tufa_common::repositories_types::tufa_server::routes::cats::DEFAULT_SELECT_ALL_LIMIT
+    };
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::cats::Cat,
         "SELECT * FROM cats LIMIT $1",
-        10
+        *limit as i64
     )
    .fetch_all(&**pool)
    .await {
