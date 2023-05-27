@@ -1,4 +1,4 @@
-// http://127.0.0.1:8080/api/cats/?username=kek - Some(kek)
+// http://127.0.0.1:8080/api/cats/?limit=87 - Some(87)
 //or
 // http://127.0.0.1:8080/api/cats/ - None
 #[actix_web::get("/")]
@@ -7,7 +7,7 @@ pub async fn get_all(
     pool: actix_web::web::Data<sqlx::PgPool>, 
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
 ) -> actix_web::HttpResponse {//or impl actix_web::Responder
-    println!("get all cats, username {:?}", query_parameters.username);
+    println!("get all cats, limit {:?}", query_parameters.limit);
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::cats::Cat,
         "SELECT * FROM cats LIMIT $1",
@@ -24,7 +24,6 @@ pub async fn get_all(
             ))
         },
         Err(e) => {
-            //todo port and pid ?
             // tracing::error!("Unable to query cats table, error: {e:?}");
             let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresSelectAllCatsErrorNamed::SelectCats {
                 select_cats: e,
