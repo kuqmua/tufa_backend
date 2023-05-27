@@ -6,6 +6,7 @@ pub async fn get_all(//todo rename to get(vec) and add adiitional parameters
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::SelectAllQueryParameters>,
     pool: actix_web::web::Data<sqlx::PgPool>, 
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
+    //todo - add check github commit id
 ) -> actix_web::HttpResponse {//or impl actix_web::Responder
     println!("get_all, limit {:?}", query_parameters.limit);
     let limit = match &query_parameters.limit {
