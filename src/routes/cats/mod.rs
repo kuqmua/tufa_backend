@@ -7,7 +7,7 @@ pub async fn get_all(
     pool: actix_web::web::Data<sqlx::PgPool>, 
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
 ) -> actix_web::HttpResponse {//or impl actix_web::Responder
-    println!("get all cats, limit {:?}", query_parameters.limit);
+    println!("get_all, limit {:?}", query_parameters.limit);
     let limit = match &query_parameters.limit {
         Some(limit) => limit,
         None => &tufa_common::repositories_types::tufa_server::routes::cats::DEFAULT_SELECT_ALL_LIMIT
@@ -48,12 +48,8 @@ pub async fn select_by_id(
     path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::SelectByIdPathParameters>,
     pool: actix_web::web::Data<sqlx::PgPool>, 
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
-    //todo - request metainfo
 ) -> actix_web::HttpResponse {//or impl actix_web::Responder
-    println!(
-        "Welcome id {}!",
-        path_parameters.id, 
-    );
+    println!("select_by_id {}", path_parameters.id);
     let bigserial = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(path_parameters.id) {
         Ok(bigserial) => bigserial,
         Err(error) => {
@@ -62,52 +58,43 @@ pub async fn select_by_id(
             return actix_web::HttpResponse::InternalServerError()
             .json(
                 actix_web::web::Json(
-                    tufa_common::repositories_types::tufa_server::routes::cats::SelectByIdResponse::Err(error.into_serialize_deserialize_version())
+                    tufa_common::repositories_types::tufa_server::routes::cats::SelectByIdResponse::BigserialError(error.into_serialize_deserialize_version())
                 )
             );
         },
     };
-    // println!("{}", {
-    //     use tufa_common::common::config::config_fields::GetServerPort;
-    //     config.get_server_port()
-    // });
-//     //step1
-//     match sqlx::query_as!(
-//         tufa_common::repositories_types::tufa_server::routes::cats::Cat,
-//         "SELECT * FROM cats WHERE name = $1",
-//         "black"
-//     )
-//    .fetch_all(&**pool)
-//    .await {
-//         Ok(vec_cats) => {
-//             //
-//             // tracing::info!("selected casts:\n{vec_cats:#?}");
-//             println!("selected cats:\n{vec_cats:#?}");
-//             actix_web::HttpResponse::Ok()
-//             .json(actix_web::web::Json(
-//                 tufa_common::repositories_types::tufa_server::routes::cats::GetResponse::Ok(vec_cats)
-//             ))
-//         },
-//         Err(e) => {
-//             // tracing::error!("Unable to query cats table, error: {e:?}");
-//             let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresSelectCatsErrorNamed::SelectCats {
-//                 select_cats: e,
-//                 code_occurence: tufa_common::code_occurence!(),
-//             };
-//             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-//             error.error_log(**config);
-//             actix_web::HttpResponse::InternalServerError()
-//             .json(
-//                 actix_web::web::Json(
-//                     tufa_common::repositories_types::tufa_server::routes::cats::GetResponse::Err(error.into_serialize_deserialize_version())
-//                 )
-//             )
-//         },
-//     }
-    actix_web::HttpResponse::Ok()
-    .finish()
+    match sqlx::query_as!(
+        tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+        "SELECT * FROM cats WHERE id = $1",
+        *bigserial.bigserial()
+    )
+   .fetch_one(&**pool)
+   .await {
+        Ok(cat) => {
+            // tracing::info!("selected casts:\n{vec_cats:#?}");
+            println!("selected cats:\n{cat:#?}");
+            actix_web::HttpResponse::Ok()
+            .json(actix_web::web::Json(
+                tufa_common::repositories_types::tufa_server::routes::cats::SelectByIdResponse::Ok(cat)
+            ))
+        },
+        Err(e) => {
+            // tracing::error!("Unable to query cats table, error: {e:?}");
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresSelectCatErrorNamed::SelectCat {
+                select_cat: e,
+                code_occurence: tufa_common::code_occurence!(),
+            };
+            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+            error.error_log(**config);
+            actix_web::HttpResponse::InternalServerError()
+            .json(
+                actix_web::web::Json(
+                    tufa_common::repositories_types::tufa_server::routes::cats::SelectByIdResponse::Select(error.into_serialize_deserialize_version())
+                )
+            )
+        },
+    }
 }
-//
 
 #[actix_web::get("/{name}/{color}")]//#[actix_web::get("/{id}/{name}")]
 pub async fn select_cats(
