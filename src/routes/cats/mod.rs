@@ -1,8 +1,13 @@
+// http://127.0.0.1:8080/api/cats/?username=kek - Some(kek)
+//or
+// http://127.0.0.1:8080/api/cats/ - None
+#[actix_web::get("/")]
 pub async fn get_all(
+    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::SelectAllQueryParameters>,
     pool: actix_web::web::Data<sqlx::PgPool>, 
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
 ) -> actix_web::HttpResponse {//or impl actix_web::Responder
-    println!("get all cats");
+    println!("get all cats, username {:?}", query_parameters.username);
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::cats::Cat,
         "SELECT * FROM cats LIMIT $1",
@@ -38,16 +43,9 @@ pub async fn get_all(
     }
 }
 
-#[derive(serde::Deserialize)]
-pub struct CatFilter {
-    // id: i64,
-    name: String,
-    color: String,
-}
-
-#[actix_web::get("?name={name}/color={color}")]//#[actix_web::get("/{id}/{name}")]
+#[actix_web::get("/{name}/{color}")]//#[actix_web::get("/{id}/{name}")]
 pub async fn select_cats(
-    route_path_info: actix_web::web::Path<CatFilter>,
+    path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::GetPathParameters>,
     pool: actix_web::web::Data<sqlx::PgPool>, 
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
     //todo - request metainfo
@@ -55,9 +53,9 @@ pub async fn select_cats(
     //add check for 
     println!(
         "Welcome name {}, color {}!",
-        // route_path_info.id, 
-        route_path_info.name,
-        route_path_info.color
+        // path_parameters.id, 
+        path_parameters.name,
+        path_parameters.color
     );
     println!("{}", {
         use tufa_common::common::config::config_fields::GetServerPort;
