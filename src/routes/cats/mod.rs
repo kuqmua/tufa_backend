@@ -8,18 +8,44 @@ pub async fn get_all(//todo rename to get(vec) and add adiitional parameters
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
     //todo - add check github commit id
 ) -> actix_web::HttpResponse {//or impl actix_web::Responder
-    println!("get_all, limit {:?}", query_parameters.limit);
+    println!("get_all, limit {:?}, name {:?} color {:?}", 
+        query_parameters.limit,
+        query_parameters.name,
+        query_parameters.color
+    );
     let limit = match &query_parameters.limit {
         Some(limit) => limit,
         None => &tufa_common::repositories_types::tufa_server::routes::cats::DEFAULT_SELECT_ALL_LIMIT
     };
-    match sqlx::query_as!(
-        tufa_common::repositories_types::tufa_server::routes::cats::Cat,
-        "SELECT * FROM cats LIMIT $1",
-        *limit as i64
-    )
-   .fetch_all(&**pool)
-   .await {
+    let query_result = match (&query_parameters.name, &query_parameters.color) {
+        //match` arms have incompatible types if return just a result of query_as!
+        (Some(name), Some(color)) => sqlx::query_as!(
+            tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+            "SELECT * FROM cats WHERE name = $1 AND color = $2 LIMIT $3",
+            name,
+            color,
+            *limit as i64
+        ).fetch_all(&**pool).await,
+        (Some(name), None) => sqlx::query_as!(
+            tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+            "SELECT * FROM cats WHERE name = $1 LIMIT $2",
+            name,
+            *limit as i64
+        ).fetch_all(&**pool).await,
+        (None, Some(color)) => sqlx::query_as!(
+            tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+            "SELECT * FROM cats WHERE color = $1 LIMIT $2",
+            color,
+            *limit as i64
+        ).fetch_all(&**pool).await,
+        (None, None) => sqlx::query_as!(
+            tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+            "SELECT * FROM cats LIMIT $1",
+            *limit as i64
+        ).fetch_all(&**pool).await,
+
+    };
+    match query_result {
         Ok(vec_cats) => {
             // tracing::info!("selected casts:\n{vec_cats:#?}");
             println!("selected casts:\n{vec_cats:#?}");
