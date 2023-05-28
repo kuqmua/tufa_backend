@@ -1,5 +1,5 @@
 pub fn entry<'a>(
-    config: &'static tufa_common::repositories_types::tufa_server::config::config_struct::Config
+    config: &'static tufa_common::repositories_types::tufa_server::config::config_struct::Config,
 ) {
     match tokio::runtime::Builder::new_multi_thread()
         .worker_threads(num_cpus::get())

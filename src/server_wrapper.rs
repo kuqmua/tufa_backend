@@ -1,6 +1,9 @@
 pub async fn server_wrapper<'a>(
-    config: &'static tufa_common::repositories_types::tufa_server::config::config_struct::Config
-) -> Result<(), Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed<'a>>> {
+    config: &'static tufa_common::repositories_types::tufa_server::config::config_struct::Config,
+) -> Result<
+    (),
+    Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed<'a>>,
+> {
     let tcp_listener = match {
         use tufa_common::common::config::try_create_tcp_listener::TryCreateTcpListener;
         config.try_create_tcp_listener()

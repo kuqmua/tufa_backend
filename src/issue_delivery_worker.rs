@@ -4,7 +4,7 @@
 //         + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
 //         + tufa_common::common::config::config_fields::GetSourcePlaceType
 //         + tufa_common::common::config::config_fields::GetTimezone
-//         + std::marker::Send 
+//         + std::marker::Send
 //         + std::marker::Sync
 //     )
 // ) {// -> Result<(), Error>
@@ -40,7 +40,7 @@
 //                 dequeue_task: e,
 //                 code_occurence: tufa_common::code_occurence!(),
 //             });
-//         }, 
+//         },
 //         Ok(option_task) => option_task,
 //     };
 //     match task {
@@ -143,9 +143,9 @@
 //     if let Err(e) = sqlx::query!(
 //         r#"
 //         DELETE FROM issue_delivery_queue
-//         WHERE 
+//         WHERE
 //             newsletter_issue_id = $1 AND
-//             subscriber_email = $2 
+//             subscriber_email = $2
 //         "#,
 //         issue_id,
 //         email
@@ -165,7 +165,6 @@
 //     }
 //     Ok(())
 // }
-
 
 // #[tracing::instrument(skip_all)]
 // async fn get_issue<'a>(pool: &sqlx::PgPool, issue_id: uuid::Uuid) -> Result<tufa_common::repositories_types::tufa_server::issue_delivery_worker::NewsletterIssue, tufa_common::repositories_types::tufa_server::issue_delivery_worker::GetIssueErrorNamed<'a>> {

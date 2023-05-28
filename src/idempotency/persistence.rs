@@ -2,7 +2,7 @@ pub async fn get_saved_response<'a>(
     pool: &sqlx::PgPool,
     idempotency_key: &tufa_common::repositories_types::tufa_server::idempotency::IdempotencyKey,
     user_id: uuid::Uuid,
-) -> Result<Option<actix_web::HttpResponse>, tufa_common::repositories_types::tufa_server::idempotency::persistence::GetSavedResponseErrorNamed<'a>> {
+) -> Result<Option<actix_web::HttpResponse>, tufa_common::repositories_types::tufa_server::idempotency::persistence::GetSavedResponseErrorNamed<'a>>{
     use tufa_common::repositories_types::tufa_server::idempotency::persistence::HeaderPairRecord;
     //todo - sqlx::query! is a macro to check db on compile time. DATABASE_URL must be set in env variables. its not for lib. change it later
     let saved_response = match sqlx::query!(
@@ -20,13 +20,14 @@ pub async fn get_saved_response<'a>(
         idempotency_key.as_ref()
     )
     .fetch_optional(pool)
-    .await {
+    .await
+    {
         Err(e) => {
             return Err(tufa_common::repositories_types::tufa_server::idempotency::persistence::GetSavedResponseErrorNamed::PostgresSelect {
                 postgres_select: e,
                 code_occurence: tufa_common::code_occurence!(),
             });
-        },
+        }
         Ok(option_record) => option_record,
     };
     if let Some(r) = saved_response {
@@ -59,7 +60,12 @@ pub async fn save_response<'a>(
     idempotency_key: &tufa_common::repositories_types::tufa_server::idempotency::IdempotencyKey,
     user_id: uuid::Uuid,
     http_response: actix_web::HttpResponse,
-) -> Result<actix_web::HttpResponse, tufa_common::repositories_types::tufa_server::idempotency::persistence::SaveResponseErrorNamed<'a>> {
+) -> Result<
+    actix_web::HttpResponse,
+    tufa_common::repositories_types::tufa_server::idempotency::persistence::SaveResponseErrorNamed<
+        'a,
+    >,
+> {
     let (response_head, body) = http_response.into_parts();
     // `MessageBody::Error` is not `Send` + `Sync`,
     let body = match actix_web::body::to_bytes(body).await {
@@ -68,7 +74,7 @@ pub async fn save_response<'a>(
                 body_to_bytes: e.into(),
                 code_occurence: tufa_common::code_occurence!(),
             });
-        },
+        }
         Ok(bytes) => bytes,
     };
     let status_code = response_head.status().as_u16() as i16;
@@ -99,7 +105,8 @@ pub async fn save_response<'a>(
         body.as_ref()
     )
     .execute(&mut transaction)
-    .await {
+    .await
+    {
         return Err(tufa_common::repositories_types::tufa_server::idempotency::persistence::SaveResponseErrorNamed::PostgtesUpdate {
             postgres_update: e,
             code_occurence: tufa_common::code_occurence!(),
@@ -121,14 +128,19 @@ pub async fn try_processing<'a>(
     pool: &sqlx::PgPool,
     idempotency_key: &tufa_common::repositories_types::tufa_server::idempotency::IdempotencyKey,
     user_id: uuid::Uuid,
-) -> Result<tufa_common::repositories_types::tufa_server::idempotency::NextAction, tufa_common::repositories_types::tufa_server::idempotency::persistence::TryProcessingErrorNamed<'a>> {
+) -> Result<
+    tufa_common::repositories_types::tufa_server::idempotency::NextAction,
+    tufa_common::repositories_types::tufa_server::idempotency::persistence::TryProcessingErrorNamed<
+        'a,
+    >,
+> {
     let mut transaction = match pool.begin().await {
         Err(e) => {
             return Err(tufa_common::repositories_types::tufa_server::idempotency::persistence::TryProcessingErrorNamed::PostgresPoolBegin {
                 pool_begin_error: e,
                 code_occurence: tufa_common::code_occurence!(),
             });
-        },
+        }
         Ok(transaction) => transaction,
     };
     let n_inserted_rows = match sqlx::query!(
@@ -145,17 +157,22 @@ pub async fn try_processing<'a>(
         idempotency_key.as_ref()
     )
     .execute(&mut transaction)
-    .await {
+    .await
+    {
         Err(e) => {
             return Err(tufa_common::repositories_types::tufa_server::idempotency::persistence::TryProcessingErrorNamed::PostgresInsert {
                 insert: e,
                 code_occurence: tufa_common::code_occurence!(),
             });
-        },
+        }
         Ok(pg_query_result) => pg_query_result.rows_affected(),
     };
     if n_inserted_rows > 0 {
-        Ok(tufa_common::repositories_types::tufa_server::idempotency::NextAction::StartProcessing(transaction))
+        Ok(
+            tufa_common::repositories_types::tufa_server::idempotency::NextAction::StartProcessing(
+                transaction,
+            ),
+        )
     } else {
         match get_saved_response(pool, idempotency_key, user_id).await {
             Err(e) => {

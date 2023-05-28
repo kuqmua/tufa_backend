@@ -36,7 +36,10 @@ async fn integration_new_password_fields_must_match() {
             "new_password_check": &another_new_password,
         }))
         .await;
-    crate::tests::integration_tests::api::helpers::assert_is_redirect_to(&response, "/admin/password");
+    crate::tests::integration_tests::api::helpers::assert_is_redirect_to(
+        &response,
+        "/admin/password",
+    );
     let html_page = app.get_change_password_html().await;
     assert!(html_page.contains(
         "<p><i>You entered two different new passwords - the field values must match.</i></p>"
@@ -60,7 +63,10 @@ async fn integration_current_password_must_be_valid() {
             "new_password_check": &new_password,
         }))
         .await;
-    crate::tests::integration_tests::api::helpers::assert_is_redirect_to(&response, "/admin/password");
+    crate::tests::integration_tests::api::helpers::assert_is_redirect_to(
+        &response,
+        "/admin/password",
+    );
     let html_page = app.get_change_password_html().await;
     assert!(html_page.contains("<p><i>The current password is incorrect.</i></p>"));
 }
@@ -74,7 +80,10 @@ async fn integration_changing_password_works() {
         "password": &app.test_user.password
     });
     let response = app.post_login(&login_body).await;
-    crate::tests::integration_tests::api::helpers::assert_is_redirect_to(&response, "/admin/dashboard");
+    crate::tests::integration_tests::api::helpers::assert_is_redirect_to(
+        &response,
+        "/admin/dashboard",
+    );
     let response = app
         .post_change_password(&serde_json::json!({
             "current_password": &app.test_user.password,
@@ -82,7 +91,10 @@ async fn integration_changing_password_works() {
             "new_password_check": &new_password,
         }))
         .await;
-    crate::tests::integration_tests::api::helpers::assert_is_redirect_to(&response, "/admin/password");
+    crate::tests::integration_tests::api::helpers::assert_is_redirect_to(
+        &response,
+        "/admin/password",
+    );
     let html_page = app.get_change_password_html().await;
     assert!(html_page.contains("<p><i>Your password has been changed.</i></p>"));
     let response = app.post_logout().await;
@@ -94,5 +106,8 @@ async fn integration_changing_password_works() {
         "password": &new_password
     });
     let response = app.post_login(&login_body).await;
-    crate::tests::integration_tests::api::helpers::assert_is_redirect_to(&response, "/admin/dashboard");
+    crate::tests::integration_tests::api::helpers::assert_is_redirect_to(
+        &response,
+        "/admin/dashboard",
+    );
 }

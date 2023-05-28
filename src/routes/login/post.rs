@@ -1,8 +1,15 @@
 pub async fn login<'a>(
-    form: actix_web::web::Form<tufa_common::repositories_types::tufa_server::routes::login::post::FormData>,
+    form: actix_web::web::Form<
+        tufa_common::repositories_types::tufa_server::routes::login::post::FormData,
+    >,
     pool: actix_web::web::Data<sqlx::PgPool>,
     session: tufa_common::repositories_types::tufa_server::session_state::TypedSession,
-) -> Result<actix_web::HttpResponse, actix_web::error::InternalError<tufa_common::repositories_types::tufa_server::routes::login::post::LoginErrorNamed<'a>>> {
+) -> Result<
+    actix_web::HttpResponse,
+    actix_web::error::InternalError<
+        tufa_common::repositories_types::tufa_server::routes::login::post::LoginErrorNamed<'a>,
+    >,
+> {
     let credentials = tufa_common::common::postgres_credentials::PostgresCredentials {
         username: form.0.username,
         password: form.0.password,
@@ -31,7 +38,11 @@ pub async fn login<'a>(
     }
 }
 
-fn login_redirect(e: tufa_common::repositories_types::tufa_server::routes::login::post::LoginErrorNamed) -> actix_web::error::InternalError<tufa_common::repositories_types::tufa_server::routes::login::post::LoginErrorNamed> {
+fn login_redirect(
+    e: tufa_common::repositories_types::tufa_server::routes::login::post::LoginErrorNamed,
+) -> actix_web::error::InternalError<
+    tufa_common::repositories_types::tufa_server::routes::login::post::LoginErrorNamed,
+> {
     actix_web_flash_messages::FlashMessage::error(e.to_string()).send();
     let response = actix_web::HttpResponse::SeeOther()
         .insert_header((actix_web::http::header::LOCATION, "/login"))

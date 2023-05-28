@@ -1,5 +1,10 @@
 #[tracing::instrument(name = "Confirm a pending subscriber", skip(parameters, pool))]
-pub async fn confirm(parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::Parameters>, pool: actix_web::web::Data<sqlx::PgPool>) -> actix_web::HttpResponse {
+pub async fn confirm(
+    parameters: actix_web::web::Query<
+        tufa_common::repositories_types::tufa_server::routes::Parameters,
+    >,
+    pool: actix_web::web::Data<sqlx::PgPool>,
+) -> actix_web::HttpResponse {
     let id = match get_subscriber_id_from_token(&pool, &parameters.subscription_token).await {
         Ok(id) => id,
         Err(_) => return actix_web::HttpResponse::InternalServerError().finish(),
@@ -16,7 +21,10 @@ pub async fn confirm(parameters: actix_web::web::Query<tufa_common::repositories
 }
 
 #[tracing::instrument(name = "Mark subscriber as confirmed", skip(subscriber_id, pool))]
-pub async fn confirm_subscriber(pool: &sqlx::PgPool, subscriber_id: uuid::Uuid) -> Result<(), sqlx::Error> {
+pub async fn confirm_subscriber(
+    pool: &sqlx::PgPool,
+    subscriber_id: uuid::Uuid,
+) -> Result<(), sqlx::Error> {
     sqlx::query!(
         r#"UPDATE subscriptions SET status = 'confirmed' WHERE id = $1"#,
         subscriber_id,

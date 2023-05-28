@@ -4,58 +4,57 @@ pub async fn try_build_actix_web_dev_server<'a>(
     postgres_pool: sqlx::Pool<sqlx::Postgres>,
     redis_session_storage: actix_session::storage::RedisSessionStore,
     config: &'static tufa_common::repositories_types::tufa_server::config::config_struct::Config
-) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::TryBuildActixWebDevServer<'a>>> {
+) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::TryBuildActixWebDevServer<'a>>>{
+    // Shared Mutable State
+    // use actix_web::{web, App, HttpServer};
+    // use std::sync::Mutex;
 
-// Shared Mutable State
-// use actix_web::{web, App, HttpServer};
-// use std::sync::Mutex;
+    // struct AppStateWithCounter {
+    //     counter: Mutex<i32>, // <- Mutex is necessary to mutate safely across threads
+    // }
 
-// struct AppStateWithCounter {
-//     counter: Mutex<i32>, // <- Mutex is necessary to mutate safely across threads
-// }
+    // async fn index(data: web::Data<AppStateWithCounter>) -> String {
+    //     let mut counter = data.counter.lock().unwrap(); // <- get counter's MutexGuard
+    //     *counter += 1; // <- access counter inside MutexGuard
 
-// async fn index(data: web::Data<AppStateWithCounter>) -> String {
-//     let mut counter = data.counter.lock().unwrap(); // <- get counter's MutexGuard
-//     *counter += 1; // <- access counter inside MutexGuard
+    //     format!("Request number: {counter}") // <- response with count
+    // }
 
-//     format!("Request number: {counter}") // <- response with count
-// }
+    // use actix_web::{web, App, HttpResponse, HttpServer};
 
-// use actix_web::{web, App, HttpResponse, HttpServer};
+    // // this function could be located in a different module
+    // fn scoped_config(cfg: &mut web::ServiceConfig) {
+    //     cfg.service(
+    //         web::resource("/test")
+    //             .route(web::get().to(|| async { HttpResponse::Ok().body("test") }))
+    //             .route(web::head().to(HttpResponse::MethodNotAllowed)),
+    //     );
+    // }
 
-// // this function could be located in a different module
-// fn scoped_config(cfg: &mut web::ServiceConfig) {
-//     cfg.service(
-//         web::resource("/test")
-//             .route(web::get().to(|| async { HttpResponse::Ok().body("test") }))
-//             .route(web::head().to(HttpResponse::MethodNotAllowed)),
-//     );
-// }
+    // // this function could be located in a different module
+    // fn config(cfg: &mut web::ServiceConfig) {
+    //     cfg.service(
+    //         web::resource("/app")
+    //             .route(web::get().to(|| async { HttpResponse::Ok().body("app") }))
+    //             .route(web::head().to(HttpResponse::MethodNotAllowed)),
+    //     );
+    // }
 
-// // this function could be located in a different module
-// fn config(cfg: &mut web::ServiceConfig) {
-//     cfg.service(
-//         web::resource("/app")
-//             .route(web::get().to(|| async { HttpResponse::Ok().body("app") }))
-//             .route(web::head().to(HttpResponse::MethodNotAllowed)),
-//     );
-// }
-
-// #[actix_web::main]
-// async fn main() -> std::io::Result<()> {
-//     HttpServer::new(|| {
-//         App::new()
-//             .configure(config)
-//             .service(web::scope("/api").configure(scoped_config))
-//             .route(
-//                 "/",
-//                 web::get().to(|| async { HttpResponse::Ok().body("/") }),
-//             )
-//     })
-//     .bind(("127.0.0.1", 8080))?
-//     .run()
-//     .await
-// }
+    // #[actix_web::main]
+    // async fn main() -> std::io::Result<()> {
+    //     HttpServer::new(|| {
+    //         App::new()
+    //             .configure(config)
+    //             .service(web::scope("/api").configure(scoped_config))
+    //             .route(
+    //                 "/",
+    //                 web::get().to(|| async { HttpResponse::Ok().body("/") }),
+    //             )
+    //     })
+    //     .bind(("127.0.0.1", 8080))?
+    //     .run()
+    //     .await
+    // }
 
     let server = match actix_web::HttpServer::new(move || {
         let secret_key = actix_web::cookie::Key::from({

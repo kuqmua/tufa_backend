@@ -14,10 +14,10 @@ mod tests;
 
 //query! containing mods
 pub mod authentication;
+pub mod idempotency;
 pub mod issue_delivery_worker;
 pub mod routes;
 pub mod try_build_actix_web_dev_server;
-pub mod idempotency;
 
 pub mod dev;
 

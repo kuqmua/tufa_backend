@@ -6,11 +6,27 @@ static TRACING: once_cell::sync::Lazy<()> = once_cell::sync::Lazy::new(|| {
     let default_filter_level = "info".to_string();
     let subscriber_name = "test".to_string();
     if std::env::var("TEST_LOG").is_ok() {
-        let subscriber = tufa_common::repositories_types::tufa_server::telemetry::get_subscriber::get_subscriber(subscriber_name, default_filter_level, std::io::stdout);
-        tufa_common::repositories_types::tufa_server::telemetry::init_subscriber::init_subscriber(subscriber).expect("cannot init tracing subscriber std::io::stdout");
+        let subscriber =
+            tufa_common::repositories_types::tufa_server::telemetry::get_subscriber::get_subscriber(
+                subscriber_name,
+                default_filter_level,
+                std::io::stdout,
+            );
+        tufa_common::repositories_types::tufa_server::telemetry::init_subscriber::init_subscriber(
+            subscriber,
+        )
+        .expect("cannot init tracing subscriber std::io::stdout");
     } else {
-        let subscriber = tufa_common::repositories_types::tufa_server::telemetry::get_subscriber::get_subscriber(subscriber_name, default_filter_level, std::io::sink);
-        tufa_common::repositories_types::tufa_server::telemetry::init_subscriber::init_subscriber(subscriber).expect("cannot init tracing subscriber std::io::sink");
+        let subscriber =
+            tufa_common::repositories_types::tufa_server::telemetry::get_subscriber::get_subscriber(
+                subscriber_name,
+                default_filter_level,
+                std::io::sink,
+            );
+        tufa_common::repositories_types::tufa_server::telemetry::init_subscriber::init_subscriber(
+            subscriber,
+        )
+        .expect("cannot init tracing subscriber std::io::sink");
     };
 });
 
@@ -201,15 +217,14 @@ pub async fn spawn_app() -> TestApp {
         c.email_client.base_url = email_server.uri();
         c
     };
-    let config = once_cell::sync::Lazy::force(
-        &crate::global_variables::runtime::config::CONFIG,
-    );
+    let config = once_cell::sync::Lazy::force(&crate::global_variables::runtime::config::CONFIG);
     configure_database(config).await;
-    let application = crate::try_build_actix_web_dev_server::Application::build(//try_build_actix_web_dev_server
-        config
+    let application = crate::try_build_actix_web_dev_server::Application::build(
+        //try_build_actix_web_dev_server
+        config,
     )
-        .await
-        .expect("Failed to build application.");
+    .await
+    .expect("Failed to build application.");
     let application_port = application.port();
     let _ = tokio::spawn(application.run_until_stopped());
     let client = reqwest::Client::builder()
@@ -223,7 +238,9 @@ pub async fn spawn_app() -> TestApp {
             config.get_server_address()
         },
         port: application_port,
-        db_pool: crate::try_build_actix_web_dev_server::get_connection_pool(&configuration.database),
+        db_pool: crate::try_build_actix_web_dev_server::get_connection_pool(
+            &configuration.database,
+        ),
         email_server,
         test_user: TestUser::generate(),
         api_client: client,
@@ -238,20 +255,20 @@ async fn configure_database(
         impl tufa_common::traits::get_postgres_connect_options_with_db::GetPostgresConnectOptionsWithDb
         + tufa_common::traits::get_postgres_connect_options_without_db::GetPostgresConnectOptionsWithoutDb
         + tufa_common::common::config::config_fields::GetPostgresDb
-    )
+    ),
 ) -> sqlx::PgPool {
-    let mut connection = sqlx::PgConnection::connect_with(
-        config.get_postgres_connect_options_without_db()
-    )
-        .await
-        .expect("Failed to connect to Postgres");
+    let mut connection =
+        sqlx::PgConnection::connect_with(config.get_postgres_connect_options_without_db())
+            .await
+            .expect("Failed to connect to Postgres");
     connection
-        .execute(&*format!(r#"CREATE DATABASE "{}";"#, config.get_postgres_db()))
+        .execute(&*format!(
+            r#"CREATE DATABASE "{}";"#,
+            config.get_postgres_db()
+        ))
         .await
         .expect("Failed to create database.");
-    let connection_pool = sqlx::PgPool::connect_with(
-        config.get_postgres_connect_options_with_db()
-    )
+    let connection_pool = sqlx::PgPool::connect_with(config.get_postgres_connect_options_with_db())
         .await
         .expect("Failed to connect to Postgres.");
     sqlx::migrate!("./migrations")

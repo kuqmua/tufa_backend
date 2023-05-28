@@ -1,16 +1,17 @@
 pub async fn change_password(
-    form: actix_web::web::Form<tufa_common::common::change_password_form_data::ChangePasswordFormData>,
+    form: actix_web::web::Form<
+        tufa_common::common::change_password_form_data::ChangePasswordFormData,
+    >,
     pool: actix_web::web::Data<sqlx::PgPool>,
-    user_id: actix_web::web::ReqData<tufa_common::repositories_types::tufa_server::authentication::UserId>,
+    user_id: actix_web::web::ReqData<
+        tufa_common::repositories_types::tufa_server::authentication::UserId,
+    >,
 ) -> Result<actix_web::HttpResponse, actix_web::Error> {
     let user_id = user_id.into_inner();
-    if 
-    {
+    if {
         use secrecy::ExposeSecret;
         form.new_password.expose_secret()
-    } 
-    != 
-    {
+    } != {
         use secrecy::ExposeSecret;
         form.new_password_check.expose_secret()
     } {
@@ -18,9 +19,15 @@ pub async fn change_password(
             "You entered two different new passwords - the field values must match.",
         )
         .send();
-        return Ok(tufa_common::repositories_types::tufa_server::utils::status_codes::see_other("/admin/password"));
+        return Ok(
+            tufa_common::repositories_types::tufa_server::utils::status_codes::see_other(
+                "/admin/password",
+            ),
+        );
     }
-    let username = crate::routes::dashboard::get_username(*user_id, &pool).await.map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?;
+    let username = crate::routes::dashboard::get_username(*user_id, &pool)
+        .await
+        .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?;
     let credentials = tufa_common::common::postgres_credentials::PostgresCredentials {
         username,
         password: form.0.current_password,
@@ -70,5 +77,9 @@ pub async fn change_password(
         .await
         .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?;
     actix_web_flash_messages::FlashMessage::error("Your password has been changed.").send();
-    Ok(tufa_common::repositories_types::tufa_server::utils::status_codes::see_other("/admin/password"))
+    Ok(
+        tufa_common::repositories_types::tufa_server::utils::status_codes::see_other(
+            "/admin/password",
+        ),
+    )
 }

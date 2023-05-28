@@ -1,18 +1,24 @@
 pub async fn subscribe<'a>(
     form: actix_web::web::Form<tufa_common::repositories_types::tufa_server::routes::FormData>,
     pool: actix_web::web::Data<sqlx::PgPool>,
-    email_client: actix_web::web::Data<tufa_common::repositories_types::tufa_server::email_client::EmailClient>,
+    email_client: actix_web::web::Data<
+        tufa_common::repositories_types::tufa_server::email_client::EmailClient,
+    >,
     base_url: actix_web::web::Data<std::string::String>,
-) -> Result<actix_web::HttpResponse, tufa_common::repositories_types::tufa_server::routes::SubscribeErrorNamed<'a>> {
-    let new_subscriber: tufa_common::repositories_types::tufa_server::domain::NewSubscriber = match form.0.try_into() {
-        Err(e) => {
-            return Err(tufa_common::repositories_types::tufa_server::routes::subscriptions::SubscribeErrorNamed::TryIntoNewSubscriber {
+) -> Result<
+    actix_web::HttpResponse,
+    tufa_common::repositories_types::tufa_server::routes::SubscribeErrorNamed<'a>,
+> {
+    let new_subscriber: tufa_common::repositories_types::tufa_server::domain::NewSubscriber =
+        match form.0.try_into() {
+            Err(e) => {
+                return Err(tufa_common::repositories_types::tufa_server::routes::subscriptions::SubscribeErrorNamed::TryIntoNewSubscriber {
                 try_into_new_subscriber: e,
                 code_occurence: tufa_common::code_occurence!(),
             });
-        },
-        Ok(new_subscriber) => new_subscriber,
-    };
+            }
+            Ok(new_subscriber) => new_subscriber,
+        };
     //"Failed to acquire a Postgres connection from the pool"
     let mut transaction = match pool.begin().await {
         Err(e) => {
@@ -20,7 +26,7 @@ pub async fn subscribe<'a>(
                 postgres_pool_begin: e,
                 code_occurence: tufa_common::code_occurence!(),
             });
-        },
+        }
         Ok(transaction) => transaction,
     };
     //"Failed to insert new subscriber in the database."
@@ -30,13 +36,12 @@ pub async fn subscribe<'a>(
                 insert_subscriber: e,
                 code_occurence: tufa_common::code_occurence!(),
             });
-        },
+        }
         Ok(subscriber_id) => subscriber_id,
     };
     let subscription_token = tufa_common::repositories_types::tufa_server::routes::subscriptions::generate_subscription_token();
     //"Failed to store the confirmation token for a new subscriber."
-    if let Err(e) = store_token(&mut transaction, subscriber_id, &subscription_token)
-    .await {
+    if let Err(e) = store_token(&mut transaction, subscriber_id, &subscription_token).await {
         return Err(tufa_common::repositories_types::tufa_server::routes::subscriptions::SubscribeErrorNamed::StoreToken {
             store_token: e,
             code_occurence: tufa_common::code_occurence!(),
@@ -55,7 +60,9 @@ pub async fn subscribe<'a>(
         new_subscriber,
         &base_url,
         &subscription_token,
-    ).await {
+    )
+    .await
+    {
         return Err(tufa_common::repositories_types::tufa_server::routes::subscriptions::SubscribeErrorNamed::SendConfirmationEmail {
             send_confirmation_email: e,
             code_occurence: tufa_common::code_occurence!(),

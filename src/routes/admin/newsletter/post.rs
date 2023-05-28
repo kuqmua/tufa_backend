@@ -4,8 +4,12 @@
     fields(user_id=%*user_id)
 )]
 pub async fn publish_newsletter(
-    form: actix_web::web::Form<tufa_common::repositories_types::tufa_server::routes::admin::newsletter::post::FormData>,
-    user_id: actix_web::web::ReqData<tufa_common::repositories_types::tufa_server::authentication::UserId>,
+    form: actix_web::web::Form<
+        tufa_common::repositories_types::tufa_server::routes::admin::newsletter::post::FormData,
+    >,
+    user_id: actix_web::web::ReqData<
+        tufa_common::repositories_types::tufa_server::authentication::UserId,
+    >,
     pool: actix_web::web::Data<sqlx::PgPool>,
 ) -> Result<actix_web::HttpResponse, actix_web::Error> {
     let user_id = user_id.into_inner();
@@ -15,7 +19,10 @@ pub async fn publish_newsletter(
         html_content,
         idempotency_key,
     } = form.0;
-    let idempotency_key: tufa_common::repositories_types::tufa_server::idempotency::IdempotencyKey = idempotency_key.try_into().map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e400)?;
+    let idempotency_key: tufa_common::repositories_types::tufa_server::idempotency::IdempotencyKey =
+        idempotency_key
+            .try_into()
+            .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e400)?;
     let mut transaction = match crate::idempotency::try_processing(&pool, &idempotency_key, *user_id)
         .await
         .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?
@@ -34,10 +41,13 @@ pub async fn publish_newsletter(
     enqueue_delivery_tasks(&mut transaction, issue_id)
         .await
         .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?;
-    let response = tufa_common::repositories_types::tufa_server::utils::status_codes::see_other("/admin/newsletters");
-    let response = crate::idempotency::save_response(transaction, &idempotency_key, *user_id, response)
-        .await
-        .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?;
+    let response = tufa_common::repositories_types::tufa_server::utils::status_codes::see_other(
+        "/admin/newsletters",
+    );
+    let response =
+        crate::idempotency::save_response(transaction, &idempotency_key, *user_id, response)
+            .await
+            .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?;
     success_message().send();
     Ok(response)
 }

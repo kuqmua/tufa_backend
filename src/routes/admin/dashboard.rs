@@ -2,8 +2,13 @@ pub async fn admin_dashboard(
     session: tufa_common::repositories_types::tufa_server::session_state::TypedSession,
     pool: actix_web::web::Data<sqlx::PgPool>,
 ) -> Result<actix_web::HttpResponse, actix_web::Error> {
-    let username = if let Some(user_id) = session.get_user_id().map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)? {
-        get_username(user_id, &pool).await.map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?
+    let username = if let Some(user_id) = session
+        .get_user_id()
+        .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?
+    {
+        get_username(user_id, &pool)
+            .await
+            .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?
     } else {
         return Ok(actix_web::HttpResponse::SeeOther()
             .insert_header((actix_web::http::header::LOCATION, "/login"))
@@ -34,7 +39,13 @@ pub async fn admin_dashboard(
         )))
 }
 
-pub async fn get_username<'a>(user_id: uuid::Uuid, pool: &sqlx::PgPool) -> Result<String, tufa_common::repositories_types::tufa_server::routes::dashboard::GetUsernameErrorNamed<'a>> {
+pub async fn get_username<'a>(
+    user_id: uuid::Uuid,
+    pool: &sqlx::PgPool,
+) -> Result<
+    String,
+    tufa_common::repositories_types::tufa_server::routes::dashboard::GetUsernameErrorNamed<'a>,
+> {
     match sqlx::query!(
         r#"
         SELECT username
