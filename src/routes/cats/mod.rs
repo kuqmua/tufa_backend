@@ -5,6 +5,7 @@
 #[actix_web::get("/")]
 pub async fn select(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::SelectQueryParameters>,
+    //todo will path parameter work with query parameters if id is empty?
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
     //todo - add check github commit id
@@ -85,6 +86,7 @@ pub async fn select(
 #[actix_web::get("/{id}")]
 pub async fn select_by_id(
     path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::SelectByIdPathParameters>,
+    //todo will path parameter work with query parameters if id is empty?
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
 ) -> impl actix_web::Responder {
@@ -371,6 +373,7 @@ pub async fn update_one_patch(
 #[actix_web::delete("delete_by_id/{id}")]
 pub async fn delete_by_id(
     path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdPathParameters>,
+    //todo will path parameter work with query parameters if id is empty?
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
     //todo - check maybe not need to use everywhere InternalServerError
@@ -524,7 +527,7 @@ pub async fn upsert(
         Err(e) => {
             eprintln!("Unable to upsert a cat, error: {e:#?}");
             let error = tufa_common::repositories_types::tufa_server::routes::cats::UpsertErrorNamed::PostgresInsertOrUpdate {
-                insert_or_update: e,
+                postgres_insert_or_update: e,
                 code_occurence: tufa_common::code_occurence!(),
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
