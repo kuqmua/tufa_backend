@@ -475,6 +475,7 @@ pub async fn delete_where(
     }
 }
 //todo - its the case if all columns except id are not null. for nullable columns must be different logic
+// curl -X PUT http://127.0.0.1:8080/api/cats/upsert -H 'Content-Type: application/json' -d '{"id": 7, "name":"simba", "color":"black"}'
 #[actix_web::put("/upsert")]
 pub async fn upsert(
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::Cat>,
