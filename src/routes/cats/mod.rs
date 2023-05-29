@@ -426,4 +426,76 @@ pub async fn delete_by_id(
         }
     }
 }
-//do not support put method - only for mongo
+
+// curl -X DELETE http://127.0.0.1:8080/api/cats/delete_where/?color=white
+#[actix_web::delete("delete_where/")]
+pub async fn delete_where(
+    query_parameters: actix_web::web::Query<
+        tufa_common::repositories_types::tufa_server::routes::cats::DeleteWhereQueryParameters,
+    >,
+    pool: actix_web::web::Data<sqlx::PgPool>,
+    config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
+    //todo - check maybe not need to use everywhere InternalServerError
+) -> impl actix_web::Responder {
+    //todo how to handle sql injection ?
+    println!("delete_where name {:?}, color {:?}", query_parameters.name, query_parameters.color);
+    let query_result = match (&query_parameters.name, &query_parameters.color) {
+        (None, None) => {
+            eprintln!("Unable to delete_where cats, no parameters");
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresDeleteWhereErrorNamed::NoParameters {
+                no_parameters: std::string::String::from("no parameters provided"),
+                code_occurence: tufa_common::code_occurence!(),
+            };
+            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+            error.error_log(**config);
+            return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
+                error.into_serialize_deserialize_version(),
+            ));
+        }
+        (None, Some(color)) => {
+            sqlx::query_as!(
+                tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+                "DELETE FROM cats WHERE color = $1",
+                color,
+            )
+            .fetch_all(&**pool)
+            .await
+        }
+        (Some(name), None) => {
+            sqlx::query_as!(
+                tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+                "DELETE FROM cats WHERE name = $1",
+                name,
+            )
+            .fetch_all(&**pool)
+            .await
+        }
+        (Some(name), Some(color)) => {
+            sqlx::query_as!(
+                tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+                "DELETE FROM cats WHERE name = $1 AND color = $2",
+                name,
+                color
+            )
+            .fetch_all(&**pool)
+            .await
+        }
+    };
+    match query_result {
+        Ok(_) => actix_web::HttpResponse::Ok().finish(),
+        Err(e) => {
+            eprintln!("Unable to delete_where cats, error: {e:#?}");
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresDeleteWhereErrorNamed::Delete {
+                delete: e,
+                code_occurence: tufa_common::code_occurence!(),
+            };
+            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+            error.error_log(**config);
+            actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
+                error.into_serialize_deserialize_version(),
+            ))
+        }
+    }
+}
+
+//todo do not support put method - only for mongo
