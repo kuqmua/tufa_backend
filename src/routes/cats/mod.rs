@@ -136,7 +136,7 @@ pub async fn select_by_id(
     }
 }
 //todo change methods patch post delete etc
-// curl -X POST http://127.0.0.1:8080/api/cats/ -H 'Content-Type: application/json' -d '{"name":"simba", "color":"black"}'
+// curl -X POST http://127.0.0.1:8080/api/cats/insert_one -H 'Content-Type: application/json' -d '{"name":"simba", "color":"black"}'
 #[actix_web::post("/insert_one")]
 pub async fn insert_one(
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::CatToInsert>,
@@ -144,9 +144,11 @@ pub async fn insert_one(
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
 ) -> impl actix_web::Responder {
     println!("insert one name {}, color {}", cat.name, cat.color);
+    println!("len{}", cat.color.len());
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::cats::Cat,
         "INSERT INTO cats(name, color) VALUES ($1, $2)",
+        // "INSERT INTO cats(id, name, color) VALUES ($1, $2) ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, color = EXCLUDED.color",
         cat.name,
         cat.color
     )
@@ -178,8 +180,7 @@ pub async fn update_one(
     //todo - check maybe not need to use everywhere InternalServerError
 ) -> impl actix_web::Responder {
     //todo how to handle sql injection ?
-    println!("update one name {:?}, color {:?}", cat.name, cat.color);
-    //
+    println!("update one id {} name {:?}, color {:?}", cat.id, cat.name, cat.color);
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
         cat.id,
     ) {
@@ -463,6 +464,53 @@ pub async fn delete_where(
             eprintln!("Unable to delete_where cats, error: {e:#?}");
             let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresDeleteWhereErrorNamed::Delete {
                 delete: e,
+                code_occurence: tufa_common::code_occurence!(),
+            };
+            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+            error.error_log(**config);
+            actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
+                error.into_serialize_deserialize_version(),
+            ))
+        }
+    }
+}
+//todo - its the case if all columns except id are not null. for nullable columns must be different logic
+#[actix_web::put("/upsert")]
+pub async fn upsert(
+    cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::Cat>,
+    pool: actix_web::web::Data<sqlx::PgPool>,
+    config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
+) -> impl actix_web::Responder {
+    //todo - maybe check max length for field here instead of put it in postgres and recieve error ? color VARCHAR (255) NOT NULL
+    println!("upsert id {} name {}, color {}", cat.id, cat.name, cat.color);
+    let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(cat.id) {
+        Ok(bigserial_id) => bigserial_id,
+        Err(e) => {
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::UpsertErrorNamed::Bigserial { 
+                bigserial: e, 
+                code_occurence: tufa_common::code_occurence!()
+            };
+            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+            error.error_log(**config);
+            return actix_web::HttpResponse::InternalServerError()
+            .json(actix_web::web::Json(error.into_serialize_deserialize_version()));
+        }
+    };
+    match sqlx::query_as!(
+        tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+        "INSERT INTO cats(id, name, color) VALUES ($1, $2, $3) ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, color = EXCLUDED.color",
+        *bigserial_id.bigserial(),
+        cat.name,
+        cat.color
+    )
+    .fetch_all(&**pool)
+    .await
+    {
+        Ok(_) => actix_web::HttpResponse::Ok().finish(),
+        Err(e) => {
+            eprintln!("Unable to upsert a cat, error: {e:#?}");
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::UpsertErrorNamed::PostgresInsertOrUpdate {
+                insert_or_update: e,
                 code_occurence: tufa_common::code_occurence!(),
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
