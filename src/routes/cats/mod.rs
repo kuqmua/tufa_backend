@@ -281,8 +281,8 @@ pub async fn update_one(
     }
 }
 
-// curl -X POST http://127.0.0.1:8080/api/cats/delete_by_id/2
-#[actix_web::post("delete_by_id/{id}")]
+// curl -X DELETE http://127.0.0.1:8080/api/cats/delete_by_id/2
+#[actix_web::delete("delete_by_id/{id}")]
 pub async fn delete_by_id(
     path_parameters: actix_web::web::Path<
         tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdPathParameters,
