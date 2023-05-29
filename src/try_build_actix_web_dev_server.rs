@@ -115,11 +115,8 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 // actix_web::web::resource("/cats")
                     actix_web::web::scope("/cats")
                     .service(crate::routes::cats::select)
-                    // .service(crate::routes::cats::select_cats)
                     .service(crate::routes::cats::select_by_id)
-                    .service(crate::routes::cats::insert_one)
-                    //todo - merge insert and update?
-                    // .route("/update_one", actix_web::web::post().to(crate::routes::cats::update_one))
+                    .service(crate::routes::cats::create)
                     .service(crate::routes::cats::update_one)
                     .service(crate::routes::cats::update_one_patch)
                     .service(crate::routes::cats::delete_by_id)

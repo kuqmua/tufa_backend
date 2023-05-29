@@ -137,8 +137,8 @@ pub async fn select_by_id(
 }
 //todo change methods patch post delete etc
 // curl -X POST http://127.0.0.1:8080/api/cats/insert_one -H 'Content-Type: application/json' -d '{"name":"simba", "color":"black"}'
-#[actix_web::post("/insert_one")]
-pub async fn insert_one(
+#[actix_web::post("/")]
+pub async fn create(
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::CatToInsert>,
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
@@ -148,7 +148,6 @@ pub async fn insert_one(
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::cats::Cat,
         "INSERT INTO cats(name, color) VALUES ($1, $2)",
-        // "INSERT INTO cats(id, name, color) VALUES ($1, $2) ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, color = EXCLUDED.color",
         cat.name,
         cat.color
     )
@@ -158,8 +157,8 @@ pub async fn insert_one(
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
         Err(e) => {
             eprintln!("Unable to insert a cat, error: {e:#?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresInsertOneErrorNamed::Insert {
-                insert: e,
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::CreateErrorNamed::PostgresInsert {
+                postgres_insert: e,
                 code_occurence: tufa_common::code_occurence!(),
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
@@ -522,5 +521,3 @@ pub async fn upsert(
         }
     }
 }
-
-//todo do not support put method - only for mongo
