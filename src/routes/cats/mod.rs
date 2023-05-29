@@ -1,4 +1,4 @@
-//todo - create enum without inner values for Http Codes for every route 
+//todo - create enum without inner values for returning every possible Http Codes for every route. like 201 or 500
 // http://127.0.0.1:8080/api/cats/?limit=87 - Some(87)
 //or
 // http://127.0.0.1:8080/api/cats/ - None
