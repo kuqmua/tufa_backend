@@ -110,15 +110,15 @@ pub async fn select_by_id(
         path_parameters.id,
     ) {
         Ok(bigserial_id) => bigserial_id,
-        Err(error) => {
+        Err(e) => {
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::SelectByIdErrorNamed::Bigserial { 
+                bigserial: e, 
+                code_occurence: tufa_common::code_occurence!()
+            };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
             error.error_log(**config);
             return actix_web::HttpResponse::InternalServerError()
-            .json(
-                actix_web::web::Json(
-                    tufa_common::repositories_types::tufa_server::routes::cats::SelectByIdResponse::BigserialError(error.into_serialize_deserialize_version())
-                )
-            );
+            .json(actix_web::web::Json(error.into_serialize_deserialize_version()));
         }
     };
     match sqlx::query_as!(
@@ -132,26 +132,18 @@ pub async fn select_by_id(
         Ok(cat) => {
             // tracing::info!("selected casts:\n{vec_cats:#?}");
             println!("selected cats:\n{cat:#?}");
-            actix_web::HttpResponse::Ok().json(actix_web::web::Json(
-                tufa_common::repositories_types::tufa_server::routes::cats::SelectByIdResponse::Ok(
-                    cat,
-                ),
-            ))
+            actix_web::HttpResponse::Ok().json(actix_web::web::Json(cat))
         }
         Err(e) => {
             // tracing::error!("Unable to query cats table, error: {e:?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresSelectCatErrorNamed::SelectCat {
-                select_cat: e,
-                code_occurence: tufa_common::code_occurence!(),
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::SelectByIdErrorNamed::SelectCat { 
+                select_cat: e, 
+                code_occurence: tufa_common::code_occurence!() 
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
             error.error_log(**config);
             actix_web::HttpResponse::InternalServerError()
-            .json(
-                actix_web::web::Json(
-                    tufa_common::repositories_types::tufa_server::routes::cats::SelectByIdResponse::Select(error.into_serialize_deserialize_version())
-                )
-            )
+            .json(actix_web::web::Json(error.into_serialize_deserialize_version()))
         }
     }
 }
