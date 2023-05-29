@@ -147,8 +147,9 @@ pub async fn select_by_id(
         }
     }
 }
-
+//todo change methods patch post delete etc
 // curl -X POST http://127.0.0.1:8080/api/cats/ -H 'Content-Type: application/json' -d '{"name":"simba", "color":"black"}'
+#[actix_web::post("/insert_one")]
 pub async fn insert_one(
     cat: actix_web::web::Json<
         tufa_common::repositories_types::tufa_server::routes::cats::CatToInsert,
@@ -280,7 +281,7 @@ pub async fn update_one(
     }
 }
 
-// curl -X POST http://127.0.0.1:8080/api/cats/delete_by_id
+// curl -X POST http://127.0.0.1:8080/api/cats/delete_by_id/2
 #[actix_web::post("delete_by_id/{id}")]
 pub async fn delete_by_id(
     path_parameters: actix_web::web::Path<
