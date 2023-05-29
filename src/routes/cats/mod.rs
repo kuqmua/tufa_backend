@@ -346,7 +346,7 @@ pub async fn update_one_patch(
         (Some(_), Some(_)) => {
             eprintln!("please use post or maybe todo for full object update");
             let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresUpdateOnePatchErrorNamed::PleaseUsePost {
-                please_use_post: std::string::String::from("no parameters provided"),
+                please_use_post: std::string::String::from("please_use_post"),
                 code_occurence: tufa_common::code_occurence!(),
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
