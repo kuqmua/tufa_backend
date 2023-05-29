@@ -3,14 +3,9 @@
 // http://127.0.0.1:8080/api/cats/ - None
 #[actix_web::get("/")]
 pub async fn select(
-    //todo rename to get(vec) and add adiitional parameters
-    query_parameters: actix_web::web::Query<
-        tufa_common::repositories_types::tufa_server::routes::cats::SelectQueryParameters,
-    >,
+    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::SelectQueryParameters>,
     pool: actix_web::web::Data<sqlx::PgPool>,
-    config: actix_web::web::Data<
-        &tufa_common::repositories_types::tufa_server::config::config_struct::Config,
-    >,
+    config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
     //todo - add check github commit id
 ) -> impl actix_web::Responder {
     println!(
@@ -94,13 +89,9 @@ pub async fn select(
 //http://127.0.0.1:8080/api/cats/756
 #[actix_web::get("/{id}")]
 pub async fn select_by_id(
-    path_parameters: actix_web::web::Path<
-        tufa_common::repositories_types::tufa_server::routes::cats::SelectByIdPathParameters,
-    >,
+    path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::SelectByIdPathParameters>,
     pool: actix_web::web::Data<sqlx::PgPool>,
-    config: actix_web::web::Data<
-        &tufa_common::repositories_types::tufa_server::config::config_struct::Config,
-    >,
+    config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
 ) -> impl actix_web::Responder {
     println!("select_by_id {}", path_parameters.id);
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
@@ -148,13 +139,9 @@ pub async fn select_by_id(
 // curl -X POST http://127.0.0.1:8080/api/cats/ -H 'Content-Type: application/json' -d '{"name":"simba", "color":"black"}'
 #[actix_web::post("/insert_one")]
 pub async fn insert_one(
-    cat: actix_web::web::Json<
-        tufa_common::repositories_types::tufa_server::routes::cats::CatToInsert,
-    >,
+    cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::CatToInsert>,
     pool: actix_web::web::Data<sqlx::PgPool>,
-    config: actix_web::web::Data<
-        &tufa_common::repositories_types::tufa_server::config::config_struct::Config,
-    >,
+    config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
 ) -> impl actix_web::Responder {
     println!("insert one name {}, color {}", cat.name, cat.color);
     match sqlx::query_as!(
@@ -185,13 +172,9 @@ pub async fn insert_one(
 // curl -X POST http://127.0.0.1:8080/api/cats/update_one -H 'Content-Type: application/json' -d '{"id": 6, "name":"simba"}'
 #[actix_web::post("/update_one")]
 pub async fn update_one(
-    cat: actix_web::web::Json<
-        tufa_common::repositories_types::tufa_server::routes::cats::CatToUpdate,
-    >,
+    cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::CatToUpdate>,
     pool: actix_web::web::Data<sqlx::PgPool>,
-    config: actix_web::web::Data<
-        &tufa_common::repositories_types::tufa_server::config::config_struct::Config,
-    >,
+    config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
     //todo - check maybe not need to use everywhere InternalServerError
 ) -> impl actix_web::Responder {
     //todo how to handle sql injection ?
@@ -373,9 +356,7 @@ pub async fn update_one_patch(
 // curl -X DELETE http://127.0.0.1:8080/api/cats/delete_by_id/2
 #[actix_web::delete("delete_by_id/{id}")]
 pub async fn delete_by_id(
-    path_parameters: actix_web::web::Path<
-        tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdPathParameters,
-    >,
+    path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdPathParameters>,
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
     //todo - check maybe not need to use everywhere InternalServerError
@@ -427,9 +408,7 @@ pub async fn delete_by_id(
 // curl -X DELETE http://127.0.0.1:8080/api/cats/delete_where/?color=white
 #[actix_web::delete("delete_where/")]
 pub async fn delete_where(
-    query_parameters: actix_web::web::Query<
-        tufa_common::repositories_types::tufa_server::routes::cats::DeleteWhereQueryParameters,
-    >,
+    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::DeleteWhereQueryParameters>,
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
     //todo - check maybe not need to use everywhere InternalServerError
