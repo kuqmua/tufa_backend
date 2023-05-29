@@ -26,11 +26,19 @@ pub async fn select(
     };
     let query_result = match (&query_parameters.name, &query_parameters.color) {
         //match` arms have incompatible types if return just a result of query_as!
-        (Some(name), Some(color)) => {
+        (None, None) => {
             sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::cats::Cat,
-                "SELECT * FROM cats WHERE name = $1 AND color = $2 LIMIT $3",
-                name,
+                "SELECT * FROM cats LIMIT $1",
+                *limit as i64
+            )
+            .fetch_all(&**pool)
+            .await
+        }
+        (None, Some(color)) => {
+            sqlx::query_as!(
+                tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+                "SELECT * FROM cats WHERE color = $1 LIMIT $2",
                 color,
                 *limit as i64
             )
@@ -47,20 +55,12 @@ pub async fn select(
             .fetch_all(&**pool)
             .await
         }
-        (None, Some(color)) => {
+        (Some(name), Some(color)) => {
             sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::cats::Cat,
-                "SELECT * FROM cats WHERE color = $1 LIMIT $2",
+                "SELECT * FROM cats WHERE name = $1 AND color = $2 LIMIT $3",
+                name,
                 color,
-                *limit as i64
-            )
-            .fetch_all(&**pool)
-            .await
-        }
-        (None, None) => {
-            sqlx::query_as!(
-                tufa_common::repositories_types::tufa_server::routes::cats::Cat,
-                "SELECT * FROM cats LIMIT $1",
                 *limit as i64
             )
             .fetch_all(&**pool)
