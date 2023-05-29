@@ -432,7 +432,7 @@ pub async fn delete_where(
     let query_result = match (&query_parameters.name, &query_parameters.color) {
         (None, None) => {
             eprintln!("Unable to delete_where cats, no parameters");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresDeleteWhereErrorNamed::NoParameters {
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteWhereErrorNamed::NoParameters {
                 no_parameters: std::string::String::from("no parameters provided"),
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -475,8 +475,8 @@ pub async fn delete_where(
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
         Err(e) => {
             eprintln!("Unable to delete_where cats, error: {e:#?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresDeleteWhereErrorNamed::Delete {
-                delete: e,
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteWhereErrorNamed::PostgresDelete {
+                postgres_delete: e,
                 code_occurence: tufa_common::code_occurence!(),
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
