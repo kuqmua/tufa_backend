@@ -12,8 +12,7 @@ pub async fn select(
         &tufa_common::repositories_types::tufa_server::config::config_struct::Config,
     >,
     //todo - add check github commit id
-) -> actix_web::HttpResponse {
-    //or impl actix_web::Responder
+) -> impl actix_web::Responder {
     println!(
         "select, limit {:?}, name {:?} color {:?}",
         query_parameters.limit, query_parameters.name, query_parameters.color
@@ -25,7 +24,6 @@ pub async fn select(
         }
     };
     let query_result = match (&query_parameters.name, &query_parameters.color) {
-        //match` arms have incompatible types if return just a result of query_as!
         (None, None) => {
             sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::cats::Cat,
@@ -103,8 +101,7 @@ pub async fn select_by_id(
     config: actix_web::web::Data<
         &tufa_common::repositories_types::tufa_server::config::config_struct::Config,
     >,
-) -> actix_web::HttpResponse {
-    //or impl actix_web::Responder
+) -> impl actix_web::Responder {
     println!("select_by_id {}", path_parameters.id);
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
         path_parameters.id,
