@@ -64,24 +64,18 @@ pub async fn select(
         Ok(vec_cats) => {
             // tracing::info!("selected casts:\n{vec_cats:#?}");
             println!("selected casts:\n{vec_cats:#?}");
-            actix_web::HttpResponse::Ok().json(actix_web::web::Json(
-                tufa_common::repositories_types::tufa_server::routes::cats::GetAllResponse::Ok(
-                    vec_cats,
-                ),
-            ))
+            actix_web::HttpResponse::Ok().json(actix_web::web::Json(vec_cats))
         }
         Err(e) => {
             // tracing::error!("Unable to query cats table, error: {e:?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresSelectCatsErrorNamed::SelectCats {
-                select_cats: e,
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::GetErrorNamed::PostgresSelect {
+                postgres_select: e,
                 code_occurence: tufa_common::code_occurence!(),
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
             error.error_log(**config);
             actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
-                tufa_common::repositories_types::tufa_server::routes::cats::GetAllResponse::Err(
-                    error.into_serialize_deserialize_version(),
-                ),
+                error.into_serialize_deserialize_version()
             ))
         }
     }
@@ -124,8 +118,8 @@ pub async fn select_by_id(
         }
         Err(e) => {
             // tracing::error!("Unable to query cats table, error: {e:?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::SelectByIdErrorNamed::SelectCat { 
-                select_cat: e, 
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::SelectByIdErrorNamed::PostgresSelect { 
+                postgres_select: e, 
                 code_occurence: tufa_common::code_occurence!() 
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
