@@ -281,6 +281,98 @@ pub async fn update_one(
     }
 }
 
+#[actix_web::patch("/update_one_patch")]
+pub async fn update_one_patch(
+    cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::CatToPatch>,
+    pool: actix_web::web::Data<sqlx::PgPool>,
+    config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
+    //todo - check maybe not need to use everywhere InternalServerError
+) -> impl actix_web::Responder {
+    //todo how to handle sql injection ?
+    println!("update one patch name {:?}, color {:?}", cat.name, cat.color);
+    //
+    let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
+        cat.id,
+    ) {
+        Ok(bigserial_id) => bigserial_id,
+        Err(e) => {
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresUpdateOnePatchErrorNamed::Bigserial { 
+                bigserial: e, 
+                code_occurence: tufa_common::code_occurence!()
+            };
+            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+            error.error_log(**config);
+            return actix_web::HttpResponse::InternalServerError()
+            .json(
+                actix_web::web::Json(
+                    error.into_serialize_deserialize_version()
+                )
+            );
+        }
+    };
+    let query_result = match (&cat.name, &cat.color) {
+        (None, None) => {
+            eprintln!("Unable to update a cat, no parameters");
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresUpdateOnePatchErrorNamed::NoParameters {
+                no_parameters: std::string::String::from("no parameters provided"),
+                code_occurence: tufa_common::code_occurence!(),
+            };
+            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+            error.error_log(**config);
+            return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
+                error.into_serialize_deserialize_version(),
+            ));
+        }
+        (None, Some(color)) => {
+            sqlx::query_as!(
+                tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+                "UPDATE cats SET color = $1 WHERE id = $2",
+                color,
+                *bigserial_id.bigserial()
+            )
+            .fetch_all(&**pool)
+            .await
+        }
+        (Some(name), None) => {
+            sqlx::query_as!(
+                tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+                "UPDATE cats SET name = $1 WHERE id = $2",
+                name,
+                *bigserial_id.bigserial()
+            )
+            .fetch_all(&**pool)
+            .await
+        }
+        (Some(_), Some(_)) => {
+            eprintln!("please use post or maybe todo for full object update");
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresUpdateOnePatchErrorNamed::PleaseUsePost {
+                please_use_post: std::string::String::from("no parameters provided"),
+                code_occurence: tufa_common::code_occurence!(),
+            };
+            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+            error.error_log(**config);
+            return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
+                error.into_serialize_deserialize_version(),
+            ));
+        }
+    };
+    match query_result {
+        Ok(_) => actix_web::HttpResponse::Ok().finish(),
+        Err(e) => {
+            eprintln!("Unable to update a cat, error: {e:#?}");
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresUpdateOnePatchErrorNamed::Update {
+                update: e,
+                code_occurence: tufa_common::code_occurence!(),
+            };
+            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+            error.error_log(**config);
+            actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
+                error.into_serialize_deserialize_version(),
+            ))
+        }
+    }
+}
+
 // curl -X DELETE http://127.0.0.1:8080/api/cats/delete_by_id/2
 #[actix_web::delete("delete_by_id/{id}")]
 pub async fn delete_by_id(
@@ -288,9 +380,7 @@ pub async fn delete_by_id(
         tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdPathParameters,
     >,
     pool: actix_web::web::Data<sqlx::PgPool>,
-    config: actix_web::web::Data<
-        &tufa_common::repositories_types::tufa_server::config::config_struct::Config,
-    >,
+    config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
     //todo - check maybe not need to use everywhere InternalServerError
 ) -> impl actix_web::Responder {
     //todo how to handle sql injection ?
@@ -336,3 +426,4 @@ pub async fn delete_by_id(
         }
     }
 }
+//do not support put method - only for mongo
