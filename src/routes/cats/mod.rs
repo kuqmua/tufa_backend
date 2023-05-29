@@ -405,9 +405,9 @@ pub async fn delete_by_id(
     .await {
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
         Err(e) => {
-            eprintln!("Unable to update a cat, error: {e:#?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdErrorNamed::Delete {
-                delete: e,
+            eprintln!("Unable to delete a cat, error: {e:#?}");
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdErrorNamed::PostgresDelete {
+                postgres_delete: e,
                 code_occurence: tufa_common::code_occurence!(),
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
