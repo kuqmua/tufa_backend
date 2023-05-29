@@ -290,7 +290,7 @@ pub async fn update_one_patch(
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresUpdateOnePatchErrorNamed::Bigserial { 
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::UpdateOnePatchErrorNamed::Bigserial { 
                 bigserial: e, 
                 code_occurence: tufa_common::code_occurence!()
             };
@@ -307,7 +307,7 @@ pub async fn update_one_patch(
     let query_result = match (&cat.name, &cat.color) {
         (None, None) => {
             eprintln!("Unable to update a cat, no parameters");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresUpdateOnePatchErrorNamed::NoParameters {
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::UpdateOnePatchErrorNamed::NoParameters {
                 no_parameters: std::string::String::from("no parameters provided"),
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -339,7 +339,7 @@ pub async fn update_one_patch(
         }
         (Some(_), Some(_)) => {
             eprintln!("please use post or maybe todo for full object update");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresUpdateOnePatchErrorNamed::PleaseUsePost {
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::UpdateOnePatchErrorNamed::PleaseUsePost {
                 please_use_post: std::string::String::from("please_use_post"),
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -354,8 +354,8 @@ pub async fn update_one_patch(
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
         Err(e) => {
             eprintln!("Unable to update a cat, error: {e:#?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::PostgresUpdateOnePatchErrorNamed::Update {
-                update: e,
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::UpdateOnePatchErrorNamed::PostgresUpdate {
+                postgres_update: e,
                 code_occurence: tufa_common::code_occurence!(),
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
