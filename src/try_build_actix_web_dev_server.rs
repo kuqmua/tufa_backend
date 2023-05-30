@@ -122,7 +122,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
                     .service(crate::routes::cats::delete_by_id)
                     .service(crate::routes::cats::delete_where)
                     .service(crate::routes::cats::upsert)
-                    
                 )
             )
             .route("/subscriptions", actix_web::web::post().to(crate::routes::subscribe))
