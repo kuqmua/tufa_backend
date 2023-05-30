@@ -153,26 +153,27 @@ pub async fn create(
     {
         Ok(_) => actix_web::HttpResponse::Created().finish(),
         Err(e) => {
-    //         match e {
-    // Configuration(box_dyn_error) => todo!(),
-    // Database(box_dyn_database_error),
-    // Io(#[from] io::Error),
-    // Tls(#[source] BoxDynError),
-    // Protocol(String),
-    // RowNotFound,
-    // TypeNotFound { type_name: String },
-    // ColumnIndexOutOfBounds { index: usize, len: usize },
-    // ColumnNotFound(String),
-    // ColumnDecode {
-    //     index: String,
-    //     source: BoxDynError,
-    // },
-    // Decode(#[source] BoxDynError),
-    // PoolTimedOut,
-    // PoolClosed,
-    // WorkerCrashed,
-    // Migrate(#[source] Box<crate::migrate::MigrateError>),
-    //         }
+            // match e {
+            //     sqlx::Error::Configuration(box_dyn_error) => todo!(),
+            //     sqlx::Error::Database(box_dyn_database_error) => todo!(),
+            //     sqlx::Error::Io(io_error) => todo!(),
+            //     sqlx::Error::Tls(box_dyn_error) => todo!(),
+            //     sqlx::Error::Protocol(string) => todo!(),
+            //     sqlx::Error::RowNotFound => todo!(),
+            //     sqlx::Error::TypeNotFound { type_name } => todo!(),
+            //     sqlx::Error::ColumnIndexOutOfBounds { index, len } => todo!(),
+            //     sqlx::Error::ColumnNotFound(string) => todo!(),
+            //     sqlx::Error::ColumnDecode {
+            //         index,
+            //         source,
+            //     } => todo!(),
+            //     sqlx::Error::Decode(box_dyn_error) => todo!(),
+            //     sqlx::Error::PoolTimedOut => todo!(),
+            //     sqlx::Error::PoolClosed => todo!(),
+            //     sqlx::Error::WorkerCrashed => todo!(),
+            //     sqlx::Error::Migrate(box_crate_migrate_migrate_error) => todo!(),
+            //     _ => todo!()
+            // }
             eprintln!("Unable to create a cat, error: {e:#?}");
             let error = tufa_common::repositories_types::tufa_server::routes::cats::CreateErrorNamed::PostgresInsert {
                 postgres_insert: e,
