@@ -193,17 +193,17 @@ pub async fn create(
 //todo - its the case if all columns except id are not null. for nullable columns must be different logic
 // curl -X PUT http://127.0.0.1:8080/api/cats/ -H 'Content-Type: application/json' -d '{"id": 7, "name":"simba", "color":"black"}'
 #[actix_web::put("/")]
-pub async fn upsert(
+pub async fn put(
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::Cat>,
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
 ) -> impl actix_web::Responder {
     //todo - maybe check max length for field here instead of put it in postgres and recieve error ? color VARCHAR (255) NOT NULL
-    println!("upsert id {} name {}, color {}", cat.id, cat.name, cat.color);
+    println!("put id {} name {}, color {}", cat.id, cat.name, cat.color);
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(cat.id) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::UpsertErrorNamed::Bigserial { 
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::PutErrorNamed::Bigserial { 
                 bigserial: e, 
                 code_occurence: tufa_common::code_occurence!()
             };
@@ -225,8 +225,8 @@ pub async fn upsert(
     {
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
         Err(e) => {
-            eprintln!("Unable to upsert a cat, error: {e:#?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::UpsertErrorNamed::PostgresInsertOrUpdate {
+            eprintln!("Unable to put a cat, error: {e:#?}");
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::PutErrorNamed::PostgresInsertOrUpdate {
                 postgres_insert_or_update: e,
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -268,7 +268,7 @@ pub async fn patch(
     };
     let query_result = match (&cat.name, &cat.color) {
         (None, None) => {
-            eprintln!("Unable to update a cat, no parameters");
+            eprintln!("Unable to patch a cat, no parameters");
             let error = tufa_common::repositories_types::tufa_server::routes::cats::PatchErrorNamed::NoParameters {
                 no_parameters: std::string::String::from("no parameters provided"),
                 code_occurence: tufa_common::code_occurence!(),
