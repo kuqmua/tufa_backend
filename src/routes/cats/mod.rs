@@ -3,17 +3,18 @@
 //todo - check maybe not need to use everywhere InternalServerError
 //todo change methods patch post delete etc
 //todo how to handle sql injection ?
+//todo - maybe check max length for field here instead of put it in postgres and recieve error ? color VARCHAR (255) NOT NULL
 // http://127.0.0.1:8080/api/cats/?limit=87 - Some(87)
 //or
 // http://127.0.0.1:8080/api/cats/ - None
 #[actix_web::get("/")]
-pub async fn select(
-    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::SelectQueryParameters>,
+pub async fn get(
+    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::GetQueryParameters>,
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
 ) -> impl actix_web::Responder {
     println!(
-        "select, limit {:?}, name {:?} color {:?}",
+        "get limit {:?}, name {:?} color {:?}",
         query_parameters.limit, query_parameters.name, query_parameters.color
     );
     let limit = match &query_parameters.limit {
@@ -67,7 +68,7 @@ pub async fn select(
     match query_result {
         Ok(vec_cats) => {
             // tracing::info!("selected casts:\n{vec_cats:#?}");
-            println!("selected casts:\n{vec_cats:#?}");
+            println!("get casts:\n{vec_cats:#?}");
             actix_web::HttpResponse::Ok().json(actix_web::web::Json(vec_cats))
         }
         Err(e) => {
@@ -87,18 +88,18 @@ pub async fn select(
 
 //http://127.0.0.1:8080/api/cats/756
 #[actix_web::get("/{id}")]
-pub async fn select_by_id(
-    path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::SelectByIdPathParameters>,
+pub async fn get_by_id(
+    path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::GetByIdPathParameters>,
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
 ) -> impl actix_web::Responder {
-    println!("select_by_id {}", path_parameters.id);
+    println!("get_by_id {}", path_parameters.id);
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
         path_parameters.id,
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::SelectByIdErrorNamed::Bigserial { 
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::GetByIdErrorNamed::Bigserial { 
                 bigserial: e, 
                 code_occurence: tufa_common::code_occurence!()
             };
@@ -123,7 +124,7 @@ pub async fn select_by_id(
         }
         Err(e) => {
             // tracing::error!("Unable to query cats table, error: {e:?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::SelectByIdErrorNamed::PostgresSelect { 
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::GetByIdErrorNamed::PostgresSelect { 
                 postgres_select: e, 
                 code_occurence: tufa_common::code_occurence!() 
             };
@@ -137,12 +138,12 @@ pub async fn select_by_id(
 
 // curl -X POST http://127.0.0.1:8080/api/cats/ -H 'Content-Type: application/json' -d '{"name":"simba", "color":"black"}'
 #[actix_web::post("/")]
-pub async fn create(
-    cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::CatToInsert>,
+pub async fn post(
+    cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::CatToPost>,
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
 ) -> impl actix_web::Responder {
-    println!("create name {}, color {}", cat.name, cat.color);
+    println!("post name {}, color {}", cat.name, cat.color);
     println!("len{}", cat.color.len());
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::cats::Cat,
@@ -176,8 +177,8 @@ pub async fn create(
             //     sqlx::Error::Migrate(box_crate_migrate_migrate_error) => todo!(),
             //     _ => todo!()
             // }
-            eprintln!("Unable to create a cat, error: {e:#?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::CreateErrorNamed::PostgresInsert {
+            eprintln!("Unable to post a cat, error: {e:#?}");
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::PostErrorNamed::PostgresInsert {
                 postgres_insert: e,
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -198,7 +199,6 @@ pub async fn put(
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
 ) -> impl actix_web::Responder {
-    //todo - maybe check max length for field here instead of put it in postgres and recieve error ? color VARCHAR (255) NOT NULL
     println!("put id {} name {}, color {}", cat.id, cat.name, cat.color);
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(cat.id) {
         Ok(bigserial_id) => bigserial_id,
@@ -329,68 +329,18 @@ pub async fn patch(
     }
 }
 
-// curl -X DELETE http://127.0.0.1:8080/api/cats/2
-#[actix_web::delete("/{id}")]
-pub async fn delete_by_id(
-    path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdPathParameters>,
-    pool: actix_web::web::Data<sqlx::PgPool>,
-    config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
-) -> impl actix_web::Responder {
-    println!("delete_by_id {}", path_parameters.id);
-    let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
-        path_parameters.id,
-    ) {
-        Ok(bigserial_id) => bigserial_id,
-        Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdErrorNamed::Bigserial { 
-                bigserial: e, 
-                code_occurence: tufa_common::code_occurence!()
-            };
-            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(**config);
-            return actix_web::HttpResponse::InternalServerError()
-            .json(
-                actix_web::web::Json(
-                    error.into_serialize_deserialize_version()
-                )
-            );
-        }
-    };
-    match sqlx::query_as!(
-        tufa_common::repositories_types::tufa_server::routes::cats::Cat,
-        "DELETE FROM cats WHERE id = $1",
-        *bigserial_id.bigserial()
-    )
-    .fetch_all(&**pool)
-    .await {
-        Ok(_) => actix_web::HttpResponse::Ok().finish(),
-        Err(e) => {
-            eprintln!("Unable to delete a cat, error: {e:#?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdErrorNamed::PostgresDelete {
-                postgres_delete: e,
-                code_occurence: tufa_common::code_occurence!(),
-            };
-            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(**config);
-            actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
-                error.into_serialize_deserialize_version(),
-            ))
-        }
-    }
-}
-
 // curl -X DELETE http://127.0.0.1:8080/api/cats/?color=white
 #[actix_web::delete("/")]
-pub async fn delete_where(
-    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::DeleteWhereQueryParameters>,
+pub async fn delete(
+    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::DeleteQueryParameters>,
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
 ) -> impl actix_web::Responder {
-    println!("delete_where name {:?}, color {:?}", query_parameters.name, query_parameters.color);
+    println!("delete name {:?}, color {:?}", query_parameters.name, query_parameters.color);
     let query_result = match (&query_parameters.name, &query_parameters.color) {
         (None, None) => {
-            eprintln!("Unable to delete_where cats, no parameters");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteWhereErrorNamed::NoParameters {
+            eprintln!("Unable to delete cats, no parameters");
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteErrorNamed::NoParameters {
                 no_parameters: std::string::String::from("no parameters provided"),
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -432,8 +382,58 @@ pub async fn delete_where(
     match query_result {
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
         Err(e) => {
-            eprintln!("Unable to delete_where cats, error: {e:#?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteWhereErrorNamed::PostgresDelete {
+            eprintln!("Unable to delete cats, error: {e:#?}");
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteErrorNamed::PostgresDelete {
+                postgres_delete: e,
+                code_occurence: tufa_common::code_occurence!(),
+            };
+            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+            error.error_log(**config);
+            actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
+                error.into_serialize_deserialize_version(),
+            ))
+        }
+    }
+}
+
+// curl -X DELETE http://127.0.0.1:8080/api/cats/2
+#[actix_web::delete("/{id}")]
+pub async fn delete_by_id(
+    path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdPathParameters>,
+    pool: actix_web::web::Data<sqlx::PgPool>,
+    config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
+) -> impl actix_web::Responder {
+    println!("delete_by_id {}", path_parameters.id);
+    let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
+        path_parameters.id,
+    ) {
+        Ok(bigserial_id) => bigserial_id,
+        Err(e) => {
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdErrorNamed::Bigserial { 
+                bigserial: e, 
+                code_occurence: tufa_common::code_occurence!()
+            };
+            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+            error.error_log(**config);
+            return actix_web::HttpResponse::InternalServerError()
+            .json(
+                actix_web::web::Json(
+                    error.into_serialize_deserialize_version()
+                )
+            );
+        }
+    };
+    match sqlx::query_as!(
+        tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+        "DELETE FROM cats WHERE id = $1",
+        *bigserial_id.bigserial()
+    )
+    .fetch_all(&**pool)
+    .await {
+        Ok(_) => actix_web::HttpResponse::Ok().finish(),
+        Err(e) => {
+            eprintln!("Unable to delete a cat, error: {e:#?}");
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdErrorNamed::PostgresDelete {
                 postgres_delete: e,
                 code_occurence: tufa_common::code_occurence!(),
             };
