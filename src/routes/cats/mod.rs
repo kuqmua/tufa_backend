@@ -1,14 +1,16 @@
 //todo - create enum without inner values for returning every possible Http Codes for every route. like 201 or 500
+//todo - add check github commit id
+//todo - check maybe not need to use everywhere InternalServerError
+//todo change methods patch post delete etc
+//todo how to handle sql injection ?
 // http://127.0.0.1:8080/api/cats/?limit=87 - Some(87)
 //or
 // http://127.0.0.1:8080/api/cats/ - None
 #[actix_web::get("/")]
 pub async fn select(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::SelectQueryParameters>,
-    //todo will path parameter work with query parameters if id is empty?
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
-    //todo - add check github commit id
 ) -> impl actix_web::Responder {
     println!(
         "select, limit {:?}, name {:?} color {:?}",
@@ -82,11 +84,11 @@ pub async fn select(
         }
     }
 }
+
 //http://127.0.0.1:8080/api/cats/756
 #[actix_web::get("/{id}")]
 pub async fn select_by_id(
     path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::SelectByIdPathParameters>,
-    //todo will path parameter work with query parameters if id is empty?
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
 ) -> impl actix_web::Responder {
@@ -132,7 +134,7 @@ pub async fn select_by_id(
         }
     }
 }
-//todo change methods patch post delete etc
+
 // curl -X POST http://127.0.0.1:8080/api/cats/ -H 'Content-Type: application/json' -d '{"name":"simba", "color":"black"}'
 #[actix_web::post("/")]
 pub async fn create(
@@ -188,105 +190,12 @@ pub async fn create(
     }
 }
 
-// curl -X POST http://127.0.0.1:8080/api/cats/update_one -H 'Content-Type: application/json' -d '{"id": 6, "name":"simba"}'
-#[actix_web::post("/update_one")]
-pub async fn update_one(
-    cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::CatToUpdate>,
-    pool: actix_web::web::Data<sqlx::PgPool>,
-    config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
-    //todo - check maybe not need to use everywhere InternalServerError
-) -> impl actix_web::Responder {
-    //todo how to handle sql injection ?
-    println!("update one id {} name {:?}, color {:?}", cat.id, cat.name, cat.color);
-    let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
-        cat.id,
-    ) {
-        Ok(bigserial_id) => bigserial_id,
-        Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::UpdateOneErrorNamed::Bigserial { 
-                bigserial: e, 
-                code_occurence: tufa_common::code_occurence!()
-            };
-            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(**config);
-            return actix_web::HttpResponse::InternalServerError()
-            .json(
-                actix_web::web::Json(
-                    error.into_serialize_deserialize_version()
-                )
-            );
-        }
-    };
-    let query_result = match (&cat.name, &cat.color) {
-        (None, None) => {
-            eprintln!("Unable to update a cat, no parameters");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::UpdateOneErrorNamed::NoParameters {
-                no_parameters: std::string::String::from("no parameters provided"),
-                code_occurence: tufa_common::code_occurence!(),
-            };
-            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(**config);
-            return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
-                error.into_serialize_deserialize_version(),
-            ));
-        }
-        (None, Some(color)) => {
-            sqlx::query_as!(
-                tufa_common::repositories_types::tufa_server::routes::cats::Cat,
-                "UPDATE cats SET color = $1 WHERE id = $2",
-                color,
-                *bigserial_id.bigserial()
-            )
-            .fetch_all(&**pool)
-            .await
-        }
-        (Some(name), None) => {
-            sqlx::query_as!(
-                tufa_common::repositories_types::tufa_server::routes::cats::Cat,
-                "UPDATE cats SET name = $1 WHERE id = $2",
-                name,
-                *bigserial_id.bigserial()
-            )
-            .fetch_all(&**pool)
-            .await
-        }
-        (Some(name), Some(color)) => {
-            sqlx::query_as!(
-                tufa_common::repositories_types::tufa_server::routes::cats::Cat,
-                "UPDATE cats SET name = $1, color = $2 WHERE id = $3",
-                name,
-                color,
-                *bigserial_id.bigserial()
-            )
-            .fetch_all(&**pool)
-            .await
-        }
-    };
-    match query_result {
-        Ok(_) => actix_web::HttpResponse::Ok().finish(),
-        Err(e) => {
-            eprintln!("Unable to update a cat, error: {e:#?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::UpdateOneErrorNamed::PostgresUpdate {
-                postgres_update: e,
-                code_occurence: tufa_common::code_occurence!(),
-            };
-            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(**config);
-            actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
-                error.into_serialize_deserialize_version(),
-            ))
-        }
-    }
-}
-
 #[actix_web::patch("/update_one_patch")]
 pub async fn update_one_patch(
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::CatToPatch>,
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
-    //todo - check maybe not need to use everywhere InternalServerError
 ) -> impl actix_web::Responder {
-    //todo how to handle sql injection ?
     println!("update one patch name {:?}, color {:?}", cat.name, cat.color);
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
         cat.id,
@@ -341,7 +250,7 @@ pub async fn update_one_patch(
             .await
         }
         (Some(_), Some(_)) => {
-            eprintln!("please use post or maybe todo for full object update");
+            eprintln!("please use post or maybe todo for full object update");//todo - what todo?
             let error = tufa_common::repositories_types::tufa_server::routes::cats::UpdateOnePatchErrorNamed::PleaseUsePost {
                 please_use_post: std::string::String::from("please_use_post"),
                 code_occurence: tufa_common::code_occurence!(),
@@ -374,12 +283,9 @@ pub async fn update_one_patch(
 #[actix_web::delete("/{id}")]
 pub async fn delete_by_id(
     path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdPathParameters>,
-    //todo will path parameter work with query parameters if id is empty?
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
-    //todo - check maybe not need to use everywhere InternalServerError
 ) -> impl actix_web::Responder {
-    //todo how to handle sql injection ?
     println!("delete_by_id {}", path_parameters.id);
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
         path_parameters.id,
@@ -429,9 +335,7 @@ pub async fn delete_where(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::DeleteWhereQueryParameters>,
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
-    //todo - check maybe not need to use everywhere InternalServerError
 ) -> impl actix_web::Responder {
-    //todo how to handle sql injection ?
     println!("delete_where name {:?}, color {:?}", query_parameters.name, query_parameters.color);
     let query_result = match (&query_parameters.name, &query_parameters.color) {
         (None, None) => {
