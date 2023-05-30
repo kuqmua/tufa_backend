@@ -370,8 +370,8 @@ pub async fn update_one_patch(
     }
 }
 
-// curl -X DELETE http://127.0.0.1:8080/api/cats/delete_by_id/2
-#[actix_web::delete("delete_by_id/{id}")]
+// curl -X DELETE http://127.0.0.1:8080/api/cats/2
+#[actix_web::delete("/{id}")]
 pub async fn delete_by_id(
     path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdPathParameters>,
     //todo will path parameter work with query parameters if id is empty?
@@ -423,8 +423,8 @@ pub async fn delete_by_id(
     }
 }
 
-// curl -X DELETE http://127.0.0.1:8080/api/cats/delete_where/?color=white
-#[actix_web::delete("delete_where/")]
+// curl -X DELETE http://127.0.0.1:8080/api/cats/?color=white
+#[actix_web::delete("/")]
 pub async fn delete_where(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::DeleteWhereQueryParameters>,
     pool: actix_web::web::Data<sqlx::PgPool>,
