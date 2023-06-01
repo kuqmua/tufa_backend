@@ -17,7 +17,7 @@ pub async fn get<'a>(
     api_usage_checker_does_not_match_message: actix_web::web::Data<&'a str>,
 ) -> impl actix_web::Responder {
     println!(
-        "get check {} limit {:?}, name {:?} color {:?}",
+        "get query_parameters check {} limit {:?}, name {:?} color {:?}",
         query_parameters.check, query_parameters.limit, query_parameters.name, query_parameters.color
     );
     if let false = query_parameters.check == **api_usage_checker {
@@ -165,15 +165,30 @@ pub async fn get_by_id<'a>(
     }
 }
 
-// curl -X POST http://127.0.0.1:8080/api/cats/ -H 'Content-Type: application/json' -d '{"name":"simba", "color":"black"}'
+// curl -X POST http://127.0.0.1:8080/api/cats/?check=18446744073709551615 -H 'Content-Type: application/json' -d '{"name":"simba", "color":"black"}'
 #[actix_web::post("/")]
-pub async fn post(
+pub async fn post<'a>(
+    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::PostQueryParameters>,
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::CatToPost>,
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
+    api_usage_checker: actix_web::web::Data<tufa_common::repositories_types::tufa_server::routes::cats::ApiUsageCheckerType>,
+    api_usage_checker_does_not_match_message: actix_web::web::Data<&'a str>,
 ) -> impl actix_web::Responder {
+    println!("post query_parameters check {}", query_parameters.check);
     println!("post name {}, color {}", cat.name, cat.color);
     println!("len{}", cat.color.len());
+    if let false = query_parameters.check == **api_usage_checker {
+        let error = tufa_common::repositories_types::tufa_server::routes::cats::PostErrorNamed::CheckApiUsage {
+            check: &*api_usage_checker_does_not_match_message,
+            code_occurence: tufa_common::code_occurence!(),
+        };
+        use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+        error.error_log(**config);
+        return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
+            error.into_serialize_deserialize_version()
+        ));
+    }
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::cats::Cat,
         "INSERT INTO cats(name, color) VALUES ($1, $2)",
