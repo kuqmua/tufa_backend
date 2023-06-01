@@ -8,15 +8,27 @@
 //or
 // http://127.0.0.1:8080/api/cats/ - None
 #[actix_web::get("/")]
-pub async fn get(
+pub async fn get<'a>(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::GetQueryParameters>,
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
+    api_usage_checker: actix_web::web::Data<u64>,
+    api_usage_checker_does_not_match_message: actix_web::web::Data<&'a str>,
 ) -> impl actix_web::Responder {
     println!(
-        "get limit {:?}, name {:?} color {:?}",
-        query_parameters.limit, query_parameters.name, query_parameters.color
+        "get check {} limit {:?}, name {:?} color {:?}",
+        query_parameters.check, query_parameters.limit, query_parameters.name, query_parameters.color
     );
+    if let false = query_parameters.check == **api_usage_checker {
+        let error = tufa_common::repositories_types::tufa_server::routes::cats::GetErrorNamed::CheckApiUsage {
+            check: &*api_usage_checker_does_not_match_message,//todo - maybe add link to function and name of function to use instead
+        };
+        use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+        error.error_log(**config);
+        return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
+            error.into_serialize_deserialize_version()
+        ));
+    }
     let limit = match &query_parameters.limit {
         Some(limit) => limit,
         None => {
