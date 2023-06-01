@@ -12,7 +12,7 @@ pub async fn get<'a>(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::GetQueryParameters>,
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
-    api_usage_checker: actix_web::web::Data<u64>,
+    api_usage_checker: actix_web::web::Data<tufa_common::repositories_types::tufa_server::routes::cats::ApiUsageCheckerType>,
     api_usage_checker_does_not_match_message: actix_web::web::Data<&'a str>,
 ) -> impl actix_web::Responder {
     println!(
