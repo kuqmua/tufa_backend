@@ -4,9 +4,9 @@
 //todo change methods patch post delete etc
 //todo how to handle sql injection ?
 //todo - maybe check max length for field here instead of put it in postgres and recieve error ? color VARCHAR (255) NOT NULL
-// http://127.0.0.1:8080/api/cats/?limit=87 - Some(87)
+// curl -X GET http://127.0.0.1:8080/api/cats/?check=18446744073709551615&limit=87 - Some(87)
 //or
-// http://127.0.0.1:8080/api/cats/ - None
+// curl -X GET http://127.0.0.1:8080/api/cats/?check=18446744073709551615 - None
 #[actix_web::get("/")]
 pub async fn get<'a>(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::GetQueryParameters>,
