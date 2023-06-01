@@ -298,14 +298,29 @@ pub async fn put<'a>(
     }
 }
 
-// curl -X PATCH http://127.0.0.1:8080/api/cats/ -H 'Content-Type: application/json' -d '{"id": 7, "name":"simba"}'
+// curl -X PATCH http://127.0.0.1:8080/api/cats/?check=18446744073709551615 -H 'Content-Type: application/json' -d '{"id": 7, "name":"simba"}'
 #[actix_web::patch("/")]
-pub async fn patch(
+pub async fn patch<'a>(
+    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::PatchQueryParameters>,
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::CatToPatch>,
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
+    api_usage_checker: actix_web::web::Data<tufa_common::repositories_types::tufa_server::routes::cats::ApiUsageCheckerType>,
+    api_usage_checker_does_not_match_message: actix_web::web::Data<&'a str>,
 ) -> impl actix_web::Responder {
+    println!("patch query_parameters check {}", query_parameters.check);
     println!("patch name {:?}, color {:?}", cat.name, cat.color);
+    if let false = query_parameters.check == **api_usage_checker {
+        let error = tufa_common::repositories_types::tufa_server::routes::cats::PatchErrorNamed::CheckApiUsage {
+            check: &*api_usage_checker_does_not_match_message,
+            code_occurence: tufa_common::code_occurence!(),
+        };
+        use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+        error.error_log(**config);
+        return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
+            error.into_serialize_deserialize_version()
+        ));
+    }
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
         cat.id,
     ) {
