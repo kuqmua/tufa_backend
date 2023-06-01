@@ -236,14 +236,29 @@ pub async fn post<'a>(
 }
 
 //todo - its the case if all columns except id are not null. for nullable columns must be different logic
-// curl -X PUT http://127.0.0.1:8080/api/cats/ -H 'Content-Type: application/json' -d '{"id": 7, "name":"simba", "color":"black"}'
+// curl -X PUT http://127.0.0.1:8080/api/cats/?check=18446744073709551615 -H 'Content-Type: application/json' -d '{"id": 7, "name":"simba", "color":"black"}'
 #[actix_web::put("/")]
-pub async fn put(
+pub async fn put<'a>(
+    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::PutQueryParameters>,
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::Cat>,
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
+    api_usage_checker: actix_web::web::Data<tufa_common::repositories_types::tufa_server::routes::cats::ApiUsageCheckerType>,
+    api_usage_checker_does_not_match_message: actix_web::web::Data<&'a str>,
 ) -> impl actix_web::Responder {
+    println!("put query_parameters check {}", query_parameters.check);
     println!("put id {} name {}, color {}", cat.id, cat.name, cat.color);
+    if let false = query_parameters.check == **api_usage_checker {
+        let error = tufa_common::repositories_types::tufa_server::routes::cats::PutErrorNamed::CheckApiUsage {
+            check: &*api_usage_checker_does_not_match_message,
+            code_occurence: tufa_common::code_occurence!(),
+        };
+        use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+        error.error_log(**config);
+        return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
+            error.into_serialize_deserialize_version()
+        ));
+    }
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(cat.id) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
