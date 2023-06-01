@@ -8,6 +8,8 @@
 // curl -X GET http://127.0.0.1:8080/api/cats/?check=18446744073709551615&limit=87 - Some(87)
 //or
 // curl -X GET http://127.0.0.1:8080/api/cats/?check=18446744073709551615 - None
+//todo - change curl example - not always works with query params
+// http://127.0.0.1:8080/api/cats/?check=18446744073709551615&name=leo&color=red
 #[actix_web::get("/")]
 pub async fn get<'a>(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::GetQueryParameters>,
@@ -403,14 +405,27 @@ pub async fn patch<'a>(
     }
 }
 
-// curl -X DELETE http://127.0.0.1:8080/api/cats/?color=white
+// curl -X DELETE http://127.0.0.1:8080/api/cats/?check=18446744073709551615&color=white
 #[actix_web::delete("/")]
-pub async fn delete(
+pub async fn delete<'a>(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::DeleteQueryParameters>,
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
+    api_usage_checker: actix_web::web::Data<tufa_common::repositories_types::tufa_server::routes::cats::ApiUsageCheckerType>,
+    api_usage_checker_does_not_match_message: actix_web::web::Data<&'a str>,
 ) -> impl actix_web::Responder {
-    println!("delete name {:?}, color {:?}", query_parameters.name, query_parameters.color);
+    println!("delete query_parameters check {}, name {:?}, color {:?}", query_parameters.check, query_parameters.name, query_parameters.color);
+    if let false = query_parameters.check == **api_usage_checker {
+        let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteErrorNamed::CheckApiUsage {
+            check: &*api_usage_checker_does_not_match_message,
+            code_occurence: tufa_common::code_occurence!(),
+        };
+        use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+        error.error_log(**config);
+        return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
+            error.into_serialize_deserialize_version()
+        ));
+    }
     let query_result = match (&query_parameters.name, &query_parameters.color) {
         (None, None) => {
             eprintln!("Unable to delete cats, no parameters");
@@ -420,9 +435,11 @@ pub async fn delete(
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
             error.error_log(**config);
-            return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
+            let json = actix_web::web::Json(
                 error.into_serialize_deserialize_version(),
-            ));
+            );
+            println!("{json}");
+            return actix_web::HttpResponse::InternalServerError().json(json);
         }
         (None, Some(color)) => {
             sqlx::query_as!(
@@ -454,7 +471,10 @@ pub async fn delete(
         }
     };
     match query_result {
-        Ok(_) => actix_web::HttpResponse::Ok().finish(),
+        Ok(_) => {
+            println!("ok delete");
+            actix_web::HttpResponse::Ok().finish()
+        },
         Err(e) => {
             eprintln!("Unable to delete cats, error: {e:#?}");
             let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteErrorNamed::PostgresDelete {
