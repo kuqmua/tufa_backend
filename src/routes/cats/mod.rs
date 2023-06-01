@@ -4,6 +4,7 @@
 //todo change methods patch post delete etc
 //todo how to handle sql injection ?
 //todo - maybe check max length for field here instead of put it in postgres and recieve error ? color VARCHAR (255) NOT NULL
+//todo - maybe add link to function API usage and name of function to use instead and send it 
 // curl -X GET http://127.0.0.1:8080/api/cats/?check=18446744073709551615&limit=87 - Some(87)
 //or
 // curl -X GET http://127.0.0.1:8080/api/cats/?check=18446744073709551615 - None
@@ -21,7 +22,7 @@ pub async fn get<'a>(
     );
     if let false = query_parameters.check == **api_usage_checker {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::GetErrorNamed::CheckApiUsage {
-            check: &*api_usage_checker_does_not_match_message,//todo - maybe add link to function and name of function to use instead
+            check: &*api_usage_checker_does_not_match_message,
             code_occurence: tufa_common::code_occurence!(),
         };
         use tufa_common::common::error_logs_logic::error_log::ErrorLog;
@@ -99,14 +100,29 @@ pub async fn get<'a>(
     }
 }
 
-//http://127.0.0.1:8080/api/cats/756
-#[actix_web::get("/{id}")]
-pub async fn get_by_id(
+// curl -X GET http://127.0.0.1:8080/api/cats/7/?check=18446744073709551615
+#[actix_web::get("/{id}/")]
+pub async fn get_by_id<'a>(
     path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::GetByIdPathParameters>,
+    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::GetByIdQueryParameters>,
     pool: actix_web::web::Data<sqlx::PgPool>,
     config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
+    api_usage_checker: actix_web::web::Data<tufa_common::repositories_types::tufa_server::routes::cats::ApiUsageCheckerType>,
+    api_usage_checker_does_not_match_message: actix_web::web::Data<&'a str>,
 ) -> impl actix_web::Responder {
-    println!("get_by_id {}", path_parameters.id);
+    println!("get_by_id path_parameters id {}", path_parameters.id);
+    println!("get_by_id query_parameters check {}", query_parameters.check);
+    if let false = query_parameters.check == **api_usage_checker {
+        let error = tufa_common::repositories_types::tufa_server::routes::cats::GetByIdErrorNamed::CheckApiUsage {
+            check: &*api_usage_checker_does_not_match_message,
+            code_occurence: tufa_common::code_occurence!(),
+        };
+        use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+        error.error_log(**config);
+        return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
+            error.into_serialize_deserialize_version()
+        ));
+    }
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
         path_parameters.id,
     ) {
