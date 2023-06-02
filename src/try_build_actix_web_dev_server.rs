@@ -148,8 +148,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 config.get_hmac_secret().clone()
             }))
             .app_data(actix_web::web::Data::new(config))
-            .app_data(actix_web::web::Data::new(tufa_common::repositories_types::tufa_server::routes::cats::API_USAGE_CHECKER))
-            .app_data(actix_web::web::Data::new(tufa_common::repositories_types::tufa_server::routes::cats::API_USAGE_CHECKER_DOES_NOT_MATCH_MESSAGE))
+            .app_data(actix_web::web::Data::new(&tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO))
     })
     .listen(tcp_listener)
     {
