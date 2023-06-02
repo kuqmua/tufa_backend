@@ -123,7 +123,7 @@ pub async fn get_by_id<'a>(
         };
         use tufa_common::common::error_logs_logic::error_log::ErrorLog;
         error.error_log(**config);
-        return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
+        return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
             error.into_serialize_deserialize_version()
         ));
     }
@@ -138,7 +138,7 @@ pub async fn get_by_id<'a>(
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
             error.error_log(**config);
-            return actix_web::HttpResponse::InternalServerError()
+            return actix_web::HttpResponse::BadRequest()
             .json(actix_web::web::Json(error.into_serialize_deserialize_version()));
         }
     };
