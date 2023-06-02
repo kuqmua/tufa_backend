@@ -94,9 +94,9 @@ pub async fn try_build_actix_web_dev_server<'a>(
                     .route("/dashboard", actix_web::web::get().to(crate::routes::dashboard::admin_dashboard))
                     // .route("/newsletters", web::get().to(tufa_common::repositories_types::tufa_server::routes::publish_newsletter_form))
                     .route("/newsletters", actix_web::web::post().to(crate::routes::publish_newsletter))
-                    .route("/password", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::change_password_form))
+                    .route("/password", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::admin::change_password_form))
                     .route("/password", actix_web::web::post().to(crate::routes::admin::password::change_password))
-                    .route("/logout", actix_web::web::post().to(tufa_common::repositories_types::tufa_server::routes::log_out)),
+                    .route("/logout", actix_web::web::post().to(tufa_common::repositories_types::tufa_server::routes::admin::log_out)),
             )
             .route("/login", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::login::login_form))
             .route("/login", actix_web::web::post().to(crate::routes::login::login))
