@@ -38,7 +38,7 @@ pub async fn get<'a>(
     let limit = match &query_parameters.limit {
         Some(limit) => limit,
         None => {
-            &tufa_common::repositories_types::tufa_server::routes::cats::DEFAULT_SELECT_ALL_LIMIT
+            &tufa_common::server::postgres::constants::DEFAULT_POSTGRES_SELECT_LIMIT
         }
     };
     let query_result = match (&query_parameters.name, &query_parameters.color) {
