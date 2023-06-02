@@ -2,33 +2,7 @@
 // use sqlx::Connection;
 // use sqlx::Executor;
 
-static TRACING: once_cell::sync::Lazy<()> = once_cell::sync::Lazy::new(|| {
-    let default_filter_level = "info".to_string();
-    let subscriber_name = "test".to_string();
-    if std::env::var("TEST_LOG").is_ok() {
-        let subscriber =
-            tufa_common::repositories_types::tufa_server::telemetry::get_subscriber::get_subscriber(
-                subscriber_name,
-                default_filter_level,
-                std::io::stdout,
-            );
-        tufa_common::repositories_types::tufa_server::telemetry::init_subscriber::init_subscriber(
-            subscriber,
-        )
-        .expect("cannot init tracing subscriber std::io::stdout");
-    } else {
-        let subscriber =
-            tufa_common::repositories_types::tufa_server::telemetry::get_subscriber::get_subscriber(
-                subscriber_name,
-                default_filter_level,
-                std::io::sink,
-            );
-        tufa_common::repositories_types::tufa_server::telemetry::init_subscriber::init_subscriber(
-            subscriber,
-        )
-        .expect("cannot init tracing subscriber std::io::sink");
-    };
-});
+pub static TRACING: std::sync::OnceLock<()> = std::sync::OnceLock::new();
 
 pub struct TestApp {
     pub address: String,
@@ -207,7 +181,37 @@ impl TestApp {
 // }
 
 pub async fn spawn_app() -> TestApp {
-    once_cell::sync::Lazy::force(&TRACING);
+    TRACING.get_or_init(|| 
+    {
+        let default_filter_level = "info".to_string();
+        let subscriber_name = "test".to_string();
+        if std::env::var("TEST_LOG").is_ok() {
+            let subscriber =
+            tufa_common::repositories_types::tufa_server::telemetry::get_subscriber::get_subscriber(
+                subscriber_name,
+                default_filter_level,
+                std::io::stdout,
+            );
+            tufa_common::repositories_types::tufa_server::telemetry::init_subscriber::init_subscriber(
+            subscriber,
+        )
+        .expect("cannot init tracing subscriber std::io::stdout");
+        } else {
+            let subscriber =
+            tufa_common::repositories_types::tufa_server::telemetry::get_subscriber::get_subscriber(
+                subscriber_name,
+                default_filter_level,
+                std::io::sink,
+            );
+            tufa_common::repositories_types::tufa_server::telemetry::init_subscriber::init_subscriber(
+            subscriber,
+        )
+        .expect("cannot init tracing subscriber std::io::sink");
+        };
+    }    
+    );
+
+    //
     let email_server = wiremock::MockServer::start().await;
     //todo - settings\configuration was removed. use Config traits instead
     let configuration = {
@@ -217,7 +221,10 @@ pub async fn spawn_app() -> TestApp {
         c.email_client.base_url = email_server.uri();
         c
     };
-    let config = once_cell::sync::Lazy::force(&crate::global_variables::runtime::config::CONFIG);
+    let config = crate::global_variables::runtime::config::CONFIG.get_or_init(|| tufa_common::repositories_types::tufa_server::config::config_struct::Config::try_from_config_unchecked(
+        tufa_common::repositories_types::tufa_server::config::config_struct::ConfigUnchecked::new()
+        .unwrap_or_else(|e| panic!("failed to ConfigUnchecked::new(), reason: {e:#?}"))
+    ).unwrap_or_else(|e| panic!("failed to Config try_from ConfigUnchecked, reason: {e}")));
     configure_database(config).await;
     let application = crate::try_build_actix_web_dev_server::Application::build(
         //try_build_actix_web_dev_server

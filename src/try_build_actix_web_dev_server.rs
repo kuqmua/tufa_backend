@@ -86,6 +86,19 @@ pub async fn try_build_actix_web_dev_server<'a>(
                         *config.get_access_control_max_age()
                     }),
             ) //todo concrete host \ domain
+            //
+            .app_data(actix_web::web::Data::new(postgres_pool.clone()))//if use it without .clone() - will be runtime error if you try to reach route
+            .app_data(actix_web::web::Data::new({
+                use tufa_common::common::config::get_email_client::GetEmailClient;
+                config.get_email_client()
+            }))
+            .app_data(actix_web::web::Data::new({
+                use tufa_common::common::config::config_fields::GetHmacSecret;
+                config.get_hmac_secret().clone()
+            }))
+            .app_data(actix_web::web::Data::new(config))
+            .app_data(actix_web::web::Data::new(&tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO))
+            //
             .route("/", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::home::home))
             .service(
                 actix_web::web::scope("/admin")
@@ -138,17 +151,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 "/get_providers_posts",
                 actix_web::web::post().to(tufa_common::repositories_types::tufa_server::routes::get_providers_posts_route::get_providers_posts_route),
             )
-            .app_data(actix_web::web::Data::new(postgres_pool.clone()))//if use it without .clone() - will be runtime error if you try to reach route
-            .app_data(actix_web::web::Data::new({
-                use tufa_common::common::config::get_email_client::GetEmailClient;
-                config.get_email_client()
-            }))
-            .app_data(actix_web::web::Data::new({
-                use tufa_common::common::config::config_fields::GetHmacSecret;
-                config.get_hmac_secret().clone()
-            }))
-            .app_data(actix_web::web::Data::new(config))
-            .app_data(actix_web::web::Data::new(&tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO))
     })
     .listen(tcp_listener)
     {

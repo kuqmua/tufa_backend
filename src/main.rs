@@ -22,7 +22,8 @@ pub mod try_build_actix_web_dev_server;
 pub mod dev;
 
 fn main() {
-    crate::entry::entry(once_cell::sync::Lazy::force(
-        &crate::global_variables::runtime::config::CONFIG,
-    ));
+    crate::entry::entry(crate::global_variables::runtime::config::CONFIG.get_or_init(|| tufa_common::repositories_types::tufa_server::config::config_struct::Config::try_from_config_unchecked(
+        tufa_common::repositories_types::tufa_server::config::config_struct::ConfigUnchecked::new()
+        .unwrap_or_else(|e| panic!("failed to ConfigUnchecked::new(), reason: {e:#?}"))
+    ).unwrap_or_else(|e| panic!("failed to Config try_from ConfigUnchecked, reason: {e}"))));
 }
