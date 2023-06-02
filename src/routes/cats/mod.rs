@@ -31,7 +31,7 @@ pub async fn get<'a>(
         };
         use tufa_common::common::error_logs_logic::error_log::ErrorLog;
         error.error_log(**config);
-        return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
+        return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
             error.into_serialize_deserialize_version()
         ));
     }
@@ -90,6 +90,34 @@ pub async fn get<'a>(
             actix_web::HttpResponse::Ok().json(actix_web::web::Json(vec_cats))
         }
         Err(e) => {
+            // todo https://github.com/cschaible/actix-web-security-samples/blob/46bb7aa62ada7cb176d8765e2f60b497392b1840/oauth-resource-server/backend/src/error/mod.rs#L46
+            // todo https://www.postgresql.org/docs/current/errcodes-appendix.html
+            // match e {
+            //     sqlx::Error::Configuration(box_dyn_error) => println!(""),
+            //     sqlx::Error::Database(box_dyn_database_error) => {
+            //         println!("");
+            //         match box_dyn_database_error.code() {
+
+            //         }
+            //     },
+            //     sqlx::Error::Io(io_error) => println!(""),
+            //     sqlx::Error::Tls(box_dyn_error) => println!(""),
+            //     sqlx::Error::Protocol(string) => println!(""),
+            //     sqlx::Error::RowNotFound => println!(""),
+            //     sqlx::Error::TypeNotFound { type_name } => println!(""),
+            //     sqlx::Error::ColumnIndexOutOfBounds { index, len } => println!(""),
+            //     sqlx::Error::ColumnNotFound(string) => println!(""),
+            //     sqlx::Error::ColumnDecode {
+            //         index,
+            //         source,
+            //     } => println!(""),
+            //     sqlx::Error::Decode(box_dyn_error) => println!(""),
+            //     sqlx::Error::PoolTimedOut => println!(""),
+            //     sqlx::Error::PoolClosed => println!(""),
+            //     sqlx::Error::WorkerCrashed => println!(""),
+            //     sqlx::Error::Migrate(box_crate_migrate_migrate_error) => println!(""),
+            //     _ => println!("")
+            // }
             // tracing::error!("Unable to query cats table, error: {e:?}");
             let error = tufa_common::repositories_types::tufa_server::routes::cats::GetErrorNamed::PostgresSelect {
                 postgres_select: e,
@@ -204,27 +232,6 @@ pub async fn post<'a>(
     {
         Ok(_) => actix_web::HttpResponse::Created().finish(),
         Err(e) => {
-            // match e {
-            //     sqlx::Error::Configuration(box_dyn_error) => todo!(),
-            //     sqlx::Error::Database(box_dyn_database_error) => todo!(),
-            //     sqlx::Error::Io(io_error) => todo!(),
-            //     sqlx::Error::Tls(box_dyn_error) => todo!(),
-            //     sqlx::Error::Protocol(string) => todo!(),
-            //     sqlx::Error::RowNotFound => todo!(),
-            //     sqlx::Error::TypeNotFound { type_name } => todo!(),
-            //     sqlx::Error::ColumnIndexOutOfBounds { index, len } => todo!(),
-            //     sqlx::Error::ColumnNotFound(string) => todo!(),
-            //     sqlx::Error::ColumnDecode {
-            //         index,
-            //         source,
-            //     } => todo!(),
-            //     sqlx::Error::Decode(box_dyn_error) => todo!(),
-            //     sqlx::Error::PoolTimedOut => todo!(),
-            //     sqlx::Error::PoolClosed => todo!(),
-            //     sqlx::Error::WorkerCrashed => todo!(),
-            //     sqlx::Error::Migrate(box_crate_migrate_migrate_error) => todo!(),
-            //     _ => todo!()
-            // }
             eprintln!("Unable to post a cat, error: {e:#?}");
             let error = tufa_common::repositories_types::tufa_server::routes::cats::PostErrorNamed::PostgresInsert {
                 postgres_insert: e,
