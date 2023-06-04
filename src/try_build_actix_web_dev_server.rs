@@ -98,8 +98,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
             }))
             .app_data(actix_web::web::Data::new(config))
             .app_data(actix_web::web::Data::new(&tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO))
-            //
-            .route("/", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::home::home))
+            //todo - service capabilities ?
             .service(
                 actix_web::web::scope("/admin")
                     .guard(actix_web::guard::Host("127.0.0.1"))
