@@ -122,7 +122,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
         .service(
             actix_web::web::scope("/api")
             .service(actix_web_lab::web::Redirect::new(
-                "/project_git_commit", 
+                "/project_commit", 
                 {
                     use tufa_common::common::git::get_git_commit_link::GetGitCommitLink;
                     tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
