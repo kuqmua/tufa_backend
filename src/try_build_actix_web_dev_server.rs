@@ -113,6 +113,9 @@ pub async fn try_build_actix_web_dev_server<'a>(
             .route("/login", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::login::login_form))
             .route("/login", actix_web::web::post().to(crate::routes::login::login))
             .route("/health_check", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::health_check))
+            .route("/subscriptions", actix_web::web::post().to(crate::routes::subscribe))
+            .route("/subscriptions/confirm", actix_web::web::get().to(crate::routes::confirm))
+            .route("/newsletters", actix_web::web::post().to(crate::routes::publish_newsletter))
             .service(
                 actix_web::web::scope("/api")
                 .service(actix_web_lab::web::Redirect::new(
@@ -142,13 +145,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
                     .service(crate::routes::cats::delete)
                     .service(crate::routes::cats::delete_by_id)
                 )
-            )
-            .route("/subscriptions", actix_web::web::post().to(crate::routes::subscribe))
-            .route("/subscriptions/confirm", actix_web::web::get().to(crate::routes::confirm))
-            .route("/newsletters", actix_web::web::post().to(crate::routes::publish_newsletter))
-            .route(
-                "/get_providers_posts",
-                actix_web::web::post().to(tufa_common::repositories_types::tufa_server::routes::get_providers_posts_route::get_providers_posts_route),
             )
     })
     .listen(tcp_listener)
