@@ -1,30 +1,28 @@
 //todo - create enum without inner values for returning every possible Http Codes for every route. like 201 or 500
-//todo - add check github commit id
 //todo - check maybe not need to use everywhere InternalServerError
 //todo change methods patch post delete etc
 //todo how to handle sql injection ?
 //todo - maybe check max length for field here instead of put it in postgres and recieve error ? color VARCHAR (255) NOT NULL
 //todo - maybe add link to function API usage and name of function to use instead and send it 
 //todo - wrap route logic to function what return Result. after match result and return actix_web::HttpResponse
-//todo - maybe add config env variable for choosing constant or github commit for api usage checking
-// curl -X GET http://127.0.0.1:8080/api/cats/?check=18446744073709551615&limit=87 - Some(87)
+// curl -X GET http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615&limit=87 - Some(87)
 //or
-// curl -X GET http://127.0.0.1:8080/api/cats/?check=18446744073709551615 - None
+// curl -X GET http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615 - None
 //todo - change curl example - not always works with query params
-// http://127.0.0.1:8080/api/cats/?check=18446744073709551615&name=leo&color=red
+// http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615&name=leo&color=red
 #[actix_web::get("/")]
 pub async fn get<'a>(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::GetQueryParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     println!(
-        "get query_parameters check {} limit {:?}, name {:?} color {:?}",
-        query_parameters.check, query_parameters.limit, query_parameters.name, query_parameters.color
+        "get query_parameters project_commit {} limit {:?}, name {:?} color {:?}",
+        query_parameters.project_commit, query_parameters.limit, query_parameters.name, query_parameters.color
     );
     println!("what need {}", app_info.project_git_info.project_commit);
-    if let false = query_parameters.check == app_info.project_git_info.project_commit {
+    if let false = query_parameters.project_commit == app_info.project_git_info.project_commit {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::GetErrorNamed::CheckApiUsage {
-            check: app_info.project_git_info.does_not_match_message(),
+            project_commit: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
         };
         use tufa_common::common::error_logs_logic::error_log::ErrorLog;
@@ -130,7 +128,7 @@ pub async fn get<'a>(
     }
 }
 
-// curl -X GET http://127.0.0.1:8080/api/cats/7?check=18446744073709551615
+// curl -X GET http://127.0.0.1:8080/api/cats/7?project_commit=18446744073709551615
 #[actix_web::get("/{id}")]
 pub async fn get_by_id<'a>(
     path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::GetByIdPathParameters>,
@@ -138,10 +136,10 @@ pub async fn get_by_id<'a>(
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     println!("get_by_id path_parameters id {}", path_parameters.id);
-    println!("get_by_id query_parameters check {}", query_parameters.check);
-    if let false = query_parameters.check == app_info.project_git_info.project_commit {
+    println!("get_by_id query_parameters project_commit {}", query_parameters.project_commit);
+    if let false = query_parameters.project_commit == app_info.project_git_info.project_commit {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::GetByIdErrorNamed::CheckApiUsage {
-            check: app_info.project_git_info.does_not_match_message(),
+            project_commit: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
         };
         use tufa_common::common::error_logs_logic::error_log::ErrorLog;
@@ -192,19 +190,19 @@ pub async fn get_by_id<'a>(
     }
 }
 
-// curl -X POST http://127.0.0.1:8080/api/cats/?check=18446744073709551615 -H 'Content-Type: application/json' -d '{"name":"simba", "color":"black"}'
+// curl -X POST http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615 -H 'Content-Type: application/json' -d '{"name":"simba", "color":"black"}'
 #[actix_web::post("/")]
 pub async fn post<'a>(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::PostQueryParameters>,
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::CatToPost>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
-    println!("post query_parameters check {}", query_parameters.check);
+    println!("post query_parameters project_commit {}", query_parameters.project_commit);
     println!("post name {}, color {}", cat.name, cat.color);
     println!("len{}", cat.color.len());
-    if let false = query_parameters.check == app_info.project_git_info.project_commit {
+    if let false = query_parameters.project_commit == app_info.project_git_info.project_commit {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::PostErrorNamed::CheckApiUsage {
-            check: app_info.project_git_info.does_not_match_message(),
+            project_commit: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
         };
         use tufa_common::common::error_logs_logic::error_log::ErrorLog;
@@ -239,18 +237,18 @@ pub async fn post<'a>(
 }
 
 //todo - its the case if all columns except id are not null. for nullable columns must be different logic
-// curl -X PUT http://127.0.0.1:8080/api/cats/?check=18446744073709551615 -H 'Content-Type: application/json' -d '{"id": 7, "name":"simba", "color":"black"}'
+// curl -X PUT http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615 -H 'Content-Type: application/json' -d '{"id": 7, "name":"simba", "color":"black"}'
 #[actix_web::put("/")]
 pub async fn put<'a>(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::PutQueryParameters>,
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::Cat>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
-    println!("put query_parameters check {}", query_parameters.check);
+    println!("put query_parameters project_commit {}", query_parameters.project_commit);
     println!("put id {} name {}, color {}", cat.id, cat.name, cat.color);
-    if let false = query_parameters.check == app_info.project_git_info.project_commit {
+    if let false = query_parameters.project_commit == app_info.project_git_info.project_commit {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::PutErrorNamed::CheckApiUsage {
-            check: app_info.project_git_info.does_not_match_message(),
+            project_commit: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
         };
         use tufa_common::common::error_logs_logic::error_log::ErrorLog;
@@ -298,18 +296,18 @@ pub async fn put<'a>(
     }
 }
 
-// curl -X PATCH http://127.0.0.1:8080/api/cats/?check=18446744073709551615 -H 'Content-Type: application/json' -d '{"id": 7, "name":"simba"}'
+// curl -X PATCH http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615 -H 'Content-Type: application/json' -d '{"id": 7, "name":"simba"}'
 #[actix_web::patch("/")]
 pub async fn patch<'a>(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::PatchQueryParameters>,
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::CatToPatch>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
-    println!("patch query_parameters check {}", query_parameters.check);
+    println!("patch query_parameters project_commit {}", query_parameters.project_commit);
     println!("patch name {:?}, color {:?}", cat.name, cat.color);
-    if let false = query_parameters.check == app_info.project_git_info.project_commit {
+    if let false = query_parameters.project_commit == app_info.project_git_info.project_commit {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::PatchErrorNamed::CheckApiUsage {
-            check: app_info.project_git_info.does_not_match_message(),
+            project_commit: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
         };
         use tufa_common::common::error_logs_logic::error_log::ErrorLog;
@@ -400,16 +398,16 @@ pub async fn patch<'a>(
     }
 }
 
-// curl -X DELETE http://127.0.0.1:8080/api/cats/?check=18446744073709551615&color=white
+// curl -X DELETE http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615&color=white
 #[actix_web::delete("/")]
 pub async fn delete<'a>(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::DeleteQueryParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
-    println!("delete query_parameters check {}, name {:?}, color {:?}", query_parameters.check, query_parameters.name, query_parameters.color);
-    if let false = query_parameters.check == app_info.project_git_info.project_commit {
+    println!("delete query_parameters project_commit {}, name {:?}, color {:?}", query_parameters.project_commit, query_parameters.name, query_parameters.color);
+    if let false = query_parameters.project_commit == app_info.project_git_info.project_commit {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteErrorNamed::CheckApiUsage {
-            check: app_info.project_git_info.does_not_match_message(),
+            project_commit: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
         };
         use tufa_common::common::error_logs_logic::error_log::ErrorLog;
@@ -482,7 +480,7 @@ pub async fn delete<'a>(
     }
 }
 
-// curl -X DELETE http://127.0.0.1:8080/api/cats/14?check=36cd5a29d00ddbcfc32ebcaad76cc63696fdc0e5
+// curl -X DELETE http://127.0.0.1:8080/api/cats/14?project_commit=36cd5a29d00ddbcfc32ebcaad76cc63696fdc0e5
 #[actix_web::delete("/{id}")]
 pub async fn delete_by_id<'a>(
     path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdPathParameters>,
@@ -490,10 +488,10 @@ pub async fn delete_by_id<'a>(
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     println!("delete_by_id {}", path_parameters.id);
-    println!("delete_by_id query_parameters check {}", query_parameters.check);
-    if let false = query_parameters.check == app_info.project_git_info.project_commit {
+    println!("delete_by_id query_parameters project_commit {}", query_parameters.project_commit);
+    if let false = query_parameters.project_commit == app_info.project_git_info.project_commit {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdErrorNamed::CheckApiUsage {
-            check: app_info.project_git_info.does_not_match_message(),
+            project_commit: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
         };
         use tufa_common::common::error_logs_logic::error_log::ErrorLog;
