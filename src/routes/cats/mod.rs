@@ -15,22 +15,20 @@
 #[actix_web::get("/")]
 pub async fn get<'a>(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::GetQueryParameters>,
-    pool: actix_web::web::Data<sqlx::PgPool>,
-    config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
-    project_git_info: actix_web::web::Data<&tufa_common::common::git::project_git_info::ProjectGitInfo<'a>>,
+    app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     println!(
         "get query_parameters check {} limit {:?}, name {:?} color {:?}",
         query_parameters.check, query_parameters.limit, query_parameters.name, query_parameters.color
     );
-    println!("what need {}", project_git_info.git_commit_id);
-    if let false = query_parameters.check == project_git_info.git_commit_id {
+    println!("what need {}", app_info.project_git_info.git_commit_id);
+    if let false = query_parameters.check == app_info.project_git_info.git_commit_id {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::GetErrorNamed::CheckApiUsage {
-            check: project_git_info.does_not_match_message(),
+            check: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
         };
         use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-        error.error_log(**config);
+        error.error_log(app_info.config);
         return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
             error.into_serialize_deserialize_version()
         ));
@@ -48,7 +46,7 @@ pub async fn get<'a>(
                 "SELECT * FROM cats LIMIT $1",
                 *limit as i64
             )
-            .fetch_all(&**pool)
+            .fetch_all(&app_info.postgres_pool)
             .await
         }
         (None, Some(color)) => {
@@ -58,7 +56,7 @@ pub async fn get<'a>(
                 color,
                 *limit as i64
             )
-            .fetch_all(&**pool)
+            .fetch_all(&app_info.postgres_pool)
             .await
         }
         (Some(name), None) => {
@@ -68,7 +66,7 @@ pub async fn get<'a>(
                 name,
                 *limit as i64
             )
-            .fetch_all(&**pool)
+            .fetch_all(&app_info.postgres_pool)
             .await
         }
         (Some(name), Some(color)) => {
@@ -79,7 +77,7 @@ pub async fn get<'a>(
                 color,
                 *limit as i64
             )
-            .fetch_all(&**pool)
+            .fetch_all(&app_info.postgres_pool)
             .await
         }
     };
@@ -124,7 +122,7 @@ pub async fn get<'a>(
                 code_occurence: tufa_common::code_occurence!(),
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(**config);
+            error.error_log(app_info.config);
             actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
                 error.into_serialize_deserialize_version()
             ))
@@ -137,19 +135,17 @@ pub async fn get<'a>(
 pub async fn get_by_id<'a>(
     path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::GetByIdPathParameters>,
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::GetByIdQueryParameters>,
-    pool: actix_web::web::Data<sqlx::PgPool>,
-    config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
-    project_git_info: actix_web::web::Data<&tufa_common::common::git::project_git_info::ProjectGitInfo<'a>>,
+    app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     println!("get_by_id path_parameters id {}", path_parameters.id);
     println!("get_by_id query_parameters check {}", query_parameters.check);
-    if let false = query_parameters.check == project_git_info.git_commit_id {
+    if let false = query_parameters.check == app_info.project_git_info.git_commit_id {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::GetByIdErrorNamed::CheckApiUsage {
-            check: &*project_git_info.does_not_match_message(),
+            check: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
         };
         use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-        error.error_log(**config);
+        error.error_log(app_info.config);
         return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
             error.into_serialize_deserialize_version()
         ));
@@ -164,7 +160,7 @@ pub async fn get_by_id<'a>(
                 code_occurence: tufa_common::code_occurence!()
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(**config);
+            error.error_log(app_info.config);
             return actix_web::HttpResponse::BadRequest()
             .json(actix_web::web::Json(error.into_serialize_deserialize_version()));
         }
@@ -174,7 +170,7 @@ pub async fn get_by_id<'a>(
         "SELECT * FROM cats WHERE id = $1",
         *bigserial_id.bigserial()
     )
-    .fetch_one(&**pool)
+    .fetch_one(&app_info.postgres_pool)
     .await
     {
         Ok(cat) => {
@@ -189,7 +185,7 @@ pub async fn get_by_id<'a>(
                 code_occurence: tufa_common::code_occurence!() 
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(**config);
+            error.error_log(app_info.config);
             actix_web::HttpResponse::InternalServerError()
             .json(actix_web::web::Json(error.into_serialize_deserialize_version()))
         }
@@ -201,20 +197,18 @@ pub async fn get_by_id<'a>(
 pub async fn post<'a>(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::PostQueryParameters>,
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::CatToPost>,
-    pool: actix_web::web::Data<sqlx::PgPool>,
-    config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
-    project_git_info: actix_web::web::Data<&tufa_common::common::git::project_git_info::ProjectGitInfo<'a>>,
+    app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     println!("post query_parameters check {}", query_parameters.check);
     println!("post name {}, color {}", cat.name, cat.color);
     println!("len{}", cat.color.len());
-    if let false = query_parameters.check == project_git_info.git_commit_id {
+    if let false = query_parameters.check == app_info.project_git_info.git_commit_id {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::PostErrorNamed::CheckApiUsage {
-            check: project_git_info.does_not_match_message(),
+            check: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
         };
         use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-        error.error_log(**config);
+        error.error_log(app_info.config);
         return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
             error.into_serialize_deserialize_version()
         ));
@@ -225,7 +219,7 @@ pub async fn post<'a>(
         cat.name,
         cat.color
     )
-    .fetch_all(&**pool)
+    .fetch_all(&app_info.postgres_pool)
     .await
     {
         Ok(_) => actix_web::HttpResponse::Created().finish(),
@@ -236,7 +230,7 @@ pub async fn post<'a>(
                 code_occurence: tufa_common::code_occurence!(),
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(**config);
+            error.error_log(app_info.config);
             actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
                 error.into_serialize_deserialize_version(),
             ))
@@ -250,19 +244,17 @@ pub async fn post<'a>(
 pub async fn put<'a>(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::PutQueryParameters>,
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::Cat>,
-    pool: actix_web::web::Data<sqlx::PgPool>,
-    config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
-    project_git_info: actix_web::web::Data<&tufa_common::common::git::project_git_info::ProjectGitInfo<'a>>,
+    app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     println!("put query_parameters check {}", query_parameters.check);
     println!("put id {} name {}, color {}", cat.id, cat.name, cat.color);
-    if let false = query_parameters.check == project_git_info.git_commit_id {
+    if let false = query_parameters.check == app_info.project_git_info.git_commit_id {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::PutErrorNamed::CheckApiUsage {
-            check: project_git_info.does_not_match_message(),
+            check: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
         };
         use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-        error.error_log(**config);
+        error.error_log(app_info.config);
         return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
             error.into_serialize_deserialize_version()
         ));
@@ -275,7 +267,7 @@ pub async fn put<'a>(
                 code_occurence: tufa_common::code_occurence!()
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(**config);
+            error.error_log(app_info.config);
             return actix_web::HttpResponse::InternalServerError()
             .json(actix_web::web::Json(error.into_serialize_deserialize_version()));
         }
@@ -287,7 +279,7 @@ pub async fn put<'a>(
         cat.name,
         cat.color
     )
-    .fetch_all(&**pool)
+    .fetch_all(&app_info.postgres_pool)
     .await
     {
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
@@ -298,7 +290,7 @@ pub async fn put<'a>(
                 code_occurence: tufa_common::code_occurence!(),
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(**config);
+            error.error_log(app_info.config);
             actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
                 error.into_serialize_deserialize_version(),
             ))
@@ -311,19 +303,17 @@ pub async fn put<'a>(
 pub async fn patch<'a>(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::PatchQueryParameters>,
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::CatToPatch>,
-    pool: actix_web::web::Data<sqlx::PgPool>,
-    config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
-    project_git_info: actix_web::web::Data<&tufa_common::common::git::project_git_info::ProjectGitInfo<'a>>,
+    app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     println!("patch query_parameters check {}", query_parameters.check);
     println!("patch name {:?}, color {:?}", cat.name, cat.color);
-    if let false = query_parameters.check == project_git_info.git_commit_id {
+    if let false = query_parameters.check == app_info.project_git_info.git_commit_id {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::PatchErrorNamed::CheckApiUsage {
-            check: project_git_info.does_not_match_message(),
+            check: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
         };
         use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-        error.error_log(**config);
+        error.error_log(app_info.config);
         return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
             error.into_serialize_deserialize_version()
         ));
@@ -338,7 +328,7 @@ pub async fn patch<'a>(
                 code_occurence: tufa_common::code_occurence!()
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(**config);
+            error.error_log(app_info.config);
             return actix_web::HttpResponse::InternalServerError()
             .json(
                 actix_web::web::Json(
@@ -355,7 +345,7 @@ pub async fn patch<'a>(
                 code_occurence: tufa_common::code_occurence!(),
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(**config);
+            error.error_log(app_info.config);
             return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
                 error.into_serialize_deserialize_version(),
             ));
@@ -367,7 +357,7 @@ pub async fn patch<'a>(
                 color,
                 *bigserial_id.bigserial()
             )
-            .fetch_all(&**pool)
+            .fetch_all(&app_info.postgres_pool)
             .await
         }
         (Some(name), None) => {
@@ -377,7 +367,7 @@ pub async fn patch<'a>(
                 name,
                 *bigserial_id.bigserial()
             )
-            .fetch_all(&**pool)
+            .fetch_all(&app_info.postgres_pool)
             .await
         }
         (Some(_), Some(_)) => {
@@ -387,7 +377,7 @@ pub async fn patch<'a>(
                 code_occurence: tufa_common::code_occurence!(),
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(**config);
+            error.error_log(app_info.config);
             return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
                 error.into_serialize_deserialize_version(),
             ));
@@ -402,7 +392,7 @@ pub async fn patch<'a>(
                 code_occurence: tufa_common::code_occurence!(),
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(**config);
+            error.error_log(app_info.config);
             actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
                 error.into_serialize_deserialize_version(),
             ))
@@ -414,18 +404,16 @@ pub async fn patch<'a>(
 #[actix_web::delete("/")]
 pub async fn delete<'a>(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::DeleteQueryParameters>,
-    pool: actix_web::web::Data<sqlx::PgPool>,
-    config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
-    project_git_info: actix_web::web::Data<&tufa_common::common::git::project_git_info::ProjectGitInfo<'a>>,
+    app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     println!("delete query_parameters check {}, name {:?}, color {:?}", query_parameters.check, query_parameters.name, query_parameters.color);
-    if let false = query_parameters.check == project_git_info.git_commit_id {
+    if let false = query_parameters.check == app_info.project_git_info.git_commit_id {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteErrorNamed::CheckApiUsage {
-            check: project_git_info.does_not_match_message(),
+            check: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
         };
         use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-        error.error_log(**config);
+        error.error_log(app_info.config);
         return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
             error.into_serialize_deserialize_version()
         ));
@@ -438,7 +426,7 @@ pub async fn delete<'a>(
                 code_occurence: tufa_common::code_occurence!(),
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(**config);
+            error.error_log(app_info.config);
             let json = actix_web::web::Json(
                 error.into_serialize_deserialize_version(),
             );
@@ -451,7 +439,7 @@ pub async fn delete<'a>(
                 "DELETE FROM cats WHERE color = $1",
                 color,
             )
-            .fetch_all(&**pool)
+            .fetch_all(&app_info.postgres_pool)
             .await
         }
         (Some(name), None) => {
@@ -460,7 +448,7 @@ pub async fn delete<'a>(
                 "DELETE FROM cats WHERE name = $1",
                 name,
             )
-            .fetch_all(&**pool)
+            .fetch_all(&app_info.postgres_pool)
             .await
         }
         (Some(name), Some(color)) => {
@@ -470,7 +458,7 @@ pub async fn delete<'a>(
                 name,
                 color
             )
-            .fetch_all(&**pool)
+            .fetch_all(&app_info.postgres_pool)
             .await
         }
     };
@@ -486,7 +474,7 @@ pub async fn delete<'a>(
                 code_occurence: tufa_common::code_occurence!(),
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(**config);
+            error.error_log(app_info.config);
             actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
                 error.into_serialize_deserialize_version(),
             ))
@@ -494,24 +482,22 @@ pub async fn delete<'a>(
     }
 }
 
-// curl -X DELETE http://127.0.0.1:8080/api/cats/2?check=18446744073709551615&color=white
+// curl -X DELETE http://127.0.0.1:8080/api/cats/14?check=36cd5a29d00ddbcfc32ebcaad76cc63696fdc0e5
 #[actix_web::delete("/{id}")]
 pub async fn delete_by_id<'a>(
     path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdPathParameters>,
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdQueryParameters>,
-    pool: actix_web::web::Data<sqlx::PgPool>,
-    config: actix_web::web::Data<&tufa_common::repositories_types::tufa_server::config::config_struct::Config>,
-    project_git_info: actix_web::web::Data<&tufa_common::common::git::project_git_info::ProjectGitInfo<'a>>,
+    app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     println!("delete_by_id {}", path_parameters.id);
     println!("delete_by_id query_parameters check {}", query_parameters.check);
-    if let false = query_parameters.check == project_git_info.git_commit_id {
+    if let false = query_parameters.check == app_info.project_git_info.git_commit_id {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdErrorNamed::CheckApiUsage {
-            check: project_git_info.does_not_match_message(),
+            check: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
         };
         use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-        error.error_log(**config);
+        error.error_log(app_info.config);
         return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
             error.into_serialize_deserialize_version()
         ));
@@ -526,7 +512,7 @@ pub async fn delete_by_id<'a>(
                 code_occurence: tufa_common::code_occurence!()
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(**config);
+            error.error_log(app_info.config);
             return actix_web::HttpResponse::InternalServerError()
             .json(
                 actix_web::web::Json(
@@ -540,7 +526,7 @@ pub async fn delete_by_id<'a>(
         "DELETE FROM cats WHERE id = $1",
         *bigserial_id.bigserial()
     )
-    .fetch_all(&**pool)
+    .fetch_all(&app_info.postgres_pool)
     .await {
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
         Err(e) => {
@@ -550,7 +536,7 @@ pub async fn delete_by_id<'a>(
                 code_occurence: tufa_common::code_occurence!(),
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(**config);
+            error.error_log(app_info.config);
             actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
                 error.into_serialize_deserialize_version(),
             ))

@@ -62,90 +62,93 @@ pub async fn try_build_actix_web_dev_server<'a>(
             use tufa_common::common::config::config_fields::GetHmacSecret;
             config.get_hmac_secret().expose_secret()
         }.as_bytes());
-            actix_web::App::new()
-            .wrap(actix_web_flash_messages::FlashMessagesFramework::builder(
-                actix_web_flash_messages::storage::CookieMessageStore::builder(secret_key.clone()).build()
-                )
-                .build()
+        actix_web::App::new()
+        .wrap(actix_web_flash_messages::FlashMessagesFramework::builder(
+            actix_web_flash_messages::storage::CookieMessageStore::builder(secret_key.clone()).build()
             )
-            .wrap(actix_session::SessionMiddleware::new(
-                redis_session_storage.clone(),
-                secret_key,
+            .build()
+        )
+        .wrap(actix_session::SessionMiddleware::new(
+            redis_session_storage.clone(),
+            secret_key,
+        ))
+        .wrap(tracing_actix_web::TracingLogger::default())
+        .wrap(
+            actix_cors::Cors::default()
+                .supports_credentials()
+                // .allowed_origin(&config.get_access_control_allow_origin())
+                .allow_any_origin()
+                .allow_any_method()
+                .allow_any_header()
+                .expose_any_header()
+                .max_age({
+                use tufa_common::common::config::config_fields::GetAccessControlMaxAge;
+                *config.get_access_control_max_age()
+                }),
+        ) //todo concrete host \ domain
+        //
+        .app_data(actix_web::web::Data::new(postgres_pool.clone()))//if use it without .clone() - will be runtime error if you try to reach route
+        .app_data(actix_web::web::Data::new({
+            use tufa_common::common::config::get_email_client::GetEmailClient;
+            config.get_email_client()
+        }))
+        .app_data(actix_web::web::Data::new({
+            use tufa_common::common::config::config_fields::GetHmacSecret;
+            config.get_hmac_secret().clone()
+        }))
+        .app_data(actix_web::web::Data::new(tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo {
+            postgres_pool: postgres_pool.clone(),
+            config: config,
+            project_git_info: &tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO,
+        }))
+        //todo - service capabilities ?
+        .service(
+            actix_web::web::scope("/admin")
+                .guard(actix_web::guard::Host("127.0.0.1"))
+                .wrap(actix_web_lab::middleware::from_fn(tufa_common::repositories_types::tufa_server::authentication::reject_anonymous_users))
+                .route("/dashboard", actix_web::web::get().to(crate::routes::dashboard::admin_dashboard))
+                // .route("/newsletters", web::get().to(tufa_common::repositories_types::tufa_server::routes::publish_newsletter_form))
+                .route("/newsletters", actix_web::web::post().to(crate::routes::publish_newsletter))
+                .route("/password", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::admin::change_password_form))
+                .route("/password", actix_web::web::post().to(crate::routes::admin::password::change_password))
+                .route("/logout", actix_web::web::post().to(tufa_common::repositories_types::tufa_server::routes::admin::log_out)),
+        )
+        .route("/login", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::login::login_form))
+        .route("/login", actix_web::web::post().to(crate::routes::login::login))
+        .route("/subscriptions", actix_web::web::post().to(crate::routes::subscribe))
+        .route("/subscriptions/confirm", actix_web::web::get().to(crate::routes::confirm))
+        .route("/newsletters", actix_web::web::post().to(crate::routes::publish_newsletter))
+        //
+        .route("/health_check", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::health_check))
+        .service(
+            actix_web::web::scope("/api")
+            .service(actix_web_lab::web::Redirect::new(
+                "/project_git_commit", 
+                {
+                    use tufa_common::common::git::get_git_commit_link::GetGitCommitLink;
+                    tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
+                        .get_git_commit_link()
+                }
             ))
-            .wrap(tracing_actix_web::TracingLogger::default())
-            .wrap(
-                actix_cors::Cors::default()
-                    .supports_credentials()
-                    // .allowed_origin(&config.get_access_control_allow_origin())
-                    .allow_any_origin()
-                    .allow_any_method()
-                    .allow_any_header()
-                    .expose_any_header()
-                    .max_age({
-                        use tufa_common::common::config::config_fields::GetAccessControlMaxAge;
-                        *config.get_access_control_max_age()
-                    }),
-            ) //todo concrete host \ domain
-            //
-            .app_data(actix_web::web::Data::new(postgres_pool.clone()))//if use it without .clone() - will be runtime error if you try to reach route
-            .app_data(actix_web::web::Data::new({
-                use tufa_common::common::config::get_email_client::GetEmailClient;
-                config.get_email_client()
-            }))
-            .app_data(actix_web::web::Data::new({
-                use tufa_common::common::config::config_fields::GetHmacSecret;
-                config.get_hmac_secret().clone()
-            }))
-            .app_data(actix_web::web::Data::new(config))
-            .app_data(actix_web::web::Data::new(&tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO))
-            //todo - service capabilities ?
+            .service(actix_web_lab::web::Redirect::new(
+                "/git_commit", 
+                {
+                    use tufa_common::common::git::get_git_commit_link::GetGitCommitLink;
+                    crate::global_variables::compile_time::git_info::GIT_INFO.get_git_commit_link()
+                }
+            ))
             .service(
-                actix_web::web::scope("/admin")
-                    .guard(actix_web::guard::Host("127.0.0.1"))
-                    .wrap(actix_web_lab::middleware::from_fn(tufa_common::repositories_types::tufa_server::authentication::reject_anonymous_users))
-                    .route("/dashboard", actix_web::web::get().to(crate::routes::dashboard::admin_dashboard))
-                    // .route("/newsletters", web::get().to(tufa_common::repositories_types::tufa_server::routes::publish_newsletter_form))
-                    .route("/newsletters", actix_web::web::post().to(crate::routes::publish_newsletter))
-                    .route("/password", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::admin::change_password_form))
-                    .route("/password", actix_web::web::post().to(crate::routes::admin::password::change_password))
-                    .route("/logout", actix_web::web::post().to(tufa_common::repositories_types::tufa_server::routes::admin::log_out)),
+            // actix_web::web::resource("/cats")
+                actix_web::web::scope("/cats")
+                .service(crate::routes::cats::get)
+                .service(crate::routes::cats::get_by_id)
+                .service(crate::routes::cats::post)
+                .service(crate::routes::cats::put)
+                .service(crate::routes::cats::patch)
+                .service(crate::routes::cats::delete)
+                .service(crate::routes::cats::delete_by_id)
             )
-            .route("/login", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::login::login_form))
-            .route("/login", actix_web::web::post().to(crate::routes::login::login))
-            .route("/health_check", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::health_check))
-            .route("/subscriptions", actix_web::web::post().to(crate::routes::subscribe))
-            .route("/subscriptions/confirm", actix_web::web::get().to(crate::routes::confirm))
-            .route("/newsletters", actix_web::web::post().to(crate::routes::publish_newsletter))
-            .service(
-                actix_web::web::scope("/api")
-                .service(actix_web_lab::web::Redirect::new(
-                    "/project_git_commit", 
-                    {
-                        use tufa_common::common::git::get_git_commit_link::GetGitCommitLink;
-                        tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
-                            .get_git_commit_link()
-                    }
-                ))
-                .service(actix_web_lab::web::Redirect::new(
-                    "/git_commit", 
-                    {
-                        use tufa_common::common::git::get_git_commit_link::GetGitCommitLink;
-                        crate::global_variables::compile_time::git_info::GIT_INFO
-                            .get_git_commit_link()
-                    }
-                ))
-                .service(
-                // actix_web::web::resource("/cats")
-                    actix_web::web::scope("/cats")
-                    .service(crate::routes::cats::get)
-                    .service(crate::routes::cats::get_by_id)
-                    .service(crate::routes::cats::post)
-                    .service(crate::routes::cats::put)
-                    .service(crate::routes::cats::patch)
-                    .service(crate::routes::cats::delete)
-                    .service(crate::routes::cats::delete_by_id)
-                )
-            )
+        )
     })
     .listen(tcp_listener)
     {
