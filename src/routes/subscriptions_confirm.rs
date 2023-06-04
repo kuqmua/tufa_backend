@@ -1,18 +1,26 @@
-#[tracing::instrument(name = "Confirm a pending subscriber", skip(parameters, pool))]
-pub async fn confirm(
+#[tracing::instrument(name = "Confirm a pending subscriber", skip(parameters, app_info))]
+pub async fn confirm<'a>(
     parameters: actix_web::web::Query<
         tufa_common::repositories_types::tufa_server::routes::Parameters,
     >,
-    pool: actix_web::web::Data<sqlx::PgPool>,
+    app_info: actix_web::web::Data<
+        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>,
+    >,
 ) -> actix_web::HttpResponse {
-    let id = match get_subscriber_id_from_token(&pool, &parameters.subscription_token).await {
-        Ok(id) => id,
-        Err(_) => return actix_web::HttpResponse::InternalServerError().finish(),
-    };
+    let id =
+        match get_subscriber_id_from_token(&app_info.postgres_pool, &parameters.subscription_token)
+            .await
+        {
+            Ok(id) => id,
+            Err(_) => return actix_web::HttpResponse::InternalServerError().finish(),
+        };
     match id {
         None => actix_web::HttpResponse::Unauthorized().finish(),
         Some(subscriber_id) => {
-            if confirm_subscriber(&pool, subscriber_id).await.is_err() {
+            if confirm_subscriber(&app_info.postgres_pool, subscriber_id)
+                .await
+                .is_err()
+            {
                 return actix_web::HttpResponse::InternalServerError().finish();
             }
             actix_web::HttpResponse::Ok().finish()

@@ -2,7 +2,9 @@ pub async fn login<'a>(
     form: actix_web::web::Form<
         tufa_common::repositories_types::tufa_server::routes::login::post::FormData,
     >,
-    pool: actix_web::web::Data<sqlx::PgPool>,
+    app_info: actix_web::web::Data<
+        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>,
+    >,
     session: tufa_common::repositories_types::tufa_server::session_state::TypedSession,
 ) -> Result<
     actix_web::HttpResponse,
@@ -15,7 +17,7 @@ pub async fn login<'a>(
         password: form.0.password,
     };
     tracing::Span::current().record("username", &tracing::field::display(&credentials.username));
-    match crate::authentication::validate_credentials(credentials, &pool).await {
+    match crate::authentication::validate_credentials(credentials, &app_info.postgres_pool).await {
         Ok(user_id) => {
             tracing::Span::current().record("user_id", &tracing::field::display(&user_id));
             session.renew();

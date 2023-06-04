@@ -3,14 +3,16 @@
     skip_all,
     fields(user_id=%*user_id)
 )]
-pub async fn publish_newsletter(
+pub async fn publish_newsletter<'a>(
     form: actix_web::web::Form<
         tufa_common::repositories_types::tufa_server::routes::admin::newsletter::post::FormData,
     >,
     user_id: actix_web::web::ReqData<
         tufa_common::repositories_types::tufa_server::authentication::UserId,
     >,
-    pool: actix_web::web::Data<sqlx::PgPool>,
+    app_info: actix_web::web::Data<
+        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>,
+    >,
 ) -> Result<actix_web::HttpResponse, actix_web::Error> {
     let user_id = user_id.into_inner();
     let tufa_common::repositories_types::tufa_server::routes::admin::newsletter::post::FormData {
@@ -23,7 +25,7 @@ pub async fn publish_newsletter(
         idempotency_key
             .try_into()
             .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e400)?;
-    let mut transaction = match crate::idempotency::try_processing(&pool, &idempotency_key, *user_id)
+    let mut transaction = match crate::idempotency::try_processing(&app_info.postgres_pool, &idempotency_key, *user_id)
         .await
         .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?
     {

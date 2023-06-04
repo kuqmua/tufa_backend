@@ -87,7 +87,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 }),
         ) //todo concrete host \ domain
         //
-        .app_data(actix_web::web::Data::new(postgres_pool.clone()))//if use it without .clone() - will be runtime error if you try to reach route
         .app_data(actix_web::web::Data::new({
             use tufa_common::common::config::get_email_client::GetEmailClient;
             config.get_email_client()
@@ -97,7 +96,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
             config.get_hmac_secret().clone()
         }))
         .app_data(actix_web::web::Data::new(tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo {
-            postgres_pool: postgres_pool.clone(),
+            postgres_pool: postgres_pool.clone(),//if use it without .clone() - will be runtime error if you try to reach route
             config: config,
             project_git_info: &tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO,
         }))

@@ -1,12 +1,14 @@
-pub async fn admin_dashboard(
+pub async fn admin_dashboard<'a>(
     session: tufa_common::repositories_types::tufa_server::session_state::TypedSession,
-    pool: actix_web::web::Data<sqlx::PgPool>,
+    app_info: actix_web::web::Data<
+        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>,
+    >,
 ) -> Result<actix_web::HttpResponse, actix_web::Error> {
     let username = if let Some(user_id) = session
         .get_user_id()
         .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?
     {
-        get_username(user_id, &pool)
+        get_username(user_id, &app_info.postgres_pool)
             .await
             .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?
     } else {

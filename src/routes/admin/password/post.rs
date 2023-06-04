@@ -1,8 +1,10 @@
-pub async fn change_password(
+pub async fn change_password<'a>(
     form: actix_web::web::Form<
         tufa_common::common::change_password_form_data::ChangePasswordFormData,
     >,
-    pool: actix_web::web::Data<sqlx::PgPool>,
+    app_info: actix_web::web::Data<
+        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>,
+    >,
     user_id: actix_web::web::ReqData<
         tufa_common::repositories_types::tufa_server::authentication::UserId,
     >,
@@ -25,14 +27,14 @@ pub async fn change_password(
             ),
         );
     }
-    let username = crate::routes::dashboard::get_username(*user_id, &pool)
+    let username = crate::routes::dashboard::get_username(*user_id, &app_info.postgres_pool)
         .await
         .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?;
     let credentials = tufa_common::common::postgres_credentials::PostgresCredentials {
         username,
         password: form.0.current_password,
     };
-    if let Err(e) = crate::authentication::validate_credentials(credentials, &pool).await {
+    if let Err(e) = crate::authentication::validate_credentials(credentials, &app_info.postgres_pool).await {
         //todo - add to body deserialized version?
         return match &e {
             tufa_common::repositories_types::tufa_server::authentication::password::ValidateCredentialsErrorNamed::GetStoredCredentials { 
@@ -73,7 +75,7 @@ pub async fn change_password(
             }
         };
     }
-    crate::authentication::change_password(*user_id, form.0.new_password, &pool)
+    crate::authentication::change_password(*user_id, form.0.new_password, &app_info.postgres_pool)
         .await
         .map_err(tufa_common::repositories_types::tufa_server::utils::status_codes::e500)?;
     actix_web_flash_messages::FlashMessage::error("Your password has been changed.").send();

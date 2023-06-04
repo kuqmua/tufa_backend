@@ -1,6 +1,8 @@
 pub async fn subscribe<'a>(
     form: actix_web::web::Form<tufa_common::repositories_types::tufa_server::routes::FormData>,
-    pool: actix_web::web::Data<sqlx::PgPool>,
+    app_info: actix_web::web::Data<
+        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>,
+    >,
     email_client: actix_web::web::Data<
         tufa_common::repositories_types::tufa_server::email_client::EmailClient,
     >,
@@ -20,7 +22,7 @@ pub async fn subscribe<'a>(
             Ok(new_subscriber) => new_subscriber,
         };
     //"Failed to acquire a Postgres connection from the pool"
-    let mut transaction = match pool.begin().await {
+    let mut transaction = match app_info.postgres_pool.begin().await {
         Err(e) => {
             return Err(tufa_common::repositories_types::tufa_server::routes::subscriptions::SubscribeErrorNamed::PostgresPoolBegin {
                 postgres_pool_begin: e,
