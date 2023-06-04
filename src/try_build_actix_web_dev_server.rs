@@ -121,11 +121,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
         .route("/health_check", actix_web::web::get().to(tufa_common::repositories_types::tufa_server::routes::health_check))
         .service(
             actix_web::web::scope("/api")
-            .route(
-                "/project_git_info", 
-                actix_web::web::get().to(tufa_common::server::routes::project_commit::project_git_info
-            )
-        )
+            .service(tufa_common::server::routes::project_commit::project_git_info)
             .service(actix_web_lab::web::Redirect::new(
                 "/repository_commit", 
                 {
