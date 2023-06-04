@@ -21,8 +21,8 @@ pub async fn get<'a>(
         "get query_parameters check {} limit {:?}, name {:?} color {:?}",
         query_parameters.check, query_parameters.limit, query_parameters.name, query_parameters.color
     );
-    println!("what need {}", app_info.project_git_info.git_commit_id);
-    if let false = query_parameters.check == app_info.project_git_info.git_commit_id {
+    println!("what need {}", app_info.project_git_info.project_commit);
+    if let false = query_parameters.check == app_info.project_git_info.project_commit {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::GetErrorNamed::CheckApiUsage {
             check: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
@@ -139,7 +139,7 @@ pub async fn get_by_id<'a>(
 ) -> impl actix_web::Responder {
     println!("get_by_id path_parameters id {}", path_parameters.id);
     println!("get_by_id query_parameters check {}", query_parameters.check);
-    if let false = query_parameters.check == app_info.project_git_info.git_commit_id {
+    if let false = query_parameters.check == app_info.project_git_info.project_commit {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::GetByIdErrorNamed::CheckApiUsage {
             check: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
@@ -202,7 +202,7 @@ pub async fn post<'a>(
     println!("post query_parameters check {}", query_parameters.check);
     println!("post name {}, color {}", cat.name, cat.color);
     println!("len{}", cat.color.len());
-    if let false = query_parameters.check == app_info.project_git_info.git_commit_id {
+    if let false = query_parameters.check == app_info.project_git_info.project_commit {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::PostErrorNamed::CheckApiUsage {
             check: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
@@ -248,7 +248,7 @@ pub async fn put<'a>(
 ) -> impl actix_web::Responder {
     println!("put query_parameters check {}", query_parameters.check);
     println!("put id {} name {}, color {}", cat.id, cat.name, cat.color);
-    if let false = query_parameters.check == app_info.project_git_info.git_commit_id {
+    if let false = query_parameters.check == app_info.project_git_info.project_commit {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::PutErrorNamed::CheckApiUsage {
             check: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
@@ -307,7 +307,7 @@ pub async fn patch<'a>(
 ) -> impl actix_web::Responder {
     println!("patch query_parameters check {}", query_parameters.check);
     println!("patch name {:?}, color {:?}", cat.name, cat.color);
-    if let false = query_parameters.check == app_info.project_git_info.git_commit_id {
+    if let false = query_parameters.check == app_info.project_git_info.project_commit {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::PatchErrorNamed::CheckApiUsage {
             check: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
@@ -407,7 +407,7 @@ pub async fn delete<'a>(
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     println!("delete query_parameters check {}, name {:?}, color {:?}", query_parameters.check, query_parameters.name, query_parameters.color);
-    if let false = query_parameters.check == app_info.project_git_info.git_commit_id {
+    if let false = query_parameters.check == app_info.project_git_info.project_commit {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteErrorNamed::CheckApiUsage {
             check: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
@@ -491,7 +491,7 @@ pub async fn delete_by_id<'a>(
 ) -> impl actix_web::Responder {
     println!("delete_by_id {}", path_parameters.id);
     println!("delete_by_id query_parameters check {}", query_parameters.check);
-    if let false = query_parameters.check == app_info.project_git_info.git_commit_id {
+    if let false = query_parameters.check == app_info.project_git_info.project_commit {
         let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdErrorNamed::CheckApiUsage {
             check: app_info.project_git_info.does_not_match_message(),
             code_occurence: tufa_common::code_occurence!(),
