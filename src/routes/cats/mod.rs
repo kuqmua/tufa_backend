@@ -18,10 +18,22 @@ pub async fn get<'a>(
 ) -> impl actix_web::Responder {
     match request.headers().get("project_commit") {
         Some(project_commit_header_value) => match project_commit_header_value.to_str() {
-            Ok(_) => (),
+            Ok(possible_project_commit) => {
+                if let true = possible_project_commit != app_info.project_git_info.project_commit {
+                    let error = tufa_common::repositories_types::tufa_server::routes::cats::GetErrorNamed::CheckApiUsage {
+                        project_commit: app_info.project_git_info.does_not_match_message(),
+                        code_occurence: tufa_common::code_occurence!(),
+                    };
+                    use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+                    error.error_log(app_info.config);
+                    return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
+                        error.into_serialize_deserialize_version()
+                    ));
+                }
+            },
             Err(e) => {
-                let error = tufa_common::repositories_types::tufa_server::routes::cats::GetErrorNamed::CheckApiUsage {
-                    project_commit: app_info.project_git_info.does_not_match_message(),
+                let error = tufa_common::repositories_types::tufa_server::routes::cats::GetErrorNamed::CannotConvertProjectCommitToStr {
+                    cannot_convert_project_commit_to_str: app_info.project_git_info.cannot_convert_project_commit_to_str_message(),
                     code_occurence: tufa_common::code_occurence!(),
                 };
                 use tufa_common::common::error_logs_logic::error_log::ErrorLog;
@@ -32,8 +44,8 @@ pub async fn get<'a>(
             }
         },
         None => {
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::GetErrorNamed::CheckApiUsage {
-                project_commit: app_info.project_git_info.does_not_match_message(),
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::GetErrorNamed::NoProjectCommitHeader {
+                no_project_commit_header: app_info.project_git_info.no_project_commit_header_message(),
                 code_occurence: tufa_common::code_occurence!(),
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
@@ -147,6 +159,7 @@ pub async fn get<'a>(
 // curl -X GET http://127.0.0.1:8080/api/cats/7?project_commit=18446744073709551615
 #[actix_web::get("/{id}")]
 pub async fn get_by_id<'a>(
+    request: actix_web::HttpRequest,
     path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::GetByIdPathParameters>,
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::GetByIdQueryParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
@@ -209,6 +222,7 @@ pub async fn get_by_id<'a>(
 // curl -X POST http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615 -H 'Content-Type: application/json' -d '{"name":"simba", "color":"black"}'
 #[actix_web::post("/")]
 pub async fn post<'a>(
+    request: actix_web::HttpRequest,
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::PostQueryParameters>,
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::CatToPost>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
@@ -256,6 +270,7 @@ pub async fn post<'a>(
 // curl -X PUT http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615 -H 'Content-Type: application/json' -d '{"id": 7, "name":"simba", "color":"black"}'
 #[actix_web::put("/")]
 pub async fn put<'a>(
+    request: actix_web::HttpRequest,
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::PutQueryParameters>,
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::Cat>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
@@ -417,6 +432,7 @@ pub async fn patch<'a>(
 // curl -X DELETE http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615&color=white
 #[actix_web::delete("/")]
 pub async fn delete<'a>(
+    request: actix_web::HttpRequest,
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::DeleteQueryParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
@@ -499,6 +515,7 @@ pub async fn delete<'a>(
 // curl -X DELETE http://127.0.0.1:8080/api/cats/14?project_commit=36cd5a29d00ddbcfc32ebcaad76cc63696fdc0e5
 #[actix_web::delete("/{id}")]
 pub async fn delete_by_id<'a>(
+    request: actix_web::HttpRequest,
     path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdPathParameters>,
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdQueryParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
