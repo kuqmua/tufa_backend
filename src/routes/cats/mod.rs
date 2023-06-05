@@ -12,25 +12,41 @@
 // http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615&name=leo&color=red
 #[actix_web::get("/")]
 pub async fn get<'a>(
+    request: actix_web::HttpRequest,
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::GetQueryParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
+    match request.headers().get("project_commit") {
+        Some(project_commit_header_value) => match project_commit_header_value.to_str() {
+            Ok(_) => (),
+            Err(e) => {
+                let error = tufa_common::repositories_types::tufa_server::routes::cats::GetErrorNamed::CheckApiUsage {
+                    project_commit: app_info.project_git_info.does_not_match_message(),
+                    code_occurence: tufa_common::code_occurence!(),
+                };
+                use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+                error.error_log(app_info.config);
+                return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
+                    error.into_serialize_deserialize_version()
+                ));
+            }
+        },
+        None => {
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::GetErrorNamed::CheckApiUsage {
+                project_commit: app_info.project_git_info.does_not_match_message(),
+                code_occurence: tufa_common::code_occurence!(),
+            };
+            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+            error.error_log(app_info.config);
+            return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
+                error.into_serialize_deserialize_version()
+            ));
+        }
+    };
     println!(
-        "get query_parameters project_commit {} limit {:?}, name {:?} color {:?}",
-        query_parameters.project_commit, query_parameters.limit, query_parameters.name, query_parameters.color
+        "get query_parameters limit {:?}, name {:?} color {:?}",
+        query_parameters.limit, query_parameters.name, query_parameters.color
     );
-    println!("what need {}", app_info.project_git_info.project_commit);
-    if let false = query_parameters.project_commit == app_info.project_git_info.project_commit {
-        let error = tufa_common::repositories_types::tufa_server::routes::cats::GetErrorNamed::CheckApiUsage {
-            project_commit: app_info.project_git_info.does_not_match_message(),
-            code_occurence: tufa_common::code_occurence!(),
-        };
-        use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-        error.error_log(app_info.config);
-        return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
-            error.into_serialize_deserialize_version()
-        ));
-    }
     let limit = match &query_parameters.limit {
         Some(limit) => limit,
         None => {

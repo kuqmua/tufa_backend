@@ -63,6 +63,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
             config.get_hmac_secret().expose_secret()
         }.as_bytes());
         actix_web::App::new()
+        //todo - why no compile time error happens if you use 
         .wrap(actix_web_flash_messages::FlashMessagesFramework::builder(
             actix_web_flash_messages::storage::CookieMessageStore::builder(secret_key.clone()).build()
             )
@@ -126,6 +127,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
             .service(
             // actix_web::web::resource("/cats")
                 actix_web::web::scope("/cats")
+                // .guard(actix_web::guard::Host("www.rust-lang.org"))
                 .service(crate::routes::cats::get)
                 .service(crate::routes::cats::get_by_id)
                 .service(crate::routes::cats::post)
