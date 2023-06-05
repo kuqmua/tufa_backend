@@ -16,7 +16,7 @@ pub async fn get<'a>(
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::GetQueryParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
-    match request.headers().get("project_commit") {
+    match request.headers().get(tufa_common::common::git::project_git_info::PROJECT_COMMIT) {
         Some(project_commit_header_value) => match project_commit_header_value.to_str() {
             Ok(possible_project_commit) => {
                 if let true = possible_project_commit != app_info.project_git_info.project_commit {
