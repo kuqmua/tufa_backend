@@ -126,7 +126,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
             .service(tufa_common::server::routes::git_info::git_info)
             .service(
             // actix_web::web::resource("/cats")
-                actix_web::web::scope("/cats")
+                actix_web::web::scope(&format!("/{}", tufa_common::repositories_types::tufa_server::routes::cats::CATS))
                 // .guard(actix_web::guard::Host("www.rust-lang.org"))
                 .service(crate::routes::cats::get)
                 .service(crate::routes::cats::get_by_id)
