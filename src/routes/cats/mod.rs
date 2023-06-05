@@ -323,23 +323,49 @@ pub async fn post<'a>(
 #[actix_web::put("/")]
 pub async fn put<'a>(
     request: actix_web::HttpRequest,
-    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::PutQueryParameters>,
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::Cat>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
-    println!("put query_parameters project_commit {}", query_parameters.project_commit);
+    match request.headers().get(tufa_common::common::git::project_git_info::PROJECT_COMMIT) {
+        Some(project_commit_header_value) => match project_commit_header_value.to_str() {
+            Ok(possible_project_commit) => {
+                if let true = possible_project_commit != app_info.project_git_info.project_commit {
+                    let error = tufa_common::repositories_types::tufa_server::routes::cats::PutErrorNamed::CheckApiUsage {
+                        project_commit: app_info.project_git_info.does_not_match_message(),
+                        code_occurence: tufa_common::code_occurence!(),
+                    };
+                    use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+                    error.error_log(app_info.config);
+                    return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
+                        error.into_serialize_deserialize_version()
+                    ));
+                }
+            },
+            Err(e) => {
+                let error = tufa_common::repositories_types::tufa_server::routes::cats::PutErrorNamed::CannotConvertProjectCommitToStr {
+                    cannot_convert_project_commit_to_str: format!("{}, error: {e}", app_info.project_git_info.cannot_convert_project_commit_to_str_message()),
+                    code_occurence: tufa_common::code_occurence!(),
+                };
+                use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+                error.error_log(app_info.config);
+                return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
+                    error.into_serialize_deserialize_version()
+                ));
+            }
+        },
+        None => {
+            let error = tufa_common::repositories_types::tufa_server::routes::cats::PutErrorNamed::NoProjectCommitHeader {
+                no_project_commit_header: app_info.project_git_info.no_project_commit_header_message(),
+                code_occurence: tufa_common::code_occurence!(),
+            };
+            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+            error.error_log(app_info.config);
+            return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
+                error.into_serialize_deserialize_version()
+            ));
+        }
+    };
     println!("put id {} name {}, color {}", cat.id, cat.name, cat.color);
-    if let false = query_parameters.project_commit == app_info.project_git_info.project_commit {
-        let error = tufa_common::repositories_types::tufa_server::routes::cats::PutErrorNamed::CheckApiUsage {
-            project_commit: app_info.project_git_info.does_not_match_message(),
-            code_occurence: tufa_common::code_occurence!(),
-        };
-        use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-        error.error_log(app_info.config);
-        return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
-            error.into_serialize_deserialize_version()
-        ));
-    }
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(cat.id) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
