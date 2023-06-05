@@ -5,6 +5,7 @@
 //todo - maybe check max length for field here instead of put it in postgres and recieve error ? color VARCHAR (255) NOT NULL
 //todo - maybe add link to function API usage and name of function to use instead and send it 
 //todo - wrap route logic to function what return Result. after match result and return actix_web::HttpResponse
+//todo - add limit everywhere possible
 // curl -X GET http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615&limit=87 - Some(87)
 //or
 // curl -X GET http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615 - None
