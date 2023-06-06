@@ -14,14 +14,14 @@
 #[actix_web::get("/")]
 pub async fn get<'a>(
     request: actix_web::HttpRequest,
-    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::GetQueryParameters>,
+    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::GetQueryParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     match request.headers().get(tufa_common::common::git::project_git_info::PROJECT_COMMIT) {
         Some(project_commit_header_value) => match project_commit_header_value.to_str() {
             Ok(possible_project_commit) => {
                 if let true = possible_project_commit != app_info.project_git_info.project_commit {
-                    let error = tufa_common::repositories_types::tufa_server::routes::cats::GetErrorNamed::CheckApiUsage {
+                    let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetErrorNamed::CheckApiUsage {
                         project_commit: app_info.project_git_info.does_not_match_message(),
                         code_occurence: tufa_common::code_occurence!(),
                     };
@@ -33,7 +33,7 @@ pub async fn get<'a>(
                 }
             },
             Err(e) => {
-                let error = tufa_common::repositories_types::tufa_server::routes::cats::GetErrorNamed::CannotConvertProjectCommitToStr {
+                let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetErrorNamed::CannotConvertProjectCommitToStr {
                     cannot_convert_project_commit_to_str: format!("{}, error: {e}", app_info.project_git_info.cannot_convert_project_commit_to_str_message()),
                     code_occurence: tufa_common::code_occurence!(),
                 };
@@ -45,7 +45,7 @@ pub async fn get<'a>(
             }
         },
         None => {
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::GetErrorNamed::NoProjectCommitHeader {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetErrorNamed::NoProjectCommitHeader {
                 no_project_commit_header: app_info.project_git_info.no_project_commit_header_message(),
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -69,7 +69,7 @@ pub async fn get<'a>(
     let query_result = match (&query_parameters.name, &query_parameters.color) {
         (None, None) => {
             sqlx::query_as!(
-                tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "SELECT * FROM cats LIMIT $1",
                 *limit as i64
             )
@@ -78,7 +78,7 @@ pub async fn get<'a>(
         }
         (None, Some(color)) => {
             sqlx::query_as!(
-                tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "SELECT * FROM cats WHERE color = $1 LIMIT $2",
                 color,
                 *limit as i64
@@ -88,7 +88,7 @@ pub async fn get<'a>(
         }
         (Some(name), None) => {
             sqlx::query_as!(
-                tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "SELECT * FROM cats WHERE name = $1 LIMIT $2",
                 name,
                 *limit as i64
@@ -98,7 +98,7 @@ pub async fn get<'a>(
         }
         (Some(name), Some(color)) => {
             sqlx::query_as!(
-                tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "SELECT * FROM cats WHERE name = $1 AND color = $2 LIMIT $3",
                 name,
                 color,
@@ -144,7 +144,7 @@ pub async fn get<'a>(
             //     _ => println!("")
             // }
             // tracing::error!("Unable to query cats table, error: {e:?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::GetErrorNamed::PostgresSelect {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetErrorNamed::PostgresSelect {
                 postgres_select: e,
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -161,14 +161,14 @@ pub async fn get<'a>(
 #[actix_web::get("/{id}")]
 pub async fn get_by_id<'a>(
     request: actix_web::HttpRequest,
-    path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::GetByIdPathParameters>,
+    path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdPathParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     match request.headers().get(tufa_common::common::git::project_git_info::PROJECT_COMMIT) {
         Some(project_commit_header_value) => match project_commit_header_value.to_str() {
             Ok(possible_project_commit) => {
                 if let true = possible_project_commit != app_info.project_git_info.project_commit {
-                    let error = tufa_common::repositories_types::tufa_server::routes::cats::GetByIdErrorNamed::CheckApiUsage {
+                    let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdErrorNamed::CheckApiUsage {
                         project_commit: app_info.project_git_info.does_not_match_message(),
                         code_occurence: tufa_common::code_occurence!(),
                     };
@@ -180,7 +180,7 @@ pub async fn get_by_id<'a>(
                 }
             },
             Err(e) => {
-                let error = tufa_common::repositories_types::tufa_server::routes::cats::GetByIdErrorNamed::CannotConvertProjectCommitToStr {
+                let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdErrorNamed::CannotConvertProjectCommitToStr {
                     cannot_convert_project_commit_to_str: format!("{}, error: {e}", app_info.project_git_info.cannot_convert_project_commit_to_str_message()),
                     code_occurence: tufa_common::code_occurence!(),
                 };
@@ -192,7 +192,7 @@ pub async fn get_by_id<'a>(
             }
         },
         None => {
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::GetByIdErrorNamed::NoProjectCommitHeader {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdErrorNamed::NoProjectCommitHeader {
                 no_project_commit_header: app_info.project_git_info.no_project_commit_header_message(),
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -209,7 +209,7 @@ pub async fn get_by_id<'a>(
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::GetByIdErrorNamed::Bigserial { 
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdErrorNamed::Bigserial { 
                 bigserial: e, 
                 code_occurence: tufa_common::code_occurence!()
             };
@@ -220,7 +220,7 @@ pub async fn get_by_id<'a>(
         }
     };
     match sqlx::query_as!(
-        tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
         "SELECT * FROM cats WHERE id = $1",
         *bigserial_id.bigserial()
     )
@@ -234,7 +234,7 @@ pub async fn get_by_id<'a>(
         }
         Err(e) => {
             // tracing::error!("Unable to query cats table, error: {e:?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::GetByIdErrorNamed::PostgresSelect { 
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdErrorNamed::PostgresSelect { 
                 postgres_select: e, 
                 code_occurence: tufa_common::code_occurence!() 
             };
@@ -250,14 +250,14 @@ pub async fn get_by_id<'a>(
 #[actix_web::post("/")]
 pub async fn post<'a>(
     request: actix_web::HttpRequest,
-    cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::CatToPost>,
+    cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPost>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     match request.headers().get(tufa_common::common::git::project_git_info::PROJECT_COMMIT) {
         Some(project_commit_header_value) => match project_commit_header_value.to_str() {
             Ok(possible_project_commit) => {
                 if let true = possible_project_commit != app_info.project_git_info.project_commit {
-                    let error = tufa_common::repositories_types::tufa_server::routes::cats::PostErrorNamed::CheckApiUsage {
+                    let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PostErrorNamed::CheckApiUsage {
                         project_commit: app_info.project_git_info.does_not_match_message(),
                         code_occurence: tufa_common::code_occurence!(),
                     };
@@ -269,7 +269,7 @@ pub async fn post<'a>(
                 }
             },
             Err(e) => {
-                let error = tufa_common::repositories_types::tufa_server::routes::cats::PostErrorNamed::CannotConvertProjectCommitToStr {
+                let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PostErrorNamed::CannotConvertProjectCommitToStr {
                     cannot_convert_project_commit_to_str: format!("{}, error: {e}", app_info.project_git_info.cannot_convert_project_commit_to_str_message()),
                     code_occurence: tufa_common::code_occurence!(),
                 };
@@ -281,7 +281,7 @@ pub async fn post<'a>(
             }
         },
         None => {
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::PostErrorNamed::NoProjectCommitHeader {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PostErrorNamed::NoProjectCommitHeader {
                 no_project_commit_header: app_info.project_git_info.no_project_commit_header_message(),
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -295,7 +295,7 @@ pub async fn post<'a>(
     println!("post name {}, color {}", cat.name, cat.color);
     println!("len{}", cat.color.len());
     match sqlx::query_as!(
-        tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
         "INSERT INTO cats(name, color) VALUES ($1, $2)",
         cat.name,
         cat.color
@@ -306,7 +306,7 @@ pub async fn post<'a>(
         Ok(_) => actix_web::HttpResponse::Created().finish(),
         Err(e) => {
             eprintln!("Unable to post a cat, error: {e:#?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::PostErrorNamed::PostgresInsert {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PostErrorNamed::PostgresInsert {
                 postgres_insert: e,
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -324,14 +324,14 @@ pub async fn post<'a>(
 #[actix_web::put("/")]
 pub async fn put<'a>(
     request: actix_web::HttpRequest,
-    cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::Cat>,
+    cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::Cat>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     match request.headers().get(tufa_common::common::git::project_git_info::PROJECT_COMMIT) {
         Some(project_commit_header_value) => match project_commit_header_value.to_str() {
             Ok(possible_project_commit) => {
                 if let true = possible_project_commit != app_info.project_git_info.project_commit {
-                    let error = tufa_common::repositories_types::tufa_server::routes::cats::PutErrorNamed::CheckApiUsage {
+                    let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PutErrorNamed::CheckApiUsage {
                         project_commit: app_info.project_git_info.does_not_match_message(),
                         code_occurence: tufa_common::code_occurence!(),
                     };
@@ -343,7 +343,7 @@ pub async fn put<'a>(
                 }
             },
             Err(e) => {
-                let error = tufa_common::repositories_types::tufa_server::routes::cats::PutErrorNamed::CannotConvertProjectCommitToStr {
+                let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PutErrorNamed::CannotConvertProjectCommitToStr {
                     cannot_convert_project_commit_to_str: format!("{}, error: {e}", app_info.project_git_info.cannot_convert_project_commit_to_str_message()),
                     code_occurence: tufa_common::code_occurence!(),
                 };
@@ -355,7 +355,7 @@ pub async fn put<'a>(
             }
         },
         None => {
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::PutErrorNamed::NoProjectCommitHeader {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PutErrorNamed::NoProjectCommitHeader {
                 no_project_commit_header: app_info.project_git_info.no_project_commit_header_message(),
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -370,7 +370,7 @@ pub async fn put<'a>(
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(cat.id) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::PutErrorNamed::Bigserial { 
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PutErrorNamed::Bigserial { 
                 bigserial: e, 
                 code_occurence: tufa_common::code_occurence!()
             };
@@ -381,7 +381,7 @@ pub async fn put<'a>(
         }
     };
     match sqlx::query_as!(
-        tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
         "INSERT INTO cats(id, name, color) VALUES ($1, $2, $3) ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, color = EXCLUDED.color",
         *bigserial_id.bigserial(),
         cat.name,
@@ -393,7 +393,7 @@ pub async fn put<'a>(
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
         Err(e) => {
             eprintln!("Unable to put a cat, error: {e:#?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::PutErrorNamed::PostgresInsertOrUpdate {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PutErrorNamed::PostgresInsertOrUpdate {
                 postgres_insert_or_update: e,
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -410,14 +410,14 @@ pub async fn put<'a>(
 #[actix_web::patch("/")]
 pub async fn patch<'a>(
     request: actix_web::HttpRequest,
-    cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::cats::CatToPatch>,
+    cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPatch>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     match request.headers().get(tufa_common::common::git::project_git_info::PROJECT_COMMIT) {
         Some(project_commit_header_value) => match project_commit_header_value.to_str() {
             Ok(possible_project_commit) => {
                 if let true = possible_project_commit != app_info.project_git_info.project_commit {
-                    let error = tufa_common::repositories_types::tufa_server::routes::cats::PatchErrorNamed::CheckApiUsage {
+                    let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::CheckApiUsage {
                         project_commit: app_info.project_git_info.does_not_match_message(),
                         code_occurence: tufa_common::code_occurence!(),
                     };
@@ -429,7 +429,7 @@ pub async fn patch<'a>(
                 }
             },
             Err(e) => {
-                let error = tufa_common::repositories_types::tufa_server::routes::cats::PatchErrorNamed::CannotConvertProjectCommitToStr {
+                let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::CannotConvertProjectCommitToStr {
                     cannot_convert_project_commit_to_str: format!("{}, error: {e}", app_info.project_git_info.cannot_convert_project_commit_to_str_message()),
                     code_occurence: tufa_common::code_occurence!(),
                 };
@@ -441,7 +441,7 @@ pub async fn patch<'a>(
             }
         },
         None => {
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::PatchErrorNamed::NoProjectCommitHeader {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::NoProjectCommitHeader {
                 no_project_commit_header: app_info.project_git_info.no_project_commit_header_message(),
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -458,7 +458,7 @@ pub async fn patch<'a>(
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::PatchErrorNamed::Bigserial { 
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::Bigserial { 
                 bigserial: e, 
                 code_occurence: tufa_common::code_occurence!()
             };
@@ -475,7 +475,7 @@ pub async fn patch<'a>(
     let query_result = match (&cat.name, &cat.color) {
         (None, None) => {
             eprintln!("Unable to patch a cat, no parameters");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::PatchErrorNamed::NoParameters {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::NoParameters {
                 no_parameters: std::string::String::from("no parameters provided"),
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -487,7 +487,7 @@ pub async fn patch<'a>(
         }
         (None, Some(color)) => {
             sqlx::query_as!(
-                tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "UPDATE cats SET color = $1 WHERE id = $2",
                 color,
                 *bigserial_id.bigserial()
@@ -497,7 +497,7 @@ pub async fn patch<'a>(
         }
         (Some(name), None) => {
             sqlx::query_as!(
-                tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "UPDATE cats SET name = $1 WHERE id = $2",
                 name,
                 *bigserial_id.bigserial()
@@ -507,7 +507,7 @@ pub async fn patch<'a>(
         }
         (Some(_), Some(_)) => {
             eprintln!("please use put for full object update");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::PatchErrorNamed::PleaseUsePut {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::PleaseUsePut {
                 please_use_put: std::string::String::from("please_use_put"),
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -522,7 +522,7 @@ pub async fn patch<'a>(
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
         Err(e) => {
             eprintln!("Unable to patch a cat, error: {e:#?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::PatchErrorNamed::PostgresUpdate {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::PostgresUpdate {
                 postgres_update: e,
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -539,14 +539,14 @@ pub async fn patch<'a>(
 #[actix_web::delete("/")]
 pub async fn delete<'a>(
     request: actix_web::HttpRequest,
-    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::cats::DeleteQueryParameters>,
+    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteQueryParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     match request.headers().get(tufa_common::common::git::project_git_info::PROJECT_COMMIT) {
         Some(project_commit_header_value) => match project_commit_header_value.to_str() {
             Ok(possible_project_commit) => {
                 if let true = possible_project_commit != app_info.project_git_info.project_commit {
-                    let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteErrorNamed::CheckApiUsage {
+                    let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteErrorNamed::CheckApiUsage {
                         project_commit: app_info.project_git_info.does_not_match_message(),
                         code_occurence: tufa_common::code_occurence!(),
                     };
@@ -558,7 +558,7 @@ pub async fn delete<'a>(
                 }
             },
             Err(e) => {
-                let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteErrorNamed::CannotConvertProjectCommitToStr {
+                let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteErrorNamed::CannotConvertProjectCommitToStr {
                     cannot_convert_project_commit_to_str: format!("{}, error: {e}", app_info.project_git_info.cannot_convert_project_commit_to_str_message()),
                     code_occurence: tufa_common::code_occurence!(),
                 };
@@ -570,7 +570,7 @@ pub async fn delete<'a>(
             }
         },
         None => {
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteErrorNamed::NoProjectCommitHeader {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteErrorNamed::NoProjectCommitHeader {
                 no_project_commit_header: app_info.project_git_info.no_project_commit_header_message(),
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -585,7 +585,7 @@ pub async fn delete<'a>(
     let query_result = match (&query_parameters.name, &query_parameters.color) {
         (None, None) => {
             eprintln!("Unable to delete cats, no parameters");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteErrorNamed::NoParameters {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteErrorNamed::NoParameters {
                 no_parameters: std::string::String::from("no parameters provided"),
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -599,7 +599,7 @@ pub async fn delete<'a>(
         }
         (None, Some(color)) => {
             sqlx::query_as!(
-                tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "DELETE FROM cats WHERE color = $1",
                 color,
             )
@@ -608,7 +608,7 @@ pub async fn delete<'a>(
         }
         (Some(name), None) => {
             sqlx::query_as!(
-                tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "DELETE FROM cats WHERE name = $1",
                 name,
             )
@@ -617,7 +617,7 @@ pub async fn delete<'a>(
         }
         (Some(name), Some(color)) => {
             sqlx::query_as!(
-                tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "DELETE FROM cats WHERE name = $1 AND color = $2",
                 name,
                 color
@@ -633,7 +633,7 @@ pub async fn delete<'a>(
         },
         Err(e) => {
             eprintln!("Unable to delete cats, error: {e:#?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteErrorNamed::PostgresDelete {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteErrorNamed::PostgresDelete {
                 postgres_delete: e,
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -650,14 +650,14 @@ pub async fn delete<'a>(
 #[actix_web::delete("/{id}")]
 pub async fn delete_by_id<'a>(
     request: actix_web::HttpRequest,
-    path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdPathParameters>,
+    path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdPathParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     match request.headers().get(tufa_common::common::git::project_git_info::PROJECT_COMMIT) {
         Some(project_commit_header_value) => match project_commit_header_value.to_str() {
             Ok(possible_project_commit) => {
                 if let true = possible_project_commit != app_info.project_git_info.project_commit {
-                    let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdErrorNamed::CheckApiUsage {
+                    let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdErrorNamed::CheckApiUsage {
                         project_commit: app_info.project_git_info.does_not_match_message(),
                         code_occurence: tufa_common::code_occurence!(),
                     };
@@ -669,7 +669,7 @@ pub async fn delete_by_id<'a>(
                 }
             },
             Err(e) => {
-                let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdErrorNamed::CannotConvertProjectCommitToStr {
+                let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdErrorNamed::CannotConvertProjectCommitToStr {
                     cannot_convert_project_commit_to_str: format!("{}, error: {e}", app_info.project_git_info.cannot_convert_project_commit_to_str_message()),
                     code_occurence: tufa_common::code_occurence!(),
                 };
@@ -681,7 +681,7 @@ pub async fn delete_by_id<'a>(
             }
         },
         None => {
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdErrorNamed::NoProjectCommitHeader {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdErrorNamed::NoProjectCommitHeader {
                 no_project_commit_header: app_info.project_git_info.no_project_commit_header_message(),
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -698,7 +698,7 @@ pub async fn delete_by_id<'a>(
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdErrorNamed::Bigserial { 
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdErrorNamed::Bigserial { 
                 bigserial: e, 
                 code_occurence: tufa_common::code_occurence!()
             };
@@ -713,7 +713,7 @@ pub async fn delete_by_id<'a>(
         }
     };
     match sqlx::query_as!(
-        tufa_common::repositories_types::tufa_server::routes::cats::Cat,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
         "DELETE FROM cats WHERE id = $1",
         *bigserial_id.bigserial()
     )
@@ -722,7 +722,7 @@ pub async fn delete_by_id<'a>(
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
         Err(e) => {
             eprintln!("Unable to delete a cat, error: {e:#?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::cats::DeleteByIdErrorNamed::PostgresDelete {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdErrorNamed::PostgresDelete {
                 postgres_delete: e,
                 code_occurence: tufa_common::code_occurence!(),
             };
