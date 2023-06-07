@@ -452,9 +452,9 @@ pub async fn patch<'a>(
             ));
         }
     };
-    println!("patch name {:?}, color {:?}", cat.name, cat.color);
+    println!("patch cat {cat:#?}");
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
-        cat.id,
+        *cat.get_id(),
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
@@ -472,30 +472,8 @@ pub async fn patch<'a>(
             );
         }
     };
-    let query_result = match (&cat.name, &cat.color) {
-        (None, None) => {
-            eprintln!("Unable to patch a cat, no parameters");
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::NoParameters {
-                no_parameters: std::string::String::from("no parameters provided"),
-                code_occurence: tufa_common::code_occurence!(),
-            };
-            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(app_info.config);
-            return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
-                error.into_serialize_deserialize_version(),
-            ));
-        }
-        (None, Some(color)) => {
-            sqlx::query_as!(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
-                "UPDATE cats SET color = $1 WHERE id = $2",
-                color,
-                *bigserial_id.bigserial()
-            )
-            .fetch_all(&app_info.postgres_pool)
-            .await
-        }
-        (Some(name), None) => {
+    let query_result = match &*cat {
+        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPatch::IdName { id: _id, name } => {
             sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "UPDATE cats SET name = $1 WHERE id = $2",
@@ -504,19 +482,17 @@ pub async fn patch<'a>(
             )
             .fetch_all(&app_info.postgres_pool)
             .await
-        }
-        (Some(_), Some(_)) => {
-            eprintln!("please use put for full object update");
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::PleaseUsePut {
-                please_use_put: std::string::String::from("please_use_put"),
-                code_occurence: tufa_common::code_occurence!(),
-            };
-            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(app_info.config);
-            return actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
-                error.into_serialize_deserialize_version(),
-            ));
-        }
+        },
+        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPatch::IdColor { id: _id, color } => {
+            sqlx::query_as!(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
+                "UPDATE cats SET color = $1 WHERE id = $2",
+                color,
+                *bigserial_id.bigserial()
+            )
+            .fetch_all(&app_info.postgres_pool)
+            .await
+        },
     };
     match query_result {
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
