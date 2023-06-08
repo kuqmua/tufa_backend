@@ -409,10 +409,10 @@ pub async fn put<'a>(
 // curl -X PATCH http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615 -H 'Content-Type: application/json' -d '{"id": 7, "name":"simba"}'
 #[actix_web::patch("/")]
 pub async fn patch<'a>(
-    project_commita: crate::try_build_actix_web_dev_server::ProjectCommit,
     request: actix_web::HttpRequest,
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPatch>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
+    _project_commit: tufa_common::server::extractors::project_commit::ProjectCommit,//todo find out how to create middleware without 
 ) -> impl actix_web::Responder {
     match request.headers().get(tufa_common::common::git::project_git_info::PROJECT_COMMIT) {
         Some(project_commit_header_value) => match project_commit_header_value.to_str() {
