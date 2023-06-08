@@ -1,54 +1,50 @@
-use actix_web::{
-    dev::Payload, error::ErrorUnauthorized, http::header::HeaderValue, web, Error as ActixWebError,
-    FromRequest, HttpRequest,
-};
-use serde::{Deserialize, Serialize};
-use std::future::{ready, Ready};
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+pub struct ProjectCommit {}
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct AuthenticationToken {
-    pub id: usize,
-}
-
-impl FromRequest for AuthenticationToken {
-    type Error = ActixWebError;
-    type Future = Ready<Result<Self, Self::Error>>;
-
-    fn from_request(req: &HttpRequest, _payload: &mut Payload) -> Self::Future {
+impl actix_web::FromRequest for ProjectCommit {
+    type Error = actix_web::Error;
+    type Future = std::future::Ready<Result<Self, Self::Error>>;
+    fn from_request(req: &actix_web::HttpRequest, _payload: &mut actix_web::dev::Payload) -> Self::Future {
         match req
             .headers()
             .get(tufa_common::common::git::project_git_info::PROJECT_COMMIT)
         {
             Some(project_commit_header_value) => match project_commit_header_value.to_str() {
                 Ok(possible_project_commit) => {
-                    println!("possible_project_commit {possible_project_commit}");
-                    println!("PROJECT_GIT_INFO.project_commit {}", tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.project_commit);
-                    if let true = possible_project_commit != tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.project_commit {
-                        println!("1");
-                        return ready(Err(ErrorUnauthorized(
-                        "Authentication token has foreign chars!",
-                        )));
-                    }
-                    else {
-                        println!("1.5");
-                        ready(Ok(AuthenticationToken {
-                                id: 10,
-                        }))
+                    match possible_project_commit == tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.project_commit {
+                        true => std::future::ready(Ok(ProjectCommit {})),
+                        false => std::future::ready(Err(
+                            actix_web::error::ErrorBadRequest(
+                                actix_web::web::Json(
+                                    tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::ProjectCommitCheckErrorNamed::ProjectCommitNotEqual {              
+                                        project_commit_not_equal: "different project commit provided, services must work only with equal project commits", 
+                                        code_occurence: tufa_common::code_occurence!(),
+                                    }.into_serialize_deserialize_version()
+                                )
+                            )
+                        )),
                     }
                 }
-                Err(e) => {
-                    println!("2");
-                    return ready(Err(ErrorUnauthorized(
-                        "Authentication token has foreign chars!",
-                    )));
-                }
+                Err(e) => std::future::ready(Err(actix_web::error::ErrorBadRequest(//todo maybe use some different status code in this case
+                    actix_web::web::Json(
+                            tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::ProjectCommitCheckErrorNamed::ProjectCommitToStrConversion{              
+                                project_commit_to_str_conversion: e, 
+                                code_occurence: tufa_common::code_occurence!(),
+                            }.into_serialize_deserialize_version()
+                        )
+                    )
+                )),
             },
-            None => {
-                println!("3");
-                return ready(Err(ErrorUnauthorized(
-                    "Authentication token has foreign chars!",
-                )));
-            }
+            None => std::future::ready(Err(
+                actix_web::error::ErrorBadRequest(
+                    actix_web::web::Json(
+                        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::ProjectCommitCheckErrorNamed::NoProjectCommitHeader{              
+                            no_project_commit_header: "project_commit header is not provided",
+                            code_occurence: tufa_common::code_occurence!(),
+                        }.into_serialize_deserialize_version()
+                    )
+                )
+            ))
         }
     }
 }
