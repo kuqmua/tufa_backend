@@ -1,3 +1,61 @@
+use actix_web::{
+    dev::Payload, error::ErrorUnauthorized, http::header::HeaderValue, web, Error as ActixWebError,
+    FromRequest, HttpRequest,
+};
+use serde::{Deserialize, Serialize};
+use std::future::{ready, Ready};
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct AuthenticationToken {
+    pub id: usize,
+}
+
+impl FromRequest for AuthenticationToken {
+    type Error = ActixWebError;
+    type Future = Ready<Result<Self, Self::Error>>;
+
+    fn from_request(req: &HttpRequest, _payload: &mut Payload) -> Self::Future {
+        match req
+            .headers()
+            .get(tufa_common::common::git::project_git_info::PROJECT_COMMIT)
+        {
+            Some(project_commit_header_value) => match project_commit_header_value.to_str() {
+                Ok(possible_project_commit) => {
+                    println!("possible_project_commit {possible_project_commit}");
+                    println!("PROJECT_GIT_INFO.project_commit {}", tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.project_commit);
+                    if let true = possible_project_commit != tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.project_commit {
+                        println!("1");
+                        return ready(Err(ErrorUnauthorized(
+                        "Authentication token has foreign chars!",
+                        )));
+                    }
+                    else {
+                        println!("1.5");
+                        ready(Ok(AuthenticationToken {
+                                id: 10,
+                        }))
+                    }
+                }
+                Err(e) => {
+                    println!("2");
+                    return ready(Err(ErrorUnauthorized(
+                        "Authentication token has foreign chars!",
+                    )));
+                }
+            },
+            None => {
+                println!("3");
+                return ready(Err(ErrorUnauthorized(
+                    "Authentication token has foreign chars!",
+                )));
+            }
+        }
+    }
+}
+
+////////////////////////////////////////////
+// use actix_web::error::ErrorUnauthorized;
+
 // There are two steps in middleware processing.
 // 1. Middleware initialization, middleware factory gets called with
 //    next service in chain as parameter.
@@ -204,6 +262,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 }
             };
             //
+            // return ErrorUnauthorized("ErrorUnauthorized");
             use actix_web::dev::Service;
             use futures_util::FutureExt;
             srv.call(req).map(|res| {
@@ -263,6 +322,8 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 .service(crate::routes::api::cats::delete_by_id)
             )
         )
+
+
     })
     .listen(tcp_listener)
     {
