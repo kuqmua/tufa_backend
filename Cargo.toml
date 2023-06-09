@@ -71,6 +71,7 @@ tufa_common = {path = "../tufa_common"}# local dev test without commits version
 #prod
 # enum_extension = {git = "https://github.com/kuqmua/enum_extension"}
 #dev
+check_specific_dependency_version_usage = {path = "../proc_macros/check_specific_dependency_version_usage"}
 compile_time_git_info = {path = "../proc_macros/compile_time_git_info"}
 enum_extension = {path = "../proc_macros/enum_extension"}
 error_occurence = {path = "../proc_macros/error_occurence"}
