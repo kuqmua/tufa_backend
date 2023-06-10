@@ -11,59 +11,59 @@ name = "tufa_server"
 path = "src/main.rs"
 
 [dependencies]
-actix-cors = "0.6.1"
+actix-cors = {version = "0.6.1"}
 actix-session = {version = "0.7.2", features = ["redis-rs-tls-session"]}
-actix-web = "4.0.1"
+actix-web = {version = "4.0.1"}
 actix-web-flash-messages = {version = "0.4.1", features = ["cookies"]}
-actix-web-lab = "0.18.3"
-ansi_term = "0.12"
+actix-web-lab = {version = "0.18.3"}
+ansi_term = {version = "0.12"}
 argon2 = {version = "0.4.0", features = ["std"]}
-base64 = "0.21.0"
-bytes = "1.2.1"
-chrono = "0.4"
-config = "0.13.3"
-convert_case = "0.6.0"
-dotenv = "0.15.0"
-env_logger = "0.10.0"
-futures = "0.3.5"
-hex = "0.4"
+base64 = {version = "0.21.0"}
+bytes = {version = "1.2.1"}
+chrono = {version = "0.4"}
+config = {version = "0.13.3"}
+convert_case = {version = "0.6.0"}
+dotenv = {version = "0.15.0"}
+env_logger = {version = "0.10.0"}
+futures = {version = "0.3.5"}
+hex = {version = "0.4"}
 hmac = {version = "0.12", features = ["std"]}
-html_parser = "0.6.2"
-htmlescape = "0.3"
-http = "0.2.8"
-itertools = "0.10.1"
-mongodb = "2.0.1"
-num_cpus = "1.0"
-quickcheck = "1.0.3"
-quickcheck_macros = "1.0.0"
+html_parser = {version ="0.6.2" }
+htmlescape = {version = "0.3"}
+http = {version = "0.2.8"}
+itertools = {version = "0.10.1"}
+mongodb = {version = "2.0.1"}
+num_cpus = {version = "1.0"}
+quickcheck = {version = "1.0.3"}
+quickcheck_macros = {version = "1.0.0"}
 rand = {version = "0.8", features = ["std_rng"]}
-regex = "1.5"
+regex = {version = "1.5"}
 reqwest = {version = "0.11.0", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls", "multipart", "stream", "cookies"]}
 secrecy = {version = "0.8", features = ["serde"]}
 serde = {version = "1.0", features = ["derive"]}
-serde-aux = "4.0.0"
-serde-xml-rs = "0.6.0"
-serde_derive = "1.0"
-serde_json = "1.0"
-sha2 = "0.10"
+serde-aux = {version = "4.0.0"}
+serde-xml-rs = {version = "0.6.0"}
+serde_derive = {version = "1.0"}
+serde_json = {version = "1.0"}
+sha2 = {version = "0.10"}
 sqlx = {version = "0.5", default-features = false, features = ["postgres", "runtime-actix-rustls", "macros", "uuid", "chrono", "migrate", "offline"]}#"runtime-tokio-native-tls", 
-strum = "0.24.1"
-strum_macros = "0.24.3"
-thiserror = "1.0.30"
-time = "0.3.9"
+strum = {version = "0.24.1"}
+strum_macros = {version = "0.24.3"}
+thiserror = {version = "1.0.30"}
+time = {version = "0.3.9"}
 tokio = {version = "1.7.1", features = ["macros"]}
-toml = "0.5"
+toml = {version = "0.5"}
 tracing = {version = "0.1", features = ["log", "valuable"]}
-tracing-actix-web = "0.7.2"
-tracing-bunyan-formatter = "0.3"
-tracing-log = "0.1"
+tracing-actix-web = {version = "0.7.2"}
+tracing-bunyan-formatter = {version = "0.3"}
+tracing-log = {version = "0.1"}
 tracing-subscriber = {version = "0.3", features = ["registry", "env-filter"]}
-unicode-segmentation = "1"
-urlencoding = "2"
+unicode-segmentation = {version = "1"}
+urlencoding = {version = "2"}
 uuid = {version = "0.8", features = ["v4", "serde"]}
-futures-util = "0.3.28"
+futures-util = {version = "0.3.28"}
 # uuid = {version = "1.2.2", features = ["v4", "serde"]}
-validator = "0.16.0"
+validator = {version = "0.16.0"}
 valuable = {version = "0.1.0", features = ["default", "std", "alloc", "derive", "valuable-derive"]}#maybe not all features needed
 #
 # tufa_common = {git = "https://github.com/kuqmua/tufa_common"}# git version
@@ -102,14 +102,14 @@ user_port_try_from_u16 = {path = "../proc_macros/user_port_try_from_u16"}
 #tutorial from https://blog.logrocket.com/configuration-management-in-rust-web-services/
 
 [dev-dependencies]
-claim = "0.5"
-fake = "~2.3"
-linkify = "0.8"
-reqwest = "0.11"
-serde_json = "1"
-serde_urlencoded = "0.7.1"
+claim = {version = "0.5"}
+fake = {version = "~2.3"}
+linkify = {version = "0.8"}
+reqwest = {version = "0.11"}
+serde_json = {version = "1"}
+serde_urlencoded = {version = "0.7.1"}
 tokio = {version = "1", features = ["rt", "macros"]}
-wiremock = "0.5.2"
+wiremock = {version = "0.5.2"}
 
 # ###########################
 # # custom linker dependencies
