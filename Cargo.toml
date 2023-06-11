@@ -51,7 +51,7 @@ strum = {version = "=0.24.1"}
 strum_macros = {version = "=0.24.3"}
 thiserror = {version = "=1.0.30"}
 time = {version = "=0.3.9"}
-tokio = {version = "1.7.1", features = ["macros"]}
+tokio = {version = "=1.19.2", features = ["macros"]}
 toml = {version = "=0.5"}
 tracing = {version = "=0.1", features = ["log", "valuable"]}
 tracing-actix-web = {version = "=0.7.2"}
