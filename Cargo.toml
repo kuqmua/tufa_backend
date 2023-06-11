@@ -71,7 +71,6 @@ tufa_common = {path = "../tufa_common"}# local dev test without commits version
 #prod
 # enum_extension = {git = "https://github.com/kuqmua/enum_extension"}
 #dev
-check_specific_dependency_version_usage = {path = "../proc_macros/check_specific_dependency_version_usage"}
 compile_time_git_info = {path = "../proc_macros/compile_time_git_info"}
 enum_extension = {path = "../proc_macros/enum_extension"}
 error_occurence = {path = "../proc_macros/error_occurence"}
@@ -87,7 +86,7 @@ user_port_try_from_u16 = {path = "../proc_macros/user_port_try_from_u16"}
 # quick-xml = "0.18.1"
 # log = "0.4"
 # simplelog = "0.9"
-# tokio = {version = "0.2.0", features = ["macros"]}
+# tokio = {version = "=1.19.2", features = ["macros"]}
 # tokio-compat = "0.1.6"
 # crossbeam = "0.8.0"
 # async-std = "1.9.0"#remove later its only for example
@@ -108,7 +107,7 @@ linkify = {version = "=0.8"}
 reqwest = {version = "=0.11"}
 serde_json = {version = "=1"}
 serde_urlencoded = {version = "=0.7.1"}
-tokio = {version = "=1", features = ["rt", "macros"]}
+tokio = {version = "=1.19.2", features = ["rt", "macros"]}
 wiremock = {version = "=0.5.2"}
 
 # ###########################

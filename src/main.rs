@@ -21,8 +21,6 @@ pub mod try_build_actix_web_dev_server;
 
 pub mod dev;
 
-check_specific_dependency_version_usage::check_specific_dependency_version_usage!(tufa_server);
-
 fn main() {
     crate::entry::entry(crate::global_variables::runtime::config::CONFIG.get_or_init(|| tufa_common::repositories_types::tufa_server::config::config_struct::Config::try_from_config_unchecked(
         tufa_common::repositories_types::tufa_server::config::config_struct::ConfigUnchecked::new()
