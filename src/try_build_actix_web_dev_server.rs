@@ -153,66 +153,66 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 }),
         )
         // .wrap(SayHiMiddleware) 
-        .wrap_fn(|req, srv| {
-            println!("Hi from start. You requested: {}", req.path());
-            //
-            match req.request().headers().get(tufa_common::common::git::project_git_info::PROJECT_COMMIT) {
-                Some(project_commit_header_value) => match project_commit_header_value.to_str() {
-                    Ok(possible_project_commit) => {
-                        println!("possible_project_commit {possible_project_commit}");
-                        println!("PROJECT_GIT_INFO.project_commit {}", tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.project_commit);
-                        if let true = possible_project_commit != tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.project_commit {
-                            println!("1");
-                            // let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::CheckApiUsage {
-                            //     project_commit: app_info.project_git_info.does_not_match_message(),
-                            //     code_occurence: tufa_common::code_occurence!(),
-                            // };
-                            // use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-                            // error.error_log(app_info.config);
-                            // return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
-                            //     error.into_serialize_deserialize_version()
-                            // ));
-                        }
-                        else {
-                            println!("1.5");
-                        }
-                    },
-                    Err(e) => {
-                        println!("2");
-                        // let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::CannotConvertProjectCommitToStr {
-                        //     cannot_convert_project_commit_to_str: format!("{}, error: {e}", app_info.project_git_info.cannot_convert_project_commit_to_str_message()),
-                        //     code_occurence: tufa_common::code_occurence!(),
-                        // };
-                        // use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-                        // error.error_log(app_info.config);
-                        // return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
-                        //     error.into_serialize_deserialize_version()
-                        // ));
-                    }
-                },
-                None => {
-                    println!("3");
-                    // let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::NoProjectCommitHeader {
-                    //     no_project_commit_header: app_info.project_git_info.no_project_commit_header_message(),
-                    //     code_occurence: tufa_common::code_occurence!(),
-                    // };
-                    // use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-                    // error.error_log(app_info.config);
-                    // return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
-                    //     error.into_serialize_deserialize_version()
-                    // ));
-                }
-            };
-            //
-            // return ErrorUnauthorized("ErrorUnauthorized");
-            use actix_web::dev::Service;
-            use futures_util::FutureExt;
-            srv.call(req).map(|res| {
-                // println!("Hi from response");
-                res
-                // actix_web::HttpResponse::BadRequest().finish()
-            })
-        })
+        // .wrap_fn(|req, srv| {
+        //     println!("Hi from start. You requested: {}", req.path());
+        //     //
+        //     match req.request().headers().get(tufa_common::common::git::project_git_info::PROJECT_COMMIT) {
+        //         Some(project_commit_header_value) => match project_commit_header_value.to_str() {
+        //             Ok(possible_project_commit) => {
+        //                 println!("possible_project_commit {possible_project_commit}");
+        //                 println!("PROJECT_GIT_INFO.project_commit {}", tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.project_commit);
+        //                 if let true = possible_project_commit != tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.project_commit {
+        //                     println!("1");
+        //                     // let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::CheckApiUsage {
+        //                     //     project_commit: app_info.project_git_info.does_not_match_message(),
+        //                     //     code_occurence: tufa_common::code_occurence!(),
+        //                     // };
+        //                     // use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+        //                     // error.error_log(app_info.config);
+        //                     // return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
+        //                     //     error.into_serialize_deserialize_version()
+        //                     // ));
+        //                 }
+        //                 else {
+        //                     println!("1.5");
+        //                 }
+        //             },
+        //             Err(e) => {
+        //                 println!("2");
+        //                 // let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::CannotConvertProjectCommitToStr {
+        //                 //     cannot_convert_project_commit_to_str: format!("{}, error: {e}", app_info.project_git_info.cannot_convert_project_commit_to_str_message()),
+        //                 //     code_occurence: tufa_common::code_occurence!(),
+        //                 // };
+        //                 // use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+        //                 // error.error_log(app_info.config);
+        //                 // return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
+        //                 //     error.into_serialize_deserialize_version()
+        //                 // ));
+        //             }
+        //         },
+        //         None => {
+        //             println!("3");
+        //             // let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::NoProjectCommitHeader {
+        //             //     no_project_commit_header: app_info.project_git_info.no_project_commit_header_message(),
+        //             //     code_occurence: tufa_common::code_occurence!(),
+        //             // };
+        //             // use tufa_common::common::error_logs_logic::error_log::ErrorLog;
+        //             // error.error_log(app_info.config);
+        //             // return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
+        //             //     error.into_serialize_deserialize_version()
+        //             // ));
+        //         }
+        //     };
+        //     //
+        //     // return ErrorUnauthorized("ErrorUnauthorized");
+        //     use actix_web::dev::Service;
+        //     use futures_util::FutureExt;
+        //     srv.call(req).map(|res| {
+        //         // println!("Hi from response");
+        //         res
+        //         // actix_web::HttpResponse::BadRequest().finish()
+        //     })
+        // })
         //todo concrete host \ domain
         //
         .app_data(actix_web::web::Data::new({
