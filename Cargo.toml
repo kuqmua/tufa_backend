@@ -33,7 +33,7 @@ htmlescape = {version = "=0.3"}
 http = {version = "=0.2.8"}
 itertools = {version = "=0.10.1"}
 mongodb = {version = "=2.0.1"}
-num_cpus = {version = "1.0"}
+num_cpus = {version = "=1.15.0"}
 quickcheck = {version = "=1.0.3"}
 quickcheck_macros = {version = "=1.0.0"}
 rand = {version = "=0.8", features = ["std_rng"]}
