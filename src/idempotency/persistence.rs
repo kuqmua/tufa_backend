@@ -183,7 +183,7 @@ pub async fn try_processing<'a>(
             },
             Ok(option_http_response) => match option_http_response {
                 None => Err(tufa_common::repositories_types::tufa_server::idempotency::persistence::TryProcessingErrorNamed::SavedResponseIsNone {
-                    message: "We expected a saved response, we didn't find it".to_string(),
+                    message: "We expected a saved response, we didn't find it",
                     code_occurence: tufa_common::code_occurence!(),
                 }),
                 Some(saved_response) => Ok(tufa_common::repositories_types::tufa_server::idempotency::NextAction::ReturnSavedResponse(saved_response)),

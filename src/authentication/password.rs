@@ -63,7 +63,7 @@ pub async fn validate_credentials<'a>(
             }),
             Ok(_) => match user_id {
                 None => Err(tufa_common::repositories_types::tufa_server::authentication::password::ValidateCredentialsErrorNamed::UnknownUsername {
-                    message: "Unknown username".to_string(),
+                    message: "Unknown username",
                     code_occurence: tufa_common::code_occurence!()
                 }),
                 Some(uuid) => Ok(uuid),

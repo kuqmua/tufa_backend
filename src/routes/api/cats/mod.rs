@@ -328,7 +328,7 @@ pub async fn delete<'a>(
             Ok(possible_project_commit) => {
                 if let true = possible_project_commit != app_info.project_git_info.project_commit {
                     let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteErrorNamed::CheckApiUsage {
-                        project_commit: app_info.project_git_info.does_not_match_message().to_string(),
+                        project_commit: app_info.project_git_info.does_not_match_message(),
                         code_occurence: tufa_common::code_occurence!(),
                     };
                     use tufa_common::common::error_logs_logic::error_log::ErrorLog;
@@ -352,7 +352,7 @@ pub async fn delete<'a>(
         },
         None => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteErrorNamed::NoProjectCommitHeader {
-                no_project_commit_header: app_info.project_git_info.no_project_commit_header_message().to_string(),
+                no_project_commit_header: app_info.project_git_info.no_project_commit_header_message(),
                 code_occurence: tufa_common::code_occurence!(),
             };
             use tufa_common::common::error_logs_logic::error_log::ErrorLog;
