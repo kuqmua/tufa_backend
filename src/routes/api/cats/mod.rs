@@ -132,14 +132,11 @@ pub async fn get_by_id<'a>(
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdErrorNamed::Bigserial { 
+            return tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdErrorNamed::Bigserial { 
                 bigserial: e, 
                 code_occurence: tufa_common::code_occurence!()
-            };
-            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(app_info.config);
-            return actix_web::HttpResponse::BadRequest()
-            .json(actix_web::web::Json(error.into_serialize_deserialize_version()));
+            });
         }
     };
     match sqlx::query_as!(
@@ -156,15 +153,12 @@ pub async fn get_by_id<'a>(
             actix_web::HttpResponse::Ok().json(actix_web::web::Json(cat))
         }
         Err(e) => {
-            // tracing::error!("Unable to query cats table, error: {e:?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdErrorNamed::PostgresSelect { 
-                postgres_select: e, 
-                code_occurence: tufa_common::code_occurence!() 
-            };
-            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(app_info.config);
-            actix_web::HttpResponse::InternalServerError()
-            .json(actix_web::web::Json(error.into_serialize_deserialize_version()))
+            return tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdErrorNamed::PostgresSelect { 
+                    postgres_select: e, 
+                    code_occurence: tufa_common::code_occurence!() 
+                }
+            );
         }
     }
 }
