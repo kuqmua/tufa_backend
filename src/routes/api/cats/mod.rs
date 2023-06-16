@@ -106,15 +106,12 @@ pub async fn get<'a>(
             //     _ => println!("")
             // }
             // tracing::error!("Unable to query cats table, error: {e:?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetErrorNamed::PostgresSelect {
-                postgres_select: e,
-                code_occurence: tufa_common::code_occurence!(),
-            };
-            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(app_info.config);
-            actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
-                error.into_serialize_deserialize_version()
-            ))
+            tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::GetErrorNamed::PostgresSelect {
+                    postgres_select: e,
+                    code_occurence: tufa_common::code_occurence!(),
+                }
+            )
         }
     }
 }
