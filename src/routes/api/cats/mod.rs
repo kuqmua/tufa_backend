@@ -110,7 +110,8 @@ pub async fn get<'a>(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::GetErrorNamed::PostgresSelect {
                     postgres_select: e,
                     code_occurence: tufa_common::code_occurence!(),
-                }
+                },
+                app_info.config
             )
         }
     }
@@ -131,9 +132,11 @@ pub async fn get_by_id<'a>(
         Err(e) => {
             return tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdErrorNamed::Bigserial { 
-                bigserial: e, 
-                code_occurence: tufa_common::code_occurence!()
-            });
+                    bigserial: e, 
+                    code_occurence: tufa_common::code_occurence!()
+                },
+                app_info.config
+            );
         }
     };
     match sqlx::query_as!(
@@ -154,7 +157,8 @@ pub async fn get_by_id<'a>(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdErrorNamed::PostgresSelect { 
                     postgres_select: e, 
                     code_occurence: tufa_common::code_occurence!() 
-                }
+                },
+                app_info.config
             );
         }
     }
@@ -183,7 +187,8 @@ pub async fn post<'a>(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::PostErrorNamed::PostgresInsert {
                     postgres_insert: e,
                     code_occurence: tufa_common::code_occurence!(),
-                }
+                },
+                app_info.config
             )
         }
     }
