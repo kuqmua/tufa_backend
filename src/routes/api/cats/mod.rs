@@ -6,6 +6,7 @@
 //todo - maybe add link to function API usage and name of function to use instead and send it 
 //todo - wrap route logic to function what return Result. after match result and return actix_web::HttpResponse
 //todo - add limit everywhere possible
+//// request: actix_web::HttpRequest,
 //todo find out how to create middleware without extractors
 // curl -X GET http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615&limit=87 - Some(87)
 //or
@@ -206,14 +207,13 @@ pub async fn put<'a>(
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(cat.id) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PutErrorNamed::Bigserial { 
-                bigserial: e, 
-                code_occurence: tufa_common::code_occurence!()
-            };
-            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(app_info.config);
-            return actix_web::HttpResponse::InternalServerError()
-            .json(actix_web::web::Json(error.into_serialize_deserialize_version()));
+            return tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::PutErrorNamed::Bigserial { 
+                    bigserial: e, 
+                    code_occurence: tufa_common::code_occurence!()
+                },
+                app_info.config
+            );
         }
     };
     match sqlx::query_as!(
@@ -228,16 +228,13 @@ pub async fn put<'a>(
     {
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
         Err(e) => {
-            eprintln!("Unable to put a cat, error: {e:#?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PutErrorNamed::PostgresInsertOrUpdate {
-                postgres_insert_or_update: e,
-                code_occurence: tufa_common::code_occurence!(),
-            };
-            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(app_info.config);
-            actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
-                error.into_serialize_deserialize_version(),
-            ))
+            tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::PutErrorNamed::PostgresInsertOrUpdate {
+                    postgres_insert_or_update: e,
+                    code_occurence: tufa_common::code_occurence!(),
+                },
+                app_info.config
+            )
         }
     }
 }
@@ -255,17 +252,12 @@ pub async fn patch<'a>(
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::Bigserial { 
-                bigserial: e, 
-                code_occurence: tufa_common::code_occurence!()
-            };
-            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(app_info.config);
-            return actix_web::HttpResponse::InternalServerError()
-            .json(
-                actix_web::web::Json(
-                    error.into_serialize_deserialize_version()
-                )
+            return tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::Bigserial { 
+                    bigserial: e, 
+                    code_occurence: tufa_common::code_occurence!()
+                },
+                app_info.config
             );
         }
     };
@@ -294,16 +286,13 @@ pub async fn patch<'a>(
     match query_result {
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
         Err(e) => {
-            eprintln!("Unable to patch a cat, error: {e:#?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::PostgresUpdate {
-                postgres_update: e,
-                code_occurence: tufa_common::code_occurence!(),
-            };
-            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(app_info.config);
-            actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
-                error.into_serialize_deserialize_version(),
-            ))
+            tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::PostgresUpdate {
+                    postgres_update: e,
+                    code_occurence: tufa_common::code_occurence!(),
+                },
+                app_info.config
+            )
         }
     }
 }
@@ -312,25 +301,19 @@ pub async fn patch<'a>(
 #[actix_web::delete("/")]
 pub async fn delete<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
-    // request: actix_web::HttpRequest,
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteQueryParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     println!("delete name {:?}, color {:?}", query_parameters.name, query_parameters.color);
     let query_result = match (&query_parameters.name, &query_parameters.color) {
         (None, None) => {
-            eprintln!("Unable to delete cats, no parameters");
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteErrorNamed::NoParameters {
-                no_parameters: std::string::String::from("no parameters provided"),
-                code_occurence: tufa_common::code_occurence!(),
-            };
-            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(app_info.config);
-            let json = actix_web::web::Json(
-                error.into_serialize_deserialize_version(),
+            return tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteErrorNamed::NoParameters {
+                    no_parameters: std::string::String::from("no parameters provided"),
+                    code_occurence: tufa_common::code_occurence!(),
+                },
+                app_info.config
             );
-            println!("{json}");
-            return actix_web::HttpResponse::InternalServerError().json(json);
         }
         (None, Some(color)) => {
             sqlx::query_as!(
@@ -367,16 +350,13 @@ pub async fn delete<'a>(
             actix_web::HttpResponse::Ok().finish()
         },
         Err(e) => {
-            eprintln!("Unable to delete cats, error: {e:#?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteErrorNamed::PostgresDelete {
-                postgres_delete: e,
-                code_occurence: tufa_common::code_occurence!(),
-            };
-            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(app_info.config);
-            actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
-                error.into_serialize_deserialize_version(),
-            ))
+            tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteErrorNamed::PostgresDelete {
+                    postgres_delete: e,
+                    code_occurence: tufa_common::code_occurence!(),
+                },
+                app_info.config
+            )
         }
     }
 }
@@ -394,17 +374,12 @@ pub async fn delete_by_id<'a>(
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdErrorNamed::Bigserial { 
-                bigserial: e, 
-                code_occurence: tufa_common::code_occurence!()
-            };
-            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(app_info.config);
-            return actix_web::HttpResponse::InternalServerError()
-            .json(
-                actix_web::web::Json(
-                    error.into_serialize_deserialize_version()
-                )
+            return tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdErrorNamed::Bigserial { 
+                    bigserial: e, 
+                    code_occurence: tufa_common::code_occurence!()
+                },
+                app_info.config
             );
         }
     };
@@ -417,16 +392,13 @@ pub async fn delete_by_id<'a>(
     .await {
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
         Err(e) => {
-            eprintln!("Unable to delete a cat, error: {e:#?}");
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdErrorNamed::PostgresDelete {
-                postgres_delete: e,
-                code_occurence: tufa_common::code_occurence!(),
-            };
-            use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-            error.error_log(app_info.config);
-            actix_web::HttpResponse::InternalServerError().json(actix_web::web::Json(
-                error.into_serialize_deserialize_version(),
-            ))
+            tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdErrorNamed::PostgresDelete {
+                    postgres_delete: e,
+                    code_occurence: tufa_common::code_occurence!(),
+                },
+                app_info.config
+            )
         }
     }
 }
