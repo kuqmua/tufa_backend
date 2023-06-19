@@ -77,13 +77,17 @@ pub async fn get<'a>(
             println!("get casts:\n{vec_cats:#?}");
             actix_web::HttpResponse::Ok().json(actix_web::web::Json(vec_cats))
         }
-        Err(e) => tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
-            tufa_common::repositories_types::tufa_server::routes::api::cats::GetErrorNamed::PostgresSelect {
+        Err(e) => {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetErrorNamed::PostgresSelect {
                 postgres_select: e.into(),
                 code_occurence: tufa_common::code_occurence!(),
-            },
-            app_info.config
-        )
+            };
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error, 
+                &app_info.config
+            );
+            error.into()
+        }
     }
 }
 
@@ -100,13 +104,15 @@ pub async fn get_by_id<'a>(
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            return tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdErrorNamed::Bigserial { 
-                    bigserial: e, 
-                    code_occurence: tufa_common::code_occurence!()
-                },
-                app_info.config
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdErrorNamed::Bigserial { 
+                bigserial: e, 
+                code_occurence: tufa_common::code_occurence!()
+            };
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error, 
+                &app_info.config
             );
+            return error.into();
         }
     };
     match sqlx::query_as!(
@@ -122,13 +128,17 @@ pub async fn get_by_id<'a>(
             println!("selected cats:\n{cat:#?}");
             actix_web::HttpResponse::Ok().json(actix_web::web::Json(cat))
         }
-        Err(e) => tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
-            tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdErrorNamed::PostgresSelect { 
+        Err(e) => {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdErrorNamed::PostgresSelect { 
                 postgres_select: e.into(), 
                 code_occurence: tufa_common::code_occurence!() 
-            },
-            app_info.config
-        )
+            };
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error, 
+                &app_info.config
+            );
+            error.into()
+        }
     }
 }
 
@@ -151,13 +161,15 @@ pub async fn post<'a>(
     {
         Ok(_) => actix_web::HttpResponse::Created().finish(),
         Err(e) => {
-            tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::PostErrorNamed::PostgresInsert {
-                    postgres_insert: e.into(),
-                    code_occurence: tufa_common::code_occurence!(),
-                },
-                app_info.config
-            )
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PostErrorNamed::PostgresInsert {
+                postgres_insert: e.into(),
+                code_occurence: tufa_common::code_occurence!(),
+            };
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error, 
+                &app_info.config
+            );
+            error.into()
         }
     }
 }
@@ -174,13 +186,15 @@ pub async fn put<'a>(
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(cat.id) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            return tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::PutErrorNamed::Bigserial { 
-                    bigserial: e, 
-                    code_occurence: tufa_common::code_occurence!()
-                },
-                app_info.config
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PutErrorNamed::Bigserial { 
+                bigserial: e, 
+                code_occurence: tufa_common::code_occurence!()
+            };
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error, 
+                &app_info.config
             );
+            return error.into();
         }
     };
     match sqlx::query_as!(
@@ -194,13 +208,17 @@ pub async fn put<'a>(
     .await
     {
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
-        Err(e) => tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
-            tufa_common::repositories_types::tufa_server::routes::api::cats::PutErrorNamed::PostgresInsertOrUpdate {
+        Err(e) => {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PutErrorNamed::PostgresInsertOrUpdate {
                 postgres_insert_or_update: e.into(),
                 code_occurence: tufa_common::code_occurence!(),
-            },
-            app_info.config
-        )
+            };
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error, 
+                &app_info.config
+            );
+            error.into()
+        }
     }
 }
 
@@ -217,13 +235,15 @@ pub async fn patch<'a>(
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            return tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::Bigserial { 
-                    bigserial: e, 
-                    code_occurence: tufa_common::code_occurence!()
-                },
-                app_info.config
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::Bigserial { 
+                bigserial: e, 
+                code_occurence: tufa_common::code_occurence!()
+            };
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error, 
+                &app_info.config
             );
+            return error.into()
         }
     };
     let query_result = match &*cat {
@@ -250,13 +270,17 @@ pub async fn patch<'a>(
     };
     match query_result {
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
-        Err(e) => tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
-            tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::PostgresUpdate {
+        Err(e) => {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::PostgresUpdate {
                 postgres_update: e.into(),
                 code_occurence: tufa_common::code_occurence!(),
-            },
-            app_info.config
-        )
+            };
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error, 
+                &app_info.config
+            );
+            error.into()
+        }
     }
 }
 
@@ -270,13 +294,15 @@ pub async fn delete<'a>(
     println!("delete name {:?}, color {:?}", query_parameters.name, query_parameters.color);
     let query_result = match (&query_parameters.name, &query_parameters.color) {
         (None, None) => {
-            return tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteErrorNamed::NoParameters {
-                    no_parameters: std::string::String::from("no parameters provided"),
-                    code_occurence: tufa_common::code_occurence!(),
-                },
-                app_info.config
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteErrorNamed::NoParameters {
+                no_parameters: std::string::String::from("no parameters provided"),
+                code_occurence: tufa_common::code_occurence!(),
+            };
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error, 
+                &app_info.config
             );
+            return error.into()
         }
         (None, Some(color)) => {
             sqlx::query_as!(
@@ -312,13 +338,17 @@ pub async fn delete<'a>(
             println!("ok delete");
             actix_web::HttpResponse::Ok().finish()
         },
-        Err(e) => tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
-            tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteErrorNamed::PostgresDelete {
+        Err(e) => {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteErrorNamed::PostgresDelete {
                 postgres_delete: e.into(),
                 code_occurence: tufa_common::code_occurence!(),
-            },
-            app_info.config
-        )
+            };
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error, 
+                &app_info.config
+            );
+            error.into()
+        }
     }
 }
 
@@ -335,13 +365,15 @@ pub async fn delete_by_id<'a>(
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            return tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdErrorNamed::Bigserial { 
-                    bigserial: e, 
-                    code_occurence: tufa_common::code_occurence!()
-                },
-                app_info.config
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdErrorNamed::Bigserial { 
+                bigserial: e, 
+                code_occurence: tufa_common::code_occurence!()
+            };
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error, 
+                &app_info.config
             );
+            return error.into();
         }
     };
     match sqlx::query_as!(
@@ -352,12 +384,16 @@ pub async fn delete_by_id<'a>(
     .fetch_all(&app_info.postgres_pool)
     .await {
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
-        Err(e) => tufa_common::common::error_logs_logic::into_actix_web_http_response::IntoActixWebHttpResponse::into_actix_web_http_response(
-            tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdErrorNamed::PostgresDelete {
+        Err(e) => {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdErrorNamed::PostgresDelete {
                 postgres_delete: e.into(),
                 code_occurence: tufa_common::code_occurence!(),
-            },
-            app_info.config
-        )
+            };
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error, 
+                &app_info.config
+            );
+            error.into()
+        }
     }
 }
