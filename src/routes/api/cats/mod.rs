@@ -78,10 +78,7 @@ pub async fn get<'a>(
             actix_web::HttpResponse::Ok().json(actix_web::web::Json(vec_cats))
         }
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetErrorNamed::PostgresSelect {
-                postgres_select: e.into(),
-                code_occurence: tufa_common::code_occurence!(),
-            };
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetErrorNamed::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error, 
                 &app_info.config
