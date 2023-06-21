@@ -16,7 +16,7 @@
 #[actix_web::get("/")]
 pub async fn get<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
-    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::GetQueryParameters>,
+    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::get::GetQueryParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     println!(
@@ -78,7 +78,7 @@ pub async fn get<'a>(
             actix_web::HttpResponse::Ok().json(actix_web::web::Json(vec_cats))
         }
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetErrorNamed::from(e);
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get::route::GetErrorNamed::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error, 
                 &app_info.config
@@ -92,7 +92,7 @@ pub async fn get<'a>(
 #[actix_web::get("/{id}")]
 pub async fn get_by_id<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
-    path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdPathParameters>,
+    path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::GetByIdPathParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     println!("get_by_id path_parameters id {}", path_parameters.id);
@@ -101,7 +101,7 @@ pub async fn get_by_id<'a>(
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdErrorNamed::Bigserial { 
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::route::GetByIdErrorNamed::Bigserial { 
                 bigserial: e, 
                 code_occurence: tufa_common::code_occurence!()
             };
@@ -126,7 +126,7 @@ pub async fn get_by_id<'a>(
             actix_web::HttpResponse::Ok().json(actix_web::web::Json(cat))
         }
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdErrorNamed::from(e);
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::route::GetByIdErrorNamed::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error, 
                 &app_info.config
@@ -140,7 +140,7 @@ pub async fn get_by_id<'a>(
 #[actix_web::post("/")]
 pub async fn post<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
-    cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPost>,
+    cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::post::CatToPost>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     println!("post name {}, color {}", cat.name, cat.color);
@@ -155,7 +155,7 @@ pub async fn post<'a>(
     {
         Ok(_) => actix_web::HttpResponse::Created().finish(),
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PostErrorNamed::from(e);
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::post::route::PostErrorNamed::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error, 
                 &app_info.config
@@ -177,7 +177,7 @@ pub async fn put<'a>(
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(cat.id) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PutErrorNamed::Bigserial { 
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::put::route::PutErrorNamed::Bigserial { 
                 bigserial: e, 
                 code_occurence: tufa_common::code_occurence!()
             };
@@ -200,7 +200,7 @@ pub async fn put<'a>(
     {
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PutErrorNamed::from(e);
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::put::route::PutErrorNamed::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error, 
                 &app_info.config
@@ -214,7 +214,7 @@ pub async fn put<'a>(
 #[actix_web::patch("/")]
 pub async fn patch<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
-    cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPatch>,
+    cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::patch::CatToPatch>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     println!("patch cat {cat:#?}");
@@ -223,7 +223,7 @@ pub async fn patch<'a>(
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::Bigserial { 
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::patch::route::PatchErrorNamed::Bigserial { 
                 bigserial: e, 
                 code_occurence: tufa_common::code_occurence!()
             };
@@ -235,7 +235,7 @@ pub async fn patch<'a>(
         }
     };
     let query_result = match &*cat {
-        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPatch::IdName { id: _id, name } => {
+        tufa_common::repositories_types::tufa_server::routes::api::cats::patch::CatToPatch::IdName { id: _id, name } => {
             sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "UPDATE cats SET name = $1 WHERE id = $2",
@@ -245,7 +245,7 @@ pub async fn patch<'a>(
             .fetch_all(&app_info.postgres_pool)
             .await
         },
-        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPatch::IdColor { id: _id, color } => {
+        tufa_common::repositories_types::tufa_server::routes::api::cats::patch::CatToPatch::IdColor { id: _id, color } => {
             sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "UPDATE cats SET color = $1 WHERE id = $2",
@@ -259,7 +259,7 @@ pub async fn patch<'a>(
     match query_result {
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::from(e);
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::patch::route::PatchErrorNamed::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error, 
                 &app_info.config
@@ -273,13 +273,13 @@ pub async fn patch<'a>(
 #[actix_web::delete("/")]
 pub async fn delete<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
-    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteQueryParameters>,
+    query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::delete::DeleteQueryParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     println!("delete name {:?}, color {:?}", query_parameters.name, query_parameters.color);
     let query_result = match (&query_parameters.name, &query_parameters.color) {
         (None, None) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteErrorNamed::NoParameters {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete::route::DeleteErrorNamed::NoParameters {
                 no_parameters: std::string::String::from("no parameters provided"),
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -324,7 +324,7 @@ pub async fn delete<'a>(
             actix_web::HttpResponse::Ok().finish()
         },
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteErrorNamed::from(e);
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete::route::DeleteErrorNamed::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error, 
                 &app_info.config
@@ -338,7 +338,7 @@ pub async fn delete<'a>(
 #[actix_web::delete("/{id}")]
 pub async fn delete_by_id<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
-    path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdPathParameters>,
+    path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::DeleteByIdPathParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
 ) -> impl actix_web::Responder {
     println!("delete_by_id {}", path_parameters.id);
@@ -347,7 +347,7 @@ pub async fn delete_by_id<'a>(
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdErrorNamed::Bigserial { 
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::route::DeleteByIdErrorNamed::Bigserial { 
                 bigserial: e, 
                 code_occurence: tufa_common::code_occurence!()
             };
@@ -367,7 +367,7 @@ pub async fn delete_by_id<'a>(
     .await {
         Ok(_) => actix_web::HttpResponse::Ok().finish(),
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdErrorNamed::from(e);
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::route::DeleteByIdErrorNamed::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error, 
                 &app_info.config
