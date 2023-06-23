@@ -73,9 +73,8 @@ pub async fn get<'a>(
     };
     match query_result {
         Ok(vec_cats) => {
-            // tracing::info!("selected casts:\n{vec_cats:#?}");
-            println!("get casts:\n{vec_cats:#?}");
-            actix_web::HttpResponse::Ok().json(actix_web::web::Json(vec_cats))
+            println!("get cats:\n{vec_cats:#?}");
+            actix_web::HttpResponse::Ok().json(actix_web::web::Json(tufa_common::repositories_types::tufa_server::routes::api::cats::get::route::GetHttpResponse::Cats(vec_cats)))
         }
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get::route::GetErrorNamed::from(e);
@@ -83,7 +82,7 @@ pub async fn get<'a>(
                 &error, 
                 &app_info.config
             );
-            error.into()
+            tufa_common::repositories_types::tufa_server::routes::api::cats::get::route::GetHttpResponse::from(error).into()
         }
     }
 }
