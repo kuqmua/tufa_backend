@@ -18,7 +18,7 @@ pub async fn get<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::get::GetQueryParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
-) -> impl actix_web::Responder {
+) -> actix_web::HttpResponse {
     println!(
         "get query_parameters limit {:?}, name {:?} color {:?}",
         query_parameters.limit, query_parameters.name, query_parameters.color
@@ -72,10 +72,7 @@ pub async fn get<'a>(
         }
     };
     match query_result {
-        Ok(vec_cats) => {
-            println!("get cats:\n{vec_cats:#?}");
-            actix_web::HttpResponse::Ok().json(actix_web::web::Json(tufa_common::repositories_types::tufa_server::routes::api::cats::get::route::GetHttpResponse::Cats(vec_cats)))
-        }
+        Ok(vec_cats) => tufa_common::repositories_types::tufa_server::routes::api::cats::get::route::GetHttpResponse::Cats(vec_cats).into(),
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get::route::GetErrorNamed::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
