@@ -8,11 +8,6 @@
 //todo - add limit everywhere possible
 //// request: actix_web::HttpRequest,
 //todo find out how to create middleware without extractors
-// curl -X GET http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615&limit=87 - Some(87)
-//or
-// curl -X GET http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615 - None
-//todo - change curl example - not always works with query params
-// http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615&name=leo&color=red
 #[actix_web::get("/")]
 pub async fn get<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
@@ -84,13 +79,12 @@ pub async fn get<'a>(
     }
 }
 
-// curl -X GET http://127.0.0.1:8080/api/cats/7?project_commit=18446744073709551615
 #[actix_web::get("/{id}")]
 pub async fn get_by_id<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
     path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::GetByIdPathParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
-) -> impl actix_web::Responder {
+) -> actix_web::HttpResponse {
     println!("get_by_id path_parameters id {}", path_parameters.id);
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
         path_parameters.id,
@@ -105,7 +99,7 @@ pub async fn get_by_id<'a>(
                 &error, 
                 &app_info.config
             );
-            return error.into();
+            return tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::route::GetByIdHttpResponse::from(error).into();
         }
     };
     match sqlx::query_as!(
@@ -117,9 +111,8 @@ pub async fn get_by_id<'a>(
     .await
     {
         Ok(cat) => {
-            // tracing::info!("selected casts:\n{vec_cats:#?}");
             println!("selected cats:\n{cat:#?}");
-            actix_web::HttpResponse::Ok().json(actix_web::web::Json(cat))
+            tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::route::GetByIdHttpResponse::Cat(cat).into()
         }
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::route::GetByIdErrorNamed::from(e);
@@ -127,18 +120,17 @@ pub async fn get_by_id<'a>(
                 &error, 
                 &app_info.config
             );
-            error.into()
+            tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::route::GetByIdHttpResponse::from(error).into()
         }
     }
 }
 
-// curl -X POST http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615 -H 'Content-Type: application/json' -d '{"name":"simba", "color":"black"}'
 #[actix_web::post("/")]
 pub async fn post<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::post::CatToPost>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
-) -> impl actix_web::Responder {
+) -> actix_web::HttpResponse {
     println!("post name {}, color {}", cat.name, cat.color);
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
@@ -162,13 +154,12 @@ pub async fn post<'a>(
 }
 
 //todo - its the case if all columns except id are not null. for nullable columns must be different logic
-// curl -X PUT http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615 -H 'Content-Type: application/json' -d '{"id": 7, "name":"simba", "color":"black"}'
 #[actix_web::put("/")]
 pub async fn put<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::Cat>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
-) -> impl actix_web::Responder {
+) -> actix_web::HttpResponse {
     println!("put id {} name {}, color {}", cat.id, cat.name, cat.color);
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(cat.id) {
         Ok(bigserial_id) => bigserial_id,
@@ -206,13 +197,12 @@ pub async fn put<'a>(
     }
 }
 
-// curl -X PATCH http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615 -H 'Content-Type: application/json' -d '{"id": 7, "name":"simba"}'
 #[actix_web::patch("/")]
 pub async fn patch<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::patch::CatToPatch>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
-) -> impl actix_web::Responder {
+) -> actix_web::HttpResponse {
     println!("patch cat {cat:#?}");
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
         *cat.get_id(),
@@ -265,13 +255,12 @@ pub async fn patch<'a>(
     }
 }
 
-// curl -X DELETE http://127.0.0.1:8080/api/cats/?project_commit=18446744073709551615&color=white
 #[actix_web::delete("/")]
 pub async fn delete<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::delete::DeleteQueryParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
-) -> impl actix_web::Responder {
+) -> actix_web::HttpResponse {
     println!("delete name {:?}, color {:?}", query_parameters.name, query_parameters.color);
     let query_result = match (&query_parameters.name, &query_parameters.color) {
         (None, None) => {
@@ -330,13 +319,12 @@ pub async fn delete<'a>(
     }
 }
 
-// curl -X DELETE http://127.0.0.1:8080/api/cats/14?project_commit=36cd5a29d00ddbcfc32ebcaad76cc63696fdc0e5
 #[actix_web::delete("/{id}")]
 pub async fn delete_by_id<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
     path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::DeleteByIdPathParameters>,
     app_info: actix_web::web::Data<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>,
-) -> impl actix_web::Responder {
+) -> actix_web::HttpResponse {
     println!("delete_by_id {}", path_parameters.id);
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
         path_parameters.id,
