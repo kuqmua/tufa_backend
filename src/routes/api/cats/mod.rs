@@ -27,6 +27,7 @@ pub async fn get<'a>(
     };
     let query_result = match (&query_parameters.name, &query_parameters.color) {
         (None, None) => {
+            //todo make rust executable for calling cargo run + DATABASE_URL="" - then can easy move it into lib (tufa_common)
             sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "SELECT * FROM cats LIMIT $1",
