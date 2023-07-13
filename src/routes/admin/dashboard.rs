@@ -46,7 +46,9 @@ pub async fn get_username<'a>(
     pool: &sqlx::PgPool,
 ) -> Result<
     String,
-    tufa_common::repositories_types::tufa_server::routes::admin::dashboard::GetUsernameErrorNamed<'a>,
+    tufa_common::repositories_types::tufa_server::routes::admin::dashboard::GetUsernameErrorNamed<
+        'a,
+    >,
 > {
     match sqlx::query!(
         r#"

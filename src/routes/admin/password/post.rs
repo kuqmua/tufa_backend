@@ -34,7 +34,9 @@ pub async fn change_password<'a>(
         username,
         password: form.0.current_password,
     };
-    if let Err(e) = crate::authentication::validate_credentials(credentials, &app_info.postgres_pool).await {
+    if let Err(e) =
+        crate::authentication::validate_credentials(credentials, &app_info.postgres_pool).await
+    {
         //todo - add to body deserialized version?
         return match &e {
             tufa_common::repositories_types::tufa_server::authentication::password::ValidateCredentialsErrorNamed::GetStoredCredentials { 
