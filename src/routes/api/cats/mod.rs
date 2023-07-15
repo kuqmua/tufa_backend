@@ -73,7 +73,7 @@ pub async fn get<'a>(
     match query_result {
         Ok(vec_cats) => tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants::DesirableType(vec_cats).into(),
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get::GetErrorNamed::from(e);
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGet::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error, 
                 &app_info.config
