@@ -71,14 +71,14 @@ pub async fn get<'a>(
         }
     };
     match query_result {
-        Ok(vec_cats) => tufa_common::repositories_types::tufa_server::routes::api::cats::get::route::GetHttpResponse::DesirableType(vec_cats).into(),
+        Ok(vec_cats) => tufa_common::repositories_types::tufa_server::routes::api::cats::get::GetHttpResponse::DesirableType(vec_cats).into(),
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get::route::GetErrorNamed::from(e);
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get::GetErrorNamed::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error, 
                 &app_info.config
             );
-            tufa_common::repositories_types::tufa_server::routes::api::cats::get::route::GetHttpResponse::from(error).into()
+            tufa_common::repositories_types::tufa_server::routes::api::cats::get::GetHttpResponse::from(error).into()
         }
     }
 }
