@@ -151,14 +151,14 @@ pub async fn post<'a>(
     .fetch_all(&app_info.postgres_pool)
     .await
     {
-        Ok(_) => actix_web::HttpResponse::Created().finish(),
+        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants::DesirableType(()).into(),
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::post::route::PostErrorNamed::from(e);
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPost::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error,
                 &app_info.config,
             );
-            error.into()
+            tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants::from(error).into()
         }
     }
 }
