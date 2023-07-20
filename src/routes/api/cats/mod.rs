@@ -288,7 +288,7 @@ pub async fn delete<'a>(
     );
     let query_result = match (&query_parameters.name, &query_parameters.color) {
         (None, None) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete::route::DeleteErrorNamed::NoParameters {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDelete::NoParameters {
                 no_parameters: std::string::String::from("no parameters provided"),
                 code_occurence: tufa_common::code_occurence!(),
             };
@@ -296,7 +296,7 @@ pub async fn delete<'a>(
                 &error,
                 &app_info.config,
             );
-            return error.into();
+            return tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants::from(error).into();
         }
         (None, Some(color)) => {
             sqlx::query_as!(
@@ -328,17 +328,14 @@ pub async fn delete<'a>(
         }
     };
     match query_result {
-        Ok(_) => {
-            println!("ok delete");
-            actix_web::HttpResponse::Ok().finish()
-        }
+        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants::DesirableType(()).into(),
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete::route::DeleteErrorNamed::from(e);
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDelete::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
-                &error,
-                &app_info.config,
+                &error, 
+                &app_info.config
             );
-            error.into()
+            tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants::from(error).into()
         }
     }
 }
