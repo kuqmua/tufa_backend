@@ -11,7 +11,7 @@ pub fn entry<'a>(
         }
         Ok(runtime) => {
             tufa_common::dev::dev();
-            crate::dev::dev();
+            runtime.block_on(crate::dev::dev());
             if let Err(e) = tufa_common::repositories_types::tufa_server::telemetry::init_subscriber::init_subscriber(
                 tufa_common::repositories_types::tufa_server::telemetry::get_subscriber::get_subscriber(
                 env!("CARGO_PKG_VERSION"),
