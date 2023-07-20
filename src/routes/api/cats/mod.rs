@@ -354,7 +354,7 @@ pub async fn delete_by_id<'a>(
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::route::DeleteByIdErrorNamed::Bigserial { 
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteById::Bigserial { 
                 bigserial: e, 
                 code_occurence: tufa_common::code_occurence!()
             };
@@ -362,7 +362,7 @@ pub async fn delete_by_id<'a>(
                 &error,
                 &app_info.config,
             );
-            return error.into();
+            return tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants::from(error).into();
         }
     };
     match sqlx::query_as!(
@@ -373,14 +373,14 @@ pub async fn delete_by_id<'a>(
     .fetch_all(&app_info.postgres_pool)
     .await
     {
-        Ok(_) => actix_web::HttpResponse::Ok().finish(),
+        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants::DesirableType(()).into(),
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::route::DeleteByIdErrorNamed::from(e);
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteById::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
-                &error,
-                &app_info.config,
+                &error, 
+                &app_info.config
             );
-            error.into()
+            tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants::from(error).into()
         }
     }
 }
