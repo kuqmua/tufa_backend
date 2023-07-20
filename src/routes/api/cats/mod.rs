@@ -228,7 +228,7 @@ pub async fn patch<'a>(
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::patch::route::PatchErrorNamed::Bigserial { 
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatch::Bigserial { 
                 bigserial: e, 
                 code_occurence: tufa_common::code_occurence!()
             };
@@ -236,7 +236,7 @@ pub async fn patch<'a>(
                 &error,
                 &app_info.config,
             );
-            return error.into();
+            return tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatchResponseVariants::from(error).into();
         }
     };
     let query_result = match &*cat {
@@ -262,14 +262,14 @@ pub async fn patch<'a>(
         },
     };
     match query_result {
-        Ok(_) => actix_web::HttpResponse::Ok().finish(),
+        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatchResponseVariants::DesirableType(()).into(),
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::patch::route::PatchErrorNamed::from(e);
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatch::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error,
                 &app_info.config,
             );
-            error.into()
+            tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatchResponseVariants::from(error).into()
         }
     }
 }
