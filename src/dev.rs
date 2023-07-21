@@ -70,27 +70,4 @@
 // //     fn provide<'a>(&'a self, demand: &mut Demand<'a>) { ... }
 // // }
 
-pub async fn dev() {
-    axum::Server::bind(&"127.0.0.1:3000".parse().unwrap())
-        .serve(
-            axum::Router::new()
-                .route("/", axum::routing::get(handler))
-                .route_layer(axum::middleware::from_fn(
-                    tufa_common::server::middleware::project_commit_checker::project_commit_checker,
-                ))
-                .route(
-                    "/kekw",
-                    axum::routing::get(|| async {
-                        println!("handler2");
-                        "Hello, World!"
-                    }),
-                )
-                .into_make_service(),
-        )
-        .await
-        .unwrap();
-}
-
-async fn handler() {
-    println!("handler1");
-}
+pub async fn dev() {}
