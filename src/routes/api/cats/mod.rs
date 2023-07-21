@@ -10,11 +10,11 @@
 //todo find out how to create middleware without extractors
 //todo header Retry-After logic
 
+
 pub async fn get_axum<'a>(
     axum::extract::Query(query_parameters): axum::extract::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::get::GetQueryParameters>,
     axum::extract::State(app_info): axum::extract::State<std::sync::Arc<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>>,
-) -> Result<axum::response::Response, axum::response::Response> {//-> tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants
-    println!("getaxumworks");
+) -> tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants {
     println!(
         "get query_parameters limit {:?}, name {:?} color {:?}",
         query_parameters.limit, query_parameters.name, query_parameters.color
@@ -66,7 +66,7 @@ pub async fn get_axum<'a>(
             .await
         }
     };
-    let g = match query_result {
+    match query_result {
         Ok(vec_cats) => tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants::DesirableType(vec_cats),
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGet::from(e);
@@ -76,14 +76,7 @@ pub async fn get_axum<'a>(
             );
             tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants::from(error)
         }
-    };
-    println!("{g:#?}");
-    Ok(axum::response::IntoResponse::into_response((
-        axum::http::StatusCode::BAD_REQUEST,
-        axum::Json(
-            g
-        ),
-    )))
+    }
 }
 
 #[actix_web::get("/")]
