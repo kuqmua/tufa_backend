@@ -13,20 +13,20 @@ pub async fn server_wrapper<'a>(
     //         code_occurence: tufa_common::code_occurence!(),
     //     }
     // )))?;
-    let tcp_listener = match {
-        use tufa_common::common::config::try_create_tcp_listener::TryCreateTcpListener;
-        config.try_create_tcp_listener()
-    } {
-        Ok(tcp_listener) => tcp_listener,
-        Err(e) => {
-            return Err(Box::new(
-                tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::TcpListenerBind {
-                    tcp_listener_bind: *e,
-                    code_occurence: tufa_common::code_occurence!(),
-                }
-            ))
-        },
-    };
+    // let tcp_listener = match {
+    //     use tufa_common::common::config::try_create_tcp_listener::TryCreateTcpListener;
+    //     config.try_create_tcp_listener()
+    // } {
+    //     Ok(tcp_listener) => tcp_listener,
+    //     Err(e) => {
+    //         return Err(Box::new(
+    //             tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::TcpListenerBind {
+    //                 tcp_listener_bind: *e,
+    //                 code_occurence: tufa_common::code_occurence!(),
+    //             }
+    //         ))
+    //     },
+    // };
     println!("trying to create postgres pool...");
     let postgres_pool = match {
         use tufa_common::common::config::try_get_postgres_pool::TryGetPostgresPool;
@@ -59,7 +59,7 @@ pub async fn server_wrapper<'a>(
     };
     println!("trying to build actix web dev server...");
     let actix_web_dev_server = match crate::try_build_actix_web_dev_server::try_build_actix_web_dev_server(
-        tcp_listener,
+        // tcp_listener,
         postgres_pool,
         redis_session_storage,
         config

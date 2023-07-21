@@ -69,7 +69,7 @@ async fn handler() {
 
 //todo - make it async trait after async trait stabilization
 pub async fn try_build_actix_web_dev_server<'a>(
-    tcp_listener: std::net::TcpListener,
+// tcp_listener: std::net::TcpListener,
     postgres_pool: sqlx::Pool<sqlx::Postgres>,
     redis_session_storage: actix_session::storage::RedisSessionStore,
     config: &'static tufa_common::repositories_types::tufa_server::config::config_struct::Config
@@ -79,38 +79,41 @@ pub async fn try_build_actix_web_dev_server<'a>(
         tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
             .project_commit
     );
-    let shared_state = std::sync::Arc::new(
-        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo {
-            postgres_pool: postgres_pool.clone(), //if use it without .clone() - will be runtime error if you try to reach route
-            config: config,
-            project_git_info:
-                &tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO,
-            repository_git_info: &crate::global_variables::compile_time::git_info::GIT_INFO,
-        },
-    );
-    axum::Server::bind(&"127.0.0.1:3000".parse().unwrap())
+    axum::Server::bind(
+        &tufa_common::common::config::get_server_address::GetServerAddress::get_server_address(&config)
+        .parse()
+        .unwrap_or_else(|e| panic!("failed to parse server address {e:#?}"))
+    )
         .serve(
             axum::Router::new()
-                // .route("/", axum::routing::get(handler))
+                .route("/", axum::routing::get(handler))
                 .route(
                     "/get_axum/k",
                     axum::routing::get(crate::routes::api::cats::get_axum),
                 )
-                .with_state(shared_state)
-                // .route_layer(axum::middleware::from_fn(
-                //     tufa_common::server::middleware::project_commit_checker::project_commit_checker,
-                // ))
-                // .route(
-                //     "/kekw",
-                //     axum::routing::get(|| async {
-                //         println!("handler2");
-                //         "Hello, World!"
-                //     }),
-                // )
+                .with_state( std::sync::Arc::new(
+                    tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo {
+                        postgres_pool: postgres_pool.clone(), //if use it without .clone() - will be runtime error if you try to reach route
+                        config: config,
+                        project_git_info:
+                            &tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO,
+                        repository_git_info: &crate::global_variables::compile_time::git_info::GIT_INFO,
+                    },
+                ))
+                .route_layer(axum::middleware::from_fn(
+                    tufa_common::server::middleware::project_commit_checker::project_commit_checker,
+                ))
+                .route(
+                    "/kekw",
+                    axum::routing::get(|| async {
+                        println!("handler2");
+                        "Hello, World!"
+                    }),
+                )
                 .into_make_service(),
         )
         .await
-        .unwrap();
+        .unwrap_or_else(|e| panic!("axum builder serve await failed {e:#?}"));
 
     // Shared Mutable State
     // use actix_web::{web, App, HttpServer};
