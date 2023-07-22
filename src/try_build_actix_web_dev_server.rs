@@ -1,78 +1,13 @@
-// There are two steps in middleware processing.
-// 1. Middleware initialization, middleware factory gets called with
-//    next service in chain as parameter.
-// 2. Middleware's call method gets called with normal request.
-pub struct SayHi;
-
-// Middleware factory is `Transform` trait
-// `S` - type of the next service
-// `B` - type of response's body
-impl<S, B> actix_web::dev::Transform<S, actix_web::dev::ServiceRequest> for SayHi
-where
-    S: actix_web::dev::Service<
-        actix_web::dev::ServiceRequest,
-        Response = actix_web::dev::ServiceResponse<B>,
-        Error = actix_web::Error,
-    >,
-    S::Future: 'static,
-    B: 'static,
-{
-    type Response = actix_web::dev::ServiceResponse<B>;
-    type Error = actix_web::Error;
-    type InitError = ();
-    type Transform = SayHiMiddleware<S>;
-    type Future = std::future::Ready<Result<Self::Transform, Self::InitError>>;
-
-    fn new_transform(&self, service: S) -> Self::Future {
-        std::future::ready(Ok(SayHiMiddleware { service }))
-    }
-}
-
-pub struct SayHiMiddleware<S> {
-    service: S,
-}
-
-impl<S, B> actix_web::dev::Service<actix_web::dev::ServiceRequest> for SayHiMiddleware<S>
-where
-    S: actix_web::dev::Service<
-        actix_web::dev::ServiceRequest,
-        Response = actix_web::dev::ServiceResponse<B>,
-        Error = actix_web::Error,
-    >,
-    S::Future: 'static,
-    B: 'static,
-{
-    type Response = actix_web::dev::ServiceResponse<B>;
-    type Error = actix_web::Error;
-    type Future =
-        futures_util::future::LocalBoxFuture<'static, Result<Self::Response, Self::Error>>;
-
-    actix_web::dev::forward_ready!(service);
-
-    fn call(&self, req: actix_web::dev::ServiceRequest) -> Self::Future {
-        println!("Hi from start. You requested: {}", req.path());
-
-        let fut = self.service.call(req);
-
-        Box::pin(async move {
-            let res = fut.await?;
-
-            println!("Hi from response");
-            Ok(res)
-        })
-    }
-}
-
 #[derive(Clone)]
 struct State {}
 
-// fn common_routes() -> axum::Router {
-//     axum::Router::new().route("/hello", axum::routing::get(handler))
-// }
+fn common_routes() -> axum::Router {
+    axum::Router::new().route("/hello", axum::routing::get(handler))
+}
 
-// async fn handler() -> &'static str {
-//     "handler"
-// }
+async fn handler() -> &'static str {
+    "handler"
+}
 
 //todo - make it async trait after async trait stabilization
 pub async fn try_build_actix_web_dev_server<'a>(
@@ -100,6 +35,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
         .serve(
             axum::Router::new()
                 // .merge(common_routes())
+                .route("/api/git_info", axum::routing::get(tufa_common::server::routes::git_info::git_info_axum))
                 .route(
                     &format!("/api/{}/",tufa_common::repositories_types::tufa_server::routes::api::cats::CATS),
                     axum::routing::get(crate::routes::api::cats::get_axum)
@@ -122,10 +58,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
                         repository_git_info: &crate::global_variables::compile_time::git_info::GIT_INFO,
                     },
                 ))
-                .route_layer(axum::middleware::from_fn(
-                    tufa_common::server::middleware::project_commit_checker::project_commit_checker,
-                ))
-
                 .layer(
                     tower::ServiceBuilder::new()
                     .layer(tower_http::trace::TraceLayer::new_for_http())
@@ -136,57 +68,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
         )
         .await
         .unwrap_or_else(|e| panic!("axum builder serve await failed {e:#?}"));
-
-    // Shared Mutable State
-    // use actix_web::{web, App, HttpServer};
-    // use std::sync::Mutex;
-
-    // struct AppStateWithCounter {
-    //     counter: Mutex<i32>, // <- Mutex is necessary to mutate safely across threads
-    // }
-
-    // async fn index(data: web::Data<AppStateWithCounter>) -> String {
-    //     let mut counter = data.counter.lock().unwrap(); // <- get counter's MutexGuard
-    //     *counter += 1; // <- access counter inside MutexGuard
-
-    //     format!("Request number: {counter}") // <- response with count
-    // }
-
-    // use actix_web::{web, App, HttpResponse, HttpServer};
-
-    // // this function could be located in a different module
-    // fn scoped_config(cfg: &mut web::ServiceConfig) {
-    //     cfg.service(
-    //         web::resource("/test")
-    //             .route(web::get().to(|| async { HttpResponse::Ok().body("test") }))
-    //             .route(web::head().to(HttpResponse::MethodNotAllowed)),
-    //     );
-    // }
-
-    // // this function could be located in a different module
-    // fn config(cfg: &mut web::ServiceConfig) {
-    //     cfg.service(
-    //         web::resource("/app")
-    //             .route(web::get().to(|| async { HttpResponse::Ok().body("app") }))
-    //             .route(web::head().to(HttpResponse::MethodNotAllowed)),
-    //     );
-    // }
-
-    // #[actix_web::main]
-    // async fn main() -> std::io::Result<()> {
-    //     HttpServer::new(|| {
-    //         App::new()
-    //             .configure(config)
-    //             .service(web::scope("/api").configure(scoped_config))
-    //             .route(
-    //                 "/",
-    //                 web::get().to(|| async { HttpResponse::Ok().body("/") }),
-    //             )
-    //     })
-    //     .bind(("127.0.0.1", 8080))?
-    //     .run()
-    //     .await
-    // }
 
     // let server = match actix_web::HttpServer::new(move || {
     //     let secret_key = actix_web::cookie::Key::from({
@@ -219,69 +100,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
     //             *config.get_access_control_max_age()
     //             }),
     //     )
-    //     // .wrap(SayHiMiddleware)
-    //     // .wrap_fn(|req, srv| {
-    //     //     println!("Hi from start. You requested: {}", req.path());
-    //     //     //
-    //     //     match req.request().headers().get(tufa_common::common::git::project_git_info::PROJECT_COMMIT) {
-    //     //         Some(project_commit_header_value) => match project_commit_header_value.to_str() {
-    //     //             Ok(possible_project_commit) => {
-    //     //                 println!("possible_project_commit {possible_project_commit}");
-    //     //                 println!("PROJECT_GIT_INFO.project_commit {}", tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.project_commit);
-    //     //                 if let true = possible_project_commit != tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO.project_commit {
-    //     //                     println!("1");
-    //     //                     // let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::CheckApiUsage {
-    //     //                     //     project_commit: app_info.project_git_info.does_not_match_message(),
-    //     //                     //     code_occurence: tufa_common::code_occurence!(),
-    //     //                     // };
-    //     //                     // use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-    //     //                     // error.error_log(app_info.config);
-    //     //                     // return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
-    //     //                     //     error.into_serialize_deserialize_version()
-    //     //                     // ));
-    //     //                 }
-    //     //                 else {
-    //     //                     println!("1.5");
-    //     //                 }
-    //     //             },
-    //     //             Err(e) => {
-    //     //                 println!("2");
-    //     //                 // let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::CannotConvertProjectCommitToStr {
-    //     //                 //     cannot_convert_project_commit_to_str: format!("{}, error: {e}", app_info.project_git_info.cannot_convert_project_commit_to_str_message()),
-    //     //                 //     code_occurence: tufa_common::code_occurence!(),
-    //     //                 // };
-    //     //                 // use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-    //     //                 // error.error_log(app_info.config);
-    //     //                 // return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
-    //     //                 //     error.into_serialize_deserialize_version()
-    //     //                 // ));
-    //     //             }
-    //     //         },
-    //     //         None => {
-    //     //             println!("3");
-    //     //             // let error = tufa_common::repositories_types::tufa_server::routes::api::cats::PatchErrorNamed::NoProjectCommitHeader {
-    //     //             //     no_project_commit_header: app_info.project_git_info.no_project_commit_header_message(),
-    //     //             //     code_occurence: tufa_common::code_occurence!(),
-    //     //             // };
-    //     //             // use tufa_common::common::error_logs_logic::error_log::ErrorLog;
-    //     //             // error.error_log(app_info.config);
-    //     //             // return actix_web::HttpResponse::BadRequest().json(actix_web::web::Json(
-    //     //             //     error.into_serialize_deserialize_version()
-    //     //             // ));
-    //     //         }
-    //     //     };
-    //     //     //
-    //     //     // return ErrorUnauthorized("ErrorUnauthorized");
-    //     //     use actix_web::dev::Service;
-    //     //     use futures_util::FutureExt;
-    //     //     srv.call(req).map(|res| {
-    //     //         // println!("Hi from response");
-    //     //         res
-    //     //         // actix_web::HttpResponse::BadRequest().finish()
-    //     //     })
-    //     // })
-    //     //todo concrete host \ domain
-    //     //
     //     .app_data(actix_web::web::Data::new({
     //         use tufa_common::common::config::get_email_client::GetEmailClient;
     //         config.get_email_client()
