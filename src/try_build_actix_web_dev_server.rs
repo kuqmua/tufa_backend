@@ -1,13 +1,7 @@
+use tufa_common::common::config::config_fields::GetSocketAddr;
+
 #[derive(Clone)]
 struct State {}
-
-fn common_routes() -> axum::Router {
-    axum::Router::new().route("/hello", axum::routing::get(handler))
-}
-
-async fn handler() -> &'static str {
-    "handler"
-}
 
 //todo - make it async trait after async trait stabilization
 pub async fn try_build_actix_web_dev_server<'a>(
@@ -27,14 +21,9 @@ pub async fn try_build_actix_web_dev_server<'a>(
             &config
         )
     );
-    axum::Server::bind(
-        &tufa_common::common::config::get_server_address::GetServerAddress::get_server_address(&config)
-        .parse()
-        .unwrap_or_else(|e| panic!("failed to parse server address {e:#?}"))
-    )
+    axum::Server::bind(config.get_socket_addr())
         .serve(
             axum::Router::new()
-                // .merge(common_routes())
                 .route("/api/health_check", axum::routing::get(tufa_common::repositories_types::tufa_server::routes::health_check_axum))
                 .route("/api/git_info", axum::routing::get(tufa_common::server::routes::git_info::git_info_axum))
                 .route(
