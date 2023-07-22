@@ -39,6 +39,9 @@ pub async fn try_build_actix_web_dev_server<'a>(
                     axum::routing::get(crate::routes::api::cats::get_by_id_axum)
                         .delete(crate::routes::api::cats::delete_by_id_axum),
                 )
+                .route_layer(axum::middleware::from_fn(
+                    tufa_common::server::middleware::project_commit_checker::project_commit_checker,
+                ))
                 .with_state( std::sync::Arc::new(
                     tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo {
                         postgres_pool,
@@ -53,7 +56,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
                     .layer(tower_http::trace::TraceLayer::new_for_http())
                     .layer(axum::Extension(State {}))
                 )
-
                 .into_make_service(),
         )
         .await
