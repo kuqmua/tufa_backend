@@ -21,24 +21,51 @@ pub async fn try_build_actix_web_dev_server<'a>(
             &config
         )
     );
+    let with_tracing = axum::Router::new()
+        .route(
+            "/foo",
+            axum::routing::get(|| async {
+                println!("foo");
+            }),
+        )
+        .layer(tower_http::trace::TraceLayer::new_for_http());
+    let common_routes = axum::Router::new()
+        .route(
+            "/health_check",
+            axum::routing::get(
+                tufa_common::repositories_types::tufa_server::routes::health_check_axum,
+            ),
+        )
+        .route(
+            "/git_info",
+            axum::routing::get(tufa_common::server::routes::git_info::git_info_axum),
+        );
+    let cats = axum::Router::new()
+        .route(
+            &format!(
+                "/{}/",
+                tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
+            ),
+            axum::routing::get(crate::routes::api::cats::get_axum)
+                .post(crate::routes::api::cats::post_axum)
+                .put(crate::routes::api::cats::put_axum)
+                .patch(crate::routes::api::cats::patch_axum)
+                .delete(crate::routes::api::cats::delete_axum),
+        )
+        .route(
+            &format!(
+                "/{}/:id",
+                tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
+            ),
+            axum::routing::get(crate::routes::api::cats::get_by_id_axum)
+                .delete(crate::routes::api::cats::delete_by_id_axum),
+        );
     axum::Server::bind(config.get_socket_addr())
         .serve(
             axum::Router::new()
-                .route("/api/health_check", axum::routing::get(tufa_common::repositories_types::tufa_server::routes::health_check_axum))
-                .route("/api/git_info", axum::routing::get(tufa_common::server::routes::git_info::git_info_axum))
-                .route(
-                    &format!("/api/{}/",tufa_common::repositories_types::tufa_server::routes::api::cats::CATS),
-                    axum::routing::get(crate::routes::api::cats::get_axum)
-                        .post(crate::routes::api::cats::post_axum)
-                        .put(crate::routes::api::cats::put_axum)
-                        .patch(crate::routes::api::cats::patch_axum)
-                        .delete(crate::routes::api::cats::delete_axum)
-                )
-                .route(
-                    &format!("/api/{}/:id",tufa_common::repositories_types::tufa_server::routes::api::cats::CATS),
-                    axum::routing::get(crate::routes::api::cats::get_by_id_axum)
-                        .delete(crate::routes::api::cats::delete_by_id_axum),
-                )
+                .merge(with_tracing)
+                .merge(common_routes)
+                .nest("/api", cats)
                 .route_layer(axum::middleware::from_fn(
                     tufa_common::server::middleware::project_commit_checker::project_commit_checker,
                 ))
