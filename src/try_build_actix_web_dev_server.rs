@@ -63,10 +63,6 @@ where
     }
 }
 
-async fn handler() {
-    println!("handler1");
-}
-
 //todo - make it async trait after async trait stabilization
 pub async fn try_build_actix_web_dev_server<'a>(
 // tcp_listener: std::net::TcpListener,
@@ -79,6 +75,12 @@ pub async fn try_build_actix_web_dev_server<'a>(
         tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
             .project_commit
     );
+    println!(
+        "{}",
+        tufa_common::common::config::get_server_address::GetServerAddress::get_server_address(
+            &config
+        )
+    );
     axum::Server::bind(
         &tufa_common::common::config::get_server_address::GetServerAddress::get_server_address(&config)
         .parse()
@@ -86,15 +88,18 @@ pub async fn try_build_actix_web_dev_server<'a>(
     )
         .serve(
             axum::Router::new()
-                .route("/", axum::routing::get(handler))
                 .route(
-                    "/get_axum/k",
+                    &format!("/api/{}/",tufa_common::repositories_types::tufa_server::routes::api::cats::CATS),
                     axum::routing::get(crate::routes::api::cats::get_axum),
+                )
+                .route(
+                    &format!("/api/{}/:id",tufa_common::repositories_types::tufa_server::routes::api::cats::CATS),
+                    axum::routing::get(crate::routes::api::cats::get_by_id_axum),
                 )
                 .with_state( std::sync::Arc::new(
                     tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo {
-                        postgres_pool: postgres_pool.clone(), //if use it without .clone() - will be runtime error if you try to reach route
-                        config: config,
+                        postgres_pool,
+                        config,
                         project_git_info:
                             &tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO,
                         repository_git_info: &crate::global_variables::compile_time::git_info::GIT_INFO,
@@ -103,13 +108,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 .route_layer(axum::middleware::from_fn(
                     tufa_common::server::middleware::project_commit_checker::project_commit_checker,
                 ))
-                .route(
-                    "/kekw",
-                    axum::routing::get(|| async {
-                        println!("handler2");
-                        "Hello, World!"
-                    }),
-                )
                 .into_make_service(),
         )
         .await
