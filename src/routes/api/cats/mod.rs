@@ -236,6 +236,32 @@ pub async fn get_by_id<'a>(
     }
 }
 
+pub async fn post_axum<'a>(
+    axum::extract::State(app_info): axum::extract::State<std::sync::Arc<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>>,
+    axum::Json(payload): axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::post::CatToPost>,
+) -> tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants {
+    println!("post name {}, color {}", payload.name, payload.color);
+    match sqlx::query_as!(
+        tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
+        "INSERT INTO cats(name, color) VALUES ($1, $2)",
+        payload.name,
+        payload.color
+    )
+    .fetch_all(&app_info.postgres_pool)
+    .await
+    {
+        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants::DesirableType(()),
+        Err(e) => {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPost::from(e);
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error,
+                &app_info.config,
+            );
+            tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants::from(error)
+        }
+    }
+}
+
 #[actix_web::post("/")]
 pub async fn post<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
@@ -264,6 +290,50 @@ pub async fn post<'a>(
                 &app_info.config,
             );
             tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants::from(error).into()
+        }
+    }
+}
+
+//todo - its the case if all columns except id are not null. for nullable columns must be different logic
+pub async fn put_axum<'a>(
+    axum::extract::State(app_info): axum::extract::State<std::sync::Arc<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>>,
+    axum::Json(payload): axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::Cat>,
+) -> tufa_common::repositories_types::tufa_server::routes::api::cats::put::TryPutResponseVariants {
+    println!("put id {} name {}, color {}", payload.id, payload.name, payload.color);
+    let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
+        payload.id,
+    ) {
+        Ok(bigserial_id) => bigserial_id,
+        Err(e) => {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::put::TryPut::Bigserial { 
+                bigserial: e, 
+                code_occurence: tufa_common::code_occurence!()
+            };
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error,
+                &app_info.config,
+            );
+            return tufa_common::repositories_types::tufa_server::routes::api::cats::put::TryPutResponseVariants::from(error);
+        }
+    };
+    match sqlx::query_as!(
+        tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
+        "INSERT INTO cats(id, name, color) VALUES ($1, $2, $3) ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, color = EXCLUDED.color",
+        *bigserial_id.bigserial(),
+        payload.name,
+        payload.color
+    )
+    .fetch_all(&app_info.postgres_pool)
+    .await
+    {
+        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::put::TryPutResponseVariants::DesirableType(()),
+        Err(e) => {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::put::TryPut::from(e);
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error,
+                &app_info.config,
+            );
+            tufa_common::repositories_types::tufa_server::routes::api::cats::put::TryPutResponseVariants::from(error)
         }
     }
 }
@@ -312,6 +382,62 @@ pub async fn put<'a>(
                 &app_info.config,
             );
             tufa_common::repositories_types::tufa_server::routes::api::cats::put::TryPutResponseVariants::from(error).into()
+        }
+    }
+}
+
+pub async fn patch_axum<'a>(
+    axum::extract::State(app_info): axum::extract::State<std::sync::Arc<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>>,
+    axum::Json(payload): axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::patch::CatToPatch>,
+) -> tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatchResponseVariants {
+    println!("patch cat {payload:#?}");
+    let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
+        *payload.get_id(),
+    ) {
+        Ok(bigserial_id) => bigserial_id,
+        Err(e) => {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatch::Bigserial { 
+                bigserial: e, 
+                code_occurence: tufa_common::code_occurence!()
+            };
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error,
+                &app_info.config,
+            );
+            return tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatchResponseVariants::from(error);
+        }
+    };
+    let query_result = match payload {
+        tufa_common::repositories_types::tufa_server::routes::api::cats::patch::CatToPatch::IdName { id: _id, name } => {
+            sqlx::query_as!(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
+                "UPDATE cats SET name = $1 WHERE id = $2",
+                name,
+                *bigserial_id.bigserial()
+            )
+            .fetch_all(&app_info.postgres_pool)
+            .await
+        },
+        tufa_common::repositories_types::tufa_server::routes::api::cats::patch::CatToPatch::IdColor { id: _id, color } => {
+            sqlx::query_as!(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
+                "UPDATE cats SET color = $1 WHERE id = $2",
+                color,
+                *bigserial_id.bigserial()
+            )
+            .fetch_all(&app_info.postgres_pool)
+            .await
+        },
+    };
+    match query_result {
+        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatchResponseVariants::DesirableType(()),
+        Err(e) => {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatch::from(e);
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error,
+                &app_info.config,
+            );
+            tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatchResponseVariants::from(error)
         }
     }
 }
@@ -378,6 +504,68 @@ pub async fn patch<'a>(
     }
 }
 
+pub async fn delete_axum<'a>(
+    axum::extract::Query(query_parameters): axum::extract::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::delete::DeleteQueryParameters>,
+    axum::extract::State(app_info): axum::extract::State<std::sync::Arc<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>>,
+) -> tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants {
+    println!(
+        "delete name {:?}, color {:?}",
+        query_parameters.name, query_parameters.color
+    );
+    let query_result = match (&query_parameters.name, &query_parameters.color) {
+        (None, None) => {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDelete::NoParameters {
+                no_parameters: std::string::String::from("no parameters provided"),
+                code_occurence: tufa_common::code_occurence!(),
+            };
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error,
+                &app_info.config,
+            );
+            return tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants::from(error);
+        }
+        (None, Some(color)) => {
+            sqlx::query_as!(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
+                "DELETE FROM cats WHERE color = $1",
+                color,
+            )
+            .fetch_all(&app_info.postgres_pool)
+            .await
+        }
+        (Some(name), None) => {
+            sqlx::query_as!(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
+                "DELETE FROM cats WHERE name = $1",
+                name,
+            )
+            .fetch_all(&app_info.postgres_pool)
+            .await
+        }
+        (Some(name), Some(color)) => {
+            sqlx::query_as!(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
+                "DELETE FROM cats WHERE name = $1 AND color = $2",
+                name,
+                color
+            )
+            .fetch_all(&app_info.postgres_pool)
+            .await
+        }
+    };
+    match query_result {
+        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants::DesirableType(()),
+        Err(e) => {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDelete::from(e);
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error, 
+                &app_info.config
+            );
+            tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants::from(error)
+        }
+    }
+}
+
 #[actix_web::delete("/")]
 pub async fn delete<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
@@ -440,6 +628,47 @@ pub async fn delete<'a>(
                 &app_info.config
             );
             tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants::from(error).into()
+        }
+    }
+}
+
+pub async fn delete_by_id_axum<'a>(
+    axum::extract::Path(path_parameters): axum::extract::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::DeleteByIdPathParameters>,
+    axum::extract::State(app_info): axum::extract::State<std::sync::Arc<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>>,
+) -> tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants {
+    println!("delete_by_id {}", path_parameters.id);
+    let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
+        path_parameters.id,
+    ) {
+        Ok(bigserial_id) => bigserial_id,
+        Err(e) => {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteById::Bigserial { 
+                bigserial: e, 
+                code_occurence: tufa_common::code_occurence!()
+            };
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error,
+                &app_info.config,
+            );
+            return tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants::from(error);
+        }
+    };
+    match sqlx::query_as!(
+        tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
+        "DELETE FROM cats WHERE id = $1",
+        *bigserial_id.bigserial()
+    )
+    .fetch_all(&app_info.postgres_pool)
+    .await
+    {
+        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants::DesirableType(()),
+        Err(e) => {
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteById::from(e);
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error, 
+                &app_info.config
+            );
+            tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants::from(error)
         }
     }
 }

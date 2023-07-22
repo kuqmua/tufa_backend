@@ -63,8 +63,16 @@ where
     }
 }
 
-use tower::ServiceBuilder;
-use tower_http::trace::TraceLayer;
+#[derive(Clone)]
+struct State {}
+
+// fn common_routes() -> axum::Router {
+//     axum::Router::new().route("/hello", axum::routing::get(handler))
+// }
+
+// async fn handler() -> &'static str {
+//     "handler"
+// }
 
 //todo - make it async trait after async trait stabilization
 pub async fn try_build_actix_web_dev_server<'a>(
@@ -91,13 +99,19 @@ pub async fn try_build_actix_web_dev_server<'a>(
     )
         .serve(
             axum::Router::new()
+                // .merge(common_routes())
                 .route(
                     &format!("/api/{}/",tufa_common::repositories_types::tufa_server::routes::api::cats::CATS),
-                    axum::routing::get(crate::routes::api::cats::get_axum),
+                    axum::routing::get(crate::routes::api::cats::get_axum)
+                        .post(crate::routes::api::cats::post_axum)
+                        .put(crate::routes::api::cats::put_axum)
+                        .patch(crate::routes::api::cats::patch_axum)
+                        .delete(crate::routes::api::cats::delete_axum)
                 )
                 .route(
                     &format!("/api/{}/:id",tufa_common::repositories_types::tufa_server::routes::api::cats::CATS),
-                    axum::routing::get(crate::routes::api::cats::get_by_id_axum),
+                    axum::routing::get(crate::routes::api::cats::get_by_id_axum)
+                        .delete(crate::routes::api::cats::delete_by_id_axum),
                 )
                 .with_state( std::sync::Arc::new(
                     tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo {
@@ -111,6 +125,13 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 .route_layer(axum::middleware::from_fn(
                     tufa_common::server::middleware::project_commit_checker::project_commit_checker,
                 ))
+
+                .layer(
+                    tower::ServiceBuilder::new()
+                    .layer(tower_http::trace::TraceLayer::new_for_http())
+                    .layer(axum::Extension(State {}))
+                )
+
                 .into_make_service(),
         )
         .await
