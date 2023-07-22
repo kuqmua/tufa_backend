@@ -35,6 +35,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
         .serve(
             axum::Router::new()
                 // .merge(common_routes())
+                .route("/api/health_check", axum::routing::get(tufa_common::repositories_types::tufa_server::routes::health_check_axum))
                 .route("/api/git_info", axum::routing::get(tufa_common::server::routes::git_info::git_info_axum))
                 .route(
                     &format!("/api/{}/",tufa_common::repositories_types::tufa_server::routes::api::cats::CATS),
