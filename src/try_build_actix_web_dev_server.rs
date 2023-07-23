@@ -25,6 +25,33 @@ struct SharedData {
     pub message: std::string::String,
 }
 
+#[derive(Clone)] //or maybe add Clone to AppInfo too to solve possible problem?
+struct HeaderMessage(pub std::string::String);
+
+async fn read_middleware_custom_header(
+    axum::Extension(message): axum::Extension<HeaderMessage>,
+) -> std::string::String {
+    println!("read_middleware_custom_header {}", message.0);
+    message.0
+}
+
+pub async fn set_middleware_custom_header<B>(
+    mut req: axum::http::Request<B>,
+    next: axum::middleware::Next<B>,
+) -> Result<axum::response::Response, axum::http::StatusCode> {
+    let request_project_commit = req
+        .headers()
+        .get(tufa_common::common::git::project_git_info::PROJECT_COMMIT)
+        .ok_or_else(|| axum::http::StatusCode::BAD_REQUEST)?;
+    let project_commit_checker_header = request_project_commit
+        .to_str()
+        .map_err(|_error| axum::http::StatusCode::BAD_REQUEST)?
+        .to_owned();
+    let extensions = req.extensions_mut();
+    extensions.insert(HeaderMessage(project_commit_checker_header.to_owned()));
+    Ok(next.run(req).await)
+}
+
 // fn create_routes() -> axum::Router<axum::body::Body> {
 //     axum::Router::new().route("/", axum::routing::get(|| "hello"))
 // }
@@ -125,6 +152,13 @@ pub async fn try_build_actix_web_dev_server<'a>(
     axum::Server::bind(tufa_common::common::config::config_fields::GetSocketAddr::get_socket_addr(config))
         .serve(
             axum::Router::new()
+                .route(
+                    "/read_middleware_custom_header",
+                    axum::routing::get(
+                        read_middleware_custom_header
+                    ),
+                )
+                .route_layer(axum::middleware::from_fn(set_middleware_custom_header))
                 .merge(with_tracing)
                 .merge(common_routes)
                 // .merge(create_routes)
