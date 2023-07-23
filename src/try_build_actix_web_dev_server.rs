@@ -99,6 +99,10 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 .delete(crate::routes::api::cats::delete_by_id_axum),
         );
     // let create_routes = create_routes();
+    let cors = tower_http::cors::CorsLayer::new()
+        .allow_methods([http::Method::GET, http::Method::POST, http::Method::PATCH, http::Method::PUT, http::Method::DELETE])
+        .allow_origin(tower_http::cors::Any)
+    ;
     axum::Server::bind(tufa_common::common::config::config_fields::GetSocketAddr::get_socket_addr(config))
         .serve(
             axum::Router::new()
@@ -139,6 +143,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
                     tower::ServiceBuilder::new()
                     .layer(tower_http::trace::TraceLayer::new_for_http())
                 )
+                .layer(cors)
                 .into_make_service(),
         )
         .await
