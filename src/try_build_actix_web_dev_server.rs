@@ -6,12 +6,23 @@ fn routes_static() -> axum::Router {
 }
 
 async fn extract_custom_header_example(headers: http::header::HeaderMap) {
-    let pc = headers.get("project_commit" );
+    let pc = headers.get("project_commit");
     println!("pc{pc:#?}")
 }
 
-async fn header_extractor_example(axum::TypedHeader(header): axum::TypedHeader<axum::headers::UserAgent>) {
+async fn header_extractor_example(
+    axum::TypedHeader(header): axum::TypedHeader<axum::headers::UserAgent>,
+) {
     println!("header{:#?}", header);
+}
+
+async fn middleware_message_example(axum::Extension(shared_data): axum::Extension<SharedData>) {
+    println!("message {}", shared_data.message);
+}
+
+#[derive(Clone)]
+struct SharedData {
+    pub message: std::string::String,
 }
 
 // fn create_routes() -> axum::Router<axum::body::Body> {
@@ -100,9 +111,17 @@ pub async fn try_build_actix_web_dev_server<'a>(
         );
     // let create_routes = create_routes();
     let cors = tower_http::cors::CorsLayer::new()
-        .allow_methods([http::Method::GET, http::Method::POST, http::Method::PATCH, http::Method::PUT, http::Method::DELETE])
-        .allow_origin(tower_http::cors::Any)
-    ;
+        .allow_methods([
+            http::Method::GET,
+            http::Method::POST,
+            http::Method::PATCH,
+            http::Method::PUT,
+            http::Method::DELETE,
+        ])
+        .allow_origin(tower_http::cors::Any);
+    let shared_data = SharedData {
+        message: std::string::String::from("shared_message"),
+    };
     axum::Server::bind(tufa_common::common::config::config_fields::GetSocketAddr::get_socket_addr(config))
         .serve(
             axum::Router::new()
@@ -124,12 +143,17 @@ pub async fn try_build_actix_web_dev_server<'a>(
                         extract_custom_header_example
                     ),
                 )
-
-                
+                .route(
+                    "/middleware_message_example",
+                    axum::routing::get(
+                        middleware_message_example
+                    ),
+                )
                 .route_layer(axum::middleware::from_fn(
                     tufa_common::server::middleware::project_commit_checker::project_commit_checker,
                 ))
                 .fallback_service(routes_static())//tufa_common::server::routes::not_found_route::fallback_service
+                //maybe use axum::Extension instead of State ?
                 .with_state(std::sync::Arc::new(
                     tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo {
                         postgres_pool,
@@ -144,6 +168,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
                     .layer(tower_http::trace::TraceLayer::new_for_http())
                 )
                 .layer(cors)
+                .layer(axum::Extension(shared_data))
                 .into_make_service(),
         )
         .await
