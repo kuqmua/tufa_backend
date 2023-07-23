@@ -5,6 +5,11 @@ fn routes_static() -> axum::Router {
     )
 }
 
+async fn extract_custom_header_example(headers: http::header::HeaderMap) {
+    let pc = headers.get("project_commit" );
+    println!("pc{pc:#?}")
+}
+
 async fn header_extractor_example(axum::TypedHeader(header): axum::TypedHeader<axum::headers::UserAgent>) {
     println!("header{:#?}", header);
 }
@@ -107,6 +112,12 @@ pub async fn try_build_actix_web_dev_server<'a>(
                     "/header_extractor_example",
                     axum::routing::get(
                         header_extractor_example
+                    ),
+                )
+                .route(
+                    "/extract_custom_header_example",
+                    axum::routing::get(
+                        extract_custom_header_example
                     ),
                 )
 
