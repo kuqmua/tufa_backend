@@ -1,6 +1,3 @@
-#[derive(Clone)]
-struct State {}
-
 fn routes_static() -> axum::Router {
     axum::Router::new().nest_service(
         "/",
@@ -45,6 +42,29 @@ pub async fn try_build_actix_web_dev_server<'a>(
             "/git_info",
             axum::routing::get(tufa_common::server::routes::git_info::git_info_axum),
         );
+    // let cats_routes = axum::Router::new()
+    //     .route(
+    //         "/",
+    //         axum::routing::get(crate::routes::api::cats::get_axum)
+    //             // .post(crate::routes::api::cats::post_axum)
+    //             // .put(crate::routes::api::cats::put_axum)
+    //             // .patch(crate::routes::api::cats::patch_axum)
+    //             .delete(crate::routes::api::cats::delete_axum),
+    //     )
+    //     // .route(
+    //     //     "/:id",
+    //     //     axum::routing::get(crate::routes::api::cats::get_by_id_axum)
+    //     //         .delete(crate::routes::api::cats::delete_by_id_axum),
+    //     // )
+    //     ;
+    // let cats = axum::Router::new().nest(
+    //     // &format!(
+    //     //     "/{}",
+    //     //     tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
+    //     // )
+    //     "/cats",
+    //     cats_routes,
+    // );
     let cats = axum::Router::new()
         .route(
             &format!(
@@ -70,12 +90,13 @@ pub async fn try_build_actix_web_dev_server<'a>(
             axum::Router::new()
                 .merge(with_tracing)
                 .merge(common_routes)
+                // .merge(tufa_common::server::routes::common_routes::health_check_route)
                 .nest("/api", cats)
                 .route_layer(axum::middleware::from_fn(
                     tufa_common::server::middleware::project_commit_checker::project_commit_checker,
                 ))
                 .fallback_service(routes_static())//tufa_common::server::routes::not_found_route::fallback_service
-                .with_state( std::sync::Arc::new(
+                .with_state(std::sync::Arc::new(
                     tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo {
                         postgres_pool,
                         config,
@@ -87,7 +108,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 .layer(
                     tower::ServiceBuilder::new()
                     .layer(tower_http::trace::TraceLayer::new_for_http())
-                    .layer(axum::Extension(State {}))
                 )
                 .into_make_service(),
         )
