@@ -1,7 +1,12 @@
-use tufa_common::common::config::config_fields::GetSocketAddr;
-
 #[derive(Clone)]
 struct State {}
+
+fn routes_static() -> axum::Router {
+    axum::Router::new().nest_service(
+        "/",
+        axum::routing::get_service(tower_http::services::ServeDir::new("./")),
+    )
+}
 
 //todo - make it async trait after async trait stabilization
 pub async fn try_build_actix_web_dev_server<'a>(
@@ -60,7 +65,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
             axum::routing::get(crate::routes::api::cats::get_by_id_axum)
                 .delete(crate::routes::api::cats::delete_by_id_axum),
         );
-    axum::Server::bind(config.get_socket_addr())
+    axum::Server::bind(tufa_common::common::config::config_fields::GetSocketAddr::get_socket_addr(config))
         .serve(
             axum::Router::new()
                 .merge(with_tracing)
@@ -69,6 +74,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 .route_layer(axum::middleware::from_fn(
                     tufa_common::server::middleware::project_commit_checker::project_commit_checker,
                 ))
+                .fallback_service(routes_static())//tufa_common::server::routes::not_found_route::fallback_service
                 .with_state( std::sync::Arc::new(
                     tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo {
                         postgres_pool,
