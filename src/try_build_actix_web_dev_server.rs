@@ -5,6 +5,14 @@ fn routes_static() -> axum::Router {
     )
 }
 
+async fn header_extractor_example(axum::TypedHeader(header): axum::TypedHeader<axum::headers::UserAgent>) {
+    println!("header{:#?}", header);
+}
+
+// fn create_routes() -> axum::Router<axum::body::Body> {
+//     axum::Router::new().route("/", axum::routing::get(|| "hello"))
+// }
+
 //todo - make it async trait after async trait stabilization
 pub async fn try_build_actix_web_dev_server<'a>(
 // tcp_listener: std::net::TcpListener,
@@ -85,13 +93,24 @@ pub async fn try_build_actix_web_dev_server<'a>(
             axum::routing::get(crate::routes::api::cats::get_by_id_axum)
                 .delete(crate::routes::api::cats::delete_by_id_axum),
         );
+    // let create_routes = create_routes();
     axum::Server::bind(tufa_common::common::config::config_fields::GetSocketAddr::get_socket_addr(config))
         .serve(
             axum::Router::new()
                 .merge(with_tracing)
                 .merge(common_routes)
+                // .merge(create_routes)
                 // .merge(tufa_common::server::routes::common_routes::health_check_route)
                 .nest("/api", cats)
+
+                .route(
+                    "/header_extractor_example",
+                    axum::routing::get(
+                        header_extractor_example
+                    ),
+                )
+
+                
                 .route_layer(axum::middleware::from_fn(
                     tufa_common::server::middleware::project_commit_checker::project_commit_checker,
                 ))
