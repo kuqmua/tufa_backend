@@ -4,10 +4,17 @@
 //todo - add limit everywhere possible
 //todo header Retry-After logic
 
+pub type DynArcGetPostgresPoolSendSync = std::sync::Arc<dyn
+    tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::GetPostgresPool + 
+    // tufa_common::common::git::project_git_info::GetProjectGitInfo + 
+    // tufa_common::common::git::git_info::GetGitInfo +
+    Send + 
+    Sync
+>;
 
 pub async fn get_axum<'a>(
     axum::extract::Query(query_parameters): axum::extract::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::get::GetQueryParameters>,
-    axum::extract::State(app_info): axum::extract::State<std::sync::Arc<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>>,
+    axum::extract::State(app_info): axum::extract::State<DynArcGetPostgresPoolSendSync>,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants {
     println!(
         "get query_parameters limit {:?}, name {:?} color {:?}",
@@ -25,7 +32,7 @@ pub async fn get_axum<'a>(
                 "SELECT * FROM cats LIMIT $1",
                 *limit as i64
             )
-            .fetch_all(&app_info.postgres_pool)
+            .fetch_all(&*app_info.get_postgres_pool())
             .await
         }
         (None, Some(color)) => {
@@ -35,7 +42,7 @@ pub async fn get_axum<'a>(
                 color,
                 *limit as i64
             )
-            .fetch_all(&app_info.postgres_pool)
+            .fetch_all(&*app_info.get_postgres_pool())
             .await
         }
         (Some(name), None) => {
@@ -45,7 +52,7 @@ pub async fn get_axum<'a>(
                 name,
                 *limit as i64
             )
-            .fetch_all(&app_info.postgres_pool)
+            .fetch_all(&*app_info.get_postgres_pool())
             .await
         }
         (Some(name), Some(color)) => {
@@ -56,7 +63,7 @@ pub async fn get_axum<'a>(
                 color,
                 *limit as i64
             )
-            .fetch_all(&app_info.postgres_pool)
+            .fetch_all(&*app_info.get_postgres_pool())
             .await
         }
     };
@@ -64,10 +71,10 @@ pub async fn get_axum<'a>(
         Ok(vec_cats) => tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants::DesirableType(vec_cats),
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGet::from(e);
-            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
-                &error, 
-                &app_info.config
-            );
+            // tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+            //     &error, 
+            //     &app_info.config
+            // );
             tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants::from(error)
         }
     }

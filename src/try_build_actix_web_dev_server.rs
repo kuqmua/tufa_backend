@@ -74,14 +74,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
             &config
         )
     );
-    let with_tracing = axum::Router::new()
-        .route(
-            "/foo",
-            axum::routing::get(|| async {
-                println!("foo");
-            }),
-        )
-        .layer(tower_http::trace::TraceLayer::new_for_http());
     let common_routes = axum::Router::new()
         .route(
             "/health_check",
@@ -89,10 +81,11 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 tufa_common::repositories_types::tufa_server::routes::health_check_axum,
             ),
         )
-        .route(
-            "/git_info",
-            axum::routing::get(tufa_common::server::routes::git_info::git_info_axum),
-        );
+        // .route(
+        //     "/git_info",
+        //     axum::routing::get(tufa_common::server::routes::git_info::git_info_axum),
+        // )
+        ;
     // let cats_routes = axum::Router::new()
     //     .route(
     //         "/",
@@ -122,20 +115,21 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 "/{}/",
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
             ),
-            axum::routing::get(crate::routes::api::cats::get_axum)
-                .post(crate::routes::api::cats::post_axum)
-                .put(crate::routes::api::cats::put_axum)
-                .patch(crate::routes::api::cats::patch_axum)
-                .delete(crate::routes::api::cats::delete_axum),
+            axum::routing::get(crate::routes::api::cats::get_axum),
+            // .post(crate::routes::api::cats::post_axum)
+            // .put(crate::routes::api::cats::put_axum)
+            // .patch(crate::routes::api::cats::patch_axum)
+            // .delete(crate::routes::api::cats::delete_axum)
         )
-        .route(
-            &format!(
-                "/{}/:id",
-                tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
-            ),
-            axum::routing::get(crate::routes::api::cats::get_by_id_axum)
-                .delete(crate::routes::api::cats::delete_by_id_axum),
-        );
+        // .route(
+        //     &format!(
+        //         "/{}/:id",
+        //         tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
+        //     ),
+        //     axum::routing::get(crate::routes::api::cats::get_by_id_axum)
+        //         .delete(crate::routes::api::cats::delete_by_id_axum),
+        // )
+        ;
     // let create_routes = create_routes();
     let cors = tower_http::cors::CorsLayer::new()
         .allow_methods([
@@ -149,64 +143,59 @@ pub async fn try_build_actix_web_dev_server<'a>(
     let shared_data = SharedData {
         message: std::string::String::from("shared_message"),
     };
-    axum::Server::bind(tufa_common::common::config::config_fields::GetSocketAddr::get_socket_addr(config))
-        .serve(
-            axum::Router::new()
-                .route(
-                    "/read_middleware_custom_header",
-                    axum::routing::get(
-                        read_middleware_custom_header
-                    ),
-                )
-                .route_layer(axum::middleware::from_fn(set_middleware_custom_header))
-                .merge(with_tracing)
-                .merge(common_routes)
-                // .merge(create_routes)
-                // .merge(tufa_common::server::routes::common_routes::health_check_route)
-                .nest("/api", cats)
 
-                .route(
-                    "/header_extractor_example",
-                    axum::routing::get(
-                        header_extractor_example
-                    ),
-                )
-                .route(
-                    "/extract_custom_header_example",
-                    axum::routing::get(
-                        extract_custom_header_example
-                    ),
-                )
-                .route(
-                    "/middleware_message_example",
-                    axum::routing::get(
-                        middleware_message_example
-                    ),
-                )
-                .route_layer(axum::middleware::from_fn(
-                    tufa_common::server::middleware::project_commit_checker::project_commit_checker,
-                ))
-                .fallback_service(routes_static())//tufa_common::server::routes::not_found_route::fallback_service
-                //maybe use axum::Extension instead of State ?
-                .with_state(std::sync::Arc::new(
-                    tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo {
-                        postgres_pool,
-                        config,
-                        project_git_info:
-                            &tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO,
-                        repository_git_info: &crate::global_variables::compile_time::git_info::GIT_INFO,
-                    },
-                ))
-                .layer(
-                    tower::ServiceBuilder::new()
-                    .layer(tower_http::trace::TraceLayer::new_for_http())
-                )
-                .layer(cors)
-                .layer(axum::Extension(shared_data))
-                .into_make_service(),
-        )
-        .await
-        .unwrap_or_else(|e| panic!("axum builder serve await failed {e:#?}"));
+    axum::Server::bind(
+        tufa_common::common::config::config_fields::GetSocketAddr::get_socket_addr(config),
+    )
+    .serve(
+        axum::Router::new()
+            .route(
+                "/read_middleware_custom_header",
+                axum::routing::get(read_middleware_custom_header),
+            )
+            .route_layer(axum::middleware::from_fn(set_middleware_custom_header))
+            .merge(common_routes)
+            // .merge(create_routes)
+            .nest("/api", cats)
+            .route(
+                "/header_extractor_example",
+                axum::routing::get(
+                    header_extractor_example
+                ),
+            )
+            .route(
+                "/extract_custom_header_example",
+                axum::routing::get(
+                    extract_custom_header_example
+                ),
+            )
+            .route(
+                "/middleware_message_example",
+                axum::routing::get(
+                    middleware_message_example
+                ),
+            )
+            .route_layer(axum::middleware::from_fn(
+                tufa_common::server::middleware::project_commit_checker::project_commit_checker,
+            ))
+            .fallback_service(routes_static()) //tufa_common::server::routes::not_found_route::fallback_service
+            //maybe use axum::Extension instead of State ?
+            .with_state(std::sync::Arc::new(
+            tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo {
+                postgres_pool,
+                config,
+                project_git_info: &tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO,
+                repository_git_info: &crate::global_variables::compile_time::git_info::GIT_INFO,
+            }) as crate::routes::api::cats::DynArcGetPostgresPoolSendSync)
+            .layer(
+                tower::ServiceBuilder::new().layer(tower_http::trace::TraceLayer::new_for_http()),
+            )
+            .layer(cors)
+            .layer(axum::Extension(shared_data))
+            .into_make_service(),
+    )
+    .await
+    .unwrap_or_else(|e| panic!("axum builder serve await failed {e:#?}"));
 
     // let server = match actix_web::HttpServer::new(move || {
     //     let secret_key = actix_web::cookie::Key::from({
