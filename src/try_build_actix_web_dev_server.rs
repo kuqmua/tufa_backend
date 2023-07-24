@@ -186,7 +186,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 config,
                 project_git_info: &tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO,
                 repository_git_info: &crate::global_variables::compile_time::git_info::GIT_INFO,
-            }) as crate::routes::api::cats::DynArcGetPostgresPoolSendSync)
+            }) as tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetPostgresPoolSendSync)
             .layer(
                 tower::ServiceBuilder::new().layer(tower_http::trace::TraceLayer::new_for_http()),
             )
