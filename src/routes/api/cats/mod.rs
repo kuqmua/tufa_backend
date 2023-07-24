@@ -238,6 +238,8 @@ pub async fn get_by_id<'a>(
 
 pub async fn post_axum<'a>(
     axum::extract::State(app_info): axum::extract::State<std::sync::Arc<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>>>,
+    //write middleware to check if conent type is application\json. return error if its not. 
+    //use body: string here. serde::from_json later as variant of TryPost
     axum::Json(payload): axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::post::CatToPost>,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants {
     println!("post name {}, color {}", payload.name, payload.color);
@@ -253,10 +255,10 @@ pub async fn post_axum<'a>(
         Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants::DesirableType(()),
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPost::from(e);
-            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
-                &error,
-                &app_info.config,
-            );
+            // tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+            //     &error,
+            //     &app_info.config,
+            // );
             tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants::from(error)
         }
     }
