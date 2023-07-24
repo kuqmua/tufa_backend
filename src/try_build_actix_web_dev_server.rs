@@ -115,21 +115,20 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 "/{}/",
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
             ),
-            axum::routing::get(crate::routes::api::cats::get_axum),
-            // .post(crate::routes::api::cats::post_axum)
-            // .put(crate::routes::api::cats::put_axum)
-            // .patch(crate::routes::api::cats::patch_axum)
-            // .delete(crate::routes::api::cats::delete_axum)
+            axum::routing::get(crate::routes::api::cats::get_axum)
+                .post(crate::routes::api::cats::post_axum)
+                .put(crate::routes::api::cats::put_axum)
+                .patch(crate::routes::api::cats::patch_axum)
+                .delete(crate::routes::api::cats::delete_axum),
         )
-        // .route(
-        //     &format!(
-        //         "/{}/:id",
-        //         tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
-        //     ),
-        //     axum::routing::get(crate::routes::api::cats::get_by_id_axum)
-        //         .delete(crate::routes::api::cats::delete_by_id_axum),
-        // )
-        ;
+        .route(
+            &format!(
+                "/{}/:id",
+                tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
+            ),
+            axum::routing::get(crate::routes::api::cats::get_by_id_axum)
+                .delete(crate::routes::api::cats::delete_by_id_axum),
+        );
     // let create_routes = create_routes();
     let cors = tower_http::cors::CorsLayer::new()
         .allow_methods([
@@ -177,6 +176,9 @@ pub async fn try_build_actix_web_dev_server<'a>(
             )
             .route_layer(axum::middleware::from_fn(
                 tufa_common::server::middleware::project_commit_checker::project_commit_checker,
+            ))
+            .route_layer(axum::middleware::from_fn(
+                tufa_common::server::middleware::content_type_application_json::content_type_application_json,
             ))
             .fallback_service(routes_static()) //tufa_common::server::routes::not_found_route::fallback_service
             //maybe use axum::Extension instead of State ?
