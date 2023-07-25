@@ -1,4 +1,3 @@
-//todo - check maybe not need to use everywhere InternalServerError
 //todo how to handle sql injection ?
 //todo - maybe check max length for field here instead of put it in postgres and recieve error ? color VARCHAR (255) NOT NULL
 //todo - add limit everywhere possible
@@ -60,7 +59,7 @@ pub async fn get_axum(
         }
     };
     match query_result {
-        Ok(vec_cats) => tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants::DesirableType(vec_cats),
+        Ok(value) => tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants::DesirableType(value),
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGet::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
@@ -134,7 +133,7 @@ pub async fn get<'a>(
         }
     };
     match query_result {
-        Ok(vec_cats) => tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants::DesirableType(vec_cats).into(),
+        Ok(value) => tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants::DesirableType(value).into(),
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGet::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
@@ -175,7 +174,7 @@ pub async fn get_by_id_axum(
     .fetch_one(&*app_info.get_postgres_pool())
     .await
     {
-        Ok(cat) => tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetByIdResponseVariants::DesirableType(cat),
+        Ok(value) => tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetByIdResponseVariants::DesirableType(value),
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetById::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
@@ -220,9 +219,9 @@ pub async fn get_by_id<'a>(
     .fetch_one(&app_info.postgres_pool)
     .await
     {
-        Ok(cat) => {
-            println!("selected cats:\n{cat:#?}");
-            tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetByIdResponseVariants::DesirableType(cat).into()
+        Ok(value) => {
+            println!("selected cats:\n{value:#?}");
+            tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetByIdResponseVariants::DesirableType(value).into()
         }
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetById::from(e);
@@ -266,19 +265,19 @@ pub async fn post_axum(
 #[actix_web::post("/")]
 pub async fn post<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
-    cat: actix_web::web::Json<
+    json: actix_web::web::Json<
         tufa_common::repositories_types::tufa_server::routes::api::cats::post::CatToPost,
     >,
     app_info: actix_web::web::Data<
         tufa_common::repositories_types::tufa_server::routes::app_info::AppInfo<'a>,
     >,
 ) -> actix_web::HttpResponse {
-    println!("post name {}, color {}", cat.name, cat.color);
+    println!("post name {}, color {}", json.name, json.color);
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
         "INSERT INTO cats(name, color) VALUES ($1, $2)",
-        cat.name,
-        cat.color
+        json.name,
+        json.color
     )
     .fetch_all(&app_info.postgres_pool)
     .await
@@ -343,14 +342,14 @@ pub async fn put_axum<'a>(
 #[actix_web::put("/")]
 pub async fn put<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
-    cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::Cat>,
+    json: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::Cat>,
     app_info: actix_web::web::Data<
         tufa_common::repositories_types::tufa_server::routes::app_info::AppInfo<'a>,
     >,
 ) -> actix_web::HttpResponse {
-    println!("put id {} name {}, color {}", cat.id, cat.name, cat.color);
+    println!("put id {} name {}, color {}", json.id, json.name, json.color);
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
-        cat.id,
+        json.id,
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
@@ -369,8 +368,8 @@ pub async fn put<'a>(
         tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
         "INSERT INTO cats(id, name, color) VALUES ($1, $2, $3) ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, color = EXCLUDED.color",
         *bigserial_id.bigserial(),
-        cat.name,
-        cat.color
+        json.name,
+        json.color
     )
     .fetch_all(&app_info.postgres_pool)
     .await
@@ -391,7 +390,7 @@ pub async fn patch_axum<'a>(
     axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
     axum::Json(payload): axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::patch::CatToPatch>,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatchResponseVariants {
-    println!("patch cat {payload:#?}");
+    println!("patch {payload:#?}");
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
         *payload.get_id(),
     ) {
@@ -446,16 +445,16 @@ pub async fn patch_axum<'a>(
 #[actix_web::patch("/")]
 pub async fn patch<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
-    cat: actix_web::web::Json<
+    json: actix_web::web::Json<
         tufa_common::repositories_types::tufa_server::routes::api::cats::patch::CatToPatch,
     >,
     app_info: actix_web::web::Data<
         tufa_common::repositories_types::tufa_server::routes::app_info::AppInfo<'a>,
     >,
 ) -> actix_web::HttpResponse {
-    println!("patch cat {cat:#?}");
+    println!("patch {json:#?}");
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
-        *cat.get_id(),
+        *json.get_id(),
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
@@ -470,7 +469,7 @@ pub async fn patch<'a>(
             return tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatchResponseVariants::from(error).into();
         }
     };
-    let query_result = match &*cat {
+    let query_result = match &*json {
         tufa_common::repositories_types::tufa_server::routes::api::cats::patch::CatToPatch::IdName { id: _id, name } => {
             sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
