@@ -74,6 +74,15 @@ pub async fn try_build_actix_web_dev_server<'a>(
             &config
         )
     );
+    let state = std::sync::Arc::new(
+        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo {
+            postgres_pool,
+            config,
+            project_git_info:
+                &tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO,
+            repository_git_info: &crate::global_variables::compile_time::git_info::GIT_INFO,
+        },
+    );
     let common_routes = axum::Router::new()
         .route(
             "/health_check",
@@ -84,7 +93,9 @@ pub async fn try_build_actix_web_dev_server<'a>(
         .route(
             "/git_info",
             axum::routing::get(tufa_common::server::routes::git_info::git_info_axum),
-        );
+        )
+        .with_state(state.clone()
+            as tufa_common::server::routes::git_info::DynArcGitInfoRouteParametersSendSync);
     // let cats_routes = axum::Router::new()
     //     .route(
     //         "/",
@@ -127,7 +138,9 @@ pub async fn try_build_actix_web_dev_server<'a>(
             ),
             axum::routing::get(crate::routes::api::cats::get_by_id_axum)
                 .delete(crate::routes::api::cats::delete_by_id_axum),
-        );
+        )
+                    .with_state(state as tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync)
+        ;
     // let create_routes = create_routes();
     let cors = tower_http::cors::CorsLayer::new()
         .allow_methods([
@@ -181,13 +194,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
             ))
             .fallback_service(routes_static()) //tufa_common::server::routes::not_found_route::fallback_service
             //maybe use axum::Extension instead of State ?
-            .with_state(std::sync::Arc::new(
-            tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo {
-                postgres_pool,
-                config,
-                project_git_info: &tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO,
-                repository_git_info: &crate::global_variables::compile_time::git_info::GIT_INFO,
-            }) as tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync)
             .layer(
                 tower::ServiceBuilder::new().layer(tower_http::trace::TraceLayer::new_for_http()),
             )
