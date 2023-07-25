@@ -4,7 +4,7 @@ pub async fn confirm<'a>(
         tufa_common::repositories_types::tufa_server::routes::Parameters,
     >,
     app_info: actix_web::web::Data<
-        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>,
+        tufa_common::repositories_types::tufa_server::routes::app_info::AppInfo<'a>,
     >,
 ) -> actix_web::HttpResponse {
     let id =

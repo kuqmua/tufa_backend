@@ -1,7 +1,7 @@
 pub async fn admin_dashboard<'a>(
     session: tufa_common::repositories_types::tufa_server::session_state::TypedSession,
     app_info: actix_web::web::Data<
-        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>,
+        tufa_common::repositories_types::tufa_server::routes::app_info::AppInfo<'a>,
     >,
 ) -> Result<actix_web::HttpResponse, actix_web::Error> {
     let username = if let Some(user_id) = session

@@ -3,7 +3,7 @@ pub async fn change_password<'a>(
         tufa_common::common::change_password_form_data::ChangePasswordFormData,
     >,
     app_info: actix_web::web::Data<
-        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>,
+        tufa_common::repositories_types::tufa_server::routes::app_info::AppInfo<'a>,
     >,
     user_id: actix_web::web::ReqData<
         tufa_common::repositories_types::tufa_server::authentication::UserId,

@@ -6,7 +6,7 @@
 
 pub async fn get_axum(
     axum::extract::Query(query_parameters): axum::extract::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::get::GetQueryParameters>,
-    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync<'_>>,
+    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants {
     println!(
         "get query_parameters limit {:?}, name {:?} color {:?}",
@@ -79,7 +79,7 @@ pub async fn get<'a>(
         tufa_common::repositories_types::tufa_server::routes::api::cats::get::GetQueryParameters,
     >,
     app_info: actix_web::web::Data<
-        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>,
+        tufa_common::repositories_types::tufa_server::routes::app_info::AppInfo<'a>,
     >,
 ) -> actix_web::HttpResponse {
     println!(
@@ -148,7 +148,7 @@ pub async fn get<'a>(
 
 pub async fn get_by_id_axum(
     axum::extract::Path(path_parameters): axum::extract::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::GetByIdPathParameters>,
-    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync<'_>>,
+    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetByIdResponseVariants {
     println!("get_by_id path_parameters id {}", path_parameters.id);
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
@@ -192,7 +192,7 @@ pub async fn get_by_id<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
     path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::GetByIdPathParameters>,
     app_info: actix_web::web::Data<
-        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>,
+        tufa_common::repositories_types::tufa_server::routes::app_info::AppInfo<'a>,
     >,
 ) -> actix_web::HttpResponse {
     println!("get_by_id path_parameters id {}", path_parameters.id);
@@ -236,7 +236,7 @@ pub async fn get_by_id<'a>(
 }
 
 pub async fn post_axum(
-    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync<'_>>,
+    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
     //write middleware to check if conent type is application\json. return error if its not. 
     //use body: string here. serde::from_json later as variant of TryPost
     axum::Json(payload): axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::post::CatToPost>,
@@ -270,7 +270,7 @@ pub async fn post<'a>(
         tufa_common::repositories_types::tufa_server::routes::api::cats::post::CatToPost,
     >,
     app_info: actix_web::web::Data<
-        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>,
+        tufa_common::repositories_types::tufa_server::routes::app_info::AppInfo<'a>,
     >,
 ) -> actix_web::HttpResponse {
     println!("post name {}, color {}", cat.name, cat.color);
@@ -297,7 +297,7 @@ pub async fn post<'a>(
 
 //todo - its the case if all columns except id are not null. for nullable columns must be different logic
 pub async fn put_axum<'a>(
-    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync<'_>>,
+    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
     axum::Json(payload): axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::Cat>,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::put::TryPutResponseVariants {
     println!("put id {} name {}, color {}", payload.id, payload.name, payload.color);
@@ -345,7 +345,7 @@ pub async fn put<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
     cat: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::Cat>,
     app_info: actix_web::web::Data<
-        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>,
+        tufa_common::repositories_types::tufa_server::routes::app_info::AppInfo<'a>,
     >,
 ) -> actix_web::HttpResponse {
     println!("put id {} name {}, color {}", cat.id, cat.name, cat.color);
@@ -388,7 +388,7 @@ pub async fn put<'a>(
 }
 
 pub async fn patch_axum<'a>(
-    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync<'_>>,
+    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
     axum::Json(payload): axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::patch::CatToPatch>,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatchResponseVariants {
     println!("patch cat {payload:#?}");
@@ -450,7 +450,7 @@ pub async fn patch<'a>(
         tufa_common::repositories_types::tufa_server::routes::api::cats::patch::CatToPatch,
     >,
     app_info: actix_web::web::Data<
-        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>,
+        tufa_common::repositories_types::tufa_server::routes::app_info::AppInfo<'a>,
     >,
 ) -> actix_web::HttpResponse {
     println!("patch cat {cat:#?}");
@@ -507,7 +507,7 @@ pub async fn patch<'a>(
 
 pub async fn delete_axum<'a>(
     axum::extract::Query(query_parameters): axum::extract::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::delete::DeleteQueryParameters>,
-    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync<'_>>,
+    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants {
     println!(
         "delete name {:?}, color {:?}",
@@ -572,7 +572,7 @@ pub async fn delete<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::delete::DeleteQueryParameters>,
     app_info: actix_web::web::Data<
-        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>,
+        tufa_common::repositories_types::tufa_server::routes::app_info::AppInfo<'a>,
     >,
 ) -> actix_web::HttpResponse {
     println!(
@@ -635,7 +635,7 @@ pub async fn delete<'a>(
 
 pub async fn delete_by_id_axum<'a>(
     axum::extract::Path(path_parameters): axum::extract::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::DeleteByIdPathParameters>,
-    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync<'_>>,
+    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants {
     println!("delete_by_id {}", path_parameters.id);
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
@@ -679,7 +679,7 @@ pub async fn delete_by_id<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
     path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::DeleteByIdPathParameters>,
     app_info: actix_web::web::Data<
-        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>,
+        tufa_common::repositories_types::tufa_server::routes::app_info::AppInfo<'a>,
     >,
 ) -> actix_web::HttpResponse {
     println!("delete_by_id {}", path_parameters.id);

@@ -3,7 +3,7 @@ pub async fn login<'a>(
         tufa_common::repositories_types::tufa_server::routes::login::post::FormData,
     >,
     app_info: actix_web::web::Data<
-        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo<'a>,
+        tufa_common::repositories_types::tufa_server::routes::app_info::AppInfo<'a>,
     >,
     session: tufa_common::repositories_types::tufa_server::session_state::TypedSession,
 ) -> Result<

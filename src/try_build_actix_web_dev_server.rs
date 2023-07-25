@@ -75,7 +75,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
         )
     );
     let app_info = std::sync::Arc::new(
-        tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo {
+        tufa_common::repositories_types::tufa_server::routes::app_info::AppInfo {
             postgres_pool,
             config,
             project_git_info:
