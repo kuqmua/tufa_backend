@@ -74,7 +74,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
             &config
         )
     );
-    let state = std::sync::Arc::new(
+    let app_info = std::sync::Arc::new(
         tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::AppInfo {
             postgres_pool,
             config,
@@ -94,8 +94,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
             "/git_info",
             axum::routing::get(tufa_common::server::routes::git_info::git_info_axum),
         )
-        .with_state(state.clone()
-            as tufa_common::server::routes::git_info::DynArcGitInfoRouteParametersSendSync);
+        .with_state(app_info.clone());
     // let cats_routes = axum::Router::new()
     //     .route(
     //         "/",
@@ -139,8 +138,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
             axum::routing::get(crate::routes::api::cats::get_by_id_axum)
                 .delete(crate::routes::api::cats::delete_by_id_axum),
         )
-                    .with_state(state as tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync)
-        ;
+        .with_state(app_info);
     // let create_routes = create_routes();
     let cors = tower_http::cors::CorsLayer::new()
         .allow_methods([
