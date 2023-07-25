@@ -6,7 +6,7 @@
 
 pub async fn get_axum(
     axum::extract::Query(query_parameters): axum::extract::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::get::GetQueryParameters>,
-    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync>,
+    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync<'_>>,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants {
     println!(
         "get query_parameters limit {:?}, name {:?} color {:?}",
@@ -148,7 +148,7 @@ pub async fn get<'a>(
 
 pub async fn get_by_id_axum(
     axum::extract::Path(path_parameters): axum::extract::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::GetByIdPathParameters>,
-    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync>,
+    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync<'_>>,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetByIdResponseVariants {
     println!("get_by_id path_parameters id {}", path_parameters.id);
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
@@ -236,7 +236,7 @@ pub async fn get_by_id<'a>(
 }
 
 pub async fn post_axum(
-    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync>,
+    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync<'_>>,
     //write middleware to check if conent type is application\json. return error if its not. 
     //use body: string here. serde::from_json later as variant of TryPost
     axum::Json(payload): axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::post::CatToPost>,
@@ -297,7 +297,7 @@ pub async fn post<'a>(
 
 //todo - its the case if all columns except id are not null. for nullable columns must be different logic
 pub async fn put_axum<'a>(
-    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync>,
+    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync<'_>>,
     axum::Json(payload): axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::Cat>,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::put::TryPutResponseVariants {
     println!("put id {} name {}, color {}", payload.id, payload.name, payload.color);
@@ -388,7 +388,7 @@ pub async fn put<'a>(
 }
 
 pub async fn patch_axum<'a>(
-    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync>,
+    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync<'_>>,
     axum::Json(payload): axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::patch::CatToPatch>,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatchResponseVariants {
     println!("patch cat {payload:#?}");
@@ -507,7 +507,7 @@ pub async fn patch<'a>(
 
 pub async fn delete_axum<'a>(
     axum::extract::Query(query_parameters): axum::extract::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::delete::DeleteQueryParameters>,
-    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync>,
+    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync<'_>>,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants {
     println!(
         "delete name {:?}, color {:?}",
@@ -635,7 +635,7 @@ pub async fn delete<'a>(
 
 pub async fn delete_by_id_axum<'a>(
     axum::extract::Path(path_parameters): axum::extract::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::DeleteByIdPathParameters>,
-    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync>,
+    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::app_info::DynArcGetAppInfoSendSync<'_>>,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants {
     println!("delete_by_id {}", path_parameters.id);
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(

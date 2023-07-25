@@ -81,11 +81,10 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 tufa_common::repositories_types::tufa_server::routes::health_check_axum,
             ),
         )
-        // .route(
-        //     "/git_info",
-        //     axum::routing::get(tufa_common::server::routes::git_info::git_info_axum),
-        // )
-        ;
+        .route(
+            "/git_info",
+            axum::routing::get(tufa_common::server::routes::git_info::git_info_axum),
+        );
     // let cats_routes = axum::Router::new()
     //     .route(
     //         "/",
