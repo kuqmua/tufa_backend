@@ -4,6 +4,7 @@ pub async fn server_wrapper<'a>(
     (),
     Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed<'a>>,
 > {
+    //todo check postgres version with sql query
     // let tcp_listener = {
     //     use tufa_common::common::config::try_create_tcp_listener::TryCreateTcpListener;
     //     config.try_create_tcp_listener()
