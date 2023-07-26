@@ -74,18 +74,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
             repository_git_info: &crate::global_variables::compile_time::git_info::GIT_INFO,
         },
     );
-    let common_routes = axum::Router::new()
-        .route(
-            "/health_check",
-            axum::routing::get(
-                tufa_common::repositories_types::tufa_server::routes::health_check_axum,
-            ),
-        )
-        .route(
-            "/git_info",
-            axum::routing::get(tufa_common::server::routes::git_info::git_info_axum),
-        )
-        .with_state(app_info.clone());
     let cors = tower_http::cors::CorsLayer::new()
         .allow_methods([
             http::Method::GET,
@@ -98,6 +86,12 @@ pub async fn try_build_actix_web_dev_server<'a>(
     let shared_data = SharedData {
         message: std::string::String::from("shared_message"),
     };
+    let git_info_route = axum::Router::new()
+        .route(
+            "/git_info",
+            axum::routing::get(tufa_common::server::routes::git_info::git_info_axum),
+        )
+        .with_state(app_info.clone());
     axum::Server::bind(
         tufa_common::common::config::config_fields::GetSocketAddr::get_socket_addr(config),
     )
@@ -108,7 +102,8 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 axum::routing::get(read_middleware_custom_header),
             )
             .route_layer(axum::middleware::from_fn(set_middleware_custom_header))
-            .merge(common_routes)
+            .merge(git_info_route)
+            .merge(tufa_common::repositories_types::tufa_server::routes::health_check_route())
             .nest("/api", crate::routes::api::cats::routes(app_info))
             .route(
                 "/header_extractor_example",
