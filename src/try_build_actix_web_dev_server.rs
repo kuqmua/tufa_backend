@@ -52,32 +52,6 @@ pub async fn set_middleware_custom_header<B>(
     Ok(next.run(req).await)
 }
 
-fn cats_routes(
-    app_info: tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync,
-) -> axum::Router {
-    axum::Router::new()
-        .route(
-            &format!(
-                "/{}/",
-                tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
-            ),
-            axum::routing::get(crate::routes::api::cats::get::get_axum)
-                .post(crate::routes::api::cats::post::post_axum)
-                .put(crate::routes::api::cats::put::put_axum)
-                .patch(crate::routes::api::cats::patch::patch_axum)
-                .delete(crate::routes::api::cats::delete::delete_axum),
-        )
-        .route(
-            &format!(
-                "/{}/:id",
-                tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
-            ),
-            axum::routing::get(crate::routes::api::cats::get_by_id::get_by_id_axum)
-                .delete(crate::routes::api::cats::delete_by_id::delete_by_id_axum),
-        )
-        .with_state(app_info)
-}
-
 //todo - make it async trait after async trait stabilization
 pub async fn try_build_actix_web_dev_server<'a>(
 // tcp_listener: std::net::TcpListener,
@@ -86,7 +60,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
     config: &'static tufa_common::repositories_types::tufa_server::config::config_struct::Config
 ) -> Result<actix_web::dev::Server, Box<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::TryBuildActixWebDevServer<'a>>>{
     println!(
-        "{}",
+        "server running on {}",
         tufa_common::common::config::get_server_address::GetServerAddress::get_server_address(
             &config
         )
@@ -135,7 +109,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
             )
             .route_layer(axum::middleware::from_fn(set_middleware_custom_header))
             .merge(common_routes)
-            .nest("/api", cats_routes(app_info))
+            .nest("/api", crate::routes::api::cats::routes(app_info))
             .route(
                 "/header_extractor_example",
                 axum::routing::get(
