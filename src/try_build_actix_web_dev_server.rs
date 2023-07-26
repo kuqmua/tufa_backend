@@ -61,19 +61,19 @@ fn cats_routes(
                 "/{}/",
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
             ),
-            axum::routing::get(crate::routes::api::cats::get_axum)
-                .post(crate::routes::api::cats::post_axum)
-                .put(crate::routes::api::cats::put_axum)
-                .patch(crate::routes::api::cats::patch_axum)
-                .delete(crate::routes::api::cats::delete_axum),
+            axum::routing::get(crate::routes::api::cats::get::get_axum)
+                .post(crate::routes::api::cats::post::post_axum)
+                .put(crate::routes::api::cats::put::put_axum)
+                .patch(crate::routes::api::cats::patch::patch_axum)
+                .delete(crate::routes::api::cats::delete::delete_axum),
         )
         .route(
             &format!(
                 "/{}/:id",
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
             ),
-            axum::routing::get(crate::routes::api::cats::get_by_id_axum)
-                .delete(crate::routes::api::cats::delete_by_id_axum),
+            axum::routing::get(crate::routes::api::cats::get_by_id::get_by_id_axum)
+                .delete(crate::routes::api::cats::delete_by_id::delete_by_id_axum),
         )
         .with_state(app_info)
 }
