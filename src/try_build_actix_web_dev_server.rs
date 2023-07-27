@@ -86,7 +86,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
     let shared_data = SharedData {
         message: std::string::String::from("shared_message"),
     };
-    let git_info_route = tufa_common::server::routes::git_info::git_info_route(app_info.clone());
     axum::Server::bind(
         tufa_common::common::config::config_fields::GetSocketAddr::get_socket_addr(config),
     )
@@ -97,9 +96,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 axum::routing::get(read_middleware_custom_header),
             )
             .route_layer(axum::middleware::from_fn(set_middleware_custom_header))
-            .merge(git_info_route)
-            .merge(tufa_common::server::routes::health_check::health_check_route())
-            .nest("/api", crate::routes::api::cats::routes(app_info))
+            .nest("/api", crate::routes::api::cats::routes(app_info.clone()))
             .route(
                 "/header_extractor_example",
                 axum::routing::get(header_extractor_example),
@@ -114,6 +111,10 @@ pub async fn try_build_actix_web_dev_server<'a>(
             )
             .route_layer(axum::middleware::from_fn(
                 tufa_common::server::middleware::project_commit_checker::project_commit_checker,
+            ))
+            .merge(tufa_common::server::routes::health_check::health_check_route())
+            .merge(tufa_common::server::routes::git_info::git_info_route(
+                app_info,
             ))
             // .route_layer(axum::middleware::from_fn(
             //     tufa_common::server::middleware::content_type_application_json::content_type_application_json,
