@@ -74,15 +74,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
             repository_git_info: &crate::global_variables::compile_time::git_info::GIT_INFO,
         },
     );
-    let cors = tower_http::cors::CorsLayer::new()
-        .allow_methods([
-            http::Method::GET,
-            http::Method::POST,
-            http::Method::PATCH,
-            http::Method::PUT,
-            http::Method::DELETE,
-        ])
-        .allow_origin(tower_http::cors::Any);
     let shared_data = SharedData {
         message: std::string::String::from("shared_message"),
     };
@@ -112,8 +103,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
             .route_layer(axum::middleware::from_fn(
                 tufa_common::server::middleware::project_commit_checker::project_commit_checker,
             ))
-            .merge(tufa_common::server::routes::health_check::health_check_route())
-            .merge(tufa_common::server::routes::git_info::git_info_route(
+            .merge(tufa_common::server::routes::common_routes::common_routes(
                 app_info,
             ))
             // .route_layer(axum::middleware::from_fn(
@@ -123,7 +113,20 @@ pub async fn try_build_actix_web_dev_server<'a>(
             .layer(
                 tower::ServiceBuilder::new().layer(tower_http::trace::TraceLayer::new_for_http()),
             )
-            .layer(cors)
+            .layer(
+                tower_http::cors::CorsLayer::new()
+                    .allow_methods([
+                        http::Method::GET,
+                        http::Method::POST,
+                        http::Method::PATCH,
+                        http::Method::PUT,
+                        http::Method::DELETE,
+                    ])
+                    .allow_origin([
+                        "http://127.0.0.1".parse().unwrap(),
+                        "http://localhost".parse().unwrap(),
+                    ]),
+            )
             .layer(axum::Extension(shared_data))
             .into_make_service(),
     )

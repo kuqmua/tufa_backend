@@ -35,5 +35,12 @@ pub fn routes(
             axum::routing::get(crate::routes::api::cats::get_by_id::get_by_id_axum)
                 .delete(crate::routes::api::cats::delete_by_id::delete_by_id_axum),
         )
+        .layer(tower_http::cors::CorsLayer::new().allow_methods([
+            http::Method::GET,
+            http::Method::POST,
+            http::Method::PATCH,
+            http::Method::PUT,
+            http::Method::DELETE,
+        ]))
         .with_state(app_info)
 }
