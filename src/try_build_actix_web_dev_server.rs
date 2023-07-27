@@ -113,28 +113,22 @@ pub async fn try_build_actix_web_dev_server<'a>(
             .nest("/api", crate::routes::api::cats::routes(app_info))
             .route(
                 "/header_extractor_example",
-                axum::routing::get(
-                    header_extractor_example
-                ),
+                axum::routing::get(header_extractor_example),
             )
             .route(
                 "/extract_custom_header_example",
-                axum::routing::get(
-                    extract_custom_header_example
-                ),
+                axum::routing::get(extract_custom_header_example),
             )
             .route(
                 "/middleware_message_example",
-                axum::routing::get(
-                    middleware_message_example
-                ),
+                axum::routing::get(middleware_message_example),
             )
             .route_layer(axum::middleware::from_fn(
                 tufa_common::server::middleware::project_commit_checker::project_commit_checker,
             ))
-            .route_layer(axum::middleware::from_fn(
-                tufa_common::server::middleware::content_type_application_json::content_type_application_json,
-            ))
+            // .route_layer(axum::middleware::from_fn(
+            //     tufa_common::server::middleware::content_type_application_json::content_type_application_json,
+            // ))
             .fallback_service(routes_static()) //tufa_common::server::routes::not_found_route::fallback_service
             .layer(
                 tower::ServiceBuilder::new().layer(tower_http::trace::TraceLayer::new_for_http()),
