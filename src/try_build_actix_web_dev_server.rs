@@ -52,17 +52,6 @@ pub async fn set_middleware_custom_header<B>(
     Ok(next.run(req).await)
 }
 
-pub fn git_info_route(
-    app_info: tufa_common::server::routes::git_info::DynArcGitInfoRouteParametersSendSync,
-) -> axum::Router {
-    axum::Router::new()
-        .route(
-            "/git_info",
-            axum::routing::get(tufa_common::server::routes::git_info::git_info_axum),
-        )
-        .with_state(app_info)
-}
-
 //todo - make it async trait after async trait stabilization
 pub async fn try_build_actix_web_dev_server<'a>(
 // tcp_listener: std::net::TcpListener,
@@ -97,7 +86,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
     let shared_data = SharedData {
         message: std::string::String::from("shared_message"),
     };
-    let git_info_route = git_info_route(app_info.clone());
+    let git_info_route = tufa_common::server::routes::git_info::git_info_route(app_info.clone());
     axum::Server::bind(
         tufa_common::common::config::config_fields::GetSocketAddr::get_socket_addr(config),
     )
@@ -109,7 +98,7 @@ pub async fn try_build_actix_web_dev_server<'a>(
             )
             .route_layer(axum::middleware::from_fn(set_middleware_custom_header))
             .merge(git_info_route)
-            .merge(tufa_common::repositories_types::tufa_server::routes::health_check_route())
+            .merge(tufa_common::server::routes::health_check::health_check_route())
             .nest("/api", crate::routes::api::cats::routes(app_info))
             .route(
                 "/header_extractor_example",
