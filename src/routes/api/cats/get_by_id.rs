@@ -1,4 +1,4 @@
-pub async fn get_by_id_axum(
+pub(crate) async fn get_by_id_axum(
     axum::extract::Path(path_parameters): axum::extract::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::GetByIdPathParameters>,
     axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetByIdResponseVariants {
@@ -40,7 +40,7 @@ pub async fn get_by_id_axum(
 }
 
 #[actix_web::get("/{id}")]
-pub async fn get_by_id<'a>(
+pub(crate) async fn get_by_id<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
     path_parameters: actix_web::web::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::GetByIdPathParameters>,
     app_info: actix_web::web::Data<

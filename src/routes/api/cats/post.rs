@@ -1,4 +1,4 @@
-pub async fn post_axum(
+pub(crate) async fn post_axum(
     axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
     //write middleware to check if conent type is application\json. return error if its not.
     //use body: string here. serde::from_json later as variant of TryPost
@@ -30,7 +30,7 @@ pub async fn post_axum(
 }
 
 #[actix_web::post("/")]
-pub async fn post<'a>(
+pub(crate) async fn post<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
     json: actix_web::web::Json<
         tufa_common::repositories_types::tufa_server::routes::api::cats::post::CatToPost,

@@ -1,4 +1,4 @@
-pub async fn delete_axum<'a>(
+pub(crate) async fn delete_axum<'a>(
     axum::extract::Query(query_parameters): axum::extract::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::delete::DeleteQueryParameters>,
     axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants {
@@ -61,7 +61,7 @@ pub async fn delete_axum<'a>(
 }
 
 #[actix_web::delete("/")]
-pub async fn delete<'a>(
+pub(crate) async fn delete<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
     query_parameters: actix_web::web::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::delete::DeleteQueryParameters>,
     app_info: actix_web::web::Data<

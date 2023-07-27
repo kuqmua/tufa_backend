@@ -1,4 +1,4 @@
-pub async fn put_axum<'a>(
+pub(crate) async fn put_axum<'a>(
     axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
     axum::Json(payload): axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::Cat>,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::put::TryPutResponseVariants {
@@ -42,7 +42,7 @@ pub async fn put_axum<'a>(
 }
 
 #[actix_web::put("/")]
-pub async fn put<'a>(
+pub(crate) async fn put<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
     json: actix_web::web::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::Cat>,
     app_info: actix_web::web::Data<

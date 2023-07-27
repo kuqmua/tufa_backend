@@ -1,10 +1,10 @@
-pub mod delete;
-pub mod delete_by_id;
-pub mod get;
-pub mod get_by_id;
-pub mod patch;
-pub mod post;
-pub mod put;
+mod delete;
+mod delete_by_id;
+mod get;
+mod get_by_id;
+mod patch;
+mod post;
+mod put;
 
 //todo how to handle sql injection ?
 //todo - maybe check max length for field here instead of put it in postgres and recieve error ? color VARCHAR (255) NOT NULL
@@ -12,7 +12,7 @@ pub mod put;
 //todo header Retry-After logic
 //todo - its the case if all columns except id are not null. for nullable columns must be different logic(post or put)
 
-pub fn routes(
+pub(crate) fn routes(
     app_info: tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync,
 ) -> axum::Router {
     axum::Router::new()

@@ -1,9 +1,10 @@
-fn routes_static() -> axum::Router {
-    axum::Router::new().nest_service(
-        "/",
-        axum::routing::get_service(tower_http::services::ServeDir::new("./")),
-    )
-}
+//allow to open source files in browser like php
+// fn routes_static() -> axum::Router {
+//     axum::Router::new().nest_service(
+//         "/",
+//         axum::routing::get_service(tower_http::services::ServeDir::new("./")),
+//     )
+// }
 
 async fn extract_custom_header_example(headers: http::header::HeaderMap) {
     let pc = headers.get("project_commit");
@@ -86,8 +87,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 "/read_middleware_custom_header",
                 axum::routing::get(read_middleware_custom_header),
             )
-            .route_layer(axum::middleware::from_fn(set_middleware_custom_header))
-            .nest("/api", crate::routes::api::cats::routes(app_info.clone()))
             .route(
                 "/header_extractor_example",
                 axum::routing::get(header_extractor_example),
@@ -96,27 +95,22 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 "/extract_custom_header_example",
                 axum::routing::get(extract_custom_header_example),
             )
+            .route_layer(axum::middleware::from_fn(set_middleware_custom_header))
             .route(
                 "/middleware_message_example",
                 axum::routing::get(middleware_message_example),
             )
-            .route_layer(axum::middleware::from_fn(
-                tufa_common::server::middleware::project_commit_checker::project_commit_checker,
-            ))
-            .merge(tufa_common::server::routes::common_routes::common_routes(
-                app_info,
-            ))
+            .layer(axum::Extension(shared_data))
             // .route_layer(axum::middleware::from_fn(
             //     tufa_common::server::middleware::content_type_application_json::content_type_application_json,
             // ))
-            .fallback_service(routes_static()) //tufa_common::server::routes::not_found_route::fallback_service
-            .layer(
-                tower::ServiceBuilder::new().layer(tower_http::trace::TraceLayer::new_for_http()),
-            )
+            .merge(tufa_common::server::routes::routes(app_info.clone()))
+            .merge(crate::routes::api::routes(app_info.clone()))
+            .fallback(tufa_common::server::routes::not_found::not_found)
             .layer(
                 tower_http::cors::CorsLayer::new()
                     .allow_methods([
-                        http::Method::GET,
+                        // http::Method::GET,
                         http::Method::POST,
                         http::Method::PATCH,
                         http::Method::PUT,
@@ -127,7 +121,6 @@ pub async fn try_build_actix_web_dev_server<'a>(
                         "http://localhost".parse().unwrap(),
                     ]),
             )
-            .layer(axum::Extension(shared_data))
             .into_make_service(),
     )
     .await

@@ -1,4 +1,4 @@
-pub async fn get_axum(
+pub(crate) async fn get_axum(
     axum::extract::Query(query_parameters): axum::extract::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::get::GetQueryParameters>,
     axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants {
@@ -67,7 +67,7 @@ pub async fn get_axum(
 }
 
 #[actix_web::get("/")]
-pub async fn get<'a>(
+pub(crate) async fn get<'a>(
     _project_commit_extractor: tufa_common::server::extractors::project_commit_extractor::ProjectCommitExtractor,
     query_parameters: actix_web::web::Query<
         tufa_common::repositories_types::tufa_server::routes::api::cats::get::GetQueryParameters,
