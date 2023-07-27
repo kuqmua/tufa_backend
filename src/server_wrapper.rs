@@ -43,26 +43,26 @@ pub async fn server_wrapper<'a>(
             ))
         },
     };
-    println!("trying to create redis session storage...");
-    let redis_session_storage = match {
-        use tufa_common::common::config::try_get_redis_session_storage::TryGetRedisSessionStorage;
-        config.try_get_redis_session_storage().await
-    } {
-        Ok(redis_session_storage) => redis_session_storage,
-        Err(e) => {
-            return Err(Box::new(
-                tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::TryGetRedisSessionStorage {
-                    try_get_redis_session_storage: e,
-                    code_occurence: tufa_common::code_occurence!(),
-                }
-            ))
-        },
-    };
-    println!("trying to build actix web dev server...");
+    // println!("trying to create redis session storage...");
+    // let redis_session_storage = match {
+    //     use tufa_common::common::config::try_get_redis_session_storage::TryGetRedisSessionStorage;
+    //     config.try_get_redis_session_storage().await
+    // } {
+    //     Ok(redis_session_storage) => redis_session_storage,
+    //     Err(e) => {
+    //         return Err(Box::new(
+    //             tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::TryGetRedisSessionStorage {
+    //                 try_get_redis_session_storage: e,
+    //                 code_occurence: tufa_common::code_occurence!(),
+    //             }
+    //         ))
+    //     },
+    // };
+    println!("trying to build server...");
     let actix_web_dev_server = match crate::try_build_actix_web_dev_server::try_build_actix_web_dev_server(
         // tcp_listener,
         postgres_pool,
-        redis_session_storage,
+        // redis_session_storage,
         config
     ).await {
         Err(e) => return Err(Box::new(tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::ApplicationBuild {
@@ -72,42 +72,42 @@ pub async fn server_wrapper<'a>(
         Ok(app) => app,
     };
     println!("server running!");
-    let application_task = tokio::spawn(async move {
-        match 
-            actix_web_dev_server
-            .await 
-        {
-            Err(e) => Err(tufa_common::repositories_types::tufa_server::server_wrapper::RunUntilStoppedErrorNamed::RunUntilStopped {
-                run_until_stopped: e,
-                code_occurence: tufa_common::code_occurence!(),
-            }),
-            Ok(_) => Ok(()),
-        }
-    });
+    // let application_task = tokio::spawn(async move {
+    //     match
+    //         actix_web_dev_server
+    //         .await
+    //     {
+    //         Err(e) => Err(tufa_common::repositories_types::tufa_server::server_wrapper::RunUntilStoppedErrorNamed::RunUntilStopped {
+    //             run_until_stopped: e,
+    //             code_occurence: tufa_common::code_occurence!(),
+    //         }),
+    //         Ok(_) => Ok(()),
+    //     }
+    // });
     // let worker_task = tokio::spawn(crate::issue_delivery_worker::run_worker_until_stopped(config));
-    tokio::select! {
-        task = application_task => match task {
-            Ok(Ok(())) => (),
-            Ok(Err(e)) => {
-                return Err(Box::new(tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::RunUntilStopped {
-                    run_until_stopped: e,
-                    code_occurence: tufa_common::code_occurence!(),
-                }));
-            },
-            Err(e) => {
-                return Err(Box::new(
-                    tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::TokioSpawn {
-                        tokio_spawn: e,
-                        code_occurence: tufa_common::code_occurence!(),
-                    },
-                ));
-            },
-        },
-        // task = worker_task => match task {
-        //     Ok(_) => println!("2"),
-        //     Err(_) => println!("3"),
-        // },//report_exit("Background worker", o)
-    };
+    // tokio::select! {
+    //     task = application_task => match task {
+    //         Ok(Ok(())) => (),
+    //         Ok(Err(e)) => {
+    //             return Err(Box::new(tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::RunUntilStopped {
+    //                 run_until_stopped: e,
+    //                 code_occurence: tufa_common::code_occurence!(),
+    //             }));
+    //         },
+    //         Err(e) => {
+    //             return Err(Box::new(
+    //                 tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed::TokioSpawn {
+    //                     tokio_spawn: e,
+    //                     code_occurence: tufa_common::code_occurence!(),
+    //                 },
+    //             ));
+    //         },
+    //     },
+    //     // task = worker_task => match task {
+    //     //     Ok(_) => println!("2"),
+    //     //     Err(_) => println!("3"),
+    //     // },//report_exit("Background worker", o)
+    // };
     Ok(())
 }
 

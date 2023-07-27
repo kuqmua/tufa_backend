@@ -1,2 +1,2 @@
 mod post;
-pub use post::change_password;
+// pub use post::change_password;
