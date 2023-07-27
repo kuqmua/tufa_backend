@@ -59,7 +59,7 @@ pub async fn server_wrapper<'a>(
     //     },
     // };
     println!("trying to build server...");
-    let actix_web_dev_server = match crate::try_build_actix_web_dev_server::try_build_actix_web_dev_server(
+    match crate::try_build_actix_web_dev_server::try_build_actix_web_dev_server(
         // tcp_listener,
         postgres_pool,
         // redis_session_storage,
@@ -69,8 +69,8 @@ pub async fn server_wrapper<'a>(
             application_build: *e,
             code_occurence: tufa_common::code_occurence!(),
         })),
-        Ok(app) => app,
-    };
+        Ok(_) => (),
+    }
     println!("server running!");
     // let application_task = tokio::spawn(async move {
     //     match
