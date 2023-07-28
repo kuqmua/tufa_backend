@@ -226,8 +226,8 @@
 //         .unwrap_or_else(|e| panic!("failed to ConfigUnchecked::new(), reason: {e:#?}"))
 //     ).unwrap_or_else(|e| panic!("failed to Config try_from ConfigUnchecked, reason: {e}")));
 //     configure_database(config).await;
-//     let application = crate::try_build_actix_web_dev_server::Application::build(
-//         //try_build_actix_web_dev_server
+//     let application = crate::try_build_server::Application::build(
+//         //try_build_server
 //         config,
 //     )
 //     .await
@@ -245,7 +245,7 @@
 //             config.get_server_address()
 //         },
 //         port: application_port,
-//         db_pool: crate::try_build_actix_web_dev_server::get_connection_pool(
+//         db_pool: crate::try_build_server::get_connection_pool(
 //             &configuration.database,
 //         ),
 //         email_server,

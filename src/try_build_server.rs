@@ -1,4 +1,4 @@
-//allow to open source files in browser like php
+// // allow to open source files in browser like php
 // fn routes_static() -> axum::Router {
 //     axum::Router::new().nest_service(
 //         "/",
@@ -54,10 +54,13 @@ pub async fn set_middleware_custom_header<B>(
 }
 
 //todo - make it async trait after async trait stabilization
-pub async fn try_build_actix_web_dev_server<'a>(
+pub async fn try_build_server<'a>(
     postgres_pool: sqlx::Pool<sqlx::Postgres>,
-    config: &'static tufa_common::repositories_types::tufa_server::config::config_struct::Config
-) -> Result<(), Box<tufa_common::repositories_types::tufa_server::try_build_actix_web_dev_server::TryBuildActixWebDevServer<'a>>>{
+    config: &'static tufa_common::repositories_types::tufa_server::config::config_struct::Config,
+) -> Result<
+    (),
+    Box<tufa_common::repositories_types::tufa_server::try_build_server::TryBuildServer<'a>>,
+> {
     println!(
         "server running on {}",
         tufa_common::common::config::get_server_address::GetServerAddress::get_server_address(
@@ -99,16 +102,14 @@ pub async fn try_build_actix_web_dev_server<'a>(
                 axum::routing::get(middleware_message_example),
             )
             .layer(axum::Extension(shared_data))
-            // .route_layer(axum::middleware::from_fn(
-            //     tufa_common::server::middleware::content_type_application_json::content_type_application_json,
-            // ))
             .merge(tufa_common::server::routes::routes(app_info.clone()))
             .merge(crate::routes::api::routes(app_info.clone()))
             .fallback(tufa_common::server::routes::not_found::not_found)
+            // .fallback_service(routes_static())
             .layer(
                 tower_http::cors::CorsLayer::new()
                     .allow_methods([
-                        // http::Method::GET,
+                        http::Method::GET,
                         http::Method::POST,
                         http::Method::PATCH,
                         http::Method::PUT,

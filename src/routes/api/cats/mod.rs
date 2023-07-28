@@ -23,6 +23,9 @@ pub(crate) fn routes(
             ),
             axum::routing::get(crate::routes::api::cats::get::get_axum)
                 .post(crate::routes::api::cats::post::post_axum)
+                // .route_layer(axum::middleware::from_fn(
+                //     tufa_common::server::middleware::content_type_application_json::content_type_application_json,
+                // ))
                 .put(crate::routes::api::cats::put::put_axum)
                 .patch(crate::routes::api::cats::patch::patch_axum)
                 .delete(crate::routes::api::cats::delete::delete_axum),
