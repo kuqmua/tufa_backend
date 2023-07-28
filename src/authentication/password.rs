@@ -80,10 +80,7 @@ fn verify_password_hash<'a>(
     expected_password_hash: secrecy::Secret<String>,
     password_candidate: secrecy::Secret<String>,
 ) -> Result<(), tufa_common::repositories_types::tufa_server::authentication::password::VerifyPasswordHashErrorNamed<'a>>{
-    match argon2::PasswordHash::new({
-        use secrecy::ExposeSecret;
-        expected_password_hash.expose_secret()
-    }) {
+    match argon2::PasswordHash::new(secrecy::ExposeSecret::expose_secret(&expected_password_hash)) {
         Err(e) => Err(tufa_common::repositories_types::tufa_server::authentication::password::VerifyPasswordHashErrorNamed::ExposeSecret {
             expose_secret: e,
             code_occurence: tufa_common::code_occurence!()
@@ -92,10 +89,7 @@ fn verify_password_hash<'a>(
             use argon2::PasswordVerifier;
             argon2::Argon2::default()
             .verify_password(
-                {
-                    use secrecy::ExposeSecret;
-                    password_candidate.expose_secret()
-                }.as_bytes(),
+                secrecy::ExposeSecret::expose_secret(&password_candidate).as_bytes(),
                 &expected_password_hash,
             )
         } {
@@ -131,10 +125,7 @@ pub async fn change_password<'a>(
                         SET password_hash = $1
                         WHERE user_id = $2
                     "#,
-                    {
-                        use secrecy::ExposeSecret;
-                        password_hash.expose_secret()
-                    },
+                    secrecy::ExposeSecret::expose_secret(&password_hash),
                     user_id
             )
             .execute(pool)
@@ -156,10 +147,7 @@ fn compute_password_hash<'a>(password: secrecy::Secret<String>) -> Result<secrec
         argon2::Version::V0x13,
         argon2::Params::new(15000, 2, 1, None).unwrap(),
     )
-    .hash_password({
-        use secrecy::ExposeSecret;
-        password.expose_secret()
-    }.as_bytes(), &argon2::password_hash::SaltString::generate(&mut rand::thread_rng())) {
+    .hash_password(secrecy::ExposeSecret::expose_secret(&password).as_bytes(), &argon2::password_hash::SaltString::generate(&mut rand::thread_rng())) {
         Ok(password_hash) => Ok(secrecy::Secret::new(password_hash.to_string())),
         Err(e) => Err(
             tufa_common::repositories_types::tufa_server::authentication::password::ComputePasswordHashErrorNamed::PasswordHash {

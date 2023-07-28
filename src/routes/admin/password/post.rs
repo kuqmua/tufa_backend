@@ -10,13 +10,7 @@
 //     >,
 // ) -> Result<actix_web::HttpResponse, actix_web::Error> {
 //     let user_id = user_id.into_inner();
-//     if {
-//         use secrecy::ExposeSecret;
-//         form.new_password.expose_secret()
-//     } != {
-//         use secrecy::ExposeSecret;
-//         form.new_password_check.expose_secret()
-//     } {
+//     if secrecy::ExposeSecret::expose_secret(&form.new_password) != secrecy::ExposeSecret::expose_secret(form.new_password_check) {
 //         actix_web_flash_messages::FlashMessage::error(
 //             "You entered two different new passwords - the field values must match.",
 //         )
