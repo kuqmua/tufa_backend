@@ -4,10 +4,7 @@ pub async fn server_wrapper<'a>(
     (),
     Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed<'a>>,
 > {
-    let postgres_pool = match {
-        use tufa_common::common::config::try_get_postgres_pool::TryGetPostgresPool;
-        config.try_get_postgres_pool().await
-    } {
+    let postgres_pool = match tufa_common::common::config::try_get_postgres_pool::TryGetPostgresPool::try_get_postgres_pool(config).await {
         Ok(postgres_pool) => postgres_pool,
         Err(e) => {
             return Err(Box::new(

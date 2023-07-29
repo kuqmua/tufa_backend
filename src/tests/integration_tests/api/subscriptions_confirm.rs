@@ -1,12 +1,6 @@
-use crate::tests::integration_tests::api::helpers::spawn_app;
-use wiremock::matchers::method;
-use wiremock::matchers::path;
-use wiremock::Mock;
-use wiremock::ResponseTemplate;
-
 #[tokio::test]
 async fn integration_confirmations_without_token_are_rejected_with_a_400() {
-    let app = spawn_app().await;
+    let app = crate::tests::integration_tests::api::helpers::spawn_app().await;
     let response = reqwest::get(&format!("{}/subscriptions/confirm", app.address))
         .await
         .expect("inside integration_confirmations_without_token_are_rejected_with_a_400 reqwest::get().await failed");
@@ -15,11 +9,11 @@ async fn integration_confirmations_without_token_are_rejected_with_a_400() {
 
 #[tokio::test]
 async fn integration_the_link_returned_by_subscribe_returns_a_200_if_called() {
-    let app = spawn_app().await;
+    let app = crate::tests::integration_tests::api::helpers::spawn_app().await;
     let body = "name=le%20guin&email=ursula_le_guin%40gmail.com";
-    Mock::given(path("/email"))
-        .and(method("POST"))
-        .respond_with(ResponseTemplate::new(200))
+    wiremock::Mock::given(wiremock::matchers::path("/email"))
+        .and(wiremock::matchers::method("POST"))
+        .respond_with(wiremock::ResponseTemplate::new(200))
         .mount(&app.email_server)
         .await;
     app.post_subscriptions(body.into()).await;
@@ -31,11 +25,11 @@ async fn integration_the_link_returned_by_subscribe_returns_a_200_if_called() {
 
 #[tokio::test]
 async fn integration_clicking_on_the_confirmation_link_confirms_a_subscriber() {
-    let app = spawn_app().await;
+    let app = crate::tests::integration_tests::api::helpers::spawn_app().await;
     let body = "name=le%20guin&email=ursula_le_guin%40gmail.com";
-    Mock::given(path("/email"))
-        .and(method("POST"))
-        .respond_with(ResponseTemplate::new(200))
+    wiremock::Mock::given(wiremock::matchers::path("/email"))
+        .and(wiremock::matchers::method("POST"))
+        .respond_with(wiremock::ResponseTemplate::new(200))
         .mount(&app.email_server)
         .await;
     app.post_subscriptions(body.into()).await;

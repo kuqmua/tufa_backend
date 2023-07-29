@@ -1,16 +1,10 @@
-use crate::tests::integration_tests::api::helpers::spawn_app;
-use wiremock::matchers::method;
-use wiremock::matchers::path;
-use wiremock::Mock;
-use wiremock::ResponseTemplate;
-
 #[tokio::test]
 async fn integration_subscribe_returns_a_200_for_valid_form_data() {
-    let app = spawn_app().await;
+    let app = crate::tests::integration_tests::api::helpers::spawn_app().await;
     let body = "name=le%20guin&email=ursula_le_guin%40gmail.com";
-    Mock::given(path("/email"))
-        .and(method("POST"))
-        .respond_with(ResponseTemplate::new(200))
+    wiremock::Mock::given(wiremock::matchers::path("/email"))
+        .and(wiremock::matchers::method("POST"))
+        .respond_with(wiremock::ResponseTemplate::new(200))
         .mount(&app.email_server)
         .await;
     let response = app.post_subscriptions(body.into()).await;
@@ -19,11 +13,11 @@ async fn integration_subscribe_returns_a_200_for_valid_form_data() {
 
 #[tokio::test]
 async fn integration_subscribe_persists_the_new_subscriber() {
-    let app = spawn_app().await;
+    let app = crate::tests::integration_tests::api::helpers::spawn_app().await;
     let body = "name=le%20guin&email=ursula_le_guin%40gmail.com";
-    Mock::given(path("/email"))
-        .and(method("POST"))
-        .respond_with(ResponseTemplate::new(200))
+    wiremock::Mock::given(wiremock::matchers::path("/email"))
+        .and(wiremock::matchers::method("POST"))
+        .respond_with(wiremock::ResponseTemplate::new(200))
         .mount(&app.email_server)
         .await;
     app.post_subscriptions(body.into()).await;
@@ -38,7 +32,7 @@ async fn integration_subscribe_persists_the_new_subscriber() {
 
 #[tokio::test]
 async fn integration_subscribe_returns_a_400_when_data_is_missing() {
-    let app = spawn_app().await;
+    let app = crate::tests::integration_tests::api::helpers::spawn_app().await;
     let test_cases = vec![
         ("name=le%20guin", "missing the email"),
         ("email=ursula_le_guin%40gmail.com", "missing the name"),
@@ -57,7 +51,7 @@ async fn integration_subscribe_returns_a_400_when_data_is_missing() {
 
 #[tokio::test]
 async fn integration_subscribe_returns_a_400_when_fields_are_present_but_invalid() {
-    let app = spawn_app().await;
+    let app = crate::tests::integration_tests::api::helpers::spawn_app().await;
     let test_cases = vec![
         ("name=&email=ursula_le_guin%40gmail.com", "empty name"),
         ("name=Ursula&email=", "empty email"),
@@ -76,11 +70,11 @@ async fn integration_subscribe_returns_a_400_when_fields_are_present_but_invalid
 
 #[tokio::test]
 async fn integration_subscribe_sends_a_confirmation_email_for_valid_data() {
-    let app = spawn_app().await;
+    let app = crate::tests::integration_tests::api::helpers::spawn_app().await;
     let body = "name=le%20guin&email=ursula_le_guin%40gmail.com";
-    Mock::given(path("/email"))
-        .and(method("POST"))
-        .respond_with(ResponseTemplate::new(200))
+    wiremock::Mock::given(wiremock::matchers::path("/email"))
+        .and(wiremock::matchers::method("POST"))
+        .respond_with(wiremock::ResponseTemplate::new(200))
         .expect(1)
         .mount(&app.email_server)
         .await;
@@ -103,11 +97,11 @@ async fn integration_subscribe_sends_a_confirmation_email_for_valid_data() {
 
 #[tokio::test]
 async fn integration_subscribe_sends_a_confirmation_email_with_a_link() {
-    let app = spawn_app().await;
+    let app = crate::tests::integration_tests::api::helpers::spawn_app().await;
     let body = "name=le%20guin&email=ursula_le_guin%40gmail.com";
-    Mock::given(path("/email"))
-        .and(method("POST"))
-        .respond_with(ResponseTemplate::new(200))
+    wiremock::Mock::given(wiremock::matchers::path("/email"))
+        .and(wiremock::matchers::method("POST"))
+        .respond_with(wiremock::ResponseTemplate::new(200))
         .mount(&app.email_server)
         .await;
     app.post_subscriptions(body.into()).await;
@@ -118,7 +112,7 @@ async fn integration_subscribe_sends_a_confirmation_email_with_a_link() {
 
 #[tokio::test]
 async fn integration_subscribe_fails_if_there_is_a_fatal_database_error() {
-    let app = spawn_app().await;
+    let app = crate::tests::integration_tests::api::helpers::spawn_app().await;
     let body = "name=le%20guin&email=ursula_le_guin%40gmail.com";
     sqlx::query!("ALTER TABLE subscriptions DROP COLUMN email;",)
         .execute(&app.db_pool)

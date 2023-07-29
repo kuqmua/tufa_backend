@@ -85,14 +85,11 @@ fn verify_password_hash<'a>(
             expose_secret: e,
             code_occurence: tufa_common::code_occurence!()
         }),
-        Ok(expected_password_hash) => match {
-            use argon2::PasswordVerifier;
-            argon2::Argon2::default()
-            .verify_password(
+        Ok(expected_password_hash) => match argon2::PasswordVerifier::verify_password(
+                &argon2::Argon2::default(), 
                 secrecy::ExposeSecret::expose_secret(&password_candidate).as_bytes(),
-                &expected_password_hash,
-            )
-        } {
+                &expected_password_hash
+            ) {
             Err(e) => Err(tufa_common::repositories_types::tufa_server::authentication::password::VerifyPasswordHashErrorNamed::InvalidPassword {
                 invalid_password: e,
                 code_occurence: tufa_common::code_occurence!()
@@ -141,13 +138,15 @@ pub async fn change_password<'a>(
 }
 
 fn compute_password_hash<'a>(password: secrecy::Secret<String>) -> Result<secrecy::Secret<String>, tufa_common::repositories_types::tufa_server::authentication::password::ComputePasswordHashErrorNamed<'a>>{
-    use argon2::PasswordHasher;
-    match argon2::Argon2::new(
-        argon2::Algorithm::Argon2id,
-        argon2::Version::V0x13,
-        argon2::Params::new(15000, 2, 1, None).unwrap(),
-    )
-    .hash_password(secrecy::ExposeSecret::expose_secret(&password).as_bytes(), &argon2::password_hash::SaltString::generate(&mut rand::thread_rng())) {
+    match argon2::PasswordHasher::hash_password(
+        &argon2::Argon2::new(
+            argon2::Algorithm::Argon2id,
+            argon2::Version::V0x13,
+            argon2::Params::new(15000, 2, 1, None).unwrap(),
+        ), 
+        secrecy::ExposeSecret::expose_secret(&password).as_bytes(), 
+        &argon2::password_hash::SaltString::generate(&mut rand::thread_rng())
+    ) {
         Ok(password_hash) => Ok(secrecy::Secret::new(password_hash.to_string())),
         Err(e) => Err(
             tufa_common::repositories_types::tufa_server::authentication::password::ComputePasswordHashErrorNamed::PasswordHash {

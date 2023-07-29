@@ -1,8 +1,6 @@
-use crate::tests::integration_tests::api::helpers::spawn_app;
-
 #[tokio::test]
 async fn integration_health_check_works() {
-    let app = spawn_app().await;
+    let app = crate::tests::integration_tests::api::helpers::spawn_app().await;
     let client = reqwest::Client::new();
     let response = client
         .get(&format!("{}/health_check", &app.address))
