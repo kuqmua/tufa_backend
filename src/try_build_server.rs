@@ -104,7 +104,9 @@ pub async fn try_build_server<'a>(
             .layer(axum::Extension(shared_data))
             .merge(tufa_common::server::routes::routes(app_info.clone()))
             .merge(crate::routes::api::routes(app_info.clone()))
-            .fallback(tufa_common::server::routes::not_found::not_found)
+            .merge(tufa_common::server::routes::not_found::not_found_route(
+                app_info.clone(),
+            ))
             // .fallback_service(routes_static())
             .layer(
                 tower_http::cors::CorsLayer::new()
