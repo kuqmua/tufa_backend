@@ -1,12 +1,24 @@
 pub(crate) async fn post_axum(
     axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
-    //write middleware to check if conent type is application\json. return error if its not.
-    //use body: string here. serde::from_json later as variant of TryPost
-    axum::Json(payload): axum::Json<
-        tufa_common::repositories_types::tufa_server::routes::api::cats::post::CatToPost,
+    result: Result<
+        axum::Json<
+            tufa_common::repositories_types::tufa_server::routes::api::cats::post::CatToPost,
+        >,
+        axum::extract::rejection::JsonRejection,
     >,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants
 {
+    let payload = match result {
+        Ok(payload) => payload,
+        Err(err) => {
+            let error = tufa_common::server::routes::helpers::json_extractor_error::JsonExtractorErrorNamed::from(err);
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error,
+                &app_info.get_config(),
+            );
+            return tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants::from(error);
+        }
+    };
     println!("post name {}, color {}", payload.name, payload.color);
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
