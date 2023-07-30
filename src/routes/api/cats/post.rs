@@ -1,9 +1,7 @@
 pub(crate) async fn post_axum(
     axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
     payload_extraction_result: Result<
-        axum::Json<
-            tufa_common::repositories_types::tufa_server::routes::api::cats::post::CatToPost,
-        >,
+        axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPost>,
         axum::extract::rejection::JsonRejection,
     >,
 ) -> impl axum::response::IntoResponse {
