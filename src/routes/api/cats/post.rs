@@ -6,8 +6,7 @@ pub(crate) async fn post_axum(
         >,
         axum::extract::rejection::JsonRejection,
     >,
-) -> tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants
-{
+) -> impl axum::response::IntoResponse {
     let payload = match payload_extraction_result {
         Ok(payload) => payload,
         Err(err) => {

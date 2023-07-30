@@ -1,7 +1,7 @@
 pub(crate) async fn get_axum(
     axum::extract::Query(query_parameters): axum::extract::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::get::GetQueryParameters>,
     axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
-) -> tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants {
+) -> impl axum::response::IntoResponse {
     println!(
         "get query_parameters limit {:?}, name {:?} color {:?}",
         query_parameters.limit, query_parameters.name, query_parameters.color

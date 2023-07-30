@@ -1,7 +1,7 @@
 pub(crate) async fn delete_axum<'a>(
     axum::extract::Query(query_parameters): axum::extract::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::delete::DeleteQueryParameters>,
     axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
-) -> tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants {
+) -> impl axum::response::IntoResponse {
     println!(
         "delete name {:?}, color {:?}",
         query_parameters.name, query_parameters.color
