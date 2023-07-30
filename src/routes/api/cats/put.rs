@@ -1,7 +1,23 @@
 pub(crate) async fn put_axum<'a>(
     axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
-    axum::Json(payload): axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::Cat>,
+    payload_extraction_result: Result<
+        axum::Json<
+            tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
+        >,
+        axum::extract::rejection::JsonRejection,
+    >
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::put::TryPutResponseVariants {
+    let payload = match payload_extraction_result {
+        Ok(payload) => payload,
+        Err(err) => {
+            let error = tufa_common::server::routes::helpers::json_extractor_error::JsonExtractorErrorNamed::from(err);
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error,
+                &app_info.get_config(),
+            );
+            return tufa_common::repositories_types::tufa_server::routes::api::cats::put::TryPutResponseVariants::from(error);
+        }
+    };
     println!("put id {} name {}, color {}", payload.id, payload.name, payload.color);
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
         payload.id,

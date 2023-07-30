@@ -1,6 +1,6 @@
 pub(crate) async fn post_axum(
     axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
-    result: Result<
+    payload_extraction_result: Result<
         axum::Json<
             tufa_common::repositories_types::tufa_server::routes::api::cats::post::CatToPost,
         >,
@@ -8,7 +8,7 @@ pub(crate) async fn post_axum(
     >,
 ) -> tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants
 {
-    let payload = match result {
+    let payload = match payload_extraction_result {
         Ok(payload) => payload,
         Err(err) => {
             let error = tufa_common::server::routes::helpers::json_extractor_error::JsonExtractorErrorNamed::from(err);
