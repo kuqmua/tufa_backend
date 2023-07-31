@@ -7,7 +7,7 @@ pub(crate) async fn patch_axum<'a>(
         axum::extract::rejection::JsonRejection,
     >
 ) -> impl axum::response::IntoResponse {
-    let payload = match payload_extraction_result {
+    let axum::Json(payload) = match payload_extraction_result {
         Ok(payload) => payload,
         Err(err) => {
             let error = tufa_common::server::routes::helpers::json_extractor_error::JsonExtractorErrorNamed::from(err);
@@ -20,7 +20,7 @@ pub(crate) async fn patch_axum<'a>(
     };
     println!("patch {payload:#?}");
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
-        *payload.get_id(),
+        *tufa_common::server::postgres::get_postgres_bigserial_id::GetPostgresBigserialId::get_postgres_bigserial_id(&payload),
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
@@ -36,7 +36,7 @@ pub(crate) async fn patch_axum<'a>(
         }
     };
     let query_result = match payload {
-        axum::Json(tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPatch::IdName { id: _id, name }) => {
+        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPatch::IdName { id: _id, name } => {
             sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "UPDATE cats SET name = $1 WHERE id = $2",
@@ -46,7 +46,7 @@ pub(crate) async fn patch_axum<'a>(
             .fetch_all(&*app_info.get_postgres_pool())
             .await
         },
-        axum::Json(tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPatch::IdColor { id: _id, color }) => {
+        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPatch::IdColor { id: _id, color } => {
             sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "UPDATE cats SET color = $1 WHERE id = $2",
