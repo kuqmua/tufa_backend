@@ -1,7 +1,23 @@
 pub(crate) async fn delete_axum<'a>(
-    axum::extract::Query(query_parameters): axum::extract::Query<tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteQueryParameters>,
+    query_parameters_result: Result<
+        axum::extract::Query<
+            tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteQueryParameters,
+        >,
+        axum::extract::rejection::QueryRejection,
+    >,
     axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 ) -> impl axum::response::IntoResponse {
+    let axum::extract::Query(query_parameters) = match query_parameters_result {
+        Ok(query_parameters) => query_parameters,
+        Err(err) => {
+            let error = tufa_common::server::routes::helpers::query_extractor_error::QueryExtractorErrorNamed::from(err);
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+                &error,
+                &app_info.get_config(),
+            );
+            return tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants::from(error);
+        }
+    };
     println!(
         "delete name {:?}, color {:?}",
         query_parameters.name, query_parameters.color
