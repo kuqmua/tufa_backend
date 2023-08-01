@@ -1,4 +1,4 @@
-pub(crate) async fn delete_by_id_axum<'a>(
+pub(crate) async fn delete_by_id<'a>(
     path_parameters_extraction_result: Result<
         axum::extract::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdPathParameters>,
         axum::extract::rejection::PathRejection,
@@ -41,7 +41,7 @@ pub(crate) async fn delete_by_id_axum<'a>(
     .fetch_all(&*app_info.get_postgres_pool())
     .await
     {
-        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants::DesirableType(()),
+        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants::Desirable(()),
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteById::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(

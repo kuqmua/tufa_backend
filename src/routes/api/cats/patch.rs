@@ -1,4 +1,4 @@
-pub(crate) async fn patch_axum<'a>(
+pub(crate) async fn patch<'a>(
     axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
     payload_extraction_result: Result<
         axum::Json<
@@ -58,7 +58,7 @@ pub(crate) async fn patch_axum<'a>(
         },
     };
     match query_result {
-        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatchResponseVariants::DesirableType(()),
+        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatchResponseVariants::Desirable(()),
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatch::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(

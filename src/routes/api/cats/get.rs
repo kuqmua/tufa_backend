@@ -1,4 +1,4 @@
-pub(crate) async fn get_axum(
+pub(crate) async fn get(
     query_parameters_result: Result<
         axum::extract::Query<
             tufa_common::repositories_types::tufa_server::routes::api::cats::GetQueryParameters,
@@ -540,7 +540,7 @@ pub(crate) async fn get_axum(
         },
     };
     match query_result {
-        Ok(value) => tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants::DesirableType(
+        Ok(value) => tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants::Desirable(
             value.into_iter().map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element)).collect()
         ),
         Err(e) => {

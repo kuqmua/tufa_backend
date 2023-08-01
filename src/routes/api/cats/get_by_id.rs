@@ -1,4 +1,4 @@
-pub(crate) async fn get_by_id_axum(
+pub(crate) async fn get_by_id(
     path_parameters_extraction_result: Result<
         axum::extract::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdPathParameters>,
         axum::extract::rejection::PathRejection,
@@ -41,7 +41,7 @@ pub(crate) async fn get_by_id_axum(
     .fetch_one(&*app_info.get_postgres_pool())
     .await
     {
-        Ok(value) => tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetByIdResponseVariants::DesirableType(value),
+        Ok(value) => tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetByIdResponseVariants::Desirable(value),
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetById::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
