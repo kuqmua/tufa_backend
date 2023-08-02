@@ -5,6 +5,20 @@ pub(crate) async fn post(
         axum::extract::rejection::JsonRejection,
     >,
 ) -> impl axum::response::IntoResponse {
+    // let aa = std::ops::Deref::deref(&app_info).clone();
+    // let payload = match tufa_common::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
+    //     tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPost,
+    //     tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants,
+    //     tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync
+    // >::try_extract_value(
+    //     payload_extraction_result,
+    //     app_info.into()
+    // ) {
+    //     Ok(payload) => payload,
+    //     Err(err) => {
+    //         return err;
+    //     },
+    // };
     let axum::Json(payload) = match payload_extraction_result {
         Ok(payload) => payload,
         Err(err) => {
