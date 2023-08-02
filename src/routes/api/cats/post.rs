@@ -1,34 +1,22 @@
 pub(crate) async fn post(
-    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
+    // axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
+    app_info_state: axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
     payload_extraction_result: Result<
         axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPost>,
         axum::extract::rejection::JsonRejection,
     >,
 ) -> impl axum::response::IntoResponse {
-    // let aa = std::ops::Deref::deref(&app_info).clone();
-    // let payload = match tufa_common::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
-    //     tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPost,
-    //     tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants,
-    //     tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync
-    // >::try_extract_value(
-    //     payload_extraction_result,
-    //     app_info.into()
-    // ) {
-    //     Ok(payload) => payload,
-    //     Err(err) => {
-    //         return err;
-    //     },
-    // };
-    let axum::Json(payload) = match payload_extraction_result {
+    let payload = match tufa_common::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
+        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPost,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants
+    >::try_extract_value(
+        payload_extraction_result,
+        &app_info_state
+    ) {
         Ok(payload) => payload,
         Err(err) => {
-            let error = tufa_common::server::routes::helpers::json_extractor_error::JsonExtractorErrorNamed::from(err);
-            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
-                &error,
-                &app_info.get_config(),
-            );
-            return tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants::from(error);
-        }
+            return err;
+        },
     };
     println!("post name {}, color {}", payload.name, payload.color);
     match sqlx::query_as!(
@@ -37,7 +25,7 @@ pub(crate) async fn post(
         payload.name,
         payload.color
     )
-    .fetch_all(&*app_info.get_postgres_pool())
+    .fetch_all(&*app_info_state.get_postgres_pool())
     .await
     {
         Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants::Desirable(()),
@@ -45,7 +33,7 @@ pub(crate) async fn post(
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPost::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error,
-                &app_info.get_config(),
+                &app_info_state.get_config(),
             );
             tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants::from(error)
         }
