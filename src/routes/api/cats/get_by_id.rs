@@ -3,7 +3,7 @@ pub(crate) async fn get_by_id(
         axum::extract::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdPathParameters>,
         axum::extract::rejection::PathRejection,
     >,
-    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
+    app_info_state: axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 ) -> impl axum::response::IntoResponse {
     let axum::extract::Path(path_parameters) = match path_parameters_extraction_result {
         Ok(path_parameters) => path_parameters,
@@ -11,7 +11,7 @@ pub(crate) async fn get_by_id(
             let error = tufa_common::server::routes::helpers::path_extractor_error::PathExtractorErrorNamed::from(err);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error,
-                &app_info.get_config(),
+                &app_info_state.get_config(),
             );
             return tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetByIdResponseVariants::from(error);
         }
@@ -28,7 +28,7 @@ pub(crate) async fn get_by_id(
             };
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error, 
-                &app_info.get_config()
+                &app_info_state.get_config()
             );
             return tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetByIdResponseVariants::from(error);
         }
@@ -38,7 +38,7 @@ pub(crate) async fn get_by_id(
         "SELECT * FROM cats WHERE id = $1",
         *bigserial_id.bigserial()
     )
-    .fetch_one(&*app_info.get_postgres_pool())
+    .fetch_one(&*app_info_state.get_postgres_pool())
     .await
     {
         Ok(value) => tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetByIdResponseVariants::Desirable(value),
@@ -46,7 +46,7 @@ pub(crate) async fn get_by_id(
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetById::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error, 
-                &app_info.get_config()
+                &app_info_state.get_config()
             );
             tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetByIdResponseVariants::from(error)
         }

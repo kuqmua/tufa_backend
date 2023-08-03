@@ -5,7 +5,7 @@ pub(crate) async fn get(
         >,
         axum::extract::rejection::QueryRejection,
     >,
-    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
+    app_info_state: axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 ) -> impl axum::response::IntoResponse {
     let axum::extract::Query(query_parameters) = match query_parameters_result {
         Ok(query_parameters) => query_parameters,
@@ -13,7 +13,7 @@ pub(crate) async fn get(
             let error = tufa_common::server::routes::helpers::query_extractor_error::QueryExtractorErrorNamed::from(err);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error,
-                &app_info.get_config(),
+                &app_info_state.get_config(),
             );
             return tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants::from(error);
         }
@@ -43,7 +43,7 @@ pub(crate) async fn get(
                 "SELECT id FROM cats LIMIT $1",
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -60,7 +60,7 @@ pub(crate) async fn get(
                 "SELECT name FROM cats LIMIT $1",
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -77,7 +77,7 @@ pub(crate) async fn get(
                 "SELECT color FROM cats LIMIT $1",
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -94,7 +94,7 @@ pub(crate) async fn get(
                 "SELECT id, name FROM cats LIMIT $1",
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -111,7 +111,7 @@ pub(crate) async fn get(
                 "SELECT id, color FROM cats LIMIT $1",
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -128,7 +128,7 @@ pub(crate) async fn get(
                 "SELECT name, color FROM cats LIMIT $1",
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -145,7 +145,7 @@ pub(crate) async fn get(
                 "SELECT id, name, color FROM cats LIMIT $1",
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -163,7 +163,7 @@ pub(crate) async fn get(
                 color,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -181,7 +181,7 @@ pub(crate) async fn get(
                 color,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -199,7 +199,7 @@ pub(crate) async fn get(
                 color,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -217,7 +217,7 @@ pub(crate) async fn get(
                 color,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -235,7 +235,7 @@ pub(crate) async fn get(
                 color,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -253,7 +253,7 @@ pub(crate) async fn get(
                 color,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -271,7 +271,7 @@ pub(crate) async fn get(
                 color,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -289,7 +289,7 @@ pub(crate) async fn get(
                 name,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -307,7 +307,7 @@ pub(crate) async fn get(
                 name,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -325,7 +325,7 @@ pub(crate) async fn get(
                 name,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -343,7 +343,7 @@ pub(crate) async fn get(
                 name,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -361,7 +361,7 @@ pub(crate) async fn get(
                 name,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -379,7 +379,7 @@ pub(crate) async fn get(
                 name,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -397,7 +397,7 @@ pub(crate) async fn get(
                 name,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -416,7 +416,7 @@ pub(crate) async fn get(
                 color,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -435,7 +435,7 @@ pub(crate) async fn get(
                 color,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -454,7 +454,7 @@ pub(crate) async fn get(
                 color,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -473,7 +473,7 @@ pub(crate) async fn get(
                 color,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -492,7 +492,7 @@ pub(crate) async fn get(
                 color,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -511,7 +511,7 @@ pub(crate) async fn get(
                 color,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -530,7 +530,7 @@ pub(crate) async fn get(
                 color,
                 *limit as i64
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         {
             Ok(value) => Ok(value.into_iter()
@@ -547,7 +547,7 @@ pub(crate) async fn get(
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGet::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error,
-                &app_info.get_config(),
+                &app_info_state.get_config(),
             );
             tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants::from(error)
         }

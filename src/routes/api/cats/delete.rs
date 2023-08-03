@@ -5,7 +5,7 @@ pub(crate) async fn delete<'a>(
         >,
         axum::extract::rejection::QueryRejection,
     >,
-    axum::extract::State(app_info): axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
+    app_info_state: axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 ) -> impl axum::response::IntoResponse {
     let axum::extract::Query(query_parameters) = match query_parameters_result {
         Ok(query_parameters) => query_parameters,
@@ -13,7 +13,7 @@ pub(crate) async fn delete<'a>(
             let error = tufa_common::server::routes::helpers::query_extractor_error::QueryExtractorErrorNamed::from(err);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error,
-                &app_info.get_config(),
+                &app_info_state.get_config(),
             );
             return tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants::from(error);
         }
@@ -30,7 +30,7 @@ pub(crate) async fn delete<'a>(
             };
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error,
-                &app_info.get_config(),
+                &app_info_state.get_config(),
             );
             return tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants::from(error);
         }
@@ -40,7 +40,7 @@ pub(crate) async fn delete<'a>(
                 "DELETE FROM cats WHERE color = $1",
                 color,
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         }
         (Some(name), None) => {
@@ -49,7 +49,7 @@ pub(crate) async fn delete<'a>(
                 "DELETE FROM cats WHERE name = $1",
                 name,
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         }
         (Some(name), Some(color)) => {
@@ -59,7 +59,7 @@ pub(crate) async fn delete<'a>(
                 name,
                 color
             )
-            .fetch_all(&*app_info.get_postgres_pool())
+            .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         }
     };
@@ -69,7 +69,7 @@ pub(crate) async fn delete<'a>(
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDelete::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error, 
-                &app_info.get_config()
+                &app_info_state.get_config()
             );
             tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants::from(error)
         }
