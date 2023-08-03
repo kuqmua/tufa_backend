@@ -5,16 +5,17 @@ pub(crate) async fn get_by_id(
     >,
     app_info_state: axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 ) -> impl axum::response::IntoResponse {
-    let axum::extract::Path(path_parameters) = match path_parameters_extraction_result {
+    let path_parameters = match tufa_common::server::routes::helpers::path_extractor_error::PathValueResultExtractor::<
+        tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdPathParameters,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetByIdResponseVariants
+    >::try_extract_value(
+        path_parameters_extraction_result,
+        &app_info_state
+    ) {
         Ok(path_parameters) => path_parameters,
         Err(err) => {
-            let error = tufa_common::server::routes::helpers::path_extractor_error::PathExtractorErrorNamed::from(err);
-            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
-                &error,
-                &app_info_state.get_config(),
-            );
-            return tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetByIdResponseVariants::from(error);
-        }
+            return err;
+        },
     };
     println!("get_by_id path_parameters id {}", path_parameters.id);
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
