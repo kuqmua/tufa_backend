@@ -128,3 +128,68 @@ pub async fn try_build_server<'a>(
     .unwrap_or_else(|e| panic!("axum builder serve await failed {e:#?}"));
     Ok(())
 }
+
+///////////////////////////////////
+// this     works
+
+// pub struct One(String);
+// pub struct Two(String);
+// pub struct AppInfo(One, Two);
+// pub trait GetOne {
+//     fn get_one(&self) -> &One;
+// }
+// pub trait GetTwo {
+//     fn get_two(&self) -> &Two;
+// }
+// pub trait GetOneGetTwo: GetOne + GetTwo {}
+// impl GetOne for AppInfo {
+//     fn get_one(&self) -> &One {
+//         &self.0
+//     }
+// }
+// impl GetTwo for AppInfo {
+//     fn get_two(&self) -> &Two {
+//         &self.1
+//     }
+// }
+// impl GetOneGetTwo for AppInfo {}
+// pub struct Example {}
+// pub trait DoSomething {
+//     fn do_something<T: GetOne + ?Sized>(&self, handle_get_one: &T);
+// }
+// impl DoSomething for Example {
+//     fn do_something<T: GetOne + ?Sized>(&self, handle_get_one: &T) {
+//         println!("{}", handle_get_one.get_one().0);
+//     }
+// }
+// pub async fn something(
+//     app_info_state: axum::extract::State<std::sync::Arc<dyn GetOneGetTwo + Send + Sync>>,
+// ) {
+//     let example = Example {};
+//     example.do_something(app_info_state.as_ref());
+// }
+// #[tokio::main]
+// async fn main() {
+//     //case1 - compiles
+//     // let router = axum::Router::new()
+//     //     .route("/", axum::routing::get(something))
+//     //     .with_state(Box::new(std::sync::Arc::new(AppInfo(
+//     //         One(String::from("one")),
+//     //         Two(String::from("two")),
+//     //     ))))
+//     //     .into_make_service();
+//     //case2
+//     let app_info: std::sync::Arc<dyn GetOneGetTwo + Send + Sync> =
+//         std::sync::Arc::new(AppInfo(One(String::from("one")), Two(String::from("two"))));
+//     let router = axum::Router::new()
+//         .route("/", axum::routing::get(something))
+//         // expected struct `std::boxed::Box<std::sync::Arc<(dyn GetOneGetTwo + std::marker::Send + std::marker::Sync + 'static)>>`
+//         // found struct `std::boxed::Box<std::sync::Arc<AppInfo>>`
+//         .with_state(app_info)
+//         .into_make_service();
+//     //
+//     axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
+//         .serve(router)
+//         .await
+//         .unwrap();
+// }
