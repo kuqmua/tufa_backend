@@ -29,7 +29,7 @@ pub(crate) async fn delete<'a>(
                 no_parameters: std::string::String::from("no parameters provided"),
                 code_occurence: tufa_common::code_occurence!(),
             };
-            tufa_common::common::error_logs_logic::error_log::ErrorLogSecond::error_log_second(
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error,
                 app_info_state.as_ref()
             );
@@ -68,7 +68,7 @@ pub(crate) async fn delete<'a>(
         Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants::Desirable(()),
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDelete::from(e);
-            tufa_common::common::error_logs_logic::error_log::ErrorLogSecond::error_log_second(
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error, 
                 app_info_state.as_ref()
             );

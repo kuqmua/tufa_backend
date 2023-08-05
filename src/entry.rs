@@ -25,7 +25,7 @@ pub fn entry<'a>(
                 //preparation logic must be enabled by default. service must check on existing database tables.
                 println!("checking net availability...");
                 if let Err(e) = runtime.block_on(tufa_common::server::net::net_check_availability::net_check_availability(config)) {
-                    tufa_common::common::error_logs_logic::error_log::ErrorLogSecond::error_log_second(
+                    tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                         &*e,
                         &config
                     );
@@ -33,7 +33,7 @@ pub fn entry<'a>(
                 else {
                     if let Err(e) = runtime.block_on(crate::server_wrapper::server_wrapper(&config)) {
                         eprintln!("server stopped");
-                        tufa_common::common::error_logs_logic::error_log::ErrorLogSecond::error_log_second(
+                        tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                             &*e,
                             &config
                         );

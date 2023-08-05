@@ -29,7 +29,7 @@ pub(crate) async fn put<'a>(
                 bigserial: e, 
                 code_occurence: tufa_common::code_occurence!()
             };
-            tufa_common::common::error_logs_logic::error_log::ErrorLogSecond::error_log_second(
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error,
                 &app_info_state.get_config(),
             );
@@ -49,7 +49,7 @@ pub(crate) async fn put<'a>(
         Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::put::TryPutResponseVariants::Desirable(()),
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::put::TryPut::from(e);
-            tufa_common::common::error_logs_logic::error_log::ErrorLogSecond::error_log_second(
+            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error,
                 &app_info_state.get_config(),
             );
