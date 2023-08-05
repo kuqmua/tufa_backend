@@ -27,7 +27,7 @@ pub(crate) async fn get_by_id(
                 bigserial: e, 
                 code_occurence: tufa_common::code_occurence!()
             };
-            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+            tufa_common::common::error_logs_logic::error_log::ErrorLogSecond::error_log_second(
                 &error, 
                 &app_info_state.get_config()
             );
@@ -45,7 +45,7 @@ pub(crate) async fn get_by_id(
         Ok(value) => tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetByIdResponseVariants::Desirable(value),
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetById::from(e);
-            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+            tufa_common::common::error_logs_logic::error_log::ErrorLogSecond::error_log_second(
                 &error, 
                 &app_info_state.get_config()
             );

@@ -27,7 +27,7 @@ pub(crate) async fn delete_by_id<'a>(
                 bigserial: e,
                 code_occurence: tufa_common::code_occurence!()
             };
-            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+            tufa_common::common::error_logs_logic::error_log::ErrorLogSecond::error_log_second(
                 &error,
                 &app_info_state.get_config(),
             );
@@ -45,7 +45,7 @@ pub(crate) async fn delete_by_id<'a>(
         Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants::Desirable(()),
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteById::from(e);
-            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+            tufa_common::common::error_logs_logic::error_log::ErrorLogSecond::error_log_second(
                 &error,
                 &app_info_state.get_config()
             );

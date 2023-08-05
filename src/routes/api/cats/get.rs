@@ -546,7 +546,7 @@ pub(crate) async fn get(
         ),
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGet::from(e);
-            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+            tufa_common::common::error_logs_logic::error_log::ErrorLogSecond::error_log_second(
                 &error,
                 &app_info_state.get_config(),
             );

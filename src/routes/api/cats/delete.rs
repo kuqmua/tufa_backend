@@ -68,9 +68,9 @@ pub(crate) async fn delete<'a>(
         Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants::Desirable(()),
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDelete::from(e);
-            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+            tufa_common::common::error_logs_logic::error_log::ErrorLogSecond::error_log_second(
                 &error, 
-                &app_info_state
+                app_info_state.as_ref()
             );
             tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants::from(error)
         }
