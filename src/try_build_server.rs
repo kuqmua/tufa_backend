@@ -75,7 +75,7 @@ pub async fn try_build_server<'a>(
                 &tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO,
             repository_git_info: &crate::global_variables::compile_time::git_info::GIT_INFO,
         },
-    );
+    ); //: std::sync::Arc<dyn tufa_common::repositories_types::tufa_server::routes::service_possibilities::ServicePossibilities + Send + Sync>
     let shared_data = SharedData {
         message: std::string::String::from("shared_message"),
     };
