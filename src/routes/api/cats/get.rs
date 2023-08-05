@@ -30,6 +30,8 @@ pub(crate) async fn get(
         Some(limit) => limit,
         None => &tufa_common::server::postgres::constants::DEFAULT_POSTGRES_SELECT_LIMIT,
     };
+    let f =
+        vec![tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelectField::Id];
     let query_result = match (
         &query_parameters.name,
         &query_parameters.color,
@@ -38,7 +40,7 @@ pub(crate) async fn get(
         (
             None,
             None,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Id,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelectHandle::try_init(f),
         ) => match sqlx::query_as!(
             tufa_common::repositories_types::tufa_server::routes::api::cats::CatId,
                 "SELECT id FROM cats LIMIT $1",
@@ -56,6 +58,7 @@ pub(crate) async fn get(
             None,
             None,
             tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Name,
+
         ) => match sqlx::query_as!(
             tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
                 "SELECT name FROM cats LIMIT $1",
