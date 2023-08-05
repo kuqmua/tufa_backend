@@ -29,7 +29,7 @@ pub(crate) async fn get_by_id(
             };
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error, 
-                &app_info_state.get_config()
+                app_info_state.as_ref()
             );
             return tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetByIdResponseVariants::from(error);
         }
@@ -47,7 +47,7 @@ pub(crate) async fn get_by_id(
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetById::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error, 
-                &app_info_state.get_config()
+                app_info_state.as_ref()
             );
             tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetByIdResponseVariants::from(error)
         }

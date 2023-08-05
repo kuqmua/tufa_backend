@@ -29,7 +29,7 @@ pub(crate) async fn delete_by_id<'a>(
             };
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error,
-                &app_info_state.get_config(),
+                app_info_state.as_ref(),
             );
             return tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants::from(error);
         }
@@ -47,7 +47,7 @@ pub(crate) async fn delete_by_id<'a>(
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteById::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error,
-                &app_info_state.get_config()
+                app_info_state.as_ref()
             );
             tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants::from(error)
         }

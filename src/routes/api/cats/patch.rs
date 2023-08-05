@@ -31,7 +31,7 @@ pub(crate) async fn patch<'a>(
             };
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error,
-                &app_info_state.get_config(),
+                app_info_state.as_ref(),
             );
             return tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatchResponseVariants::from(error);
         }
@@ -64,7 +64,7 @@ pub(crate) async fn patch<'a>(
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatch::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error,
-                &app_info_state.get_config(),
+                app_info_state.as_ref(),
             );
             tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatchResponseVariants::from(error)
         }
