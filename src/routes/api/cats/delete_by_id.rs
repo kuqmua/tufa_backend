@@ -18,6 +18,7 @@ pub(crate) async fn delete_by_id<'a>(
         },
     };
     println!("delete_by_id {}", path_parameters.id);
+    //todo - must be two versions of query\path\body paremeters where Postgres Id exists. if using rust function http request - using type Bigserial. if its route then i64
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
         path_parameters.id,
     ) {

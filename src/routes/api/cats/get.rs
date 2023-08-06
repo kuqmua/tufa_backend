@@ -7,25 +7,26 @@ pub(crate) async fn get(
     >,
     app_info_state: axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 ) -> impl axum::response::IntoResponse {
-    // let query_parameters = match tufa_common::server::routes::helpers::query_extractor_error::QueryValueResultExtractor::<
-    //     tufa_common::repositories_types::tufa_server::routes::api::cats::GetQueryParameters,
-    //     tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants
-    // >::try_extract_value(
-    //     query_parameters_extraction_result,
-    //     &app_info_state
-    // ) {
-    //     Ok(query_parameters) => query_parameters,
-    //     Err(err) => {
-    //         return err;
-    //     },
-    // };
-    // println!(
-    //     "get query_parameters limit {:?}, name {:?} color {:?} select {}",
-    //     query_parameters.limit,
-    //     query_parameters.name,
-    //     query_parameters.color,
-    //     query_parameters.select
-    // );
+    let query_parameters = match tufa_common::server::routes::helpers::query_extractor_error::QueryValueResultExtractor::<
+        tufa_common::repositories_types::tufa_server::routes::api::cats::GetQueryParameters,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants
+    >::try_extract_value(
+        query_parameters_extraction_result,
+        &app_info_state
+    ) {
+        Ok(query_parameters) => query_parameters,
+        Err(err) => {
+            return err;
+        },
+    };
+    println!(
+        "get query_parameters limit {:?}, id {:?} name {:?} color {:?} select {:?}",
+        query_parameters.limit,
+        query_parameters.id,
+        query_parameters.name,
+        query_parameters.color,
+        query_parameters.select
+    );
     // let limit = match &query_parameters.limit {
     //     Some(limit) => limit,
     //     None => &tufa_common::server::postgres::constants::DEFAULT_POSTGRES_SELECT_LIMIT,

@@ -21,7 +21,7 @@ pub(crate) async fn patch<'a>(
     };
     println!("patch {payload:#?}");
     let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
-        *tufa_common::server::postgres::get_postgres_bigserial_id::GetPostgresBigserialId::get_postgres_bigserial_id(&payload),
+        *tufa_common::server::postgres::bigserial::GetPostgresBigserialId::get_postgres_bigserial_id(&payload),
     ) {
         Ok(bigserial_id) => bigserial_id,
         Err(e) => {
