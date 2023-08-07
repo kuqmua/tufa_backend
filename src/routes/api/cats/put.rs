@@ -1,12 +1,12 @@
 pub(crate) async fn put<'a>(
     app_info_state: axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
     payload_extraction_result: Result<
-        axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::Cat>,
+        axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPut>,
         axum::extract::rejection::JsonRejection,
     >,
 ) -> impl axum::response::IntoResponse {
     let payload = match tufa_common::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
-        tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPut,
         tufa_common::repositories_types::tufa_server::routes::api::cats::put::TryPutResponseVariants
     >::try_extract_value(
         payload_extraction_result,
@@ -22,9 +22,9 @@ pub(crate) async fn put<'a>(
         payload.id, payload.name, payload.color
     );
     match sqlx::query_as!(
-        tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPut,
         "INSERT INTO cats(id, name, color) VALUES ($1, $2, $3) ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, color = EXCLUDED.color",
-        payload.id,
+        payload.id.inner(),
         payload.name,
         payload.color
     )

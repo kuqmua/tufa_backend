@@ -151,7 +151,7 @@ pub(crate) async fn get(
     //         None,
     //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdNameColor,
     //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
+    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdNameColor,
     //             "SELECT id, name, color FROM cats LIMIT $1",
     //             *limit as i64
     //         )
