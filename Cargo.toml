@@ -135,3 +135,7 @@ wiremock = {version = "=0.5.2"}
 
 # [target.aarch64-apple-darwin]
 # rustflags = ["-C", "link-arg=-fuse-ld=/usr/local/bin/zld"]
+
+# cargo run-script *script name*
+[package.metadata.scripts]
+something = "ls"
