@@ -42,7 +42,9 @@ pub(crate) async fn patch<'a>(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "UPDATE cats SET name = $1 WHERE id = $2",
                 name,
-                *bigserial_id.bigserial()
+                // *
+                bigserial_id.0
+                // bigserial()
             )
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
@@ -52,7 +54,9 @@ pub(crate) async fn patch<'a>(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "UPDATE cats SET color = $1 WHERE id = $2",
                 color,
-                *bigserial_id.bigserial()
+                // *
+                bigserial_id.0
+                // bigserial()
             )
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await

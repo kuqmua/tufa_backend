@@ -38,7 +38,7 @@ pub(crate) async fn delete_by_id<'a>(
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
         "DELETE FROM cats WHERE id = $1",
-        *bigserial_id.bigserial()
+        bigserial_id.0
     )
     .fetch_all(&*app_info_state.get_postgres_pool())
     .await
