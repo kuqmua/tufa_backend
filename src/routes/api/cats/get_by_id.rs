@@ -37,11 +37,7 @@ pub(crate) async fn get_by_id(
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
         "SELECT * FROM cats WHERE id = $1",
-        // *
-        // bigserial_id.0
-        path_parameters.id.0
-        // bigserial()
-        // *path_parameters.id.bigserial()
+        path_parameters.id.inner()
     )
     .fetch_one(&*app_info_state.get_postgres_pool())
     .await

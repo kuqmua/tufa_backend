@@ -19,26 +19,26 @@ pub(crate) async fn delete_by_id<'a>(
     };
     println!("delete_by_id {}", path_parameters.id);
     //todo - must be two versions of query\path\body paremeters where Postgres Id exists. if using rust function http request - using type Bigserial. if its route then i64
-    let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
-        path_parameters.id,
-    ) {
-        Ok(bigserial_id) => bigserial_id,
-        Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteById::Bigserial {
-                bigserial: e,
-                code_occurence: tufa_common::code_occurence!()
-            };
-            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
-                &error,
-                app_info_state.as_ref(),
-            );
-            return tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants::from(error);
-        }
-    };
+    // let bigserial_id = match tufa_common::server::postgres::bigserial::Bigserial::try_from_i64(
+    //     path_parameters.id,
+    // ) {
+    //     Ok(bigserial_id) => bigserial_id,
+    //     Err(e) => {
+    //         let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteById::Bigserial {
+    //             bigserial: e,
+    //             code_occurence: tufa_common::code_occurence!()
+    //         };
+    //         tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
+    //             &error,
+    //             app_info_state.as_ref(),
+    //         );
+    //         return tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants::from(error);
+    //     }
+    // };
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
         "DELETE FROM cats WHERE id = $1",
-        bigserial_id.0
+        path_parameters.id.inner()
     )
     .fetch_all(&*app_info_state.get_postgres_pool())
     .await
