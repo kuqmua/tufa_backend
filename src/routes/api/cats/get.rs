@@ -29,57 +29,10 @@ pub(crate) async fn get(
     );
     let limit = &query_parameters.limit;
     let where_name = "WHERE";
+    let and_name = "AND";
     let mut where_handle_increment = std::string::String::from("");
     let mut increment: u64 = 0;
-    // let select_string_parameters = match &query_parameters.select {
-    //     Some(get_select) => match get_select {
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Id => {
-    //             increment += 1;
-    //             format!("${increment}")
-    //         }
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Name => {
-    //             increment += 1;
-    //             format!("${increment}")
-    //         }
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Color => {
-    //             increment += 1;
-    //             format!("${increment}")
-    //         }
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdName => {
-    //             let incr_one = increment + 1;
-    //             let incr_two = increment + 2;
-    //             increment += 2;
-    //             format!("${incr_one}, ${incr_two}")
-    //         }
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdColor => {
-    //             let incr_one = increment + 1;
-    //             let incr_two = increment + 2;
-    //             increment += 2;
-    //             format!("${incr_one}, ${incr_two}")
-    //         }
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::NameColor => {
-    //             let incr_one = increment + 1;
-    //             let incr_two = increment + 2;
-    //             increment += 2;
-    //             format!("${incr_one}, ${incr_two}")
-    //         }
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdNameColor => {
-    //             let incr_one = increment + 1;
-    //             let incr_two = increment + 2;
-    //             let incr_three = increment + 3;
-    //             increment += 3;
-    //             format!("${incr_one}, ${incr_two}, ${incr_three}")
-    //         }
-    //     },
-    //     None => {
-    //         let incr_one = increment + 1;
-    //         let incr_two = increment + 2;
-    //         let incr_three = increment + 3;
-    //         increment += 3;
-    //         format!("${incr_one}, ${incr_two}, ${incr_three}")
-    //     }
-    // };
-    if let Some(id) = query_parameters.id.clone() {
+    if let Some(id) = &query_parameters.id {
         match where_handle_increment.is_empty() {
             true => {
                 increment += 1;
@@ -87,11 +40,11 @@ pub(crate) async fn get(
             }
             false => {
                 increment += 1;
-                where_handle_increment.push_str(&format!(" AND id = ${increment}"));
+                where_handle_increment.push_str(&format!(" {and_name} id = ${increment}"));
             }
         }
     }
-    if let Some(name) = query_parameters.name.clone() {
+    if let Some(name) = &query_parameters.name {
         match where_handle_increment.is_empty() {
             true => {
                 increment += 1;
@@ -99,11 +52,11 @@ pub(crate) async fn get(
             }
             false => {
                 increment += 1;
-                where_handle_increment.push_str(&format!(" AND name = ${increment}"));
+                where_handle_increment.push_str(&format!(" {and_name} name = ${increment}"));
             }
         }
     }
-    if let Some(color) = query_parameters.color.clone() {
+    if let Some(color) = &query_parameters.color {
         match where_handle_increment.is_empty() {
             true => {
                 increment += 1;
@@ -111,7 +64,7 @@ pub(crate) async fn get(
             }
             false => {
                 increment += 1;
-                where_handle_increment.push_str(&format!(" AND color = ${increment}"));
+                where_handle_increment.push_str(&format!(" {and_name} color = ${increment}"));
             }
         }
     }
@@ -120,15 +73,6 @@ pub(crate) async fn get(
     let select = tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::from(
         query_parameters.select.clone(),
     );
-    // let select_handle = match select {
-    //     tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Id => "cats.id",
-    //     tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Name => "cats.name",
-    //     tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Color => "cats.color",
-    //     tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdName => "cats.id, cats.name",
-    //     tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdColor => "cats.id, cats.color",
-    //     tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::NameColor => "cats.name, cats.color",
-    //     tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdNameColor => "cats.id, cats.name, cats.color",
-    // };
     // // WHERE color = $1
     // // WHERE some_id = ANY(ARRAY[1, 2])
     // // WHERE name = $1 AND color = $2
