@@ -1,6 +1,3 @@
-use sqlx::Row;
-use tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect;
-
 pub(crate) async fn get(
     query_parameters_extraction_result: Result<
         axum::extract::Query<
@@ -34,44 +31,42 @@ pub(crate) async fn get(
         Some(limit) => limit,
         None => &tufa_common::server::postgres::constants::DEFAULT_POSTGRES_SELECT_LIMIT,
     };
-
     let where_name = "WHERE";
-    // let mut where_handle = std::string::String::from("");
     let mut where_handle_increment = std::string::String::from("");
     let mut increment: u64 = 0;
     // let select_string_parameters = match &query_parameters.select {
     //     Some(get_select) => match get_select {
-    //         GetSelect::Id => {
+    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Id => {
     //             increment += 1;
     //             format!("${increment}")
     //         }
-    //         GetSelect::Name => {
+    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Name => {
     //             increment += 1;
     //             format!("${increment}")
     //         }
-    //         GetSelect::Color => {
+    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Color => {
     //             increment += 1;
     //             format!("${increment}")
     //         }
-    //         GetSelect::IdName => {
+    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdName => {
     //             let incr_one = increment + 1;
     //             let incr_two = increment + 2;
     //             increment += 2;
     //             format!("${incr_one}, ${incr_two}")
     //         }
-    //         GetSelect::IdColor => {
+    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdColor => {
     //             let incr_one = increment + 1;
     //             let incr_two = increment + 2;
     //             increment += 2;
     //             format!("${incr_one}, ${incr_two}")
     //         }
-    //         GetSelect::NameColor => {
+    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::NameColor => {
     //             let incr_one = increment + 1;
     //             let incr_two = increment + 2;
     //             increment += 2;
     //             format!("${incr_one}, ${incr_two}")
     //         }
-    //         GetSelect::IdNameColor => {
+    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdNameColor => {
     //             let incr_one = increment + 1;
     //             let incr_two = increment + 2;
     //             let incr_three = increment + 3;
@@ -91,12 +86,10 @@ pub(crate) async fn get(
         match where_handle_increment.is_empty() {
             true => {
                 increment += 1;
-                // where_handle.push_str(&format!("{where_name} id = {id}"));
                 where_handle_increment.push_str(&format!("{where_name} id = ${increment}"));
             }
             false => {
                 increment += 1;
-                // where_handle.push_str(&format!(" AND id = {id}"));
                 where_handle_increment.push_str(&format!(" AND id = ${increment}"));
             }
         }
@@ -105,12 +98,10 @@ pub(crate) async fn get(
         match where_handle_increment.is_empty() {
             true => {
                 increment += 1;
-                // where_handle.push_str(&format!("{where_name} name = \'{name}\'"));
                 where_handle_increment.push_str(&format!("{where_name} name = ${increment}"));
             }
             false => {
                 increment += 1;
-                // where_handle.push_str(&format!(" AND name = \'{name}\'"));
                 where_handle_increment.push_str(&format!(" AND name = ${increment}"));
             }
         }
@@ -119,28 +110,27 @@ pub(crate) async fn get(
         match where_handle_increment.is_empty() {
             true => {
                 increment += 1;
-                // where_handle.push_str(&format!("{where_name} color = \'{color}\'"));
                 where_handle_increment.push_str(&format!("{where_name} color = ${increment}"));
             }
             false => {
                 increment += 1;
-                // where_handle.push_str(&format!(" AND color = \'{color}\'"));
                 where_handle_increment.push_str(&format!(" AND color = ${increment}"));
             }
         }
     }
     // println!("where_handle {where_handle}");
     println!("where_handle_increment {where_handle_increment}");
-
-    let select = GetSelect::from(query_parameters.select.clone());
+    let select = tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::from(
+        query_parameters.select.clone(),
+    );
     // let select_handle = match select {
-    //     GetSelect::Id => "cats.id",
-    //     GetSelect::Name => "cats.name",
-    //     GetSelect::Color => "cats.color",
-    //     GetSelect::IdName => "cats.id, cats.name",
-    //     GetSelect::IdColor => "cats.id, cats.color",
-    //     GetSelect::NameColor => "cats.name, cats.color",
-    //     GetSelect::IdNameColor => "cats.id, cats.name, cats.color",
+    //     tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Id => "cats.id",
+    //     tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Name => "cats.name",
+    //     tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Color => "cats.color",
+    //     tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdName => "cats.id, cats.name",
+    //     tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdColor => "cats.id, cats.color",
+    //     tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::NameColor => "cats.name, cats.color",
+    //     tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdNameColor => "cats.id, cats.name, cats.color",
     // };
     // // WHERE color = $1
     // // WHERE some_id = ANY(ARRAY[1, 2])
@@ -157,83 +147,18 @@ pub(crate) async fn get(
     // //
     // // let params = format!("?{}", ", ?".repeat(v.len() - 1));
     //{select_string_parameters}
-
-    // // let f = f.bind(limit);
-    // //
-    //
-    // async fn notify(pool: &PgPool, s: &str) -> Result<(), sqlx::Error> {
-    //     sqlx::query(
-    //         r#"
-    // SELECT pg_notify(chan, payload)
-    // FROM (VALUES ('chan0', $1)) v(chan, payload)
-    // "#,
-    //     )
-    //     .bind(s)
-    //     .execute(pool)
-    //     .await?;
-
-    //     Ok(())
-    // }
-    //
-    // sqlx::query_as!(
-    //     tufa_common::repositories_types::tufa_server::routes::api::cats::CatId,
-    //     // tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions,
-    //     "SELECT id FROM cats LIMIT ?",
-    //     *limit as i64
-    // )
     increment += 1;
     let query_string =
         format!("SELECT {select} FROM cats {where_handle_increment} LIMIT ${increment}"); //{limit} // WHERE name = $2   LIMIT $1{select}{where_handle}{limit}
     println!("{query_string}");
-    // let query_result =
-    // match sqlx::query_as::<
-    //     sqlx::Postgres,
-    //     tufa_common::repositories_types::tufa_server::routes::api::cats::CatId,
-    // >(&query_string)
-    // // .bind("id")
-    // // .bind("test_name")
-    // // .bind(limit)
-    // //   sqlx::query(&query_string)
-    // .fetch_all(&*app_info_state.get_postgres_pool())
-    // .await
-    // {
-    //     Ok(value) => {
-    //         //     Ok(
-    //         //     value,
-
-    //         //     // value.into_iter()
-    //         //           // .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //         //           // .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()
-    //         // )
-    //         // value.iter().for_each(|f| {
-    //         //     let option_id: Option<i64> = f.get("id");
-    //         //     println!("option_id\n{option_id:#?}");
-    //         //     let option_name: Option<std::string::String> = f.get("name");
-    //         //     println!("option_name\n{option_name:#?}");
-    //         //     let option_color: Result<std::string::String, _> = f.get("color");
-    //         // });
-    //         // todo!("1")
-    //     }
-    //     Err(e) => {
-    //         // Err(e)
-    //         todo!("2")
-    //     }
-    // };
-    // println!("{query_result:#?}");
     println!("{select}");
     println!("{select:#?}");
     let query_result = match select {
-        GetSelect::Id => {
+        tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Id => {
             let mut query = sqlx::query_as::<
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatId,
             >(&query_string);
-            if let Some(get_select) = query_parameters.select {
-                for i in get_select.into_get_select_field_vec() {
-                    println!("i\n{i}");
-                    query = query.bind(i.to_string());
-                }
-            }
             if let Some(id) = query_parameters.id.clone() {
                 query = query.bind(id.inner().clone());
             }
@@ -254,16 +179,11 @@ pub(crate) async fn get(
                 Err(e) => Err(e),
             }
         }
-        GetSelect::Name => {
+        tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Name => {
             let mut query = sqlx::query_as::<
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
             >(&query_string);
-            // if let Some(get_select) = query_parameters.select {
-            //     for i in get_select.into_get_select_field_vec() {
-            //         query = query.bind(i.to_string());
-            //     }
-            // }
             if let Some(id) = query_parameters.id.clone() {
                 query = query.bind(id.inner().clone());
             }
@@ -274,9 +194,6 @@ pub(crate) async fn get(
                 query = query.bind(color);
             }
             query = query.bind(limit);
-            // if let Some(limit) = query_parameters.limit {
-            //     query = query.bind(limit)
-            // }
             match query
             .fetch_all(&*app_info_state.get_postgres_pool())
              .await
@@ -287,16 +204,11 @@ pub(crate) async fn get(
                 Err(e) => Err(e),
             }
         }
-        GetSelect::Color => {
+        tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Color => {
             let mut query = sqlx::query_as::<
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatColor,
             >(&query_string);
-            // if let Some(get_select) = query_parameters.select {
-            //     for i in get_select.into_get_select_field_vec() {
-            //         query = query.bind(i.to_string());
-            //     }
-            // }
             if let Some(id) = query_parameters.id.clone() {
                 query = query.bind(id.inner().clone());
             }
@@ -317,16 +229,11 @@ pub(crate) async fn get(
                 Err(e) => Err(e),
             }
         }
-        GetSelect::IdName => {
+        tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdName => {
             let mut query = sqlx::query_as::<
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdName,
             >(&query_string);
-            // if let Some(get_select) = query_parameters.select {
-            //     for i in get_select.into_get_select_field_vec() {
-            //         query = query.bind(i.to_string());
-            //     }
-            // }
             if let Some(id) = query_parameters.id.clone() {
                 query = query.bind(id.inner().clone());
             }
@@ -347,16 +254,11 @@ pub(crate) async fn get(
                 Err(e) => Err(e),
             }
         }
-        GetSelect::IdColor => {
+        tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdColor => {
             let mut query = sqlx::query_as::<
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdColor,
             >(&query_string);
-            // if let Some(get_select) = query_parameters.select {
-            //     for i in get_select.into_get_select_field_vec() {
-            //         query = query.bind(i.to_string());
-            //     }
-            // }
             if let Some(id) = query_parameters.id.clone() {
                 query = query.bind(id.inner().clone());
             }
@@ -377,16 +279,11 @@ pub(crate) async fn get(
                 Err(e) => Err(e),
             }
         }
-        GetSelect::NameColor => {
+        tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::NameColor => {
             let mut query = sqlx::query_as::<
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatNameColor,
             >(&query_string);
-            // if let Some(get_select) = query_parameters.select {
-            //     for i in get_select.into_get_select_field_vec() {
-            //         query = query.bind(i.to_string());
-            //     }
-            // }
             if let Some(id) = query_parameters.id.clone() {
                 query = query.bind(id.inner().clone());
             }
@@ -407,20 +304,11 @@ pub(crate) async fn get(
                 Err(e) => Err(e),
             }
         }
-        GetSelect::IdNameColor => {
+        tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdNameColor => {
             let mut query = sqlx::query_as::<
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdNameColor,
             >(&query_string);
-
-            // if let Some(get_select) = query_parameters.select {
-            //     // for i in get_select.into_get_select_field_vec() {
-            //     //     query = query.bind(i.to_string());
-            //     // }
-            //     query = query.bind("id");
-            //     query = query.bind("name");
-            //     query = query.bind("color");
-            // }
             if let Some(id) = query_parameters.id.clone() {
                 query = query.bind(id.inner().clone());
             }
@@ -442,7 +330,6 @@ pub(crate) async fn get(
             }
         }
     };
-    // // //
     // // Create a dynamic query string with the right number of parameter
     // // placeholders injected
     // // let query = format!(
@@ -452,531 +339,15 @@ pub(crate) async fn get(
     // //         .collect::<Vec<&str>>()
     // //         .join(",")
     // // );
-
     // // // Dynamically bind each entry from
     // // let mut q = sqlx::query_as::<sqlx::Sqlite, Project>(&query_string);
     // // for x in (0..uuids.len()) {
     // //     q = q.bind(uuids[x]);
     // // }
-
     // // let records = q.fetch(&conn).await?;
-
-    // let query_result = match (
-    //     &query_parameters.name,
-    //     &query_parameters.color,
-    //     &query_parameters.select.unwrap(),
-    // ) {
-    //     (
-    //         None,
-    //         None,
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Id,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatId,
-    //             "SELECT id FROM cats LIMIT $1",
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     }
-    //     (
-    //         None,
-    //         None,
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Name,
-
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats LIMIT $1",
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     }
-    //     (
-    //         None,
-    //         None,
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Color,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatColor,
-    //             "SELECT color FROM cats LIMIT $1",
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         None,
-    //         None,
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdName,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdName,
-    //             "SELECT id, name FROM cats LIMIT $1",
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         None,
-    //         None,
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdColor,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdColor,
-    //             "SELECT id, color FROM cats LIMIT $1",
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         None,
-    //         None,
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::NameColor,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatNameColor,
-    //             "SELECT name, color FROM cats LIMIT $1",
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         None,
-    //         None,
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdNameColor,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdNameColor,
-    //             "SELECT id, name, color FROM cats LIMIT $1",
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         None,
-    //         Some(color),
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Id,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE color = $1 LIMIT $2",
-    //             color,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         None,
-    //         Some(color),
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Name,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE color = $1 LIMIT $2",
-    //             color,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         None,
-    //         Some(color),
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Color,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE color = $1 LIMIT $2",
-    //             color,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         None,
-    //         Some(color),
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdName,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE color = $1 LIMIT $2",
-    //             color,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         None,
-    //         Some(color),
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdColor,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE color = $1 LIMIT $2",
-    //             color,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         None,
-    //         Some(color),
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::NameColor,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE color = $1 LIMIT $2",
-    //             color,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         None,
-    //         Some(color),
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdNameColor,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE color = $1 LIMIT $2",
-    //             color,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         Some(name),
-    //         None,
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Id,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE name = $1 LIMIT $2",
-    //             name,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         Some(name),
-    //         None,
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Name,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE name = $1 LIMIT $2",
-    //             name,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         Some(name),
-    //         None,
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Color,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE name = $1 LIMIT $2",
-    //             name,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         Some(name),
-    //         None,
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdName,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE name = $1 LIMIT $2",
-    //             name,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         Some(name),
-    //         None,
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdColor,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE name = $1 LIMIT $2",
-    //             name,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         Some(name),
-    //         None,
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::NameColor,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE name = $1 LIMIT $2",
-    //             name,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         Some(name),
-    //         None,
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdNameColor,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE name = $1 LIMIT $2",
-    //             name,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         Some(name),
-    //         Some(color),
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Id,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE name = $1 AND color = $2 LIMIT $3",
-    //             name,
-    //             color,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         Some(name),
-    //         Some(color),
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Name,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE name = $1 AND color = $2 LIMIT $3",
-    //             name,
-    //             color,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         Some(name),
-    //         Some(color),
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Color,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE name = $1 AND color = $2 LIMIT $3",
-    //             name,
-    //             color,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         Some(name),
-    //         Some(color),
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdName,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE name = $1 AND color = $2 LIMIT $3",
-    //             name,
-    //             color,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         Some(name),
-    //         Some(color),
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdColor,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE name = $1 AND color = $2 LIMIT $3",
-    //             name,
-    //             color,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         Some(name),
-    //         Some(color),
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::NameColor,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE name = $1 AND color = $2 LIMIT $3",
-    //             name,
-    //             color,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    //     (
-    //         Some(name),
-    //         Some(color),
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdNameColor,
-    //     ) => match sqlx::query_as!(
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-    //             "SELECT name FROM cats WHERE name = $1 AND color = $2 LIMIT $3",
-    //             name,
-    //             color,
-    //             *limit as i64
-    //         )
-    //         .fetch_all(&*app_info_state.get_postgres_pool())
-    //         .await
-    //     {
-    //         Ok(value) => Ok(value.into_iter()
-    //             .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-    //             .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-    //         Err(e) => Err(e)
-    //     },
-    // };
-
     match query_result {
         Ok(value) => tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants::Desirable(
             value.into_iter().map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element)).collect()
-            // value
         ),
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGet::from(e);
@@ -987,5 +358,19 @@ pub(crate) async fn get(
             tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants::from(error)
         }
     }
-    // todo!("3")
 }
+
+// #[derive(serde_derive::Deserialize, sqlx::FromRow)]
+// struct IdWrapper { id: i64 }
+// //1 works
+// let id_handle = "id";
+// sqlx::query_as::<sqlx::Postgres, IdWrapper>(&format!("SELECT {id_handle} FROM example")).fetch_all(postgres_pool).await
+// //2 works
+// sqlx::query_as!(IdWrapper, "SELECT id FROM example").fetch_all(postgres_pool).await
+// //3 runtime error: column not found: id
+// let mut query = sqlx::query_as::<sqlx::Postgres, IdWrapper>(&format!("SELECT $1 FROM example"));
+// query = query.bind("id");
+// query.fetch_all(postgres_pool).await
+// //4 compile time error: column name "?column?" is invalid: "" is not a valid Rust identifier
+// let id_handle = "id";
+// sqlx::query_as!(IdWrapper, "SELECT $1 FROM example", id_handle).fetch_all(postgres_pool).await
