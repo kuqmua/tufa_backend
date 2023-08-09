@@ -34,40 +34,56 @@ pub(crate) async fn get(
         Some(limit) => limit,
         None => &tufa_common::server::postgres::constants::DEFAULT_POSTGRES_SELECT_LIMIT,
     };
-    //
+
     let where_name = "WHERE";
-    let mut where_handle = std::string::String::from("");
+    // let mut where_handle = std::string::String::from("");
+    let mut where_handle_increment = std::string::String::from("");
+    let mut increment: u64 = 0;
     if let Some(id) = query_parameters.id.clone() {
-        match where_handle.is_empty() {
+        match where_handle_increment.is_empty() {
             true => {
-                where_handle.push_str(&format!("{where_name} id = {id}"));
+                increment += 1;
+                // where_handle.push_str(&format!("{where_name} id = {id}"));
+                where_handle_increment.push_str(&format!("{where_name} id = ${increment}"));
             }
             false => {
-                where_handle.push_str(&format!(" AND id = {id}"));
+                increment += 1;
+                // where_handle.push_str(&format!(" AND id = {id}"));
+                where_handle_increment.push_str(&format!(" AND id = ${increment}"));
             }
         }
     }
     if let Some(name) = query_parameters.name.clone() {
-        match where_handle.is_empty() {
+        match where_handle_increment.is_empty() {
             true => {
-                where_handle.push_str(&format!("{where_name} name = \'{name}\'"));
+                increment += 1;
+                // where_handle.push_str(&format!("{where_name} name = \'{name}\'"));
+                where_handle_increment.push_str(&format!("{where_name} name = ${increment}"));
             }
             false => {
-                where_handle.push_str(&format!(" AND name = \'{name}\'"));
+                increment += 1;
+                // where_handle.push_str(&format!(" AND name = \'{name}\'"));
+                where_handle_increment.push_str(&format!(" AND name = ${increment}"));
             }
         }
     }
     if let Some(color) = query_parameters.color.clone() {
-        match where_handle.is_empty() {
+        match where_handle_increment.is_empty() {
             true => {
-                where_handle.push_str(&format!("{where_name} color = \'{color}\'"));
+                increment += 1;
+                // where_handle.push_str(&format!("{where_name} color = \'{color}\'"));
+                where_handle_increment.push_str(&format!("{where_name} color = ${increment}"));
             }
             false => {
-                where_handle.push_str(&format!(" AND color = \'{color}\'"));
+                increment += 1;
+                // where_handle.push_str(&format!(" AND color = \'{color}\'"));
+                where_handle_increment.push_str(&format!(" AND color = ${increment}"));
             }
         }
     }
-    println!("{where_handle}");
+    // println!("where_handle {where_handle}");
+    println!("where_handle_increment {where_handle_increment}");
+
     // let select_string_parameters = match &query_parameters.select {
     //     Some(get_select) => match get_select {
     //         GetSelect::Id => std::string::String::from("$1"),
@@ -120,7 +136,9 @@ pub(crate) async fn get(
     //     "SELECT id FROM cats LIMIT ?",
     //     *limit as i64
     // )
-    let query_string = format!("SELECT {select} FROM cats {where_handle} LIMIT $1"); //{limit} // WHERE name = $2   LIMIT $1{select}{where_handle}{limit}
+    increment += 1;
+    let query_string =
+        format!("SELECT {select} FROM cats {where_handle_increment} LIMIT ${increment}"); //{limit} // WHERE name = $2   LIMIT $1{select}{where_handle}{limit}
     println!("{query_string}");
     // let query_result =
     // match sqlx::query_as::<
@@ -168,9 +186,16 @@ pub(crate) async fn get(
             // if let Some(name) = query_parameters.name {
             //     query = query.bind(name)
             // }
-            if let Some(limit) = query_parameters.limit {
-                query = query.bind(limit)
+            if let Some(id) = query_parameters.id.clone() {
+                query = query.bind(id.inner().clone());
             }
+            if let Some(name) = query_parameters.name.clone() {
+                query = query.bind(name);
+            }
+            if let Some(color) = query_parameters.color.clone() {
+                query = query.bind(color);
+            }
+            query = query.bind(limit);
             // if let Some(get_select) = query_parameters.select {
             //     for i in get_select.into_get_select_field_vec() {
             //         println!("i\n{i}");
@@ -197,9 +222,19 @@ pub(crate) async fn get(
             //         query = query.bind(i.to_string());
             //     }
             // }
-            if let Some(limit) = query_parameters.limit {
-                query = query.bind(limit)
+            if let Some(id) = query_parameters.id.clone() {
+                query = query.bind(id.inner().clone());
             }
+            if let Some(name) = query_parameters.name.clone() {
+                query = query.bind(name);
+            }
+            if let Some(color) = query_parameters.color.clone() {
+                query = query.bind(color);
+            }
+            query = query.bind(limit);
+            // if let Some(limit) = query_parameters.limit {
+            //     query = query.bind(limit)
+            // }
             match query
             .fetch_all(&*app_info_state.get_postgres_pool())
              .await
@@ -220,9 +255,16 @@ pub(crate) async fn get(
             //         query = query.bind(i.to_string());
             //     }
             // }
-            if let Some(limit) = query_parameters.limit {
-                query = query.bind(limit)
+            if let Some(id) = query_parameters.id.clone() {
+                query = query.bind(id.inner().clone());
             }
+            if let Some(name) = query_parameters.name.clone() {
+                query = query.bind(name);
+            }
+            if let Some(color) = query_parameters.color.clone() {
+                query = query.bind(color);
+            }
+            query = query.bind(limit);
             match query
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
@@ -243,9 +285,16 @@ pub(crate) async fn get(
             //         query = query.bind(i.to_string());
             //     }
             // }
-            if let Some(limit) = query_parameters.limit {
-                query = query.bind(limit)
+            if let Some(id) = query_parameters.id.clone() {
+                query = query.bind(id.inner().clone());
             }
+            if let Some(name) = query_parameters.name.clone() {
+                query = query.bind(name);
+            }
+            if let Some(color) = query_parameters.color.clone() {
+                query = query.bind(color);
+            }
+            query = query.bind(limit);
             match query
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
@@ -266,9 +315,16 @@ pub(crate) async fn get(
             //         query = query.bind(i.to_string());
             //     }
             // }
-            if let Some(limit) = query_parameters.limit {
-                query = query.bind(limit)
+            if let Some(id) = query_parameters.id.clone() {
+                query = query.bind(id.inner().clone());
             }
+            if let Some(name) = query_parameters.name.clone() {
+                query = query.bind(name);
+            }
+            if let Some(color) = query_parameters.color.clone() {
+                query = query.bind(color);
+            }
+            query = query.bind(limit);
             match query
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
@@ -289,9 +345,16 @@ pub(crate) async fn get(
             //         query = query.bind(i.to_string());
             //     }
             // }
-            if let Some(limit) = query_parameters.limit {
-                query = query.bind(limit)
+            if let Some(id) = query_parameters.id.clone() {
+                query = query.bind(id.inner().clone());
             }
+            if let Some(name) = query_parameters.name.clone() {
+                query = query.bind(name);
+            }
+            if let Some(color) = query_parameters.color.clone() {
+                query = query.bind(color);
+            }
+            query = query.bind(limit);
             match query
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
@@ -312,9 +375,16 @@ pub(crate) async fn get(
             //         query = query.bind(i.to_string());
             //     }
             // }
-            if let Some(limit) = query_parameters.limit {
-                query = query.bind(limit)
+            if let Some(id) = query_parameters.id.clone() {
+                query = query.bind(id.inner().clone());
             }
+            if let Some(name) = query_parameters.name.clone() {
+                query = query.bind(name);
+            }
+            if let Some(color) = query_parameters.color.clone() {
+                query = query.bind(color);
+            }
+            query = query.bind(limit);
             match query
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
