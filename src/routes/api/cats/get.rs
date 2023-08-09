@@ -120,7 +120,7 @@ pub(crate) async fn get(
     //     "SELECT id FROM cats LIMIT ?",
     //     *limit as i64
     // )
-    let query_string = format!("SELECT {select} FROM cats {where_handle} LIMIT {limit}"); // WHERE name = $2   LIMIT $1{select}{where_handle}{limit}
+    let query_string = format!("SELECT {select} FROM cats {where_handle} LIMIT $1"); //{limit} // WHERE name = $2   LIMIT $1{select}{where_handle}{limit}
     println!("{query_string}");
     // let query_result =
     // match sqlx::query_as::<
@@ -168,6 +168,9 @@ pub(crate) async fn get(
             // if let Some(name) = query_parameters.name {
             //     query = query.bind(name)
             // }
+            if let Some(limit) = query_parameters.limit {
+                query = query.bind(limit)
+            }
             // if let Some(get_select) = query_parameters.select {
             //     for i in get_select.into_get_select_field_vec() {
             //         println!("i\n{i}");
@@ -189,10 +192,13 @@ pub(crate) async fn get(
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
             >(&query_string);
-            if let Some(get_select) = query_parameters.select {
-                for i in get_select.into_get_select_field_vec() {
-                    query = query.bind(i.to_string());
-                }
+            // if let Some(get_select) = query_parameters.select {
+            //     for i in get_select.into_get_select_field_vec() {
+            //         query = query.bind(i.to_string());
+            //     }
+            // }
+            if let Some(limit) = query_parameters.limit {
+                query = query.bind(limit)
             }
             match query
             .fetch_all(&*app_info_state.get_postgres_pool())
@@ -209,10 +215,13 @@ pub(crate) async fn get(
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatColor,
             >(&query_string);
-            if let Some(get_select) = query_parameters.select {
-                for i in get_select.into_get_select_field_vec() {
-                    query = query.bind(i.to_string());
-                }
+            // if let Some(get_select) = query_parameters.select {
+            //     for i in get_select.into_get_select_field_vec() {
+            //         query = query.bind(i.to_string());
+            //     }
+            // }
+            if let Some(limit) = query_parameters.limit {
+                query = query.bind(limit)
             }
             match query
             .fetch_all(&*app_info_state.get_postgres_pool())
@@ -229,10 +238,13 @@ pub(crate) async fn get(
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdName,
             >(&query_string);
-            if let Some(get_select) = query_parameters.select {
-                for i in get_select.into_get_select_field_vec() {
-                    query = query.bind(i.to_string());
-                }
+            // if let Some(get_select) = query_parameters.select {
+            //     for i in get_select.into_get_select_field_vec() {
+            //         query = query.bind(i.to_string());
+            //     }
+            // }
+            if let Some(limit) = query_parameters.limit {
+                query = query.bind(limit)
             }
             match query
             .fetch_all(&*app_info_state.get_postgres_pool())
@@ -249,10 +261,13 @@ pub(crate) async fn get(
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdColor,
             >(&query_string);
-            if let Some(get_select) = query_parameters.select {
-                for i in get_select.into_get_select_field_vec() {
-                    query = query.bind(i.to_string());
-                }
+            // if let Some(get_select) = query_parameters.select {
+            //     for i in get_select.into_get_select_field_vec() {
+            //         query = query.bind(i.to_string());
+            //     }
+            // }
+            if let Some(limit) = query_parameters.limit {
+                query = query.bind(limit)
             }
             match query
             .fetch_all(&*app_info_state.get_postgres_pool())
@@ -269,10 +284,13 @@ pub(crate) async fn get(
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatNameColor,
             >(&query_string);
-            if let Some(get_select) = query_parameters.select {
-                for i in get_select.into_get_select_field_vec() {
-                    query = query.bind(i.to_string());
-                }
+            // if let Some(get_select) = query_parameters.select {
+            //     for i in get_select.into_get_select_field_vec() {
+            //         query = query.bind(i.to_string());
+            //     }
+            // }
+            if let Some(limit) = query_parameters.limit {
+                query = query.bind(limit)
             }
             match query
             .fetch_all(&*app_info_state.get_postgres_pool())
@@ -289,10 +307,13 @@ pub(crate) async fn get(
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdNameColor,
             >(&query_string);
-            if let Some(get_select) = query_parameters.select {
-                for i in get_select.into_get_select_field_vec() {
-                    query = query.bind(i.to_string());
-                }
+            // if let Some(get_select) = query_parameters.select {
+            //     for i in get_select.into_get_select_field_vec() {
+            //         query = query.bind(i.to_string());
+            //     }
+            // }
+            if let Some(limit) = query_parameters.limit {
+                query = query.bind(limit)
             }
             match query
             .fetch_all(&*app_info_state.get_postgres_pool())
