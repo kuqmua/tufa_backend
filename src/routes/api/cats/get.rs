@@ -39,6 +39,54 @@ pub(crate) async fn get(
     // let mut where_handle = std::string::String::from("");
     let mut where_handle_increment = std::string::String::from("");
     let mut increment: u64 = 0;
+    // let select_string_parameters = match &query_parameters.select {
+    //     Some(get_select) => match get_select {
+    //         GetSelect::Id => {
+    //             increment += 1;
+    //             format!("${increment}")
+    //         }
+    //         GetSelect::Name => {
+    //             increment += 1;
+    //             format!("${increment}")
+    //         }
+    //         GetSelect::Color => {
+    //             increment += 1;
+    //             format!("${increment}")
+    //         }
+    //         GetSelect::IdName => {
+    //             let incr_one = increment + 1;
+    //             let incr_two = increment + 2;
+    //             increment += 2;
+    //             format!("${incr_one}, ${incr_two}")
+    //         }
+    //         GetSelect::IdColor => {
+    //             let incr_one = increment + 1;
+    //             let incr_two = increment + 2;
+    //             increment += 2;
+    //             format!("${incr_one}, ${incr_two}")
+    //         }
+    //         GetSelect::NameColor => {
+    //             let incr_one = increment + 1;
+    //             let incr_two = increment + 2;
+    //             increment += 2;
+    //             format!("${incr_one}, ${incr_two}")
+    //         }
+    //         GetSelect::IdNameColor => {
+    //             let incr_one = increment + 1;
+    //             let incr_two = increment + 2;
+    //             let incr_three = increment + 3;
+    //             increment += 3;
+    //             format!("${incr_one}, ${incr_two}, ${incr_three}")
+    //         }
+    //     },
+    //     None => {
+    //         let incr_one = increment + 1;
+    //         let incr_two = increment + 2;
+    //         let incr_three = increment + 3;
+    //         increment += 3;
+    //         format!("${incr_one}, ${incr_two}, ${incr_three}")
+    //     }
+    // };
     if let Some(id) = query_parameters.id.clone() {
         match where_handle_increment.is_empty() {
             true => {
@@ -84,19 +132,16 @@ pub(crate) async fn get(
     // println!("where_handle {where_handle}");
     println!("where_handle_increment {where_handle_increment}");
 
-    // let select_string_parameters = match &query_parameters.select {
-    //     Some(get_select) => match get_select {
-    //         GetSelect::Id => std::string::String::from("$1"),
-    //         GetSelect::Name => std::string::String::from("$1"),
-    //         GetSelect::Color => std::string::String::from("$1"),
-    //         GetSelect::IdName => std::string::String::from("$1, $2"),
-    //         GetSelect::IdColor => std::string::String::from("$1, $2"),
-    //         GetSelect::NameColor => std::string::String::from("$1, $2"),
-    //         GetSelect::IdNameColor => std::string::String::from("$1, $2, $3"),
-    //     },
-    //     None => std::string::String::from("$1, $2, $3"),
-    // };
     let select = GetSelect::from(query_parameters.select.clone());
+    // let select_handle = match select {
+    //     GetSelect::Id => "cats.id",
+    //     GetSelect::Name => "cats.name",
+    //     GetSelect::Color => "cats.color",
+    //     GetSelect::IdName => "cats.id, cats.name",
+    //     GetSelect::IdColor => "cats.id, cats.color",
+    //     GetSelect::NameColor => "cats.name, cats.color",
+    //     GetSelect::IdNameColor => "cats.id, cats.name, cats.color",
+    // };
     // // WHERE color = $1
     // // WHERE some_id = ANY(ARRAY[1, 2])
     // // WHERE name = $1 AND color = $2
@@ -183,9 +228,12 @@ pub(crate) async fn get(
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatId,
             >(&query_string);
-            // if let Some(name) = query_parameters.name {
-            //     query = query.bind(name)
-            // }
+            if let Some(get_select) = query_parameters.select {
+                for i in get_select.into_get_select_field_vec() {
+                    println!("i\n{i}");
+                    query = query.bind(i.to_string());
+                }
+            }
             if let Some(id) = query_parameters.id.clone() {
                 query = query.bind(id.inner().clone());
             }
@@ -196,12 +244,6 @@ pub(crate) async fn get(
                 query = query.bind(color);
             }
             query = query.bind(limit);
-            // if let Some(get_select) = query_parameters.select {
-            //     for i in get_select.into_get_select_field_vec() {
-            //         println!("i\n{i}");
-            //         query = query.bind(i.to_string());
-            //     }
-            // }
             match query
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
@@ -370,10 +412,14 @@ pub(crate) async fn get(
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdNameColor,
             >(&query_string);
+
             // if let Some(get_select) = query_parameters.select {
-            //     for i in get_select.into_get_select_field_vec() {
-            //         query = query.bind(i.to_string());
-            //     }
+            //     // for i in get_select.into_get_select_field_vec() {
+            //     //     query = query.bind(i.to_string());
+            //     // }
+            //     query = query.bind("id");
+            //     query = query.bind("name");
+            //     query = query.bind("color");
             // }
             if let Some(id) = query_parameters.id.clone() {
                 query = query.bind(id.inner().clone());
