@@ -27,10 +27,7 @@ pub(crate) async fn get(
         query_parameters.color,
         query_parameters.select
     );
-    let limit = match &query_parameters.limit {
-        Some(limit) => limit,
-        None => &tufa_common::server::postgres::constants::DEFAULT_POSTGRES_SELECT_LIMIT,
-    };
+    let limit = &query_parameters.limit;
     let where_name = "WHERE";
     let mut where_handle_increment = std::string::String::from("");
     let mut increment: u64 = 0;
