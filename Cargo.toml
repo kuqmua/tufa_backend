@@ -35,7 +35,7 @@ num_cpus = {version = "=1.15.0"}
 quickcheck = {version = "=1.0.3"}
 quickcheck_macros = {version = "=1.0.0"}
 rand = {version = "=0.8", features = ["std_rng"]}
-regex = {version = "=1.5"}
+regex = {version = "=1.9.3"}
 reqwest = {version = "=0.11.17", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls", "multipart", "stream", "cookies"]}
 secrecy = {version = "=0.8", features = ["serde"]}
 serde = {version = "=1.0", features = ["derive"]}
@@ -63,6 +63,10 @@ futures-util = {version = "=0.3.28"}
 # uuid = {version = "1.2.2", features = ["v4", "serde"]}
 validator = {version = "=0.16.0"}
 valuable = {version = "=0.1.0", features = ["default", "std", "alloc", "derive", "valuable-derive"]}#maybe not all features needed
+utoipa = {version = "=3.4.4", features = ["axum_extras"]}
+utoipa-swagger-ui = {version = "=3.0.2", features=["axum"]}
+utoipa-redoc = {version = "=0.1.0", features=["axum"]}
+utoipa-rapidoc = {version = "=0.1.0"}
 #
 # tufa_common = {git = "https://github.com/kuqmua/tufa_common"}# git version
 tufa_common = {path = "../tufa_common"}# local dev test without commits version

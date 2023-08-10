@@ -1,3 +1,32 @@
+#[derive(utoipa::OpenApi)]
+#[openapi(
+    paths(
+        tufa_common::server::routes::git_info::git_info,
+    ),
+    components(
+        schemas(tufa_common::server::routes::git_info::GitInfo)
+    ),
+    modifiers(&SecurityAddon),
+)]
+struct ApiDoc;
+
+struct SecurityAddon;
+
+impl utoipa::Modify for SecurityAddon {
+    fn modify(&self, openapi: &mut utoipa::openapi::OpenApi) {
+        if let Some(components) = openapi.components.as_mut() {
+            components.add_security_scheme(
+                "api_key",
+                utoipa::openapi::security::SecurityScheme::ApiKey(
+                    utoipa::openapi::security::ApiKey::Header(
+                        utoipa::openapi::security::ApiKeyValue::new("todo_apikey"),
+                    ),
+                ),
+            )
+        }
+    }
+}
+
 // // allow to open source files in browser like php
 // fn routes_static() -> axum::Router {
 //     axum::Router::new().nest_service(
@@ -122,6 +151,20 @@ pub async fn try_build_server<'a>(
                         "http://localhost".parse().unwrap(),
                     ]),
             )
+            .merge(utoipa_swagger_ui::SwaggerUi::new("/swagger-ui").url(
+                "/api-docs/openapi.json",
+                {
+                    use utoipa::OpenApi;
+                    ApiDoc::openapi()
+                },
+            ))
+            .merge({
+                use utoipa_redoc::Servable;
+                utoipa_redoc::Redoc::with_url("/redoc", {
+                    use utoipa::OpenApi;
+                    ApiDoc::openapi()
+                })
+            })
             .into_make_service(),
     )
     .await
