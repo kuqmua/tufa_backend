@@ -18,7 +18,7 @@ pub(crate) async fn patch<'a>(
         },
     };
     println!("patch {payload:#?}");
-    let bigserial_id = *tufa_common::server::postgres::bigserial::GetPostgresBigserialId::get_postgres_bigserial_id(&payload).inner();
+    let bigserial_id = *tufa_common::server::postgres::bigserial::GetPostgresBigserialId::get_postgres_bigserial_id(&payload).to_inner();
     let query_result = match payload {
         tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPatch::IdName {
             id: _id,

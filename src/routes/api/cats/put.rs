@@ -24,7 +24,7 @@ pub(crate) async fn put<'a>(
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPut,
         "INSERT INTO cats(id, name, color) VALUES ($1, $2, $3) ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, color = EXCLUDED.color",
-        payload.id.inner(),
+        payload.id.to_inner(),
         payload.name,
         payload.color
     )

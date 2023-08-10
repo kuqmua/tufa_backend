@@ -96,21 +96,10 @@ pub(crate) async fn get(
     println!("{select:#?}");
     let query_result = match select {
         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Id => {
-            let mut query = sqlx::query_as::<
+            match tufa_common::repositories_types::tufa_server::routes::api::cats::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatId,
-            >(&query_string);
-            if let Some(id) = query_parameters.id.clone() {
-                query = query.bind(id.inner().clone());
-            }
-            if let Some(name) = query_parameters.name.clone() {
-                query = query.bind(name);
-            }
-            if let Some(color) = query_parameters.color.clone() {
-                query = query.bind(color);
-            }
-            query = query.bind(limit);
-            match query
+            >(&query_string))
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
             {
@@ -121,21 +110,10 @@ pub(crate) async fn get(
             }
         }
         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Name => {
-            let mut query = sqlx::query_as::<
+            match tufa_common::repositories_types::tufa_server::routes::api::cats::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
                 sqlx::Postgres,
-                tufa_common::repositories_types::tufa_server::routes::api::cats::CatName,
-            >(&query_string);
-            if let Some(id) = query_parameters.id.clone() {
-                query = query.bind(id.inner().clone());
-            }
-            if let Some(name) = query_parameters.name.clone() {
-                query = query.bind(name);
-            }
-            if let Some(color) = query_parameters.color.clone() {
-                query = query.bind(color);
-            }
-            query = query.bind(limit);
-            match query
+                tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdName,
+            >(&query_string))
             .fetch_all(&*app_info_state.get_postgres_pool())
              .await
             {
@@ -146,21 +124,10 @@ pub(crate) async fn get(
             }
         }
         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Color => {
-            let mut query = sqlx::query_as::<
+            match tufa_common::repositories_types::tufa_server::routes::api::cats::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
                 sqlx::Postgres,
-                tufa_common::repositories_types::tufa_server::routes::api::cats::CatColor,
-            >(&query_string);
-            if let Some(id) = query_parameters.id.clone() {
-                query = query.bind(id.inner().clone());
-            }
-            if let Some(name) = query_parameters.name.clone() {
-                query = query.bind(name);
-            }
-            if let Some(color) = query_parameters.color.clone() {
-                query = query.bind(color);
-            }
-            query = query.bind(limit);
-            match query
+                tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdColor,
+            >(&query_string))
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
             {
@@ -171,21 +138,10 @@ pub(crate) async fn get(
             }
         }
         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdName => {
-            let mut query = sqlx::query_as::<
+            match tufa_common::repositories_types::tufa_server::routes::api::cats::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdName,
-            >(&query_string);
-            if let Some(id) = query_parameters.id.clone() {
-                query = query.bind(id.inner().clone());
-            }
-            if let Some(name) = query_parameters.name.clone() {
-                query = query.bind(name);
-            }
-            if let Some(color) = query_parameters.color.clone() {
-                query = query.bind(color);
-            }
-            query = query.bind(limit);
-            match query
+            >(&query_string))
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
             {
@@ -196,21 +152,10 @@ pub(crate) async fn get(
             }
         }
         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdColor => {
-            let mut query = sqlx::query_as::<
+            match tufa_common::repositories_types::tufa_server::routes::api::cats::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdColor,
-            >(&query_string);
-            if let Some(id) = query_parameters.id.clone() {
-                query = query.bind(id.inner().clone());
-            }
-            if let Some(name) = query_parameters.name.clone() {
-                query = query.bind(name);
-            }
-            if let Some(color) = query_parameters.color.clone() {
-                query = query.bind(color);
-            }
-            query = query.bind(limit);
-            match query
+            >(&query_string))
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
             {
@@ -221,21 +166,10 @@ pub(crate) async fn get(
             }
         }
         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::NameColor => {
-            let mut query = sqlx::query_as::<
+            match tufa_common::repositories_types::tufa_server::routes::api::cats::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatNameColor,
-            >(&query_string);
-            if let Some(id) = query_parameters.id.clone() {
-                query = query.bind(id.inner().clone());
-            }
-            if let Some(name) = query_parameters.name.clone() {
-                query = query.bind(name);
-            }
-            if let Some(color) = query_parameters.color.clone() {
-                query = query.bind(color);
-            }
-            query = query.bind(limit);
-            match query
+            >(&query_string))
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
             {
@@ -246,21 +180,10 @@ pub(crate) async fn get(
             }
         }
         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdNameColor => {
-            let mut query = sqlx::query_as::<
+            match tufa_common::repositories_types::tufa_server::routes::api::cats::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdNameColor,
-            >(&query_string);
-            if let Some(id) = query_parameters.id.clone() {
-                query = query.bind(id.inner().clone());
-            }
-            if let Some(name) = query_parameters.name.clone() {
-                query = query.bind(name);
-            }
-            if let Some(color) = query_parameters.color.clone() {
-                query = query.bind(color);
-            }
-            query = query.bind(limit);
-            match query
+            >(&query_string))
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
             {
