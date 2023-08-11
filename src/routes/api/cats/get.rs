@@ -1,3 +1,5 @@
+use hmac::digest::typenum::array;
+
 pub(crate) async fn get(
     query_parameters_extraction_result: Result<
         axum::extract::Query<
@@ -27,68 +29,44 @@ pub(crate) async fn get(
         query_parameters.color,
         query_parameters.select
     );
+    let select_name = "SELECT";
+    let from_name = "FROM";
     let where_name = "WHERE";
     let and_name = "AND";
     let limit_name = "LIMIT";
+    let any_name = "ANY";
+    let array_name = "ARRAY";
     let mut additional_parameters = std::string::String::from("");
     let mut increment: u64 = 0;
-    if let Some(bigserial_ids) = &query_parameters.id {
-        let increments = {
-            let mut increments = std::string::String::from("");
-            bigserial_ids.0.iter().for_each(|_| {
-                increment += 1;
-                increments.push_str(&format!("${increment}, "));
-            });
-            if let false = increments.is_empty() {
-                increments.pop();
-                increments.pop();
-            }
-            increments
-        };
+    if let Some(value) = &query_parameters.id {
         let prefix = match additional_parameters.is_empty() {
             true => format!("{where_name}"),
             false => format!(" {and_name}"),
         };
-        additional_parameters.push_str(&format!("{prefix} id = ANY(ARRAY[{increments}])"));
+        additional_parameters.push_str(&format!(
+            "{prefix} id = {any_name}({array_name}[{}])", 
+            tufa_common::server::postgres::generate_bind_increments::GenerateBindIncrements::generate_bind_increments(value, &mut increment)
+        ));
     }
-    //
     if let Some(value) = &query_parameters.name {
-        let increments = {
-            let mut increments = std::string::String::from("");
-            value.0.iter().for_each(|_| {
-                increment += 1;
-                increments.push_str(&format!("${increment}, "));
-            });
-            if let false = increments.is_empty() {
-                increments.pop();
-                increments.pop();
-            }
-            increments
-        };
         let prefix = match additional_parameters.is_empty() {
             true => format!("{where_name}"),
             false => format!(" {and_name}"),
         };
-        additional_parameters.push_str(&format!("{prefix} name = ANY(ARRAY[{increments}])"));
+        additional_parameters.push_str(&format!(
+            "{prefix} name = {any_name}({array_name}[{}])",
+            tufa_common::server::postgres::generate_bind_increments::GenerateBindIncrements::generate_bind_increments(value, &mut increment)
+        ));
     }
     if let Some(value) = &query_parameters.color {
-        let increments = {
-            let mut increments = std::string::String::from("");
-            value.0.iter().for_each(|_| {
-                increment += 1;
-                increments.push_str(&format!("${increment}, "));
-            });
-            if let false = increments.is_empty() {
-                increments.pop();
-                increments.pop();
-            }
-            increments
-        };
         let prefix = match additional_parameters.is_empty() {
             true => format!("{where_name}"),
             false => format!(" {and_name}"),
         };
-        additional_parameters.push_str(&format!("{prefix} color = ANY(ARRAY[{increments}])"));
+        additional_parameters.push_str(&format!(
+            "{prefix} color = {any_name}({array_name}[{}])",
+            tufa_common::server::postgres::generate_bind_increments::GenerateBindIncrements::generate_bind_increments(value, &mut increment)
+        ));
     }
     {
         increment += 1;
@@ -101,7 +79,10 @@ pub(crate) async fn get(
     let select = tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::from(
         query_parameters.select.clone(),
     );
-    let query_string = format!("SELECT {select} FROM cats {additional_parameters}");
+    let query_string = format!(
+        "{select_name} {select} {from_name} {} {additional_parameters}",
+        tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
+    );
     println!("{query_string}");
     let query_result = match select {
         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Id => {
@@ -217,18 +198,3 @@ pub(crate) async fn get(
         }
     }
 }
-
-// #[derive(serde_derive::Deserialize, sqlx::FromRow)]
-// struct IdWrapper { id: i64 }
-// //1 works
-// let id_handle = "id";
-// sqlx::query_as::<sqlx::Postgres, IdWrapper>(&format!("SELECT {id_handle} FROM example")).fetch_all(postgres_pool).await
-// //2 works
-// sqlx::query_as!(IdWrapper, "SELECT id FROM example").fetch_all(postgres_pool).await
-// //3 runtime error: column not found: id
-// let mut query = sqlx::query_as::<sqlx::Postgres, IdWrapper>(&format!("SELECT $1 FROM example"));
-// query = query.bind("id");
-// query.fetch_all(postgres_pool).await
-// //4 compile time error: column name "?column?" is invalid: "" is not a valid Rust identifier
-// let id_handle = "id";
-// sqlx::query_as!(IdWrapper, "SELECT $1 FROM example", id_handle).fetch_all(postgres_pool).await
