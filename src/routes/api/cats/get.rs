@@ -52,10 +52,10 @@ pub(crate) async fn get(
         additional_parameters.push_str(&format!("{prefix} id = ANY(ARRAY[{increments}])"));
     }
     //
-    if let Some(names) = &query_parameters.name {
+    if let Some(value) = &query_parameters.name {
         let increments = {
             let mut increments = std::string::String::from("");
-            names.0.iter().for_each(|_| {
+            value.0.iter().for_each(|_| {
                 increment += 1;
                 increments.push_str(&format!("${increment}, "));
             });
@@ -71,13 +71,24 @@ pub(crate) async fn get(
         };
         additional_parameters.push_str(&format!("{prefix} name = ANY(ARRAY[{increments}])"));
     }
-    if let Some(_) = &query_parameters.color {
-        increment += 1;
+    if let Some(value) = &query_parameters.color {
+        let increments = {
+            let mut increments = std::string::String::from("");
+            value.0.iter().for_each(|_| {
+                increment += 1;
+                increments.push_str(&format!("${increment}, "));
+            });
+            if let false = increments.is_empty() {
+                increments.pop();
+                increments.pop();
+            }
+            increments
+        };
         let prefix = match additional_parameters.is_empty() {
             true => format!("{where_name}"),
             false => format!(" {and_name}"),
         };
-        additional_parameters.push_str(&format!("{prefix} color = ${increment}"));
+        additional_parameters.push_str(&format!("{prefix} color = ANY(ARRAY[{increments}])"));
     }
     {
         increment += 1;
@@ -90,8 +101,6 @@ pub(crate) async fn get(
     let select = tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::from(
         query_parameters.select.clone(),
     );
-    // // WHERE some_id = ANY(ARRAY[1, 2])
-    // // WHERE name = $1 AND color = $2
     let query_string = format!("SELECT {select} FROM cats {additional_parameters}");
     println!("{query_string}");
     let query_result = match select {
