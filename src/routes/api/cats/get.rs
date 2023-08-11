@@ -1,5 +1,3 @@
-use hmac::digest::typenum::array;
-
 pub(crate) async fn get(
     query_parameters_extraction_result: Result<
         axum::extract::Query<
@@ -29,50 +27,49 @@ pub(crate) async fn get(
         query_parameters.color,
         query_parameters.select
     );
-    let select_name = "SELECT";
-    let from_name = "FROM";
-    let where_name = "WHERE";
-    let and_name = "AND";
-    let limit_name = "LIMIT";
-    let any_name = "ANY";
-    let array_name = "ARRAY";
     let mut additional_parameters = std::string::String::from("");
     let mut increment: u64 = 0;
     if let Some(value) = &query_parameters.id {
         let prefix = match additional_parameters.is_empty() {
-            true => format!("{where_name}"),
-            false => format!(" {and_name}"),
+            true => format!("{}", tufa_common::server::postgres::constants::WHERE_NAME),
+            false => format!(" {}", tufa_common::server::postgres::constants::AND_NAME),
         };
         additional_parameters.push_str(&format!(
-            "{prefix} id = {any_name}({array_name}[{}])", 
+            "{prefix} id = {}({}[{}])", 
+            tufa_common::server::postgres::constants::ANY_NAME,
+            tufa_common::server::postgres::constants::ARRAY_NAME,
             tufa_common::server::postgres::generate_bind_increments::GenerateBindIncrements::generate_bind_increments(value, &mut increment)
         ));
     }
     if let Some(value) = &query_parameters.name {
         let prefix = match additional_parameters.is_empty() {
-            true => format!("{where_name}"),
-            false => format!(" {and_name}"),
+            true => format!("{}", tufa_common::server::postgres::constants::WHERE_NAME),
+            false => format!(" {}", tufa_common::server::postgres::constants::AND_NAME),
         };
         additional_parameters.push_str(&format!(
-            "{prefix} name = {any_name}({array_name}[{}])",
+            "{prefix} name = {}({}[{}])",
+            tufa_common::server::postgres::constants::ANY_NAME,
+            tufa_common::server::postgres::constants::ARRAY_NAME,
             tufa_common::server::postgres::generate_bind_increments::GenerateBindIncrements::generate_bind_increments(value, &mut increment)
         ));
     }
     if let Some(value) = &query_parameters.color {
         let prefix = match additional_parameters.is_empty() {
-            true => format!("{where_name}"),
-            false => format!(" {and_name}"),
+            true => format!("{}", tufa_common::server::postgres::constants::WHERE_NAME),
+            false => format!(" {}", tufa_common::server::postgres::constants::AND_NAME),
         };
         additional_parameters.push_str(&format!(
-            "{prefix} color = {any_name}({array_name}[{}])",
+            "{prefix} color = {}({}[{}])",
+            tufa_common::server::postgres::constants::ANY_NAME,
+            tufa_common::server::postgres::constants::ARRAY_NAME,
             tufa_common::server::postgres::generate_bind_increments::GenerateBindIncrements::generate_bind_increments(value, &mut increment)
         ));
     }
     {
         increment += 1;
         let limit_prefix = match additional_parameters.is_empty() {
-            true => format!("{limit_name}"),
-            false => format!(" {limit_name}"),
+            true => format!("{}", tufa_common::server::postgres::constants::LIMIT_NAME),
+            false => format!(" {}", tufa_common::server::postgres::constants::LIMIT_NAME),
         };
         additional_parameters.push_str(&format!("{limit_prefix} ${increment}"));
     }
@@ -80,7 +77,9 @@ pub(crate) async fn get(
         query_parameters.select.clone(),
     );
     let query_string = format!(
-        "{select_name} {select} {from_name} {} {additional_parameters}",
+        "{} {select} {} {} {additional_parameters}",
+        tufa_common::server::postgres::constants::SELECT_NAME,
+        tufa_common::server::postgres::constants::FROM_NAME,
         tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
     );
     println!("{query_string}");
