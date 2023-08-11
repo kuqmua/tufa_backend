@@ -22,14 +22,6 @@ pub mod try_build_server;
 pub mod dev;
 
 fn main() {
-    // let data = r#"75,563,34,35"#;
-
-    // let datas: Vec<i64> = serde_json::from_str(data).unwrap();
-
-    // for data in datas.iter() {
-    //     println!("{:#?}", data);
-    // }
-
     println!(
         "project commit {}",
         tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO

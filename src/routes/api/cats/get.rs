@@ -33,29 +33,43 @@ pub(crate) async fn get(
     let mut additional_parameters = std::string::String::from("");
     let mut increment: u64 = 0;
     if let Some(bigserial_ids) = &query_parameters.id {
+        let increments = {
+            let mut increments = std::string::String::from("");
+            bigserial_ids.0.iter().for_each(|_| {
+                increment += 1;
+                increments.push_str(&format!("${increment}, "));
+            });
+            if let false = increments.is_empty() {
+                increments.pop();
+                increments.pop();
+            }
+            increments
+        };
         let prefix = match additional_parameters.is_empty() {
             true => format!("{where_name}"),
             false => format!(" {and_name}"),
         };
-
-        let mut increments = std::string::String::from("");
-        bigserial_ids.0.iter().enumerate().for_each(|(index, _b)| {
-            increment += 1;
-            increments.push_str(&format!("${increment}, "));
-        });
-        if let false = increments.is_empty() {
-            increments.pop();
-            increments.pop();
-        }
         additional_parameters.push_str(&format!("{prefix} id = ANY(ARRAY[{increments}])"));
     }
-    if let Some(_) = &query_parameters.name {
-        increment += 1;
+    //
+    if let Some(names) = &query_parameters.name {
+        let increments = {
+            let mut increments = std::string::String::from("");
+            names.0.iter().for_each(|_| {
+                increment += 1;
+                increments.push_str(&format!("${increment}, "));
+            });
+            if let false = increments.is_empty() {
+                increments.pop();
+                increments.pop();
+            }
+            increments
+        };
         let prefix = match additional_parameters.is_empty() {
             true => format!("{where_name}"),
             false => format!(" {and_name}"),
         };
-        additional_parameters.push_str(&format!("{prefix} name = ${increment}"));
+        additional_parameters.push_str(&format!("{prefix} name = ANY(ARRAY[{increments}])"));
     }
     if let Some(_) = &query_parameters.color {
         increment += 1;
