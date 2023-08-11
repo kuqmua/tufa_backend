@@ -27,76 +27,62 @@ pub(crate) async fn get(
         query_parameters.color,
         query_parameters.select
     );
-    let limit = &query_parameters.limit;
     let where_name = "WHERE";
     let and_name = "AND";
-    let mut where_handle_increment = std::string::String::from("");
+    let limit_name = "LIMIT";
+    let mut additional_parameters = std::string::String::from("");
     let mut increment: u64 = 0;
-    if let Some(id) = &query_parameters.id {
-        match where_handle_increment.is_empty() {
-            true => {
-                increment += 1;
-                where_handle_increment.push_str(&format!("{where_name} id = ${increment}"));
-            }
-            false => {
-                increment += 1;
-                where_handle_increment.push_str(&format!(" {and_name} id = ${increment}"));
-            }
+    if let Some(bigserial_ids) = &query_parameters.id {
+        let prefix = match additional_parameters.is_empty() {
+            true => format!("{where_name}"),
+            false => format!(" {and_name}"),
+        };
+
+        let mut increments = std::string::String::from("");
+        bigserial_ids.0.iter().enumerate().for_each(|(index, _b)| {
+            increment += 1;
+            increments.push_str(&format!("${increment}, "));
+        });
+        if let false = increments.is_empty() {
+            increments.pop();
+            increments.pop();
         }
+        additional_parameters.push_str(&format!("{prefix} id = ANY(ARRAY[{increments}])"));
     }
-    if let Some(name) = &query_parameters.name {
-        match where_handle_increment.is_empty() {
-            true => {
-                increment += 1;
-                where_handle_increment.push_str(&format!("{where_name} name = ${increment}"));
-            }
-            false => {
-                increment += 1;
-                where_handle_increment.push_str(&format!(" {and_name} name = ${increment}"));
-            }
-        }
+    if let Some(_) = &query_parameters.name {
+        increment += 1;
+        let prefix = match additional_parameters.is_empty() {
+            true => format!("{where_name}"),
+            false => format!(" {and_name}"),
+        };
+        additional_parameters.push_str(&format!("{prefix} name = ${increment}"));
     }
-    if let Some(color) = &query_parameters.color {
-        match where_handle_increment.is_empty() {
-            true => {
-                increment += 1;
-                where_handle_increment.push_str(&format!("{where_name} color = ${increment}"));
-            }
-            false => {
-                increment += 1;
-                where_handle_increment.push_str(&format!(" {and_name} color = ${increment}"));
-            }
-        }
+    if let Some(_) = &query_parameters.color {
+        increment += 1;
+        let prefix = match additional_parameters.is_empty() {
+            true => format!("{where_name}"),
+            false => format!(" {and_name}"),
+        };
+        additional_parameters.push_str(&format!("{prefix} color = ${increment}"));
     }
-    // println!("where_handle {where_handle}");
-    println!("where_handle_increment {where_handle_increment}");
+    {
+        increment += 1;
+        let limit_prefix = match additional_parameters.is_empty() {
+            true => format!("{limit_name}"),
+            false => format!(" {limit_name}"),
+        };
+        additional_parameters.push_str(&format!("{limit_prefix} ${increment}"));
+    }
     let select = tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::from(
         query_parameters.select.clone(),
     );
-    // // WHERE color = $1
     // // WHERE some_id = ANY(ARRAY[1, 2])
     // // WHERE name = $1 AND color = $2
-
-    // // let v = vec![1, 2];
-    // // let params = format!("?{}", ", ?".repeat(v.len() - 1));
-    // // let query_str = format!("SELECT id FROM test_table WHERE id IN ( { } )", params);
-    // let mut query = sqlx::query(&query_str);
-    // for i in v {
-    //     query = query.bind(i);
-    // }
-    // // let row = query.fetch_all(&pool).await?;
-    // //
-    // // let params = format!("?{}", ", ?".repeat(v.len() - 1));
-    //{select_string_parameters}
-    increment += 1;
-    let query_string =
-        format!("SELECT {select} FROM cats {where_handle_increment} LIMIT ${increment}"); //{limit} // WHERE name = $2   LIMIT $1{select}{where_handle}{limit}
+    let query_string = format!("SELECT {select} FROM cats {additional_parameters}");
     println!("{query_string}");
-    println!("{select}");
-    println!("{select:#?}");
     let query_result = match select {
         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Id => {
-            match tufa_common::repositories_types::tufa_server::routes::api::cats::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
+            match tufa_common::server::routes::helpers::bind_sqlx_query::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatId,
             >(&query_string))
@@ -110,7 +96,7 @@ pub(crate) async fn get(
             }
         }
         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Name => {
-            match tufa_common::repositories_types::tufa_server::routes::api::cats::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
+            match tufa_common::server::routes::helpers::bind_sqlx_query::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdName,
             >(&query_string))
@@ -124,7 +110,7 @@ pub(crate) async fn get(
             }
         }
         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Color => {
-            match tufa_common::repositories_types::tufa_server::routes::api::cats::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
+            match tufa_common::server::routes::helpers::bind_sqlx_query::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdColor,
             >(&query_string))
@@ -138,7 +124,7 @@ pub(crate) async fn get(
             }
         }
         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdName => {
-            match tufa_common::repositories_types::tufa_server::routes::api::cats::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
+            match tufa_common::server::routes::helpers::bind_sqlx_query::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdName,
             >(&query_string))
@@ -152,7 +138,7 @@ pub(crate) async fn get(
             }
         }
         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdColor => {
-            match tufa_common::repositories_types::tufa_server::routes::api::cats::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
+            match tufa_common::server::routes::helpers::bind_sqlx_query::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdColor,
             >(&query_string))
@@ -166,7 +152,7 @@ pub(crate) async fn get(
             }
         }
         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::NameColor => {
-            match tufa_common::repositories_types::tufa_server::routes::api::cats::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
+            match tufa_common::server::routes::helpers::bind_sqlx_query::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatNameColor,
             >(&query_string))
@@ -180,7 +166,7 @@ pub(crate) async fn get(
             }
         }
         tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdNameColor => {
-            match tufa_common::repositories_types::tufa_server::routes::api::cats::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
+            match tufa_common::server::routes::helpers::bind_sqlx_query::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
                 sqlx::Postgres,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdNameColor,
             >(&query_string))
@@ -194,21 +180,6 @@ pub(crate) async fn get(
             }
         }
     };
-    // // Create a dynamic query string with the right number of parameter
-    // // placeholders injected
-    // // let query = format!(
-    // //     "SELECT * FROM projects WHERE uuid IN ({})",
-    // //     (0..keys.len())
-    // //         .map(|_| "?")
-    // //         .collect::<Vec<&str>>()
-    // //         .join(",")
-    // // );
-    // // // Dynamically bind each entry from
-    // // let mut q = sqlx::query_as::<sqlx::Sqlite, Project>(&query_string);
-    // // for x in (0..uuids.len()) {
-    // //     q = q.bind(uuids[x]);
-    // // }
-    // // let records = q.fetch(&conn).await?;
     match query_result {
         Ok(value) => tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants::Desirable(
             value.into_iter().map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element)).collect()

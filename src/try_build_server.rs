@@ -1,3 +1,4 @@
+//swagger axum integration https://www.youtube.com/watch?v=wlNQvJ6i2nA
 #[derive(utoipa::OpenApi)]
 #[openapi(
     paths(
