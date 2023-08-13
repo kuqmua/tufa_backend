@@ -83,117 +83,12 @@ pub(crate) async fn get(
         tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
     );
     println!("{query_string}");
-    let query_result = match select {
-        tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Id => {
-            match tufa_common::server::routes::helpers::bind_sqlx_query::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
-                sqlx::Postgres,
-                tufa_common::repositories_types::tufa_server::routes::api::cats::CatId,
-            >(&query_string))
-            .fetch_all(&*app_info_state.get_postgres_pool())
-            .await
-            {
-                Ok(value) => Ok(value.into_iter()
-                    .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-                    .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-                Err(e) => Err(e),
-            }
-        }
-        tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Name => {
-            match tufa_common::server::routes::helpers::bind_sqlx_query::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
-                sqlx::Postgres,
-                tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdName,
-            >(&query_string))
-            .fetch_all(&*app_info_state.get_postgres_pool())
-             .await
-            {
-                Ok(value) => Ok(value.into_iter()
-                    .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-                    .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-                Err(e) => Err(e),
-            }
-        }
-        tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::Color => {
-            match tufa_common::server::routes::helpers::bind_sqlx_query::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
-                sqlx::Postgres,
-                tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdColor,
-            >(&query_string))
-            .fetch_all(&*app_info_state.get_postgres_pool())
-            .await
-            {
-                Ok(value) => Ok(value.into_iter()
-                    .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-                    .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-                Err(e) => Err(e),
-            }
-        }
-        tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdName => {
-            match tufa_common::server::routes::helpers::bind_sqlx_query::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
-                sqlx::Postgres,
-                tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdName,
-            >(&query_string))
-            .fetch_all(&*app_info_state.get_postgres_pool())
-            .await
-            {
-                Ok(value) => Ok(value.into_iter()
-                    .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-                    .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-                Err(e) => Err(e),
-            }
-        }
-        tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdColor => {
-            match tufa_common::server::routes::helpers::bind_sqlx_query::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
-                sqlx::Postgres,
-                tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdColor,
-            >(&query_string))
-            .fetch_all(&*app_info_state.get_postgres_pool())
-            .await
-            {
-                Ok(value) => Ok(value.into_iter()
-                    .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-                    .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-                Err(e) => Err(e),
-            }
-        }
-        tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::NameColor => {
-            match tufa_common::server::routes::helpers::bind_sqlx_query::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
-                sqlx::Postgres,
-                tufa_common::repositories_types::tufa_server::routes::api::cats::CatNameColor,
-            >(&query_string))
-            .fetch_all(&*app_info_state.get_postgres_pool())
-            .await
-            {
-                Ok(value) => Ok(value.into_iter()
-                    .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-                    .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-                Err(e) => Err(e),
-            }
-        }
-        tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::IdNameColor => {
-            match tufa_common::server::routes::helpers::bind_sqlx_query::BindSqlxQuery::bind_sqlx_query(query_parameters, sqlx::query_as::<
-                sqlx::Postgres,
-                tufa_common::repositories_types::tufa_server::routes::api::cats::CatIdNameColor,
-            >(&query_string))
-            .fetch_all(&*app_info_state.get_postgres_pool())
-            .await
-            {
-                Ok(value) => Ok(value.into_iter()
-                    .map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element))
-                    .collect::<Vec<tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions>>()),
-                Err(e) => Err(e),
-            }
-        }
-    };
-    match query_result {
-        Ok(value) => tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants::Desirable(
-            value.into_iter().map(|value_element| tufa_common::repositories_types::tufa_server::routes::api::cats::CatOptions::from(value_element)).collect()
-        ),
-        Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGet::from(e);
-            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
-                &error,
-                app_info_state.as_ref(),
-            );
-            tufa_common::repositories_types::tufa_server::routes::api::cats::get::TryGetResponseVariants::from(error)
-        }
-    }
+    select
+        .execute_query(
+            query_string,
+            &*app_info_state.get_postgres_pool(),
+            query_parameters,
+            &app_info_state,
+        )
+        .await
 }
