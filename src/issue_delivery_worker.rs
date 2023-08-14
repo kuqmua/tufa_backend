@@ -31,7 +31,7 @@
 //         impl tufa_common::traits::get_email_client::GetEmailClient
 //         + tufa_common::traits::get_postgres_connection_pool::GetPostgresConnectionPool
 //     )
-// ) -> Result<tufa_common::repositories_types::tufa_server::issue_delivery_worker::ExecutionOutcome, tufa_common::repositories_types::tufa_server::issue_delivery_worker::TryExecuteTaskErrorNamed<'a>> {
+// ) -> Result<tufa_common::repositories_types::tufa_server::issue_delivery_worker::ExecutionOutcome, tufa_common::repositories_types::tufa_server::issue_delivery_worker::TryExecuteTaskErrorNamed> {
 //     let pool = &config.get_postgres_connection_pool();
 //     let email_client = &config.get_email_client();
 //     let task = match dequeue_task(pool).await {
@@ -100,7 +100,7 @@
 
 // async fn dequeue_task<'a>(
 //     pool: &sqlx::PgPool,
-// ) -> Result<Option<(sqlx::Transaction<'static, sqlx::Postgres>, uuid::Uuid, String)>, tufa_common::repositories_types::tufa_server::issue_delivery_worker::DequeueTaskErrorNamed<'a>> {
+// ) -> Result<Option<(sqlx::Transaction<'static, sqlx::Postgres>, uuid::Uuid, String)>, tufa_common::repositories_types::tufa_server::issue_delivery_worker::DequeueTaskErrorNamed> {
 //     match pool.begin().await {
 //         Err(e) => Err(tufa_common::repositories_types::tufa_server::issue_delivery_worker::DequeueTaskErrorNamed::PostgresPoolBegin {
 //             postgres_pool_begin: e,
@@ -139,7 +139,7 @@
 //     mut transaction: sqlx::Transaction<'static, sqlx::Postgres>,
 //     issue_id: uuid::Uuid,
 //     email: &str,
-// ) -> Result<(), tufa_common::repositories_types::tufa_server::issue_delivery_worker::DeleteTaskErrorNamed<'a>> {
+// ) -> Result<(), tufa_common::repositories_types::tufa_server::issue_delivery_worker::DeleteTaskErrorNamed> {
 //     if let Err(e) = sqlx::query!(
 //         r#"
 //         DELETE FROM issue_delivery_queue
@@ -167,7 +167,7 @@
 // }
 
 // #[tracing::instrument(skip_all)]
-// async fn get_issue<'a>(pool: &sqlx::PgPool, issue_id: uuid::Uuid) -> Result<tufa_common::repositories_types::tufa_server::issue_delivery_worker::NewsletterIssue, tufa_common::repositories_types::tufa_server::issue_delivery_worker::GetIssueErrorNamed<'a>> {
+// async fn get_issue<'a>(pool: &sqlx::PgPool, issue_id: uuid::Uuid) -> Result<tufa_common::repositories_types::tufa_server::issue_delivery_worker::NewsletterIssue, tufa_common::repositories_types::tufa_server::issue_delivery_worker::GetIssueErrorNamed> {
 //     match sqlx::query_as!(
 //         tufa_common::repositories_types::tufa_server::issue_delivery_worker::NewsletterIssue,
 //         r#"

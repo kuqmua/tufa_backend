@@ -2,7 +2,7 @@
 async fn get_stored_credentials<'a>(
     username: &str,
     pool: &sqlx::PgPool,
-) -> Result<Option<(uuid::Uuid, secrecy::Secret<String>)>, tufa_common::repositories_types::tufa_server::authentication::password::GetStoredCredentialsErrorNamed<'a>>{
+) -> Result<Option<(uuid::Uuid, secrecy::Secret<String>)>, tufa_common::repositories_types::tufa_server::authentication::password::GetStoredCredentialsErrorNamed>{
     match sqlx::query!(
         r#"
         SELECT user_id, password_hash
@@ -25,7 +25,7 @@ async fn get_stored_credentials<'a>(
 pub async fn validate_credentials<'a>(
     credentials: tufa_common::common::postgres_credentials::PostgresCredentials,
     pool: &sqlx::PgPool,
-) -> Result<uuid::Uuid, tufa_common::repositories_types::tufa_server::authentication::password::ValidateCredentialsErrorNamed<'a>>{
+) -> Result<uuid::Uuid, tufa_common::repositories_types::tufa_server::authentication::password::ValidateCredentialsErrorNamed>{
     let mut user_id = None;
     let mut expected_password_hash = secrecy::Secret::new(
         "$argon2id$v=19$m=15000,t=2,p=1$\
@@ -63,7 +63,7 @@ pub async fn validate_credentials<'a>(
             }),
             Ok(_) => match user_id {
                 None => Err(tufa_common::repositories_types::tufa_server::authentication::password::ValidateCredentialsErrorNamed::UnknownUsername {
-                    message: "Unknown username",
+                    message: "Unknown username".to_string(),
                     code_occurence: tufa_common::code_occurence!()
                 }),
                 Some(uuid) => Ok(uuid),
@@ -79,7 +79,7 @@ pub async fn validate_credentials<'a>(
 fn verify_password_hash<'a>(
     expected_password_hash: secrecy::Secret<String>,
     password_candidate: secrecy::Secret<String>,
-) -> Result<(), tufa_common::repositories_types::tufa_server::authentication::password::VerifyPasswordHashErrorNamed<'a>>{
+) -> Result<(), tufa_common::repositories_types::tufa_server::authentication::password::VerifyPasswordHashErrorNamed>{
     match argon2::PasswordHash::new(secrecy::ExposeSecret::expose_secret(&expected_password_hash)) {
         Err(e) => Err(tufa_common::repositories_types::tufa_server::authentication::password::VerifyPasswordHashErrorNamed::ExposeSecret {
             expose_secret: e,
@@ -103,7 +103,7 @@ pub async fn change_password<'a>(
     user_id: uuid::Uuid,
     password: secrecy::Secret<String>,
     pool: &sqlx::PgPool,
-) -> Result<(), tufa_common::repositories_types::tufa_server::authentication::password::ChangePasswordErrorNamed<'a>>{
+) -> Result<(), tufa_common::repositories_types::tufa_server::authentication::password::ChangePasswordErrorNamed>{
     match tufa_common::repositories_types::tufa_server::telemetry::spawn_blocking_with_tracing::spawn_blocking_with_tracing(
         move || compute_password_hash(password)
     ).await {
@@ -137,7 +137,7 @@ pub async fn change_password<'a>(
     }
 }
 
-fn compute_password_hash<'a>(password: secrecy::Secret<String>) -> Result<secrecy::Secret<String>, tufa_common::repositories_types::tufa_server::authentication::password::ComputePasswordHashErrorNamed<'a>>{
+fn compute_password_hash<'a>(password: secrecy::Secret<String>) -> Result<secrecy::Secret<String>, tufa_common::repositories_types::tufa_server::authentication::password::ComputePasswordHashErrorNamed>{
     match argon2::PasswordHasher::hash_password(
         &argon2::Argon2::new(
             argon2::Algorithm::Argon2id,

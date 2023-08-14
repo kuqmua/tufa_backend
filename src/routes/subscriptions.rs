@@ -9,7 +9,7 @@
 //     base_url: actix_web::web::Data<std::string::String>,
 // ) -> Result<
 //     actix_web::HttpResponse,
-//     tufa_common::repositories_types::tufa_server::routes::SubscribeErrorNamed<'a>,
+//     tufa_common::repositories_types::tufa_server::routes::SubscribeErrorNamed,
 // > {
 //     let new_subscriber: tufa_common::repositories_types::tufa_server::domain::NewSubscriber =
 //         match form.0.try_into() {

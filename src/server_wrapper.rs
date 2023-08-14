@@ -2,7 +2,7 @@ pub async fn server_wrapper<'a>(
     config: &'static tufa_common::repositories_types::tufa_server::config::config_struct::Config,
 ) -> Result<
     (),
-    Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed<'a>>,
+    Box<tufa_common::repositories_types::tufa_server::server_wrapper::ServerWrapperErrorNamed>,
 > {
     let postgres_pool = match tufa_common::common::config::try_get_postgres_pool::TryGetPostgresPool::try_get_postgres_pool(config).await {
         Ok(postgres_pool) => postgres_pool,

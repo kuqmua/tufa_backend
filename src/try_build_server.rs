@@ -87,10 +87,8 @@ pub async fn set_middleware_custom_header<B>(
 pub async fn try_build_server<'a>(
     postgres_pool: sqlx::Pool<sqlx::Postgres>,
     config: &'static tufa_common::repositories_types::tufa_server::config::config_struct::Config,
-) -> Result<
-    (),
-    Box<tufa_common::repositories_types::tufa_server::try_build_server::TryBuildServer<'a>>,
-> {
+) -> Result<(), Box<tufa_common::repositories_types::tufa_server::try_build_server::TryBuildServer>>
+{
     println!(
         "server running on {}",
         tufa_common::common::config::get_server_address::GetServerAddress::get_server_address(

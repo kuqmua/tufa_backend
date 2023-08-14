@@ -9,7 +9,7 @@
 // ) -> Result<
 //     actix_web::HttpResponse,
 //     actix_web::error::InternalError<
-//         tufa_common::repositories_types::tufa_server::routes::login::post::LoginErrorNamed<'a>,
+//         tufa_common::repositories_types::tufa_server::routes::login::post::LoginErrorNamed,
 //     >,
 // > {
 //     let credentials = tufa_common::common::postgres_credentials::PostgresCredentials {
