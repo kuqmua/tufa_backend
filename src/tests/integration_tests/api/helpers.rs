@@ -221,7 +221,7 @@
 //         c.email_client.base_url = email_server.uri();
 //         c
 //     };
-//     let config = crate::global_variables::runtime::config::CONFIG.get_or_init(|| tufa_common::repositories_types::tufa_server::config::config_struct::Config::try_from_config_unchecked(
+//     let config = crate::global_variables::runtime::config::CONFIG.get_or_init(|| tufa_common::repositories_types::tufa_server::config::config_struct::Config::try_from(
 //         tufa_common::repositories_types::tufa_server::config::config_struct::ConfigUnchecked::new()
 //         .unwrap_or_else(|e| panic!("failed to ConfigUnchecked::new(), reason: {e:#?}"))
 //     ).unwrap_or_else(|e| panic!("failed to Config try_from ConfigUnchecked, reason: {e}")));
