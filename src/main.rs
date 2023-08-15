@@ -27,8 +27,12 @@ fn main() {
         tufa_common::global_variables::compile_time::project_git_info::PROJECT_GIT_INFO
             .project_commit
     );
-    crate::entry::entry(crate::global_variables::runtime::config::CONFIG.get_or_init(|| tufa_common::repositories_types::tufa_server::config::config_struct::Config::try_from_config_unchecked(
+    crate::entry::entry(
+        crate::global_variables::runtime::config::CONFIG.get_or_init(|| {
+            tufa_common::repositories_types::tufa_server::config::config_struct::Config::try_from(
         tufa_common::repositories_types::tufa_server::config::config_struct::ConfigUnchecked::new()
         .unwrap_or_else(|e| panic!("failed to ConfigUnchecked::new(), reason: {e:#?}"))
-    ).unwrap_or_else(|e| panic!("failed to Config try_from ConfigUnchecked, reason: {e}"))));
+    ).unwrap_or_else(|e| panic!("failed to Config try_from ConfigUnchecked, reason: {e}"))
+        }),
+    );
 }
