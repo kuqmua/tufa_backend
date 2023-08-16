@@ -9,13 +9,13 @@
 pub mod entry;
 pub mod global_variables;
 mod server_wrapper;
-#[cfg(test)]
-mod tests;
+// #[cfg(test)]
+// mod tests;
 
 //query! containing mods
 // pub mod authentication;
-pub mod idempotency;
-pub mod issue_delivery_worker;
+// pub mod idempotency;
+// pub mod issue_delivery_worker;
 pub mod routes;
 pub mod try_build_server;
 

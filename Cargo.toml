@@ -30,7 +30,7 @@ html_parser = {version ="=0.6.2" }
 htmlescape = {version = "=0.3"}
 http = {version = "=0.2.9"}
 itertools = {version = "=0.10.1"}
-mongodb = {version = "=2.0.1"}
+# mongodb = {version = "=2.0.1"}
 num_cpus = {version = "=1.15.0"}
 quickcheck = {version = "=1.0.3"}
 quickcheck_macros = {version = "=1.0.0"}
