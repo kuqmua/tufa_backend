@@ -17,7 +17,7 @@ pub(crate) async fn delete_by_id<'a>(
             return err;
         },
     };
-    println!("delete_by_id {}", path_parameters.id);
+    println!("delete_by_id {path_parameters:#?}");
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
         "DELETE FROM cats WHERE id = $1",

@@ -13,7 +13,7 @@ mod server_wrapper;
 mod tests;
 
 //query! containing mods
-pub mod authentication;
+// pub mod authentication;
 pub mod idempotency;
 pub mod issue_delivery_worker;
 pub mod routes;

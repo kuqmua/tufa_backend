@@ -29,7 +29,7 @@ pub(crate) fn routes(
         )
         .route(
             &format!(
-                "/{}/:id",
+                "/{}/:id/:select",
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
             ),
             axum::routing::get(crate::routes::api::cats::get_by_id::get_by_id)

@@ -1,6 +1,8 @@
 pub(crate) async fn get_by_id(
     path_parameters_extraction_result: Result<
-        axum::extract::Path<tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdPathParameters>,
+        axum::extract::Path<
+            tufa_common::repositories_types::tufa_server::routes::api::cats::GetByIdPathParameters,
+        >,
         axum::extract::rejection::PathRejection,
     >,
     app_info_state: axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
@@ -17,7 +19,7 @@ pub(crate) async fn get_by_id(
             return err;
         },
     };
-    println!("get_by_id path_parameters id {}", path_parameters.id);
+    println!("get_by_id path_parameters {path_parameters:#?}");
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
         "SELECT * FROM cats WHERE id = $1",
@@ -30,7 +32,7 @@ pub(crate) async fn get_by_id(
         Err(e) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetById::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
-                &error, 
+                &error,
                 app_info_state.as_ref()
             );
             tufa_common::repositories_types::tufa_server::routes::api::cats::get_by_id::TryGetByIdResponseVariants::from(error)
