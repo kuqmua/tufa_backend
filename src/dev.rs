@@ -63,11 +63,5 @@
 //         }),
 //     }
 // }
-// // pub trait Error: Debug + Display {
-// //     fn source(&self) -> Option<&(dyn Error + 'static)> { ... }
-// //     fn description(&self) -> &str { ... }
-// //     fn cause(&self) -> Option<&dyn Error> { ... }
-// //     fn provide<'a>(&'a self, demand: &mut Demand<'a>) { ... }
-// // }
 
 pub async fn dev() {}
