@@ -1,4 +1,4 @@
-// #[derive(Debug, thiserror::Error)]
+// #[derive(thiserror::Error)]
 // pub enum OneError {
 //     One(String)
 // }
@@ -10,7 +10,7 @@
 // pub async fn one() -> Result<(), OneError> {
 //     Err(OneError::One(String::from("one")))
 // }
-// #[derive(Debug, thiserror::Error)]
+// #[derive(thiserror::Error)]
 // pub enum TwoError {
 //     Two(String)
 // }
@@ -22,7 +22,7 @@
 // pub async fn two() -> Result<(), TwoError> {
 //     Err(TwoError::Two(String::from("two")))
 // }
-// #[derive(Debug, thiserror::Error)]
+// #[derive(thiserror::Error)]
 // pub enum ThreeError {
 //     One {
 //         #[source]
