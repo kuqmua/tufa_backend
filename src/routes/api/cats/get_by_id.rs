@@ -38,7 +38,6 @@ pub(crate) async fn get_by_id(
             return err;
         },
     };
-
     println!("get_by_id query_parameters {query_parameters:#?}");
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
