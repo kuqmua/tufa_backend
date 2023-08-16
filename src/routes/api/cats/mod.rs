@@ -2,7 +2,7 @@ mod delete;
 mod delete_by_id;
 mod get;
 mod get_by_id;
-mod patch;
+mod patch_by_id;
 mod post;
 mod put;
 
@@ -24,7 +24,6 @@ pub(crate) fn routes(
             axum::routing::get(crate::routes::api::cats::get::get)
                 .post(crate::routes::api::cats::post::post)
                 .put(crate::routes::api::cats::put::put)
-                .patch(crate::routes::api::cats::patch::patch)
                 .delete(crate::routes::api::cats::delete::delete),
         )
         .route(
@@ -33,6 +32,7 @@ pub(crate) fn routes(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
             ),
             axum::routing::get(crate::routes::api::cats::get_by_id::get_by_id)
+                .patch(crate::routes::api::cats::patch_by_id::patch_by_id)
                 .delete(crate::routes::api::cats::delete_by_id::delete_by_id),
         )
         .layer(tower_http::cors::CorsLayer::new().allow_methods([

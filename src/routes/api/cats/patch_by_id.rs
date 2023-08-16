@@ -1,4 +1,4 @@
-pub(crate) async fn patch<'a>(
+pub(crate) async fn patch_by_id<'a>(
     app_info_state: axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
     payload_extraction_result: Result<
         axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPatch>,
@@ -7,7 +7,7 @@ pub(crate) async fn patch<'a>(
 ) -> impl axum::response::IntoResponse {
     let payload = match tufa_common::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
         tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPatch,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatchResponseVariants
+        tufa_common::repositories_types::tufa_server::routes::api::cats::patch_by_id::TryPatchByIdResponseVariants
     >::try_extract_value(
         payload_extraction_result,
         &app_info_state
@@ -48,14 +48,14 @@ pub(crate) async fn patch<'a>(
         }
     };
     match query_result {
-        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatchResponseVariants::Desirable(()),
+        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::patch_by_id::TryPatchByIdResponseVariants::Desirable(()),
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatch::from(e);
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::patch_by_id::TryPatchById::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error,
                 app_info_state.as_ref(),
             );
-            tufa_common::repositories_types::tufa_server::routes::api::cats::patch::TryPatchResponseVariants::from(error)
+            tufa_common::repositories_types::tufa_server::routes::api::cats::patch_by_id::TryPatchByIdResponseVariants::from(error)
         }
     }
 }
