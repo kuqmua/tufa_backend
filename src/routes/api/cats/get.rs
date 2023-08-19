@@ -19,7 +19,7 @@ pub(crate) async fn get(
             return err;
         },
     };
-    tufa_common::repositories_types::tufa_server::routes::api::cats::GetSelect::from(
+    tufa_common::repositories_types::tufa_server::routes::api::cats::CatSelect::from(
         query_parameters.select.clone(),
     )
     .execute_query(
