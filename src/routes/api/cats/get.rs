@@ -26,7 +26,6 @@ pub(crate) async fn get(
         tufa_common::server::postgres::generate_get_query::GenerateGetQuery::generate_get_query(
             &query_parameters,
         ),
-        &*app_info_state.get_postgres_pool(),
         query_parameters,
         &app_info_state,
     )
