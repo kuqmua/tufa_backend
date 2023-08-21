@@ -11,8 +11,8 @@ services:
     # env_file:
     #   - ./dbs.env
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
-      # maybe instead of local folder create tufa_server folder for only this service like /var/lib/docker/volumes/tufa_server/postgresql_volume:/data/db
+      - /var/lib/postgresql/data:/var/lib/postgresql/data
+      # maybe use specific naming
     ports:
       - 5432:5432
   # mongodb_service:
