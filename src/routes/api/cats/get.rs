@@ -19,15 +19,10 @@ pub(crate) async fn get(
             return err;
         },
     };
-    tufa_common::repositories_types::tufa_server::routes::api::cats::CatSelect::from(
+    let select = tufa_common::repositories_types::tufa_server::routes::api::cats::CatSelect::from(
         query_parameters.select.clone(),
-    )
-    .execute_query(
-        tufa_common::server::postgres::generate_get_query::GenerateGetQuery::generate_get_query(
-            &query_parameters,
-        ),
-        query_parameters,
-        &app_info_state,
-    )
-    .await
+    );
+    select
+        .execute_query(query_parameters, &app_info_state)
+        .await
 }
