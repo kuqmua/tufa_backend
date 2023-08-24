@@ -19,10 +19,5 @@ pub(crate) async fn get(
             return err;
         },
     };
-    let select = tufa_common::repositories_types::tufa_server::routes::api::cats::CatSelect::from(
-        query_parameters.select.clone(),
-    );
-    select
-        .execute_query(query_parameters, &app_info_state)
-        .await
+    query_parameters.execute_query(&app_info_state).await
 }
