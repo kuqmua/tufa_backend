@@ -4,6 +4,7 @@ mod get;
 mod get_by_id;
 mod patch_by_id;
 mod post;
+mod post_search;
 mod put;
 
 //todo how to handle sql injection ?
