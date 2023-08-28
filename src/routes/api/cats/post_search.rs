@@ -1,23 +1,25 @@
 pub(crate) async fn post_search(
     app_info_state: axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
     payload_extraction_result: Result<
-        axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPost>,
+        axum::Json<
+            tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPostSearch,
+        >,
         axum::extract::rejection::JsonRejection,
     >,
 ) -> impl axum::response::IntoResponse {
-    // let payload = match tufa_common::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
-    //     tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPost,
-    //     tufa_common::repositories_types::tufa_server::routes::api::cats::post_search::TryPostSearchResponseVariants
-    // >::try_extract_value(
-    //     payload_extraction_result,
-    //     &app_info_state
-    // ) {
-    //     Ok(payload) => payload,
-    //     Err(err) => {
-    //         return err;
-    //     },
-    // };
-    // println!("post name {}, color {}", payload.name, payload.color);
+    let payload = match tufa_common::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
+        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPostSearch,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::post_search::TryPostSearchResponseVariants
+    >::try_extract_value(
+        payload_extraction_result,
+        &app_info_state
+    ) {
+        Ok(payload) => payload,
+        Err(err) => {
+            return err;
+        },
+    };
+    println!("post_search payload {payload:#?}");
     // match sqlx::query_as!(
     //     tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
     //     "INSERT INTO cats(name, color) VALUES ($1, $2)",
