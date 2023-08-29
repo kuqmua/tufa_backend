@@ -20,24 +20,5 @@ pub(crate) async fn post_search(
         },
     };
     println!("post_search payload {payload:#?}");
-    // match sqlx::query_as!(
-    //     tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
-    //     "INSERT INTO cats(name, color) VALUES ($1, $2)",
-    //     payload.name,
-    //     payload.color
-    // )
-    // .fetch_all(&*app_info_state.get_postgres_pool())
-    // .await
-    // {
-    //     Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::post_search::TryPostSearchResponseVariants::Desirable(()),
-    //     Err(e) => {
-    //         let error = tufa_common::repositories_types::tufa_server::routes::api::cats::post_search::TryPostSearch::from(e);
-    //         tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
-    //             &error,
-    //             app_info_state.as_ref(),
-    //         );
-    //         tufa_common::repositories_types::tufa_server::routes::api::cats::post_search::TryPostSearchResponseVariants::from(error)
-    //     }
-    // }
-    todo!()
+    payload.execute_query(&app_info_state).await
 }
