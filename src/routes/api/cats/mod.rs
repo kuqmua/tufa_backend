@@ -5,7 +5,7 @@ mod get_by_id;
 mod patch_by_id;
 mod post;
 mod post_search;
-mod put;
+mod put_by_id;
 
 //todo how to handle sql injection ?
 //todo - maybe check max length for field here instead of put it in postgres and recieve error ? color VARCHAR (255) NOT NULL
@@ -32,7 +32,6 @@ pub(crate) fn routes(
             ),
             axum::routing::get(crate::routes::api::cats::get::get)
                 .post(crate::routes::api::cats::post::post)
-                .put(crate::routes::api::cats::put::put)
                 .delete(crate::routes::api::cats::delete::delete),
         )
         .route(
@@ -41,6 +40,7 @@ pub(crate) fn routes(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
             ),
             axum::routing::get(crate::routes::api::cats::get_by_id::get_by_id)
+                .put(crate::routes::api::cats::put_by_id::put_by_id)
                 .patch(crate::routes::api::cats::patch_by_id::patch_by_id)
                 .delete(crate::routes::api::cats::delete_by_id::delete_by_id),
         )
