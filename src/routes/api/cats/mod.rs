@@ -13,32 +13,38 @@ mod put_by_id;
 //todo header Retry-After logic
 //todo - its the case if all columns except id are not null. for nullable columns must be different logic(post or put)
 
-pub(crate) fn routes(
+pub fn routes(
+    app_info: tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync,
+) -> axum::Router {
+    axum::Router::new().nest(
+        &format!(
+            "/{}",
+            tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
+        ),
+        axum::Router::new().merge(crud(app_info)),
+    )
+}
+
+fn crud(
     app_info: tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync,
 ) -> axum::Router {
     axum::Router::new()
-        //
         .route(
-            &format!(
-                "/{}/search",
-                tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
-            ),
+            "/search",
             axum::routing::post(crate::routes::api::cats::post_search::post_search),
         )
         .route(
-            &format!(
-                "/{}/",
-                tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
-            ),
+            "/delete_specific",
+            axum::routing::delete(crate::routes::api::cats::post_search::post_search),
+        )
+        .route(
+            "/",
             axum::routing::get(crate::routes::api::cats::get::get)
                 .post(crate::routes::api::cats::post::post)
                 .delete(crate::routes::api::cats::delete::delete),
         )
         .route(
-            &format!(
-                "/{}/id/:id",
-                tufa_common::repositories_types::tufa_server::routes::api::cats::CATS
-            ),
+            "/id/:id",
             axum::routing::get(crate::routes::api::cats::get_by_id::get_by_id)
                 .put(crate::routes::api::cats::put_by_id::put_by_id)
                 .patch(crate::routes::api::cats::patch_by_id::patch_by_id)
