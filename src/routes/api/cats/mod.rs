@@ -2,9 +2,9 @@ mod create;
 mod create_or_update_by_id;
 mod delete;
 mod delete_by_id;
-mod post_search;
 mod read;
 mod read_by_id;
+mod read_post;
 mod update_by_id;
 
 //todo how to handle sql injection ?
@@ -31,7 +31,7 @@ fn crud(
     axum::Router::new()
         .route(
             "/search",
-            axum::routing::post(crate::routes::api::cats::post_search::post_search),
+            axum::routing::post(crate::routes::api::cats::read_post::read_post),
         )
         // .route(
         //     "/delete_specific",

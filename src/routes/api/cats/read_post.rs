@@ -1,15 +1,13 @@
-pub(crate) async fn post_search(
+pub(crate) async fn read_post(
     app_info_state: axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
     payload_extraction_result: Result<
-        axum::Json<
-            tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPostSearch,
-        >,
+        axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::CatToReadPost>,
         axum::extract::rejection::JsonRejection,
     >,
 ) -> impl axum::response::IntoResponse {
     let payload = match tufa_common::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
-        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPostSearch,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::post_search::TryPostSearchResponseVariants
+        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToReadPost,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::read_post::TryReadPostResponseVariants
     >::try_extract_value(
         payload_extraction_result,
         &app_info_state
