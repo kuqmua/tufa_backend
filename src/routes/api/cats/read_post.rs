@@ -7,18 +7,20 @@ pub(crate) async fn read_post(
         axum::extract::rejection::JsonRejection,
     >,
 ) -> impl axum::response::IntoResponse {
-    let payload = match tufa_common::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
-        tufa_common::repositories_types::tufa_server::routes::api::cats::ReadPostPayload,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::read_post::TryReadPostResponseVariants
-    >::try_extract_value(
-        payload_extraction_result,
-        &app_info_state
-    ) {
-        Ok(payload) => payload,
-        Err(err) => {
-            return err;
+    let parameters = tufa_common::repositories_types::tufa_server::routes::api::cats::ReadPostParameters {
+        payload: match tufa_common::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
+            tufa_common::repositories_types::tufa_server::routes::api::cats::ReadPostPayload,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::read_post::TryReadPostResponseVariants
+        >::try_extract_value(
+            payload_extraction_result,
+            &app_info_state
+        ) {
+            Ok(payload) => payload,
+            Err(err) => {
+                return err;
+            },
         },
     };
-    println!("post_search payload {payload:#?}");
-    payload.execute_query(&app_info_state).await
+    println!("read_post parameters {parameters:#?}");
+    parameters.payload.execute_query(&app_info_state).await
 }

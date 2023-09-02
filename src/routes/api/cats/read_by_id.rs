@@ -13,36 +13,37 @@ pub(crate) async fn read_by_id(
     >,
     app_info_state: axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 ) -> impl axum::response::IntoResponse {
-    let path_parameters = match tufa_common::server::routes::helpers::path_extractor_error::PathValueResultExtractor::<
-        tufa_common::repositories_types::tufa_server::routes::api::cats::ReadByIdPathParameters,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::read_by_id::TryReadByIdResponseVariants
-    >::try_extract_value(
-        path_parameters_extraction_result,
-        &app_info_state
-    ) {
-        Ok(path_parameters) => path_parameters,
-        Err(err) => {
-            return err;
+    let parameters = tufa_common::repositories_types::tufa_server::routes::api::cats::ReadByIdParameters {
+        path: match tufa_common::server::routes::helpers::path_extractor_error::PathValueResultExtractor::<
+            tufa_common::repositories_types::tufa_server::routes::api::cats::ReadByIdPathParameters,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::read_by_id::TryReadByIdResponseVariants
+        >::try_extract_value(
+            path_parameters_extraction_result,
+            &app_info_state
+        ) {
+            Ok(path_parameters) => path_parameters,
+            Err(err) => {
+                return err;
+            },
+        },
+        query: match tufa_common::server::routes::helpers::query_extractor_error::QueryValueResultExtractor::<
+            tufa_common::repositories_types::tufa_server::routes::api::cats::ReadByIdQueryParameters,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::read_by_id::TryReadByIdResponseVariants
+        >::try_extract_value(
+            query_parameters_extraction_result,
+            &app_info_state
+        ) {
+            Ok(query_parameters) => query_parameters,
+            Err(err) => {
+                return err;
+            },
         },
     };
-    println!("read_by_id path_parameters {path_parameters:#?}");
-    let query_parameters = match tufa_common::server::routes::helpers::query_extractor_error::QueryValueResultExtractor::<
-        tufa_common::repositories_types::tufa_server::routes::api::cats::ReadByIdQueryParameters,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::read_by_id::TryReadByIdResponseVariants
-    >::try_extract_value(
-        query_parameters_extraction_result,
-        &app_info_state
-    ) {
-        Ok(query_parameters) => query_parameters,
-        Err(err) => {
-            return err;
-        },
-    };
-    println!("read_by_id query_parameters {query_parameters:#?}");
+    println!("read_by_id parameters {parameters:#?}");
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
         "SELECT * FROM cats WHERE id = $1",
-        path_parameters.id.to_inner()
+        parameters.path.id.to_inner()
     )
     .fetch_one(&*app_info_state.get_postgres_pool())
     .await

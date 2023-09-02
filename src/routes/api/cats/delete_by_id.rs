@@ -5,23 +5,25 @@ pub(crate) async fn delete_by_id<'a>(
     >,
     app_info_state: axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 ) -> impl axum::response::IntoResponse {
-    let path_parameters = match tufa_common::server::routes::helpers::path_extractor_error::PathValueResultExtractor::<
-        tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdPathParameters,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants
-    >::try_extract_value(
-        path_parameters_extraction_result,
-        &app_info_state
-    ) {
-        Ok(path_parameters) => path_parameters,
-        Err(err) => {
-            return err;
+    let parameters = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdParameters {
+        path: match tufa_common::server::routes::helpers::path_extractor_error::PathValueResultExtractor::<
+            tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteByIdPathParameters,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants
+        >::try_extract_value(
+            path_parameters_extraction_result,
+            &app_info_state
+        ) {
+            Ok(path_parameters) => path_parameters,
+            Err(err) => {
+                return err;
+            },
         },
     };
-    println!("delete_by_id {}", path_parameters.id);
+    println!("delete_by_id parameters {parameters:#?}");
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
         "DELETE FROM cats WHERE id = $1",
-        path_parameters.id.to_inner()
+        parameters.path.id.to_inner()
     )
     .fetch_all(&*app_info_state.get_postgres_pool())
     .await

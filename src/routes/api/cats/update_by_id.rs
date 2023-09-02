@@ -14,39 +14,41 @@ pub(crate) async fn update_by_id<'a>(
         axum::extract::rejection::JsonRejection,
     >,
 ) -> impl axum::response::IntoResponse {
-    let path_parameters = match tufa_common::server::routes::helpers::path_extractor_error::PathValueResultExtractor::<
-        tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPathParameters,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::update_by_id::TryUpdateByIdResponseVariants
-    >::try_extract_value(
-        path_parameters_extraction_result,
-        &app_info_state
-    ) {
-        Ok(path_parameters) => path_parameters,
-        Err(err) => {
-            return err;
-        },
-    };
-    println!("update_by_id path_parameters {path_parameters:#?}");
-    let payload = match tufa_common::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
-        tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPayload,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::update_by_id::TryUpdateByIdResponseVariants
-    >::try_extract_value(
-        payload_extraction_result,
-        &app_info_state
-    ) {
-        Ok(payload) => payload,
-        Err(err) => {
-            return err;
-        },
-    };
-    println!("patch payload {payload:#?}");
-    let query_result = match payload {
+    let parameters =
+        tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdParameters {
+            path: match tufa_common::server::routes::helpers::path_extractor_error::PathValueResultExtractor::<
+                tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPathParameters,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::update_by_id::TryUpdateByIdResponseVariants
+            >::try_extract_value(
+                path_parameters_extraction_result,
+                &app_info_state
+            ) {
+                Ok(path_parameters) => path_parameters,
+                Err(err) => {
+                    return err;
+                },
+            },
+            payload: match tufa_common::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
+                tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPayload,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::update_by_id::TryUpdateByIdResponseVariants
+            >::try_extract_value(
+                payload_extraction_result,
+                &app_info_state
+            ) {
+                Ok(payload) => payload,
+                Err(err) => {
+                    return err;
+                },
+            },
+        };
+    println!("update_by_id parameters {parameters:#?}");
+    let query_result = match parameters.payload {
         tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPayload::Name { name } => {
             sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "UPDATE cats SET name = $1 WHERE id = $2",
                 name,
-                path_parameters.id.to_inner()
+                parameters.path.id.to_inner()
             )
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
@@ -56,7 +58,7 @@ pub(crate) async fn update_by_id<'a>(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "UPDATE cats SET color = $1 WHERE id = $2",
                 color,
-                path_parameters.id.to_inner()
+                parameters.path.id.to_inner()
             )
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
@@ -67,7 +69,7 @@ pub(crate) async fn update_by_id<'a>(
                 "UPDATE cats SET name = $1, color = $2 WHERE id = $3",
                 name,
                 color,
-                path_parameters.id.to_inner()
+                parameters.path.id.to_inner()
             )
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await

@@ -7,23 +7,22 @@ pub(crate) async fn delete<'a>(
     >,
     app_info_state: axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
 ) -> impl axum::response::IntoResponse {
-    let query_parameters = match tufa_common::server::routes::helpers::query_extractor_error::QueryValueResultExtractor::<
-        tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteQueryParameters,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants
-    >::try_extract_value(
-        query_parameters_extraction_result,
-        &app_info_state
-    ) {
-        Ok(query_parameters) => query_parameters,
-        Err(err) => {
-            return err;
+    let parameters = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteParameters {
+        query: match tufa_common::server::routes::helpers::query_extractor_error::QueryValueResultExtractor::<
+            tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteQueryParameters,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants
+        >::try_extract_value(
+            query_parameters_extraction_result,
+            &app_info_state
+        ) {
+            Ok(query_parameters) => query_parameters,
+            Err(err) => {
+                return err;
+            },
         },
     };
-    println!(
-        "delete name {:?}, color {:?}",
-        query_parameters.name, query_parameters.color
-    );
-    let query_result = match (&query_parameters.name, &query_parameters.color) {
+    println!("delete parameters {parameters:#?}");
+    let query_result = match (&parameters.query.name, &parameters.query.color) {
         (None, None) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDelete::NoParameters {
                 no_parameters: std::string::String::from("no parameters provided"),
