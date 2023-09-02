@@ -1,13 +1,13 @@
-pub(crate) async fn post(
+pub(crate) async fn create(
     app_info_state: axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
     payload_extraction_result: Result<
-        axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPost>,
+        axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::CatToCreate>,
         axum::extract::rejection::JsonRejection,
     >,
 ) -> impl axum::response::IntoResponse {
     let payload = match tufa_common::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
-        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPost,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants
+        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToCreate,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::create::TryCreateResponseVariants
     >::try_extract_value(
         payload_extraction_result,
         &app_info_state
@@ -27,14 +27,14 @@ pub(crate) async fn post(
     .fetch_all(&*app_info_state.get_postgres_pool())
     .await
     {
-        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants::Desirable(()),
+        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::create::TryCreateResponseVariants::Desirable(()),
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPost::from(e);
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::create::TryCreate::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error,
                 app_info_state.as_ref(),
             );
-            tufa_common::repositories_types::tufa_server::routes::api::cats::post::TryPostResponseVariants::from(error)
+            tufa_common::repositories_types::tufa_server::routes::api::cats::create::TryCreateResponseVariants::from(error)
         }
     }
 }

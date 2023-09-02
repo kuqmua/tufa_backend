@@ -1,7 +1,7 @@
+mod create;
 mod delete;
 mod delete_by_id;
 mod patch_by_id;
-mod post;
 mod post_search;
 mod put_by_id;
 mod read;
@@ -40,7 +40,7 @@ fn crud(
         .route(
             "/",
             axum::routing::get(crate::routes::api::cats::read::read)
-                .post(crate::routes::api::cats::post::post)
+                .post(crate::routes::api::cats::create::create)
                 .delete(crate::routes::api::cats::delete::delete),
         )
         .route(
