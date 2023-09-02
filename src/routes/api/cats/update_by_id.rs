@@ -9,7 +9,7 @@ pub(crate) async fn update_by_id<'a>(
     app_info_state: axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
     payload_extraction_result: Result<
         axum::Json<
-            tufa_common::repositories_types::tufa_server::routes::api::cats::CatToUpdateById,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPayload,
         >,
         axum::extract::rejection::JsonRejection,
     >,
@@ -28,7 +28,7 @@ pub(crate) async fn update_by_id<'a>(
     };
     println!("update_by_id path_parameters {path_parameters:#?}");
     let payload = match tufa_common::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
-        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToUpdateById,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPayload,
         tufa_common::repositories_types::tufa_server::routes::api::cats::update_by_id::TryUpdateByIdResponseVariants
     >::try_extract_value(
         payload_extraction_result,
@@ -41,7 +41,7 @@ pub(crate) async fn update_by_id<'a>(
     };
     println!("patch payload {payload:#?}");
     let query_result = match payload {
-        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToUpdateById::Name { name } => {
+        tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPayload::Name { name } => {
             sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "UPDATE cats SET name = $1 WHERE id = $2",
@@ -51,7 +51,7 @@ pub(crate) async fn update_by_id<'a>(
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         },
-        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToUpdateById::Color { color } => {
+        tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPayload::Color { color } => {
             sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "UPDATE cats SET color = $1 WHERE id = $2",
@@ -61,7 +61,7 @@ pub(crate) async fn update_by_id<'a>(
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         },
-        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToUpdateById::NameColor { name, color } => {
+        tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPayload::NameColor { name, color } => {
             sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "UPDATE cats SET name = $1, color = $2 WHERE id = $3",

@@ -8,7 +8,7 @@ pub(crate) async fn create_or_update_by_id<'a>(
     app_info_state: axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
     payload_extraction_result: Result<
         axum::Json<
-            tufa_common::repositories_types::tufa_server::routes::api::cats::CatToCreateOrUpdateById,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::CreateOrUpdateByIdPayload,
         >,
         axum::extract::rejection::JsonRejection,
     >,
@@ -26,7 +26,7 @@ pub(crate) async fn create_or_update_by_id<'a>(
         },
     };
     let payload = match tufa_common::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
-        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToCreateOrUpdateById,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::CreateOrUpdateByIdPayload,
         tufa_common::repositories_types::tufa_server::routes::api::cats::create_or_update_by_id::TryCreateOrUpdateByIdResponseVariants
     >::try_extract_value(
         payload_extraction_result,
@@ -39,7 +39,7 @@ pub(crate) async fn create_or_update_by_id<'a>(
     };
     println!("put name {}, color {}", payload.name, payload.color);
     match sqlx::query_as!(
-        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToCreateOrUpdateById,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::CreateOrUpdateByIdPayload,
         "INSERT INTO cats(id, name, color) VALUES ($1, $2, $3) ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, color = EXCLUDED.color",
         path_parameters.id.to_inner(),
         payload.name,
