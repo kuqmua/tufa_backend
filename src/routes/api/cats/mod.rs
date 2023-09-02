@@ -1,9 +1,9 @@
 mod create;
+mod create_or_update_by_id;
 mod delete;
 mod delete_by_id;
 mod patch_by_id;
 mod post_search;
-mod put_by_id;
 mod read;
 mod read_by_id;
 
@@ -46,7 +46,7 @@ fn crud(
         .route(
             "/id/:id",
             axum::routing::get(crate::routes::api::cats::read_by_id::read_by_id)
-                .put(crate::routes::api::cats::put_by_id::put_by_id)
+                .put(crate::routes::api::cats::create_or_update_by_id::create_or_update_by_id)
                 .patch(crate::routes::api::cats::patch_by_id::patch_by_id)
                 .delete(crate::routes::api::cats::delete_by_id::delete_by_id),
         )
