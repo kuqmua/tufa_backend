@@ -2,10 +2,10 @@ mod create;
 mod create_or_update_by_id;
 mod delete;
 mod delete_by_id;
-mod patch_by_id;
 mod post_search;
 mod read;
 mod read_by_id;
+mod update_by_id;
 
 //todo how to handle sql injection ?
 //todo - maybe check max length for field here instead of put it in postgres and recieve error ? color VARCHAR (255) NOT NULL
@@ -47,7 +47,7 @@ fn crud(
             "/id/:id",
             axum::routing::get(crate::routes::api::cats::read_by_id::read_by_id)
                 .put(crate::routes::api::cats::create_or_update_by_id::create_or_update_by_id)
-                .patch(crate::routes::api::cats::patch_by_id::patch_by_id)
+                .patch(crate::routes::api::cats::update_by_id::update_by_id)
                 .delete(crate::routes::api::cats::delete_by_id::delete_by_id),
         )
         .layer(tower_http::cors::CorsLayer::new().allow_methods([

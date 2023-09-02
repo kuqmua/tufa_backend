@@ -1,19 +1,21 @@
-pub(crate) async fn patch_by_id<'a>(
+pub(crate) async fn update_by_id<'a>(
     path_parameters_extraction_result: Result<
         axum::extract::Path<
-            tufa_common::repositories_types::tufa_server::routes::api::cats::PatchByIdPathParameters,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPathParameters,
         >,
         axum::extract::rejection::PathRejection,
     >,
     app_info_state: axum::extract::State<tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync>,
     payload_extraction_result: Result<
-        axum::Json<tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPatchById>,
+        axum::Json<
+            tufa_common::repositories_types::tufa_server::routes::api::cats::CatToUpdateById,
+        >,
         axum::extract::rejection::JsonRejection,
     >,
 ) -> impl axum::response::IntoResponse {
     let path_parameters = match tufa_common::server::routes::helpers::path_extractor_error::PathValueResultExtractor::<
-        tufa_common::repositories_types::tufa_server::routes::api::cats::PatchByIdPathParameters,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::patch_by_id::TryPatchByIdResponseVariants
+        tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPathParameters,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::update_by_id::TryUpdateByIdResponseVariants
     >::try_extract_value(
         path_parameters_extraction_result,
         &app_info_state
@@ -23,10 +25,10 @@ pub(crate) async fn patch_by_id<'a>(
             return err;
         },
     };
-    println!("patch_by_id path_parameters {path_parameters:#?}");
+    println!("update_by_id path_parameters {path_parameters:#?}");
     let payload = match tufa_common::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
-        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPatchById,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::patch_by_id::TryPatchByIdResponseVariants
+        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToUpdateById,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::update_by_id::TryUpdateByIdResponseVariants
     >::try_extract_value(
         payload_extraction_result,
         &app_info_state
@@ -38,7 +40,7 @@ pub(crate) async fn patch_by_id<'a>(
     };
     println!("patch payload {payload:#?}");
     let query_result = match payload {
-        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPatchById::Name { name } => {
+        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToUpdateById::Name { name } => {
             sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "UPDATE cats SET name = $1 WHERE id = $2",
@@ -48,7 +50,7 @@ pub(crate) async fn patch_by_id<'a>(
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         },
-        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPatchById::Color { color } => {
+        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToUpdateById::Color { color } => {
             sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "UPDATE cats SET color = $1 WHERE id = $2",
@@ -58,7 +60,7 @@ pub(crate) async fn patch_by_id<'a>(
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
         },
-        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToPatchById::NameColor { name, color } => {
+        tufa_common::repositories_types::tufa_server::routes::api::cats::CatToUpdateById::NameColor { name, color } => {
             sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "UPDATE cats SET name = $1, color = $2 WHERE id = $3",
@@ -71,14 +73,14 @@ pub(crate) async fn patch_by_id<'a>(
         },
     };
     match query_result {
-        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::patch_by_id::TryPatchByIdResponseVariants::Desirable(()),
+        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::update_by_id::TryUpdateByIdResponseVariants::Desirable(()),
         Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::patch_by_id::TryPatchById::from(e);
+            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::update_by_id::TryUpdateById::from(e);
             tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
                 &error,
                 app_info_state.as_ref(),
             );
-            tufa_common::repositories_types::tufa_server::routes::api::cats::patch_by_id::TryPatchByIdResponseVariants::from(error)
+            tufa_common::repositories_types::tufa_server::routes::api::cats::update_by_id::TryUpdateByIdResponseVariants::from(error)
         }
     }
 }
