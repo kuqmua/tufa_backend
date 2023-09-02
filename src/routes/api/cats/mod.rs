@@ -1,10 +1,10 @@
 mod delete;
 mod delete_by_id;
-mod get;
 mod patch_by_id;
 mod post;
 mod post_search;
 mod put_by_id;
+mod read;
 mod read_by_id;
 
 //todo how to handle sql injection ?
@@ -39,7 +39,7 @@ fn crud(
         // )
         .route(
             "/",
-            axum::routing::get(crate::routes::api::cats::get::get)
+            axum::routing::get(crate::routes::api::cats::read::read)
                 .post(crate::routes::api::cats::post::post)
                 .delete(crate::routes::api::cats::delete::delete),
         )
