@@ -2,7 +2,7 @@ pub(crate) async fn update_by_id<'a>(
     //todo how to check with type system what http request function params and route path query and payload params are same?
     path_parameters_extraction_result: Result<
         axum::extract::Path<
-            tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPathParameters,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPath,
         >,
         axum::extract::rejection::PathRejection,
     >,
@@ -17,7 +17,7 @@ pub(crate) async fn update_by_id<'a>(
     let parameters =
         tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdParameters {
             path: match tufa_common::server::routes::helpers::path_extractor_error::PathValueResultExtractor::<
-                tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPathParameters,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPath,
                 tufa_common::repositories_types::tufa_server::routes::api::cats::update_by_id::TryUpdateByIdResponseVariants
             >::try_extract_value(
                 path_parameters_extraction_result,

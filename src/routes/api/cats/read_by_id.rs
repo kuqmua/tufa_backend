@@ -1,13 +1,13 @@
 pub(crate) async fn read_by_id(
     path_parameters_extraction_result: Result<
         axum::extract::Path<
-            tufa_common::repositories_types::tufa_server::routes::api::cats::ReadByIdPathParameters,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::ReadByIdPath,
         >,
         axum::extract::rejection::PathRejection,
     >,
     query_parameters_extraction_result: Result<
         axum::extract::Query<
-            tufa_common::repositories_types::tufa_server::routes::api::cats::ReadByIdQueryParameters,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::ReadByIdQuery,
         >,
         axum::extract::rejection::QueryRejection,
     >,
@@ -15,7 +15,7 @@ pub(crate) async fn read_by_id(
 ) -> impl axum::response::IntoResponse {
     let parameters = tufa_common::repositories_types::tufa_server::routes::api::cats::ReadByIdParameters {
         path: match tufa_common::server::routes::helpers::path_extractor_error::PathValueResultExtractor::<
-            tufa_common::repositories_types::tufa_server::routes::api::cats::ReadByIdPathParameters,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::ReadByIdPath,
             tufa_common::repositories_types::tufa_server::routes::api::cats::read_by_id::TryReadByIdResponseVariants
         >::try_extract_value(
             path_parameters_extraction_result,
@@ -27,7 +27,7 @@ pub(crate) async fn read_by_id(
             },
         },
         query: match tufa_common::server::routes::helpers::query_extractor_error::QueryValueResultExtractor::<
-            tufa_common::repositories_types::tufa_server::routes::api::cats::ReadByIdQueryParameters,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::ReadByIdQuery,
             tufa_common::repositories_types::tufa_server::routes::api::cats::read_by_id::TryReadByIdResponseVariants
         >::try_extract_value(
             query_parameters_extraction_result,

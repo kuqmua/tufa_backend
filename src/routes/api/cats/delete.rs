@@ -1,7 +1,7 @@
 pub(crate) async fn delete<'a>(
     query_parameters_extraction_result: Result<
         axum::extract::Query<
-            tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteQueryParameters,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteQuery,
         >,
         axum::extract::rejection::QueryRejection,
     >,
@@ -9,7 +9,7 @@ pub(crate) async fn delete<'a>(
 ) -> impl axum::response::IntoResponse {
     let parameters = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteParameters {
         query: match tufa_common::server::routes::helpers::query_extractor_error::QueryValueResultExtractor::<
-            tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteQueryParameters,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteQuery,
             tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDeleteResponseVariants
         >::try_extract_value(
             query_parameters_extraction_result,

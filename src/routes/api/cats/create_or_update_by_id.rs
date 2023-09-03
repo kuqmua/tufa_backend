@@ -1,7 +1,7 @@
 pub(crate) async fn create_or_update_by_id<'a>(
     path_parameters_extraction_result: Result<
         axum::extract::Path<
-            tufa_common::repositories_types::tufa_server::routes::api::cats::CreateOrUpdateByIdPathParameters,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::CreateOrUpdateByIdPath,
         >,
         axum::extract::rejection::PathRejection,
     >,
@@ -15,7 +15,7 @@ pub(crate) async fn create_or_update_by_id<'a>(
 ) -> impl axum::response::IntoResponse {
     let parameters = tufa_common::repositories_types::tufa_server::routes::api::cats::CreateOrUpdateByIdParameters {
         path: match tufa_common::server::routes::helpers::path_extractor_error::PathValueResultExtractor::<
-            tufa_common::repositories_types::tufa_server::routes::api::cats::CreateOrUpdateByIdPathParameters,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::CreateOrUpdateByIdPath,
             tufa_common::repositories_types::tufa_server::routes::api::cats::create_or_update_by_id::TryCreateOrUpdateByIdResponseVariants
         >::try_extract_value(
             path_parameters_extraction_result,
