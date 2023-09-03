@@ -19,7 +19,7 @@ pub(crate) async fn create(
             },
         },
     };
-    println!("crate parameters {parameters:#?}");
+    println!("{parameters:#?}");
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
         "INSERT INTO cats(name, color) VALUES ($1, $2)",

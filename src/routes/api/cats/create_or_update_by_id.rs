@@ -39,7 +39,7 @@ pub(crate) async fn create_or_update_by_id<'a>(
             },
         },
     };
-    println!("create_or_update_by_id parameters {parameters:#?}");
+    println!("{parameters:#?}");
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::api::cats::CreateOrUpdateByIdPayload,
         "INSERT INTO cats(id, name, color) VALUES ($1, $2, $3) ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, color = EXCLUDED.color",

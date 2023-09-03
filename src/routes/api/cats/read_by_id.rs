@@ -39,7 +39,7 @@ pub(crate) async fn read_by_id(
             },
         },
     };
-    println!("read_by_id parameters {parameters:#?}");
+    println!("{parameters:#?}");
     match sqlx::query_as!(
         tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
         "SELECT * FROM cats WHERE id = $1",

@@ -41,7 +41,7 @@ pub(crate) async fn update_by_id<'a>(
                 },
             },
         };
-    println!("update_by_id parameters {parameters:#?}");
+    println!("{parameters:#?}");
     let query_result = match parameters.payload {
         tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPayload::Name { name } => {
             sqlx::query_as!(

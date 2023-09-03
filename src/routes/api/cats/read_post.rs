@@ -21,6 +21,6 @@ pub(crate) async fn read_post(
             },
         },
     };
-    println!("read_post parameters {parameters:#?}");
+    println!("{parameters:#?}");
     parameters.payload.execute_query(&app_info_state).await
 }

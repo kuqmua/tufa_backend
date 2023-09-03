@@ -21,7 +21,7 @@ pub(crate) async fn delete<'a>(
             },
         },
     };
-    println!("delete parameters {parameters:#?}");
+    println!("{parameters:#?}");
     let query_result = match (&parameters.query.name, &parameters.query.color) {
         (None, None) => {
             let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete::TryDelete::NoParameters {
