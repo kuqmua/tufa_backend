@@ -42,18 +42,14 @@ pub(crate) async fn update_by_id<'a>(
             },
         };
     println!("{parameters:#?}");
-    let query_result = match parameters.payload {
-        tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPayload::Name { name } => {
-            sqlx::query_as!(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
-                "UPDATE cats SET name = $1 WHERE id = $2",
-                name,
-                parameters.path.id.to_inner()
-            )
-            .fetch_all(&*app_info_state.get_postgres_pool())
-            .await
-        },
-        tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPayload::Color { color } => {
+    let query_result = match (parameters.payload.name, parameters.payload.color) {
+        (None, None) => {
+            return tufa_common::repositories_types::tufa_server::routes::api::cats::update_by_id::TryUpdateByIdResponseVariants::NoPayloadFields {
+                no_payload_fields: std::string::String::from("no_payload_fields"),
+                code_occurence: tufa_common::code_occurence!(),
+            };
+        }
+        (None, Some(color)) => {
             sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "UPDATE cats SET color = $1 WHERE id = $2",
@@ -62,8 +58,18 @@ pub(crate) async fn update_by_id<'a>(
             )
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
-        },
-        tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPayload::NameColor { name, color } => {
+        }
+        (Some(name), None) => {
+            sqlx::query_as!(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
+                "UPDATE cats SET name = $1 WHERE id = $2",
+                name,
+                parameters.path.id.to_inner()
+            )
+            .fetch_all(&*app_info_state.get_postgres_pool())
+            .await
+        }
+        (Some(name), Some(color)) => {
             sqlx::query_as!(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
                 "UPDATE cats SET name = $1, color = $2 WHERE id = $3",
@@ -73,8 +79,41 @@ pub(crate) async fn update_by_id<'a>(
             )
             .fetch_all(&*app_info_state.get_postgres_pool())
             .await
-        },
+        }
     };
+    // let query_result = match parameters.payload {
+    //     tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPayload::Name { name } => {
+    //         sqlx::query_as!(
+    //             tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
+    //             "UPDATE cats SET name = $1 WHERE id = $2",
+    //             name,
+    //             parameters.path.id.to_inner()
+    //         )
+    //         .fetch_all(&*app_info_state.get_postgres_pool())
+    //         .await
+    //     },
+    //     tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPayload::Color { color } => {
+    //         sqlx::query_as!(
+    //             tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
+    //             "UPDATE cats SET color = $1 WHERE id = $2",
+    //             color,
+    //             parameters.path.id.to_inner()
+    //         )
+    //         .fetch_all(&*app_info_state.get_postgres_pool())
+    //         .await
+    //     },
+    //     tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPayload::NameColor { name, color } => {
+    //         sqlx::query_as!(
+    //             tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
+    //             "UPDATE cats SET name = $1, color = $2 WHERE id = $3",
+    //             name,
+    //             color,
+    //             parameters.path.id.to_inner()
+    //         )
+    //         .fetch_all(&*app_info_state.get_postgres_pool())
+    //         .await
+    //     },
+    // };
     match query_result {
         Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::update_by_id::TryUpdateByIdResponseVariants::Desirable(()),
         Err(e) => {
