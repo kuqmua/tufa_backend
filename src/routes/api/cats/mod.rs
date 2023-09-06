@@ -1,10 +1,12 @@
 mod create;
+mod create_or_update;
 mod create_or_update_by_id;
 mod delete;
 mod delete_by_id;
 mod read;
 mod read_by_id;
 mod read_post;
+mod update;
 mod update_by_id;
 
 //todo how to handle sql injection ?
