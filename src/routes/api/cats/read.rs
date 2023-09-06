@@ -22,5 +22,5 @@ pub(crate) async fn read(
         },
     };
     println!("{parameters:#?}");
-    parameters.execute_query(&app_info_state).await
+    parameters.prepare_and_execute_query(&app_info_state).await
 }
