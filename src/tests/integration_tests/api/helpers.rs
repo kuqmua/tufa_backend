@@ -2,7 +2,7 @@
 // // use sqlx::Connection;
 // // use sqlx::Executor;
 
-// pub static TRACING: std::sync::OnceLock<()> = std::sync::OnceLock::new();
+// pub const TRACING: std::sync::OnceLock<()> = std::sync::OnceLock::new();
 
 // pub struct TestApp {
 //     pub address: String,
