@@ -39,25 +39,5 @@ pub(crate) async fn create_or_update_by_id<'a>(
             },
         },
     };
-    println!("{parameters:#?}");
-    match sqlx::query_as!(
-        tufa_common::repositories_types::tufa_server::routes::api::cats::CreateOrUpdateByIdPayload,
-        "INSERT INTO cats(id, name, color) VALUES ($1, $2, $3) ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, color = EXCLUDED.color",
-        parameters.path.id.to_inner(),
-        parameters.payload.name,
-        parameters.payload.color
-    )
-    .fetch_all(&*app_info_state.get_postgres_pool())
-    .await
-    {
-        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::create_or_update_by_id::TryCreateOrUpdateByIdResponseVariants::Desirable(()),
-        Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::create_or_update_by_id::TryCreateOrUpdateById::from(e);
-            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
-                &error,
-                app_info_state.as_ref(),
-            );
-            tufa_common::repositories_types::tufa_server::routes::api::cats::create_or_update_by_id::TryCreateOrUpdateByIdResponseVariants::from(error)
-        }
-    }
+    parameters.prepare_and_execute_query(&app_info_state).await
 }
