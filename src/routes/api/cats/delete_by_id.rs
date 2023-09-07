@@ -22,22 +22,5 @@ pub(crate) async fn delete_by_id<'a>(
         },
     };
     println!("{parameters:#?}");
-    match sqlx::query_as!(
-        tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
-        "DELETE FROM cats WHERE id = $1",
-        parameters.path.id.to_inner()
-    )
-    .fetch_all(&*app_info_state.get_postgres_pool())
-    .await
-    {
-        Ok(_) => tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants::Desirable(()),
-        Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteById::from(e);
-            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
-                &error,
-                app_info_state.as_ref()
-            );
-            tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id::TryDeleteByIdResponseVariants::from(error)
-        }
-    }
+    parameters.prepare_and_execute_query(&app_info_state).await
 }
