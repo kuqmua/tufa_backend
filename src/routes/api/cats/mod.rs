@@ -42,7 +42,7 @@ fn crud(
         .route(
             "/",
             axum::routing::get(crate::routes::api::cats::read::read)
-                .post(crate::routes::api::cats::create::create)
+                .post(crate::routes::api::cats::create::create)// todo - make it /batch, so u can remove /id from "/id/:id",
                 .delete(crate::routes::api::cats::delete::delete),
         )
         .route(
