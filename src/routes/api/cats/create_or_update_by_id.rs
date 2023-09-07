@@ -39,5 +39,6 @@ pub(crate) async fn create_or_update_by_id<'a>(
             },
         },
     };
+    println!("{parameters:#?}");
     parameters.prepare_and_execute_query(&app_info_state).await
 }
