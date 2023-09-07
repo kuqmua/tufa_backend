@@ -35,6 +35,10 @@ fn crud(
             "/search",
             axum::routing::post(crate::routes::api::cats::read_post::read_post),
         )
+        .route(
+            "/batch",
+            axum::routing::post(crate::routes::api::cats::create::create),
+        )
         // .route(
         //     "/delete_specific",
         //     axum::routing::delete(crate::routes::api::cats::post_search::post_search),
@@ -42,11 +46,10 @@ fn crud(
         .route(
             "/",
             axum::routing::get(crate::routes::api::cats::read::read)
-                .post(crate::routes::api::cats::create::create)// todo - make it /batch, so u can remove /id from "/id/:id",
                 .delete(crate::routes::api::cats::delete::delete),
         )
         .route(
-            "/id/:id",
+            "/:id",
             axum::routing::get(crate::routes::api::cats::read_by_id::read_by_id)
                 .put(crate::routes::api::cats::create_or_update_by_id::create_or_update_by_id)
                 .patch(crate::routes::api::cats::update_by_id::update_by_id)
