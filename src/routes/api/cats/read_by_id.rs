@@ -40,22 +40,5 @@ pub(crate) async fn read_by_id(
         },
     };
     println!("{parameters:#?}");
-    match sqlx::query_as!(
-        tufa_common::repositories_types::tufa_server::routes::api::cats::Cat,
-        "SELECT * FROM cats WHERE id = $1",
-        parameters.path.id.to_inner()
-    )
-    .fetch_one(&*app_info_state.get_postgres_pool())
-    .await
-    {
-        Ok(value) => tufa_common::repositories_types::tufa_server::routes::api::cats::read_by_id::TryReadByIdResponseVariants::Desirable(value),
-        Err(e) => {
-            let error = tufa_common::repositories_types::tufa_server::routes::api::cats::read_by_id::TryReadById::from(e);
-            tufa_common::common::error_logs_logic::error_log::ErrorLog::error_log(
-                &error,
-                app_info_state.as_ref()
-            );
-            tufa_common::repositories_types::tufa_server::routes::api::cats::read_by_id::TryReadByIdResponseVariants::from(error)
-        }
-    }
+    parameters.prepare_and_execute_query(&app_info_state).await
 }
