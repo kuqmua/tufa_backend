@@ -36,10 +36,12 @@ fn crud(
             "/search",
             axum::routing::post(crate::routes::api::cats::read_post::read_post),
         )
-        // .route(
-        //     "/batch",
-        //     axum::routing::post(crate::routes::api::cats::create::create),
-        // )
+        .route(
+            "/batch",
+            axum::routing::post(crate::routes::api::cats::create_batch::create_batch)
+                .patch(crate::routes::api::cats::update::update)
+                .put(crate::routes::api::cats::create_or_update::create_or_update),
+        )
         // .route(
         //     "/delete_specific",
         //     axum::routing::delete(crate::routes::api::cats::post_search::post_search),
