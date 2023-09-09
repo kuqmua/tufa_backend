@@ -4,6 +4,7 @@ mod create_or_update;
 mod create_or_update_by_id;
 mod delete;
 mod delete_by_id;
+mod delete_post;
 mod read;
 mod read_by_id;
 mod read_post;
