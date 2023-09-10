@@ -7,7 +7,7 @@ mod delete_by_id;
 mod delete_post;
 mod read;
 mod read_by_id;
-mod read_post;
+mod read_with_body;
 mod update;
 mod update_by_id;
 
@@ -35,7 +35,7 @@ fn crud(
     axum::Router::new()
         .route(
             "/search",
-            axum::routing::post(crate::routes::api::cats::read_post::read_post)
+            axum::routing::post(crate::routes::api::cats::read_with_body::read_with_body)
                 .delete(crate::routes::api::cats::delete_post::delete_post),
         )
         .route(
