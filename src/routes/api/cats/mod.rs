@@ -1,7 +1,5 @@
 mod create;
 mod create_batch;
-mod create_or_update;
-mod create_or_update_by_id;
 mod delete;
 mod delete_by_id;
 mod delete_with_body;
@@ -41,8 +39,7 @@ fn crud(
         .route(
             "/batch",
             axum::routing::post(crate::routes::api::cats::create_batch::create_batch)
-                .patch(crate::routes::api::cats::update::update)
-                .put(crate::routes::api::cats::create_or_update::create_or_update),
+                .patch(crate::routes::api::cats::update::update),
         )
         .route(
             "/",
@@ -53,7 +50,6 @@ fn crud(
         .route(
             "/:id",
             axum::routing::get(crate::routes::api::cats::read_by_id::read_by_id)
-                .put(crate::routes::api::cats::create_or_update_by_id::create_or_update_by_id)
                 .patch(crate::routes::api::cats::update_by_id::update_by_id)
                 .delete(crate::routes::api::cats::delete_by_id::delete_by_id),
         )
