@@ -10,7 +10,7 @@ pub(crate) async fn delete_with_body<'a>(
     let parameters = tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteWithBodyParameters {
         payload: match tufa_common::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
             tufa_common::repositories_types::tufa_server::routes::api::cats::DeleteWithBodyPayload,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::delete_with_body::TryDeleteWithBodyResponseVariants
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteWithBodyResponseVariants
         >::try_extract_value(
             payload_extraction_result,
             &app_info_state
