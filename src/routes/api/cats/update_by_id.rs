@@ -18,7 +18,7 @@ pub(crate) async fn update_by_id<'a>(
         tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdParameters {
             path: match tufa_common::server::routes::helpers::path_extractor_error::PathValueResultExtractor::<
                 tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPath,
-                tufa_common::repositories_types::tufa_server::routes::api::cats::update_by_id::TryUpdateByIdResponseVariants
+                tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateByIdResponseVariants
             >::try_extract_value(
                 path_parameters_extraction_result,
                 &app_info_state
@@ -30,7 +30,7 @@ pub(crate) async fn update_by_id<'a>(
             },
             payload: match tufa_common::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
                 tufa_common::repositories_types::tufa_server::routes::api::cats::UpdateByIdPayload,
-                tufa_common::repositories_types::tufa_server::routes::api::cats::update_by_id::TryUpdateByIdResponseVariants
+                tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateByIdResponseVariants
             >::try_extract_value(
                 payload_extraction_result,
                 &app_info_state
