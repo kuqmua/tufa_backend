@@ -10,7 +10,7 @@ pub(crate) async fn read(
     let parameters = tufa_common::repositories_types::tufa_server::routes::api::cats::ReadParameters {
         query: match tufa_common::server::routes::helpers::query_extractor_error::QueryValueResultExtractor::<
             tufa_common::repositories_types::tufa_server::routes::api::cats::ReadQuery,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::read::TryReadResponseVariants
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadResponseVariants
         >::try_extract_value(
             query_parameters_extraction_result,
             &app_info_state
