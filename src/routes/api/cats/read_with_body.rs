@@ -10,7 +10,7 @@ pub(crate) async fn read_with_body(
     let parameters = tufa_common::repositories_types::tufa_server::routes::api::cats::ReadWithBodyParameters {
         payload: match tufa_common::server::routes::helpers::json_extractor_error::JsonValueResultExtractor::<
             tufa_common::repositories_types::tufa_server::routes::api::cats::ReadWithBodyPayload,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::read_with_body::TryReadWithBodyResponseVariants
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadWithBodyResponseVariants
         >::try_extract_value(
             payload_extraction_result,
             &app_info_state
