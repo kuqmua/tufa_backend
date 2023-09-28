@@ -16,7 +16,7 @@ pub(crate) async fn read_by_id(
     let parameters = tufa_common::repositories_types::tufa_server::routes::api::cats::ReadByIdParameters {
         path: match tufa_common::server::routes::helpers::path_extractor_error::PathValueResultExtractor::<
             tufa_common::repositories_types::tufa_server::routes::api::cats::ReadByIdPath,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::read_by_id::TryReadByIdResponseVariants
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadByIdResponseVariants
         >::try_extract_value(
             path_parameters_extraction_result,
             &app_info_state
@@ -28,7 +28,7 @@ pub(crate) async fn read_by_id(
         },
         query: match tufa_common::server::routes::helpers::query_extractor_error::QueryValueResultExtractor::<
             tufa_common::repositories_types::tufa_server::routes::api::cats::ReadByIdQuery,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::read_by_id::TryReadByIdResponseVariants
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadByIdResponseVariants
         >::try_extract_value(
             query_parameters_extraction_result,
             &app_info_state
