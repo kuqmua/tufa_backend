@@ -142,7 +142,6 @@ pub async fn try_build_server<'a>(
                         http::Method::GET,
                         http::Method::POST,
                         http::Method::PATCH,
-                        http::Method::PUT,
                         http::Method::DELETE,
                     ])
                     .allow_origin([

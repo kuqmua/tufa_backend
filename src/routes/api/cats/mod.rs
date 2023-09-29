@@ -1,5 +1,4 @@
 mod create;
-mod create_batch;
 mod delete;
 mod delete_by_id;
 mod delete_with_body;
@@ -38,8 +37,10 @@ fn crud(
         )
         .route(
             "/batch",
-            axum::routing::post(crate::routes::api::cats::create_batch::create_batch)
-                .patch(crate::routes::api::cats::update::update),
+            axum::routing::post(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::create_batch,
+            )
+            .patch(crate::routes::api::cats::update::update),
         )
         .route(
             "/",
@@ -57,7 +58,6 @@ fn crud(
             http::Method::GET,
             http::Method::POST,
             http::Method::PATCH,
-            http::Method::PUT,
             http::Method::DELETE,
         ]))
         .route_layer(axum::middleware::from_fn_with_state(
