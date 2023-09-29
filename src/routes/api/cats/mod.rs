@@ -1,13 +1,3 @@
-mod create;
-mod delete;
-mod delete_by_id;
-mod delete_with_body;
-mod read;
-mod read_by_id;
-mod read_with_body;
-mod update;
-mod update_by_id;
-
 //todo how to handle sql injection ?
 //todo - maybe check max length for field here instead of put it in postgres and recieve error ? color VARCHAR (255) NOT NULL
 //todo - add limit everywhere possible
@@ -32,27 +22,35 @@ fn crud(
     axum::Router::new()
         .route(
             "/search",
-            axum::routing::post(crate::routes::api::cats::read_with_body::read_with_body)
-                .delete(crate::routes::api::cats::delete_with_body::delete_with_body),
+            axum::routing::post(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::read_with_body,
+            )
+            .delete(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::delete_with_body,
+            ),
         )
         .route(
             "/batch",
             axum::routing::post(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::create_batch,
             )
-            .patch(crate::routes::api::cats::update::update),
+            .patch(tufa_common::repositories_types::tufa_server::routes::api::cats::update),
         )
         .route(
             "/",
-            axum::routing::get(crate::routes::api::cats::read::read)
-                .post(crate::routes::api::cats::create::create)
-                .delete(crate::routes::api::cats::delete::delete),
+            axum::routing::get(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::read,
+            )
+            .post(tufa_common::repositories_types::tufa_server::routes::api::cats::create)
+            .delete(tufa_common::repositories_types::tufa_server::routes::api::cats::delete),
         )
         .route(
             "/:id",
-            axum::routing::get(crate::routes::api::cats::read_by_id::read_by_id)
-                .patch(crate::routes::api::cats::update_by_id::update_by_id)
-                .delete(crate::routes::api::cats::delete_by_id::delete_by_id),
+            axum::routing::get(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::read_by_id,
+            )
+            .patch(tufa_common::repositories_types::tufa_server::routes::api::cats::update_by_id)
+            .delete(tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id),
         )
         .layer(tower_http::cors::CorsLayer::new().allow_methods([
             http::Method::GET,
