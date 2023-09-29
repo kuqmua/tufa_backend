@@ -144,10 +144,7 @@ pub async fn try_build_server<'a>(
                         http::Method::PATCH,
                         http::Method::DELETE,
                     ])
-                    .allow_origin([
-                        "http://127.0.0.1".parse().unwrap(),
-                        "http://localhost".parse().unwrap(),
-                    ]),
+                    .allow_origin(["http://127.0.0.1".parse().unwrap()]),
             )
             .merge(utoipa_swagger_ui::SwaggerUi::new("/swagger-ui").url(
                 "/api-docs/openapi.json",
