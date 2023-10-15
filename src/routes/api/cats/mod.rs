@@ -10,7 +10,7 @@ pub fn routes(
     axum::Router::new().nest(
         &format!(
             "/{}",
-            tufa_common::repositories_types::tufa_server::routes::api::cats::ROUTE_NAME
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TABLE_NAME
         ),
         axum::Router::new().merge(crud(app_info)),
     )
