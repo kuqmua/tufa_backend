@@ -3,9 +3,11 @@
 #[openapi(
     paths(
         tufa_common::server::routes::git_info::git_info,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id,
     ),
     components(
-        schemas(tufa_common::server::routes::git_info::GitInfo)
+        schemas(tufa_common::server::routes::git_info::GitInfo),
+        schemas(tufa_common::repositories_types::tufa_server::routes::api::cats::Cat)
     ),
     modifiers(&SecurityAddon),
 )]
