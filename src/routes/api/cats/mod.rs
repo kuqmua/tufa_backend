@@ -42,7 +42,7 @@ fn crud(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::read,
             )
             .post(tufa_common::repositories_types::tufa_server::routes::api::cats::create_one)
-            .delete(tufa_common::repositories_types::tufa_server::routes::api::cats::delete),
+            .delete(tufa_common::repositories_types::tufa_server::routes::api::cats::delete_many),
         )
         .route(
             "/:id",
