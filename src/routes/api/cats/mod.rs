@@ -50,7 +50,7 @@ fn crud(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::read_by_id,
             )
             .patch(tufa_common::repositories_types::tufa_server::routes::api::cats::update_by_id)
-            .delete(tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id),
+            .delete(tufa_common::repositories_types::tufa_server::routes::api::cats::delete_one),
         )
         .layer(tower_http::cors::CorsLayer::new().allow_methods([
             http::Method::GET,

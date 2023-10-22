@@ -3,7 +3,7 @@
 #[openapi(
     paths(
         tufa_common::server::routes::git_info::git_info,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::delete_by_id,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::delete_one,
     ),
     components(
         schemas(tufa_common::server::routes::git_info::GitInfo),
