@@ -30,9 +30,9 @@ fn crud(
             ),
         )
         .route(
-            "/batch",
+            "/batch",//todo maybe change naming?
             axum::routing::post(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::create_batch,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::create_many,
             )
             .patch(tufa_common::repositories_types::tufa_server::routes::api::cats::update),
         )
