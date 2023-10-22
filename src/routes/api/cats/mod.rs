@@ -34,7 +34,7 @@ fn crud(
             axum::routing::post(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::create_many,
             )
-            .patch(tufa_common::repositories_types::tufa_server::routes::api::cats::update),
+            .patch(tufa_common::repositories_types::tufa_server::routes::api::cats::update_many),
         )
         .route(
             "/",
