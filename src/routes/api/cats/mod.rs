@@ -26,7 +26,7 @@ fn crud(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::read_with_body,
             )
             .delete(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::delete_with_body,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::delete_many,
             ),
         )
         .route(
