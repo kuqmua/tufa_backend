@@ -41,7 +41,7 @@ fn crud(
             axum::routing::get(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::read,
             )
-            .post(tufa_common::repositories_types::tufa_server::routes::api::cats::create)
+            .post(tufa_common::repositories_types::tufa_server::routes::api::cats::create_one)
             .delete(tufa_common::repositories_types::tufa_server::routes::api::cats::delete),
         )
         .route(
