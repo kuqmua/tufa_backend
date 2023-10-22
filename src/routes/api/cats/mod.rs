@@ -49,7 +49,7 @@ fn crud(
             axum::routing::get(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::read_one,
             )
-            .patch(tufa_common::repositories_types::tufa_server::routes::api::cats::update_by_id)
+            .patch(tufa_common::repositories_types::tufa_server::routes::api::cats::update_one)
             .delete(tufa_common::repositories_types::tufa_server::routes::api::cats::delete_one),
         )
         .layer(tower_http::cors::CorsLayer::new().allow_methods([
