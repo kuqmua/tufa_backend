@@ -52,12 +52,7 @@ fn crud(
             .patch(tufa_common::repositories_types::tufa_server::routes::api::cats::update_one)
             .delete(tufa_common::repositories_types::tufa_server::routes::api::cats::delete_one),
         )
-        .layer(tower_http::cors::CorsLayer::new().allow_methods([
-            http::Method::GET,
-            http::Method::POST,
-            http::Method::PATCH,
-            http::Method::DELETE,
-        ]))
+        .layer(tower_http::cors::CorsLayer::new().allow_methods(tufa_common::repositories_types::tufa_server::routes::api::cats::ALLOW_METHODS))
         .route_layer(axum::middleware::from_fn_with_state(
             app_info.clone(),
             tufa_common::server::middleware::project_commit_checker::project_commit_checker,
