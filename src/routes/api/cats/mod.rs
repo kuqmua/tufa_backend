@@ -16,43 +16,50 @@ pub fn routes(
     )
 }
 
+async fn get_root() {}
+
 fn crud(
     app_info: tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync,
 ) -> axum::Router {
     axum::Router::new()
-        .route(
-            "/search",
-            axum::routing::post(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::read_many_with_body,
-            )
-            .delete(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::delete_many_with_body,
-            ),
-        )
-        .route(
-            "/batch",//todo maybe change naming?
-            axum::routing::post(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::create_many,
-            )
-            .patch(tufa_common::repositories_types::tufa_server::routes::api::cats::update_many),
-        )
+        //todo - remove it its just a mock route
         .route(
             "/",
-            axum::routing::get(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::read_many,
-            )
-            .post(tufa_common::repositories_types::tufa_server::routes::api::cats::create_one)
-            .delete(tufa_common::repositories_types::tufa_server::routes::api::cats::delete_many),
+            axum::routing::get(get_root),
         )
-        .route(
-            "/:id",
-            axum::routing::get(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::read_one,
-            )
-            .patch(tufa_common::repositories_types::tufa_server::routes::api::cats::update_one)
-            .delete(tufa_common::repositories_types::tufa_server::routes::api::cats::delete_one),
-        )
-        .layer(tower_http::cors::CorsLayer::new().allow_methods(tufa_common::repositories_types::tufa_server::routes::api::cats::ALLOW_METHODS))
+        // .route(
+        //     "/search",
+        //     axum::routing::post(
+        //         tufa_common::repositories_types::tufa_server::routes::api::cats::read_many_with_body,
+        //     )
+        //     .delete(
+        //         tufa_common::repositories_types::tufa_server::routes::api::cats::delete_many_with_body,
+        //     ),
+        // )
+        // .route(
+        //     "/batch",//todo maybe change naming?
+        //     axum::routing::post(
+        //         tufa_common::repositories_types::tufa_server::routes::api::cats::create_many,
+        //     )
+        //     .patch(tufa_common::repositories_types::tufa_server::routes::api::cats::update_many),
+        // )
+        // .route(
+        //     "/",
+        //     axum::routing::get(
+        //         tufa_common::repositories_types::tufa_server::routes::api::cats::read_many,
+        //     )
+        //     .post(tufa_common::repositories_types::tufa_server::routes::api::cats::create_one)
+        //     .delete(tufa_common::repositories_types::tufa_server::routes::api::cats::delete_many),
+        // )
+        // .route(
+        //     "/:id",
+        //     axum::routing::get(
+        //         tufa_common::repositories_types::tufa_server::routes::api::cats::read_one,
+        //     )
+        //     .patch(tufa_common::repositories_types::tufa_server::routes::api::cats::update_one)
+        //     .delete(tufa_common::repositories_types::tufa_server::routes::api::cats::delete_one),
+        // )
+        // .layer(tower_http::cors::CorsLayer::new().allow_methods(tufa_common::repositories_types::tufa_server::routes::api::cats::ALLOW_METHODS))
         .route_layer(axum::middleware::from_fn_with_state(
             app_info.clone(),
             tufa_common::server::middleware::project_commit_checker::project_commit_checker,
