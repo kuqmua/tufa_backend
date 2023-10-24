@@ -16,17 +16,11 @@ pub fn routes(
     )
 }
 
-async fn get_root() {}
-
 fn crud(
     app_info: tufa_common::repositories_types::tufa_server::routes::api::cats::DynArcGetConfigGetPostgresPoolSendSync,
 ) -> axum::Router {
     axum::Router::new()
         //todo - remove it its just a mock route
-        // .route(
-        //     "/",
-        //     axum::routing::get(get_root),
-        // )
         .route(
             "/search",
             axum::routing::post(
