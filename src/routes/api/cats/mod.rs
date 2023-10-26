@@ -27,15 +27,16 @@ fn crud(
         //     "/",
         //     axum::routing::get(get_root),
         // )
-        // .route(
-        //     "/search",
-        //     axum::routing::post(
-        //         tufa_common::repositories_types::tufa_server::routes::api::cats::read_many_with_body,
-        //     )
-        //     .delete(
-        //         tufa_common::repositories_types::tufa_server::routes::api::cats::delete_many_with_body,
-        //     ),
-        // )
+        .route(
+            "/search",
+            axum::routing::post(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::read_many_with_body,
+            )
+            // .delete(
+            //     tufa_common::repositories_types::tufa_server::routes::api::cats::delete_many_with_body,
+            // )
+            ,
+        )
         .route(
             "/batch", //todo maybe change naming?
             axum::routing::post(
