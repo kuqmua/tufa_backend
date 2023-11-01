@@ -34,8 +34,7 @@ fn crud(
             )
             .delete(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::delete_many_with_body,
-            )
-            ,
+            ),
         )
         .route(
             "/batch", //todo maybe change naming?
