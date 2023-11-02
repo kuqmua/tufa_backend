@@ -48,7 +48,8 @@ fn crud(
             axum::routing::get(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::read_many,
             )
-            .post(tufa_common::repositories_types::tufa_server::routes::api::cats::create_one), // .delete(tufa_common::repositories_types::tufa_server::routes::api::cats::delete_many),
+            .post(tufa_common::repositories_types::tufa_server::routes::api::cats::create_one)
+            .delete(tufa_common::repositories_types::tufa_server::routes::api::cats::delete_many),
         )
         .route(
             "/:id",
