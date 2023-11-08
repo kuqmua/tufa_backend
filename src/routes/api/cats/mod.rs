@@ -36,13 +36,13 @@ fn crud(
                 tufa_common::repositories_types::tufa_server::routes::api::cats::delete_many_with_body,
             ),
         )
-        // .route(
-        //     "/batch", //todo maybe change naming?
-        //     axum::routing::post(
-        //         tufa_common::repositories_types::tufa_server::routes::api::cats::create_many,
-        //     )
-        //     .patch(tufa_common::repositories_types::tufa_server::routes::api::cats::update_many),
-        // )
+        .route(
+            "/batch", //todo maybe change naming?
+            axum::routing::post(
+                tufa_common::repositories_types::tufa_server::routes::api::cats::create_many,
+            )
+            .patch(tufa_common::repositories_types::tufa_server::routes::api::cats::update_many),
+        )
         .route(
             "/",
             axum::routing::get(
