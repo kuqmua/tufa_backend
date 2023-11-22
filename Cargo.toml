@@ -144,3 +144,6 @@ wiremock = {version = "=0.5.2"}
 # cargo run-script *script name*
 [package.metadata.scripts]
 restart_docker_compose = "sudo docker-compose down && docker-compose up -d"
+
+[lints]
+workspace = true
