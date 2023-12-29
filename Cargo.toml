@@ -11,9 +11,9 @@ name = "tufa_server"
 path = "src/main.rs"
 
 [dependencies]
-axum = {version = "=0.6.19", features = ["headers", "macros"]}
+axum = {version = "=0.7.2", features = ["macros"]}
 tower = {version = "=0.4.13"}
-tower-http = {version = "=0.4.3", features = ["trace", "fs", "cors"]}
+tower-http = {version = "=0.5.0", features = ["trace", "fs", "cors"]}
 argon2 = {version = "=0.4.0", features = ["std"]}
 base64 = {version = "=0.21.0"}
 bytes = {version = "=1.2.1"}
@@ -65,8 +65,6 @@ validator = {version = "=0.16.0"}
 valuable = {version = "=0.1.0", features = ["default", "std", "alloc", "derive", "valuable-derive"]}#maybe not all features needed
 utoipa = {version = "=4.1.0", features = ["axum_extras"]}
 utoipa-swagger-ui = {version = "=5.0.0", features=["axum"]}
-utoipa-redoc = {version = "=2.0.0", features=["axum"]}
-utoipa-rapidoc = {version = "=2.0.0"}
 #
 # tufa_common = {git = "https://github.com/kuqmua/tufa_common"}# git version
 tufa_common = {path = "../tufa_common"}# local dev test without commits version
