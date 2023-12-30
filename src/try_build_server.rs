@@ -1,29 +1,32 @@
-// #[derive(utoipa::OpenApi)]
-// #[openapi(
-//     paths(
-//         tufa_common::server::routes::git_info::git_info,
-//     ),
-//     components(
-//         schemas(tufa_common::server::routes::git_info::Todo)
-//     ),
-//     modifiers(&SecurityAddon),
-//     tags(
-//         (name = "todo", description = "Todo items management API")
-//     )
-// )]
-// struct ApiDoc;
-
-// struct SecurityAddon;
-// impl utoipa::Modify for SecurityAddon {
-//     fn modify(&self, openapi: &mut utoipa::openapi::OpenApi) {
-//         if let Some(components) = openapi.components.as_mut() {
-//             components.add_security_scheme(
-//                 "api_key",
-//                 utoipa::openapi::security::SecurityScheme::ApiKey(utoipa::openapi::security::ApiKey::Header(utoipa::openapi::security::ApiKeyValue::new("todo_apikey"))),
-//             )
-//         }
-//     }
-// }
+    #[derive(utoipa::OpenApi)]
+    #[openapi(
+        paths(
+            tufa_common::server::routes::git_info::git_info,//todo::list_todos
+        ),
+        components(
+            schemas(tufa_common::server::routes::git_info::GitInfo, )//todo::TodoError
+        ),
+        modifiers(&SecurityAddon),
+        tags(
+            (name = "todo", description = "Todo items management API")
+        )
+    )]
+    struct ApiDoc;
+    struct SecurityAddon;
+    impl utoipa::Modify for SecurityAddon {
+        fn modify(&self, openapi: &mut utoipa::openapi::OpenApi) {
+            if let Some(components) = openapi.components.as_mut() {
+                components.add_security_scheme(
+                    "api_key",
+                    utoipa::openapi::security::SecurityScheme::ApiKey(
+                        utoipa::openapi::security::ApiKey::Header(
+                            utoipa::openapi::security::ApiKeyValue::new("todo_apikey"),
+                        ),
+                    ),
+                )
+            }
+        }
+    }
 
 // // allow to open source files in browser like php
 // fn routes_static() -> axum::Router {
@@ -142,13 +145,12 @@ pub async fn try_build_server<'a>(
                     // ])
                     .allow_origin(["http://127.0.0.1".parse().unwrap()]),
             )
-            // .merge(utoipa_swagger_ui::SwaggerUi::new("/swagger-ui").url(
-            //     "/api-docs/openapi.json",
-            //     {
-            //         use utoipa::OpenApi;
-            //         ApiDoc::openapi()
-            //     },
-            // ))
+            .merge(
+                utoipa_swagger_ui::SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", {
+                    use utoipa::OpenApi;
+                    ApiDoc::openapi()
+                }),
+            )
             .into_make_service(),
     )
     .await
@@ -220,87 +222,3 @@ pub async fn try_build_server<'a>(
 //         .await
 //         .unwrap();
 // }
-
-
-
-
-//
-// #[tokio::main]
-// async fn main() -> Result<(), std::io::Error> {
-//     #[derive(utoipa::OpenApi)]
-//     #[openapi(
-//         paths(
-//             todo::list_todos,
-//         ),
-//         components(
-//             schemas(todo::Todo, )//todo::TodoError
-//         ),
-//         modifiers(&SecurityAddon),
-//         tags(
-//             (name = "todo", description = "Todo items management API")
-//         )
-//     )]
-//     struct ApiDoc;
-//     struct SecurityAddon;
-//     impl utoipa::Modify for SecurityAddon {
-//         fn modify(&self, openapi: &mut utoipa::openapi::OpenApi) {
-//             if let Some(components) = openapi.components.as_mut() {
-//                 components.add_security_scheme(
-//                     "api_key",
-//                     utoipa::openapi::security::SecurityScheme::ApiKey(
-//                         utoipa::openapi::security::ApiKey::Header(
-//                             utoipa::openapi::security::ApiKeyValue::new("todo_apikey"),
-//                         ),
-//                     ),
-//                 )
-//             }
-//         }
-//     }
-//     let store = std::sync::Arc::new(crate::todo::Store::default());
-//     let app = axum::Router::new()
-//         .merge(
-//             utoipa_swagger_ui::SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", {
-//                 use utoipa::OpenApi;
-//                 ApiDoc::openapi()
-//             }),
-//         )
-//         .route("/todo", axum::routing::get(todo::list_todos))
-//         .with_state(store);
-
-//     let address = std::net::SocketAddr::from((std::net::Ipv4Addr::UNSPECIFIED, 8080));
-//     let listener = tokio::net::TcpListener::bind(&address).await?;
-//     axum::serve(listener, app.into_make_service()).await
-// }
-// mod todo {
-//     pub type Store = tokio::sync::Mutex<Vec<Todo>>;
-//     #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema, Clone)]
-//     pub struct Todo {
-//         id: i32,
-//         #[schema(example = "Buy groceries")]
-//         value: String,
-//         done: bool,
-//     }
-//     // #[derive(serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-//     // pub enum TodoError {
-//     //     #[schema(example = "Todo already exists")]
-//     //     Conflict(String),
-//     //     #[schema(example = "id = 1")]
-//     //     NotFound(String),
-//     //     #[schema(example = "missing api key")]
-//     //     Unauthorized(String),
-//     // }
-//     #[utoipa::path(
-//         get,
-//         path = "/todo",
-//         responses(
-//             (status = 200, description = "List all todos successfully", body = [Todo])
-//         )
-//     )]
-//     pub async fn list_todos(
-//         axum::extract::State(store): axum::extract::State<std::sync::Arc<Store>>,
-//     ) -> axum::Json<Vec<Todo>> {
-//         let todos = store.lock().await.clone();
-//         axum::Json(todos)
-//     }
-// }
-//
