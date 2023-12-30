@@ -2,9 +2,18 @@
     #[openapi(
         paths(
             tufa_common::server::routes::git_info::git_info,//todo::list_todos
+            tufa_common::repositories_types::tufa_server::routes::api::cats::create_many,
         ),
         components(
-            schemas(tufa_common::server::routes::git_info::GitInfo, )//todo::TodoError
+            schemas(
+                tufa_common::server::routes::git_info::GitInfo,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr201Created,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr408RequestTimeout,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr404NotFound,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr400BadRequest,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr500InternalServerError,
+                tufa_common::repositories_types::tufa_server::routes::api::cats::CreateManyPayloadElement,
+            )//todo::TodoError
         ),
         modifiers(&SecurityAddon),
         tags(
