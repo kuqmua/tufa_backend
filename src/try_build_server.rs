@@ -33,16 +33,16 @@
 //     )
 // }
 
-async fn extract_custom_header_example(headers: http::header::HeaderMap) {
-    let pc = headers.get("project_commit");
-    println!("pc{pc:#?}")
-}
+// async fn extract_custom_header_example(headers: http::header::HeaderMap) {
+//     let pc = headers.get("project_commit");
+//     println!("pc{pc:#?}")
+// }
 
-async fn header_extractor_example(
-    axum::TypedHeader(header): axum::TypedHeader<axum::headers::UserAgent>,
-) {
-    println!("header{:#?}", header);
-}
+// async fn header_extractor_example(
+//     axum::TypedHeader(header): axum::TypedHeader<axum::headers::UserAgent>,
+// ) {
+//     println!("header{:#?}", header);
+// }
 
 async fn middleware_message_example(axum::Extension(shared_data): axum::Extension<SharedData>) {
     println!("message {}", shared_data.message);
@@ -63,22 +63,22 @@ async fn read_middleware_custom_header(
     message.0
 }
 
-pub async fn set_middleware_custom_header<B>(
-    mut req: axum::http::Request<B>,
-    next: axum::middleware::Next<B>,
-) -> Result<axum::response::Response, axum::http::StatusCode> {
-    let request_project_commit = req
-        .headers()
-        .get(tufa_common::common::git::project_git_info::PROJECT_COMMIT)
-        .ok_or_else(|| axum::http::StatusCode::BAD_REQUEST)?;
-    let project_commit_checker_header = request_project_commit
-        .to_str()
-        .map_err(|_error| axum::http::StatusCode::BAD_REQUEST)?
-        .to_owned();
-    let extensions = req.extensions_mut();
-    extensions.insert(HeaderMessage(project_commit_checker_header.to_owned()));
-    Ok(next.run(req).await)
-}
+// pub async fn set_middleware_custom_header<B>(
+//     mut req: axum::http::Request<B>,
+//     next: axum::middleware::Next<B>,
+// ) -> Result<axum::response::Response, axum::http::StatusCode> {
+//     let request_project_commit = req
+//         .headers()
+//         .get(tufa_common::common::git::project_git_info::PROJECT_COMMIT)
+//         .ok_or_else(|| axum::http::StatusCode::BAD_REQUEST)?;
+//     let project_commit_checker_header = request_project_commit
+//         .to_str()
+//         .map_err(|_error| axum::http::StatusCode::BAD_REQUEST)?
+//         .to_owned();
+//     let extensions = req.extensions_mut();
+//     extensions.insert(HeaderMessage(project_commit_checker_header.to_owned()));
+//     Ok(next.run(req).await)
+// }
 
 //todo - make it async trait after async trait stabilization
 pub async fn try_build_server<'a>(
@@ -104,27 +104,23 @@ pub async fn try_build_server<'a>(
     let shared_data = SharedData {
         message: std::string::String::from("shared_message"),
     };
-    let listener = TcpListener::bind("127.0.0.1").await.unwrap();
-    // axum::Server
-    // ::bind(
-    //     tufa_common::common::config::config_fields::GetSocketAddr::get_socket_addr(config),
-    // )
     axum::serve(
-        listener,
+         tokio::net::TcpListener::bind(tufa_common::common::config::config_fields::GetSocketAddr::get_socket_addr(config)).await.unwrap(),
+        // tufa_common::common::config::config_fields::GetSocketAddr::get_socket_addr(config),
         axum::Router::new()
             .route(
                 "/read_middleware_custom_header",
                 axum::routing::get(read_middleware_custom_header),
             )
-            .route(
-                "/header_extractor_example",
-                axum::routing::get(header_extractor_example),
-            )
-            .route(
-                "/extract_custom_header_example",
-                axum::routing::get(extract_custom_header_example),
-            )
-            .route_layer(axum::middleware::from_fn(set_middleware_custom_header))
+            // .route(
+            //     "/header_extractor_example",
+            //     axum::routing::get(header_extractor_example),
+            // )
+            // .route(
+            //     "/extract_custom_header_example",
+            //     axum::routing::get(extract_custom_header_example),
+            // )
+            // .route_layer(axum::middleware::from_fn(set_middleware_custom_header))
             .route(
                 "/middleware_message_example",
                 axum::routing::get(middleware_message_example),
@@ -138,12 +134,12 @@ pub async fn try_build_server<'a>(
             // .fallback_service(routes_static())
             .layer(
                 tower_http::cors::CorsLayer::new()
-                    .allow_methods([
-                        http::Method::GET,
-                        http::Method::POST,
-                        http::Method::PATCH,
-                        http::Method::DELETE,
-                    ])
+                    // .allow_methods([
+                    //     http::Method::GET,
+                    //     http::Method::POST,
+                    //     http::Method::PATCH,
+                    //     http::Method::DELETE,
+                    // ])
                     .allow_origin(["http://127.0.0.1".parse().unwrap()]),
             )
             // .merge(utoipa_swagger_ui::SwaggerUi::new("/swagger-ui").url(
