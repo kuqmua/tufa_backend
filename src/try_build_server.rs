@@ -1,7 +1,7 @@
     #[derive(utoipa::OpenApi)]
     #[openapi(
         paths(
-            tufa_common::server::routes::git_info::git_info,//todo::list_todos
+            tufa_common::server::routes::git_info::git_info,
             tufa_common::repositories_types::tufa_server::routes::api::cats::create_many,
         ),
         components(
