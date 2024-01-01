@@ -1,49 +1,47 @@
-    #[derive(utoipa::OpenApi)]
-    #[openapi(
-        paths(
-            tufa_common::server::routes::git_info::git_info,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::create_many,
-        ),
-        components(
-            schemas(
-                tufa_common::server::routes::git_info::GitInfo,
-                tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr201Created,
-                tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr408RequestTimeout,
-                tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr404NotFound,
-                tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr400BadRequest,
-                tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr500InternalServerError,
-                tufa_common::repositories_types::tufa_server::routes::api::cats::CreateManyPayloadElement,
+#[derive(utoipa::OpenApi)]
+#[openapi(
+    paths(
+        tufa_common::server::routes::git_info::git_info,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::create_many,
+    ),
+    components(
+        schemas(
+            tufa_common::server::routes::git_info::GitInfo,
+            
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr201Created,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr408RequestTimeout,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr404NotFound,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr400BadRequest,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr500InternalServerError,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::CreateManyPayloadElement,
 
-                tufa_common::common::utoipa::std::time::StdTimeDuration,
-                tufa_common::common::git::git_info::GitInfoWithoutLifetime,
-                tufa_common::server::postgres::uuid_wrapper::PossibleUuidWrapper,
-                tufa_common::common::code_occurence::CodeOccurence,
-            )//todo::TodoError
-        ),
-        modifiers(&SecurityAddon),
-        tags(
-            (name = "todo", description = "Todo items management API")
+            tufa_common::common::utoipa::std::time::StdTimeDuration,
+            tufa_common::common::git::git_info::GitInfoWithoutLifetime,
+            tufa_common::server::postgres::uuid_wrapper::PossibleUuidWrapper,
+            tufa_common::common::code_occurence::CodeOccurence,
         )
-    )]
-    struct ApiDoc;
-    struct SecurityAddon;
-    impl utoipa::Modify for SecurityAddon {
-        fn modify(&self, openapi: &mut utoipa::openapi::OpenApi) {
-            if let Some(components) = openapi.components.as_mut() {
-                components.add_security_scheme(
-                    "api_key",
-                    utoipa::openapi::security::SecurityScheme::ApiKey(
-                        utoipa::openapi::security::ApiKey::Header(
-                            utoipa::openapi::security::ApiKeyValue::new("todo_apikey"),
-                        ),
+    ),
+    modifiers(&SecurityAddon),
+    tags(
+        (name = "todo", description = "Todo items management API")
+    )
+)]
+struct ApiDoc;
+struct SecurityAddon;
+impl utoipa::Modify for SecurityAddon {
+    fn modify(&self, openapi: &mut utoipa::openapi::OpenApi) {
+        if let Some(components) = openapi.components.as_mut() {
+            components.add_security_scheme(
+                "api_key",
+                utoipa::openapi::security::SecurityScheme::ApiKey(
+                    utoipa::openapi::security::ApiKey::Header(
+                        utoipa::openapi::security::ApiKeyValue::new("todo_apikey"),
                     ),
-                )
-            }
+                ),
+            )
         }
     }
-
-
-
+}
 
 // // allow to open source files in browser like php
 // fn routes_static() -> axum::Router {
