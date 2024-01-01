@@ -7,13 +7,20 @@
     components(
         schemas(
             tufa_common::server::routes::git_info::GitInfo,
-            
+
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr201Created,
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr408RequestTimeout,
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr404NotFound,
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr400BadRequest,
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr500InternalServerError,
             tufa_common::repositories_types::tufa_server::routes::api::cats::CreateManyPayloadElement,
+
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateOneResponseVariantsTvfrr201Created,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateOneResponseVariantsTvfrr408RequestTimeout,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateOneResponseVariantsTvfrr404NotFound,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateOneResponseVariantsTvfrr400BadRequest,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateOneResponseVariantsTvfrr500InternalServerError,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::CreateOnePayload,
 
             tufa_common::common::utoipa::std::time::StdTimeDuration,
             tufa_common::common::git::git_info::GitInfoWithoutLifetime,
@@ -23,7 +30,7 @@
     ),
     modifiers(&SecurityAddon),
     tags(
-        (name = "todo", description = "Todo items management API")
+        (name = "tufa_server", description = "tufa_server api")
     )
 )]
 struct ApiDoc;
