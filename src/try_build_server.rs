@@ -13,6 +13,7 @@
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr404NotFound,
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr400BadRequest,
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateManyResponseVariantsTvfrr500InternalServerError,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::CreateManyPayload,
             tufa_common::repositories_types::tufa_server::routes::api::cats::CreateManyPayloadElement,
 
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateOneResponseVariantsTvfrr201Created,
