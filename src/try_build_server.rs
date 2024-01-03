@@ -5,12 +5,12 @@
         
         tufa_common::repositories_types::tufa_server::routes::api::cats::create_many,
         tufa_common::repositories_types::tufa_server::routes::api::cats::create_one,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::read_many,
         tufa_common::repositories_types::tufa_server::routes::api::cats::read_one,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::read_many_with_body,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::update_one,
         tufa_common::repositories_types::tufa_server::routes::api::cats::update_many,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::delete_one,
-        tufa_common::repositories_types::tufa_server::routes::api::cats::delete_many_with_body,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::update_one,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::delete_many,
+        tufa_common::repositories_types::tufa_server::routes::api::cats::delete_one
     ),
     components(
         schemas(
@@ -28,23 +28,17 @@
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateOneResponseVariantsTvfrr400BadRequest,
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryCreateOneResponseVariantsTvfrr408RequestTimeout,
 
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadManyResponseVariantsTvfrr200Ok,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadManyResponseVariantsTvfrr500InternalServerError,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadManyResponseVariantsTvfrr404NotFound,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadManyResponseVariantsTvfrr400BadRequest,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadManyResponseVariantsTvfrr408RequestTimeout,
+
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadOneResponseVariantsTvfrr200Ok,
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadOneResponseVariantsTvfrr500InternalServerError,
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadOneResponseVariantsTvfrr404NotFound,
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadOneResponseVariantsTvfrr400BadRequest,
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadOneResponseVariantsTvfrr408RequestTimeout,
-
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadManyWithBodyResponseVariantsTvfrr200Ok,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadManyWithBodyResponseVariantsTvfrr500InternalServerError,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadManyWithBodyResponseVariantsTvfrr404NotFound,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadManyWithBodyResponseVariantsTvfrr400BadRequest,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryReadManyWithBodyResponseVariantsTvfrr408RequestTimeout,
-
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr200Ok,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr500InternalServerError,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr404NotFound,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr400BadRequest,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr408RequestTimeout,
 
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateManyResponseVariantsTvfrr200Ok,
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateManyResponseVariantsTvfrr500InternalServerError,
@@ -52,17 +46,23 @@
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateManyResponseVariantsTvfrr400BadRequest,
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateManyResponseVariantsTvfrr408RequestTimeout,
 
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr200Ok,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr500InternalServerError,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr404NotFound,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr400BadRequest,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryUpdateOneResponseVariantsTvfrr408RequestTimeout,
+
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyResponseVariantsTvfrr200Ok,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyResponseVariantsTvfrr500InternalServerError,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyResponseVariantsTvfrr404NotFound,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyResponseVariantsTvfrr400BadRequest,
+            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyResponseVariantsTvfrr408RequestTimeout,
+
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteOneResponseVariantsTvfrr200Ok,
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteOneResponseVariantsTvfrr500InternalServerError,
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteOneResponseVariantsTvfrr404NotFound,
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteOneResponseVariantsTvfrr400BadRequest,
             tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteOneResponseVariantsTvfrr408RequestTimeout,
-
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyWithBodyResponseVariantsTvfrr200Ok,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyWithBodyResponseVariantsTvfrr500InternalServerError,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyWithBodyResponseVariantsTvfrr404NotFound,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyWithBodyResponseVariantsTvfrr400BadRequest,
-            tufa_common::repositories_types::tufa_server::routes::api::cats::TryDeleteManyWithBodyResponseVariantsTvfrr408RequestTimeout,
 
             tufa_common::repositories_types::tufa_server::routes::api::cats::CreateManyPayload,
             tufa_common::repositories_types::tufa_server::routes::api::cats::CreateManyPayloadElement,

@@ -27,40 +27,38 @@ fn crud(
         //     "/",
         //     axum::routing::get(get_root),
         // )
+
+        //todo generate axum::Router and make it pub instead of create_many -like router handlers
         .route(
-            "/search",
-            axum::routing::post(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::read_many_with_body,
-            )
-            .delete(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::delete_many_with_body,
-            ),
+            "/create_many",
+            axum::routing::post(tufa_common::repositories_types::tufa_server::routes::api::cats::create_many),
         )
         .route(
-            "/batch", //todo maybe change naming?
-            axum::routing::post(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::create_many,
-            )
-            .patch(tufa_common::repositories_types::tufa_server::routes::api::cats::update_many),
-        )
-        .route(
-            "/",
+            "/create_one",
             axum::routing::post(tufa_common::repositories_types::tufa_server::routes::api::cats::create_one),
         )
         .route(
-            "/read",
-            axum::routing::post(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::read_one,
-            )
+            "/read_many",
+            axum::routing::post(tufa_common::repositories_types::tufa_server::routes::api::cats::read_many),
         )
         .route(
-            "/update",
-            axum::routing::patch(
-                tufa_common::repositories_types::tufa_server::routes::api::cats::update_one,
-            )
+            "/read_one",
+            axum::routing::post(tufa_common::repositories_types::tufa_server::routes::api::cats::read_one),
         )
         .route(
-            "/:id",
+            "/update_many",
+            axum::routing::patch(tufa_common::repositories_types::tufa_server::routes::api::cats::update_many),
+        )
+        .route(
+            "/update_one",
+            axum::routing::patch(tufa_common::repositories_types::tufa_server::routes::api::cats::update_one),
+        )
+        .route(
+            "/delete_many",
+            axum::routing::delete(tufa_common::repositories_types::tufa_server::routes::api::cats::delete_many),
+        )
+        .route(
+            "/delete_one",
             axum::routing::delete(tufa_common::repositories_types::tufa_server::routes::api::cats::delete_one),
         )
         // .layer(tower_http::cors::CorsLayer::new().allow_methods(
