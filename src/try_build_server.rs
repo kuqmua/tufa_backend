@@ -79,7 +79,7 @@
     tags(
         (name = "tufa_server", description = "tufa_server api")
     )
-)]
+)]//todo - this thing actually using builder pattern. maybe generate builder in GeneratePostgresqlCrud then merge it together?
 struct ApiDoc;
 struct SecurityAddon;
 impl utoipa::Modify for SecurityAddon {
