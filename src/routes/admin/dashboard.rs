@@ -45,7 +45,7 @@
 //     user_id: uuid::Uuid,
 //     pool: &sqlx::PgPool,
 // ) -> Result<
-//     String,
+//     std::string::String,
 //     tufa_common::repositories_types::tufa_server::routes::admin::dashboard::GetUsernameErrorNamed<
 //         'a,
 //     >,

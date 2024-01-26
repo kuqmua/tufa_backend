@@ -100,7 +100,7 @@
 
 // async fn dequeue_task<'a>(
 //     pool: &sqlx::PgPool,
-// ) -> Result<Option<(sqlx::Transaction<'static, sqlx::Postgres>, uuid::Uuid, String)>, tufa_common::repositories_types::tufa_server::issue_delivery_worker::DequeueTaskErrorNamed> {
+// ) -> Result<Option<(sqlx::Transaction<'static, sqlx::Postgres>, uuid::Uuid, std::string::String)>, tufa_common::repositories_types::tufa_server::issue_delivery_worker::DequeueTaskErrorNamed> {
 //     match pool.begin().await {
 //         Err(e) => Err(tufa_common::repositories_types::tufa_server::issue_delivery_worker::DequeueTaskErrorNamed::PostgresPoolBegin {
 //             postgres_pool_begin: e,
