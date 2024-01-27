@@ -74,6 +74,7 @@ tufa_common = {path = "../tufa_common"}# local dev test without commits version
 compile_time_git_info = {path = "../proc_macros/compile_time_git_info"}
 enum_extension = {path = "../proc_macros/enum_extension"}
 error_occurence = {path = "../proc_macros/error_occurence"}
+error_occurence_lib = {path = "../error_occurence_lib"}
 generate_getter_traits_for_struct_fields = {path = "../proc_macros/generate_getter_traits_for_struct_fields"}
 tufa_postgresql_crud = {path = "../tufa_postgresql_crud"}
 init_from_env = {path = "../proc_macros/init_from_env"}

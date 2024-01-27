@@ -70,7 +70,7 @@
             tufa_common::repositories_types::tufa_server::routes::api::cats::CreateOnePayload,
 
             tufa_common::common::utoipa::std::time::StdTimeDuration,
-            tufa_common::common::git::git_info::GitInfoWithoutLifetime,
+            error_occurence_lib::git_info::GitInfoWithoutLifetime,
             tufa_common::server::postgres::uuid_wrapper::PossibleUuidWrapper,
             tufa_common::common::code_occurence::CodeOccurence,
         )
