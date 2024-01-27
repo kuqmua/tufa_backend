@@ -72,7 +72,7 @@ tufa_common = {path = "../tufa_common"}# local dev test without commits version
 # enum_extension = {git = "https://github.com/kuqmua/enum_extension"}
 #dev
 compile_time_git_info = {path = "../compile_time_git_info"}
-enum_extension = {path = "../proc_macros/enum_extension"}
+enum_extension = {path = "../enum_extension"}
 error_occurence = {path = "../proc_macros/error_occurence"}
 error_occurence_lib = {path = "../error_occurence_lib"}
 generate_getter_traits_for_struct_fields = {path = "../proc_macros/generate_getter_traits_for_struct_fields"}
